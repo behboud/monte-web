@@ -1,0 +1,54 @@
+############# German navigation ##############
+
+# main menu
+[[main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[main]]
+name = "News"
+url = "/news"
+weight = 2
+
+[[main]]
+name = "Kontakt"
+url = "/contact"
+weight = 3
+
+[[main]]
+weight = 4
+name = "Spenden"
+url = "/spenden"
+
+
+[[main]]
+weight = 5
+name= "Schule"
+url = "/schule"
+
+[[main]]
+weight = 6
+name = "Intern"
+url = "/intern"
+
+[[main]]
+parent = "Schule"
+name = "Arbeitsgruppen und Elterndienste"
+url = "/arbeitsgruppen_und_elterndienste"
+
+# footer menu
+[[footer]]
+name = "Impressum"
+url = "/impressum"
+weight = 1
+
+[[footer]]
+name = "Datenschutzerklärung"
+url = "/datenschutzerklaerung"
+weight = 2
+
+[[footer]]
+name = "login"
+url = "/login"
+weight = 3
