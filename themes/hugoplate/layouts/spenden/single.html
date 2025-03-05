@@ -1,0 +1,23 @@
+{{ define "main" }}
+  {{ partial "page-header" . }}
+  <h1 class="mb-4 mt-4 text-8xl font-calligraphy font-italic text-center">{{.Params.uberschrift}}</h1>
+  {{ range $i, $e:= .Params.spenden }}
+    <section class="mb-12">
+      <div class="container">
+        <div class="row items-start flex">
+          <div class="md:col-4 mb-0">
+            {{ partial "image" (dict "Src" .image "Alt" "spende" "DisplayXL" "520x" "DisplayLG" "425x" "DisplayMD" "360x") }}
+          </div>
+          <div class="md:col-7 lg:col-6 flex flex-col justify-start">
+            <h6 class="mb-2">
+              {{ .title | markdownify }}
+            </h6>
+            <p class="text-lg mb-2">
+              {{ .content | markdownify }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{end}}
+{{ end }}

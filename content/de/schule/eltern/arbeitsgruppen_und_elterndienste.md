@@ -1,11 +1,12 @@
 ---
-title: "Arbeitsgruppen und Elterndienste"
+title: "Arbeitsgruppen & Elterndienste"
 meta_title: ""
 description: "This is meta description"
 draft: false
 ---
 
 Die Eltern sind an unserer Schule je nach Können und/oder Interesse in einer oder mehr Arbeitsgruppen tätig.
+{{< image src="images/werkstatt.jpg" caption="" alt="Werkstatt" height="" width="" position="center" command="fill" class="img-fluid" title="image title"  webp="true" >}}
 
 ### Elterndienste
 Zusätzlich zu dem Engagement in den AGs können sich unsere Eltern durch die Übernahme eines regelmäßigen Dienstes am Schulleben beteiligen.
@@ -83,3 +84,8 @@ Arbeitsgruppenleiterin: Sarah Schlehenkamp (Vertretung: Stefanie Helmensdorfer) 
 Das Ziel der Projekte AG ist die Organisation der Nachmittagsprojekte, die von Eltern geleitet und begleitet werden. Wir unterstützen die Eltern bei der Ideen-Findung, Gestaltung und Umsetzung ihrer Projekte und stimmen diese mit der Schule ab.?
 
 Arbeitsgruppenleiterin:Lena Krieg (Vertretung: Agnes Tietz) - [<span class="fa fa-envelope"></span> Email](mailto:projekte@montessorischule-gilching.de)
+
+{{< image src="images/arbeitsgruppen-gallery/fussballer.jpg" witdth="300" alt="Fussball" position="float-left"  webp="true" >}}
+{{< image src="images/arbeitsgruppen-gallery/federmappe.jpg" witdth="300" alt="Federmappe" position="float-left"  webp="true" >}}
+{{< image src="images/arbeitsgruppen-gallery/bauwagen.jpg" witdth="300" alt="Bauwagen" position="float-left"  webp="true" >}}
+

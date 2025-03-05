@@ -3,52 +3,57 @@
 # main menu
 [[main]]
 name = "Home"
-url = "/"
+pageRef = "/"
 weight = 1
 
 [[main]]
 name = "News"
-url = "/news"
+pageRef = "/news"
 weight = 2
 
 [[main]]
 name = "Kontakt"
-url = "/contact"
+pageRef = "/contact"
 weight = 3
 
 [[main]]
 weight = 4
 name = "Spenden"
-url = "/spenden"
+pageRef = "/spenden"
+
+[[main]]
+parent = "Spenden"
+name = "Förderer"
+pageRef = "/spenden/foerderer"
 
 
 [[main]]
 weight = 5
 name= "Schule"
-url = "/schule"
 
 [[main]]
 weight = 6
 name = "Intern"
-url = "/intern"
+pageRef = "/intern"
 
 [[main]]
+weight = 7
 parent = "Schule"
-name = "Arbeitsgruppen und Elterndienste"
-url = "/arbeitsgruppen_und_elterndienste"
+name = "Arbeitsgruppen & Elterndienste"
+pageRef = "/schule/eltern/arbeitsgruppen_und_elterndienste"
 
 # footer menu
 [[footer]]
 name = "Impressum"
-url = "/impressum"
+pageRef = "/impressum"
 weight = 1
 
 [[footer]]
 name = "Datenschutzerklärung"
-url = "/datenschutzerklaerung"
+pageRef = "/datenschutzerklaerung"
 weight = 2
 
 [[footer]]
 name = "login"
-url = "/login"
+pageRef = "/login"
 weight = 3
