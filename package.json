@@ -1,9 +1,9 @@
 {
-  "name": "hugoplate",
-  "description": "hugo tailwindcss boilerplate",
-  "version": "2.0.3",
+  "name": "monte-gilching",
+  "description": "Montessori Website Gilching",
+  "version": "1.0.0",
   "license": "MIT",
-  "author": "zeon.studio",
+  "author": "behboud kalantary",
   "scripts": {
     "dev": "hugo server",
     "build": "hugo --gc --minify --templateMetrics --templateMetricsHints --forceSyncStatic",

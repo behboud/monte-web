@@ -1,8 +1,32 @@
 ############# German navigation ##############
 
+# top menu
+[[top]]
+name = "NEWS"
+pageRef = "/news"
+weight = 1
+
+[[top]]
+name = "KONTAKT"
+pageRef = "/contact"
+weight = 2
+
+[[top]]
+name = "SPENDEN"
+pageRef = "/spenden"
+weight = 3
+
+[[top]]
+name = "ELTERN-LOGIN"
+url = "https://www.montessorischule-gilching.de/login"
+weight = 4
+[[top.params]]
+icon = "fa fa-user-lock"
+
+
 # main menu
 [[main]]
-name = "Home"
+name = "Startseite"
 pageRef = "/"
 weight = 1
 
@@ -22,23 +46,26 @@ name = "Spenden"
 pageRef = "/spenden"
 
 [[main]]
+weight = 5
 parent = "Spenden"
 name = "Förderer"
 pageRef = "/spenden/foerderer"
 
 
 [[main]]
-weight = 5
-name= "Schule"
-
-[[main]]
 weight = 6
-name = "Intern"
-pageRef = "/intern"
+name = "Schule"
+pageRef = "/schule"
 
 [[main]]
 weight = 7
 parent = "Schule"
+name = "Elternengagement"
+pageRef = "/schule/eltern"
+
+[[main]]
+weight = 8
+parent = "Elternengagement"
 name = "Arbeitsgruppen & Elterndienste"
 pageRef = "/schule/eltern/arbeitsgruppen_und_elterndienste"
 
@@ -55,5 +82,5 @@ weight = 2
 
 [[footer]]
 name = "login"
-pageRef = "/login"
+url = "https://www.montessorischule-gilching.de/login"
 weight = 3

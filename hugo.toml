@@ -133,6 +133,9 @@ lazy = true
 [[params.plugins.css]]
 link = "plugins/font-awesome/v6/icons.css"
 lazy = true
+[[params.plugins.css]]
+link = "https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/9.3.0/mmenu.min.css"
+lazy = false
 
 # JS Plugins
 [[params.plugins.js]]
@@ -162,3 +165,6 @@ lazy = true
 [[params.plugins.js]]
 link = "plugins/youtube-lite.js"
 lazy = true
+[[params.plugins.js]]
+link = "https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/9.3.0/mmenu.min.js"
+lazy = false

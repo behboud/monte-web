@@ -1,11 +1,11 @@
-home: Home
-read_more: Read More
-send: Send
+home: Startseite
+read_more: Weiterlesen
+send: Senden
 related_posts: Related Posts
 categories: Categories
 tags: Tags
 toc: Table of Contents
-share: Share
+share: teilen
 search_input_placeholder: Search Post...
 search_no_results: No results for
 search_initial_message: Type something to search..
