@@ -16,7 +16,7 @@ header_image_banner = "images/header-zaun.jpg"
 navbar_fixed = true
 # theme-mode
 theme_switcher = false
-theme_default = "light" # available options [light/dark/system]
+theme_default = "light"
 # Main Sections
 mainSections = ["blog"]
 # contact form action
@@ -62,11 +62,9 @@ content = "You must replace the **baseURL** in **hugo.toml** file when deploying
 # seo meta data for OpenGraph / Twitter Card
 # seo module: https://github.com/gethugothemes/hugo-modules/tree/master/seo-tools/basic-seo
 [metadata]
-keywords = ["Boilerplate", "Hugo"]
-description = "Hugo & Tailwindcss Starter"
-author = "zeon.studio"
-twitter = "zeon_studio"
-image = "images/og-image.png"
+keywords = ["Montessori", "Grundschule", "Schule", "Gilching", "München", "Westen"]
+description = "Montessori Schule Gilching (München Westen)"
+author = "behboud kalantary"
 
 
 # site verifications

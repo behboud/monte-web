@@ -1,0 +1,46 @@
+{{ define "main" }}
+
+<!-- Banner -->
+{{ with .Params.banner }}
+<section class="py-4 pt-12">
+  <div class="container">
+    <div class="justify-center text-center">
+      <h1 class="mb-4 text-8xl font-calligraphy text-monte">
+        {{ .title | markdownify }}
+      </h1>
+      {{if .content}}
+      <p class="mb-8">
+        {{ .content | markdownify }}
+      </p>
+      {{end}}
+    </div>
+  </div>
+</section>
+{{ end }}
+<!-- /Banner -->
+<div class="prose prose-slate">
+  <!-- Aktuelles -->
+  <h2 class="container text-monte text-start">Aktuelles</h2>
+</div>
+<section class="py-4">
+  <div class="container flex flex-row flex-wrap">
+    <!-- blog posts -->
+    {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
+    {{ range $pages.ByDate }}
+    <div class="basis-1/2 px-4">
+      {{ partial "components/aktuelles-card" . }}
+    </div>
+    {{ end }}
+  </div>
+</section>
+<!-- /Aktuelles -->
+
+<!-- Slider -->
+{{ with .Params.slider }}
+<section class="py-16">
+  <div class="">
+    {{ partial "slider" (dict "Dir" .images) }}
+  </div>
+</section>
+{{ end }}
+{{ end }}

@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap");
+@import "tailwindcss";
+@source "hugo_stats.json";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
+
+
+@theme {
+  --color-primary: #121212;
+  --color-body: #fff;
+  --color-border: #eaeaea;
+  --color-light: #fcfaf7;
+  --color-monte: #222477;
+  --color-bg-light: #fcfaf7;
+  --font-calligraphy: italic, "Zapfino";
+  --font-sans: sans-serif, "Overpass";
+}
+
+@import "./fonts.css";
+
+@import "search.css";
+@import "social-share.css";
+@import "gallery-slider.css";
+@import "images.css";
+@import "toc.css";
+@import "tab.css";
+@import "accordion.css";
+@import "modal.css";
+@import "notice.css";
+
+
+
+@import "custom.css";
