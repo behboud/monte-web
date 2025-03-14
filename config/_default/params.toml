@@ -18,12 +18,9 @@ navbar_fixed = true
 theme_switcher = false
 theme_default = "light"
 # Main Sections
-mainSections = ["blog"]
+mainSections = ["aktuelles"]
 # contact form action
 contact_form_action = "#" # contact form works with [https://airform.io/] or [https://formspree.io]
-# google tag manager, see https://developers.google.com/tag-manager/
-google_tag_manager = "" # example: G-XXXXXXXXXX
-google_adsense = ""     # example: ca-pub-xxxxxxxxxxxxxxxx
 # custom script on header, example: custom_script= "<script>console.log(\"Hello World\")</script>"
 custom_script = ""
 # copyright
@@ -46,7 +43,7 @@ link = "contact"
 [search]
 enable = false
 primary_color = "#121212"
-include_sections = ["blog"]
+include_sections = ["aktuelles"]
 show_image = true
 show_description = true
 show_tags = true
@@ -64,7 +61,7 @@ content = "You must replace the **baseURL** in **hugo.toml** file when deploying
 [metadata]
 keywords = ["Montessori", "Grundschule", "Schule", "Gilching", "München", "Westen"]
 description = "Montessori Schule Gilching (München Westen)"
-author = "behboud kalantary"
+author = "Monrtessori Schule Gilching"
 
 
 # site verifications

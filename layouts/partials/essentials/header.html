@@ -33,7 +33,7 @@
             {{- else -}}
               {{- .URL | relLangURL -}}
             {{- end -}}"></a> {{ end}}
-        <a class="hover:text-primary font-bold" {{ if findRE `^http` .URL }} target="_self" rel="noopener" {{ end }}
+        <a class="uk-btn uk-btn-text font-bold" {{ if findRE `^http` .URL }} target="_self" rel="noopener" {{ end }}
           href="{{- if findRE `^#` .URL -}}
                   {{- if not $.IsHome -}}
                     {{- site.Home.RelPermalink -}}

@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="bg-body text-base leading-relaxed container mx-auto">
+<body class="bg-body container mx-auto">
   <div id="page">
     <!-- cache partial only in production -->
     {{ if hugo.IsProduction }}
@@ -21,20 +21,12 @@
     {{ partialCached "gtm-noscript.html" . }}
     {{ else }}
     {{ partial "preloader.html" . }}
-
-
     <!-- tailwind size indicator -->
     {{ partial "components/tw-size-indicator.html" . }}
     {{ end }}
 
-
-    <!-- announcement -->
-    {{ partialCached "announcement.html" . }}
-
-
     <!-- header (don't cache it) -->
     {{ partial "essentials/header.html" . }}
-    {{ partial "search-modal.html" (dict "Context" . ) }}
 
 
     <main>

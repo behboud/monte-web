@@ -12,10 +12,6 @@
 {{ partialCached "manifest" . }}
 
 
-<!-- site verifications -->
-{{ partialCached "site-verifications.html" . }}
-
-
 <!-- opengraph and twitter card -->
 {{ partial "basic-seo.html" . }}
 
@@ -24,12 +20,5 @@
 {{ partialCached "custom-script.html" . }}
 
 
-<!-- google tag manager -->
-{{ partialCached "gtm.html" . }}
-
-
 <!-- search index -->
 {{ partial "search-index.html" . }}
-
-<!-- Mermaid -->
-{{ partial "mermaid/assets/js" . }}

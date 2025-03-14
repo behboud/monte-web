@@ -2,7 +2,7 @@
 
 <!-- Banner -->
 {{ with .Params.banner }}
-<section class="py-4 pt-12">
+<section class="pt-10">
   <div class="container">
     <div class="justify-center text-center">
       <h1 class="mb-4 text-8xl font-calligraphy text-monte">
@@ -20,14 +20,14 @@
 <!-- /Banner -->
 <div class="prose prose-slate">
   <!-- Aktuelles -->
-  <h2 class="container text-monte text-start">Aktuelles</h2>
+  <h2 class="container text-monte text-start text-lg font-bold">AKTUELLES</h2>
 </div>
-<section class="py-4">
+<section class="py-2">
   <div class="container flex flex-row flex-wrap">
     <!-- blog posts -->
     {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
     {{ range $pages.ByDate }}
-    <div class="basis-1/2 px-4">
+    <div class="basis-1/2">
       {{ partial "components/aktuelles-card" . }}
     </div>
     {{ end }}
@@ -37,10 +37,10 @@
 
 <!-- Slider -->
 {{ with .Params.slider }}
-<section class="py-16">
-  <div class="">
-    {{ partial "slider" (dict "Dir" .images) }}
-  </div>
+<section class="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] transform -translate-x-1/2 py-4">
+
+  {{ partial "slider" (dict "Dir" .images) }}
+
 </section>
 {{ end }}
 {{ end }}
