@@ -7,7 +7,7 @@ draft: false
 Wir möchten darauf hinweisen, dass das Versenden unverschlüsselter Emails kein sicheres Kommunikationsmittel i.S.d. Datenschutzes ist.
  
 
-### Anschrift
+# Anschrift
 Montessorischule Gilching <br>
 Frühlingstraße 16a <br> 
 82205 Gilching <br>
@@ -25,20 +25,16 @@ Fax: 0 81 05 - 77 35 76
 
 **Sprechzeiten:**
 
-| Tag       | Zeit                |
-|-----------|---------------------|
-| Mo, Do    | 10:00 – 12:30 Uhr   |
-| Di        | 08:00 – 12:30 Uhr   |
-| Mo, Di, Do| 14:30 – 16:30 Uhr   |
+Montag, Donnerstag: 10:00 – 12:30 Uhr  
+Dienstag: 08:00 – 12:30 Uhr  
+Montag, Dienstag, Donnerstag: 14:30 – 16:30 Uhr
 
 ### Verwaltung/Büro
 [<span class="fa fa-envelope"></span> Verwaltung[at]montessorischule-gilching.de](mailto:Verwaltung@montessorischule-gilching.de)
 
 **Sprechzeiten:**
 
-| Tag       | Zeit                |
-|-----------|---------------------|
-| Di – Fr   | 9:30 – 12:30 Uhr    |
+Dienstag bis Freitag: 9:30 – 12:30 Uhr
 
 ### Verein
 [<span class="fa fa-envelope"></span> kontakt.vorstand[at]montessorischule-gilching.de](mailto:kontakt.vorstand@montessorischule-gilching.de)

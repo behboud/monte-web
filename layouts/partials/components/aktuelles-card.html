@@ -1,30 +1,31 @@
-<div class="uk-card uk-card-body mr-2 my-2">
-  <h3 class="uk-card-title text-monte mb-2">
-    <a href="{{ .RelPermalink }}">
-      {{ .Title }}
-    </a>
-  </h3>
-  {{ $categories:= .Params.categories }}
-  {{ if $categories }}
-  <ul class="mb-4">
-    <li class="mr-4 inline-block">
-      <i class="fa-regular fa-calendar mr-2"></i>{{ .Params.date | dateFormat "Monday, 2 January 2006" }}
-    </li>
-    <li class="mr-4 inline-block">
-      <i class="fa fa-tag"></i>
-      {{ range $i,$p:= $categories }}
-      <a class="uk-btn uk-btn-text" href="{{ `categories/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">{{ . |
-        humanize }}{{ if ne $i
-        (sub (len $categories) 1) }}
-        <i class="fa fa-tag ml-2"></i>
-        {{ end }}
+<div class="uk-card uk-card-body mr-2 h-full flex flex-col justify-between">
+  <div class="">
+    <h3 class="uk-card-title text-monte mb-2">
+      <a href="{{ .RelPermalink }}">
+        {{ .Title }}
       </a>
-      {{ end }}
-    </li>
-  </ul>
-  {{ end }}
-  <p class="mb-6">{{ .Summary | plainify }}</p>
-  <a class="uk-btn uk-btn-default" href="{{ .RelPermalink }}">
+    </h3>
+    {{ $tags:= .Params.tags }}
+    {{ if $tags }}
+    <ul class="mb-4">
+      <li class="mr-4 inline-block">
+        <i class="fa-regular fa-calendar mr-2"></i>{{ .Params.date | dateFormat "Monday, 2 January 2006" }}
+      </li>
+      <li class="mr-4 inline-block">
+        {{ range $i,$p:= $tags }}
+        <a class="uk-btn uk-btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1"><i
+            class="fa fa-tag mr-1"></i>{{ . |
+          humanize }}{{ if ne $i
+          (sub (len $tags) 1) }}
+        </a>
+        {{ end }}
+        {{ end }}
+      </li>
+    </ul>
+    {{ end }}
+    <p class="mb-6">{{ .Summary | plainify }}</p>
+  </div>
+  <a class="uk-btn uk-btn-default w-fit" href="{{ .RelPermalink }}">
     {{ T "read_more" }}
   </a>
 </div>

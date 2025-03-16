@@ -3,7 +3,7 @@
 # top menu
 [[top]]
 name = "NEWS"
-pageRef = "/news"
+pageRef = "/aktuelles"
 weight = 1
 
 [[top]]

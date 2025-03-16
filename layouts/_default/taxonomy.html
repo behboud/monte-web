@@ -2,20 +2,12 @@
 {{ partial "page-header" . }}
 
 
-<section class="section">
-  <div class="container">
-    <div class="row gx-5">
-      <!-- blog posts -->
-      <div class="lg:col-8">
-        <div class="row">
-          {{ range .Data.Pages }}
-          <div class="md:col-6 mb-14">
-            {{ partial "components/aktuelles-card" . }}
-          </div>
-          {{ end }}
-        </div>
-      </div>
-    </div>
+<section class="container">
+  <!-- aktuelles posts -->
+  {{ range .Data.Pages }}
+  <div class="md:col-6 mb-14">
+    {{ partial "components/aktuelles-card" . }}
   </div>
+  {{ end }}
 </section>
 {{ end }}
