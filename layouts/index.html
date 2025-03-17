@@ -5,11 +5,11 @@
 <div class="ml-3">
   <div class="container pt-8">
     <div class="justify-center text-center">
-      <h1 class="mb-4 text-8xl font-calligraphy text-monte">
+      <h1 class="text-8xl font-calligraphy text-monte">
         {{ .title | markdownify }}
       </h1>
       {{if .content}}
-      <p class="mb-8">
+      <p class="mb-2">
         {{ .content | markdownify }}
       </p>
       {{end}}
