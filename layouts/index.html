@@ -17,11 +17,11 @@
   </div>
   {{ end }}
   <!-- /Banner -->
-  <div class="prose prose-slate py-2">
+  <div class="ml-1">
     <!-- Aktuelles -->
-    <h2 class="container text-monte text-start text-lg font-bold">AKTUELLES</h2>
+    <h2 class="text-monte text-start text-lg font-bold">AKTUELLES</h2>
   </div>
-  <div class="container flex flex-row flex-wrap">
+  <div class="flex flex-row flex-wrap">
     <!-- aktuelles posts -->
     {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
     {{ range $pages.ByDate.Reverse }}
@@ -34,8 +34,10 @@
 </div>
 <!-- Slider -->
 {{ with .Params.slider }}
-<div class="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] transform -translate-x-1/2 py-4">
-  {{ partial "slider" (dict "Dir" .images) }}
+<div class="w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] uk-visible-toggle uk-position-relative py-4"
+  data-uk-slideshow="animation: fade; autoplay:true; max-height: 600">
+  {{ partial "components/slider.html" (dict "Dir" .images "Class" "uk-slideshow-items" "ClassImage" "uk-anmt-kenburns uk-anmt-reverse uk-position-cover uk-transform-origin-center-left")
+  }}
 </div>
 {{ end }}
 {{ end }}

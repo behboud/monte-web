@@ -1,5 +1,5 @@
 <div class="uk-card uk-card-body mr-2 h-full flex flex-col justify-between">
-  <div class="">
+  <div class="container">
     <h3 class="uk-card-title text-monte mb-2">
       <a href="{{ .RelPermalink }}">
         {{ .Title }}
@@ -13,12 +13,10 @@
       </li>
       <li class="mr-4 inline-block">
         {{ range $i,$p:= $tags }}
-        <a class="uk-btn uk-btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1"><i
-            class="fa fa-tag mr-1"></i>{{ . |
-          humanize }}{{ if ne $i
-          (sub (len $tags) 1) }}
+        <a class="uk-btn uk-btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
+          <i class="fa fa-tag mr-1"></i>{{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
+          {{ end }}
         </a>
-        {{ end }}
         {{ end }}
       </li>
     </ul>
