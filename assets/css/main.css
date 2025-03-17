@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @import "search.css";
 @import "social-share.css";
 @import "gallery-slider.css";
@@ -19,6 +18,30 @@
     font-weight: 400;
     font-style: italic;
     font-display: swap;
-    src: url('/fonts/ZapfinoExtraLT-One.woff2') format('woff2');
+    src: url("/fonts/ZapfinoExtraLT-One.woff2") format("woff2");
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-monte;
+  }
+  h1 {
+    @apply uk-h1;
+  }
+  h2 {
+    @apply uk-h2;
+  }
+  h3 {
+    @apply uk-h3 mt-4;
+  }
+  h4 {
+    @apply uk-h4;
+  }
+  p {
+    @apply uk-paragraph;
+  }
+  code {
+    @apply uk-codespan;
   }
 }
