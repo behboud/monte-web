@@ -5,8 +5,9 @@ description: "This is meta description"
 draft: false
 ---
 
-Die Eltern sind an unserer Schule je nach Können und/oder Interesse in einer oder mehr Arbeitsgruppen tätig.
 {{< image src="images/werkstatt.jpg" caption="" alt="Werkstatt" height="" width="" position="center" command="fill" class="img-fluid" title="image title"  webp="true" >}}
+
+Die Eltern sind an unserer Schule je nach Können und/oder Interesse in einer oder mehr Arbeitsgruppen tätig.
 
 ### Elterndienste
 Zusätzlich zu dem Engagement in den AGs können sich unsere Eltern durch die Übernahme eines regelmäßigen Dienstes am Schulleben beteiligen.

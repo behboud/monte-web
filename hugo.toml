@@ -131,12 +131,6 @@ lazy = true
 [[params.plugins.css]]
 link = "https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/9.3.0/mmenu.min.css"
 lazy = false
-[[params.plugins.css]]
-link = "https://unpkg.com/franken-ui@2.0.0/dist/css/core.min.css"
-lazy = false
-[[params.plugins.css]]
-link = "https://unpkg.com/franken-ui@2.0.0/dist/css/utilities.min.css"
-lazy = false
 
 # JS Plugins
 [[params.plugins.js]]
