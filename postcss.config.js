@@ -1,4 +1,3 @@
-const franken = require('franken-ui/shadcn-ui/preset-quick');
 
 module.exports = {
     plugins: [
