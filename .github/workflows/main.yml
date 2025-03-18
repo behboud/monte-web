@@ -26,7 +26,7 @@ env:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     steps:
       - name: Install Hugo
         run: |
