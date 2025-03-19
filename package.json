@@ -4,11 +4,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "behboud kalantary",
-  "scripts": {
-    "dev": "hugo server",
-    "build": "hugo --gc --minify  --forceSyncStatic",
-    "format": "prettier -w ."
-  },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "franken-ui": "^2.0.0",
