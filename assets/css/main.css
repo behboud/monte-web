@@ -18,7 +18,7 @@
     font-weight: 400;
     font-style: italic;
     font-display: swap;
-    src: url("/fonts/ZapfinoExtraLT-One.woff2") format("woff2");
+    src: url("../fonts/ZapfinoExtraLT-One.woff2") format("woff2");
   }
   h1,
   h2,
