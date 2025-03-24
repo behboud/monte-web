@@ -1,11 +1,10 @@
 {{ define "main" }}
-{{ partial "page-header" . }}
+  {{ partial "page-header" . }}
 
 
-  <div class="container justify-center">
-        <div class="content">
-          {{ .Content }}
+  <div class="container ml-3 pt-6 flex justify-start">
+    <div class="">
+      {{ .Content }}
     </div>
   </div>
-
 {{ end }}

@@ -1,16 +1,16 @@
-<div class="uk-card uk-card-body mr-2 h-full flex flex-col justify-between">
+<div class="uk-card uk-card-body h-full flex flex-col justify-between">
   <div class="container">
     <h3 class="uk-card-title text-monte mb-2">
       <a href="{{ .RelPermalink }}">
         {{ .Title }}
       </a>
     </h3>
-    {{ $tags:= .Params.tags }}
-    {{ if $tags }}
     <ul class="mb-4">
       <li class="mr-4 inline-block">
         <i class="fa-regular fa-calendar mr-2"></i>{{ .Params.date | dateFormat "Monday, 2 January 2006" }}
       </li>
+      {{ $tags:= .Params.tags }}
+      {{ if $tags }}
       <li class="mr-4 inline-block">
         {{ range $i,$p:= $tags }}
         <a class="uk-btn uk-btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
@@ -19,8 +19,8 @@
         </a>
         {{ end }}
       </li>
+      {{ end }}
     </ul>
-    {{ end }}
     <p class="mb-6">{{ .Summary | plainify }}</p>
   </div>
   <a class="uk-btn uk-btn-default w-fit" href="{{ .RelPermalink }}">

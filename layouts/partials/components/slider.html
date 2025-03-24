@@ -1,5 +1,5 @@
 <!-- get value from params -->
-{{ $folderDir:= .Dir }}
+{{ $images:= .Images }}
 {{ $class:= .Class }}
 {{ $classImage:= .ClassImage }}
 {{ $height:= replace (replace (.Height) "px" "") "x" "" }}
@@ -13,122 +13,37 @@
 
 {{ $scratch := newScratch }}
 {{ $page:= .Page }}
-{{ $assetsImage:= resources.Match (add (string $folderDir) `/*`) }}
-{{ $contentImage:= $page.Resources.Match (add (string $folderDir) `/*`) }}
-{{ $staticImage:= print "static/" $folderDir }}
-{{ $remoteImage:= .Srcs }}
 
 
 <!-- start of slider wrapper -->
 <div class="{{ $class }}">
-    <!-- start of checking asset-image -->
-    {{ if $assetsImage }}
+  <!-- start of checking asset-image -->
+  {{ if $images }}
     <!-- start of image range -->
-    {{ range $assetsImage }}
-    {{ $image := resources.Get . }}
-    {{ $imageExt := path.Ext $image }}
-    {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
-    `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`) }}
+    {{ range $images }}
+      {{ $image := resources.Get . }}
+      {{ $imageExt := path.Ext $image }}
+      {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
+        `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`)
+      }}
 
-    {{ partial "components/image-pipe.html" (dict "Context" $scratch "Height" $height "Width" $width "Command" $command
-    "Webp"
-    $webp "Image" $image "Option" $option "Zoomable" $zoomable) }}
-    {{ $imageHeight:= $scratch.Get "image-height" }}
-    {{ $imageWidth:= $scratch.Get "image-width" }}
+        {{ partial "components/image-pipe.html" (dict "Context" $scratch "Height" $height "Width" $width "Command" $command
+          "Webp"
+          $webp "Image" $image "Option" $option "Zoomable" $zoomable)
+        }}
+        {{ $imageHeight:= $scratch.Get "image-height" }}
+        {{ $imageWidth:= $scratch.Get "image-width" }}
 
-    <div class="{{$classImage}}">
-        <img loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" alt="{{ .Name }}"
-            onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" data-uk-cover />
-    </div>
 
-    {{ end }}
+        <div class="{{ $classImage }}">
+          <img loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" data-uk-cover />
+        </div>
+      {{ end }}
     {{ end }}
 
 
     <!-- end of image range -->
-
-    <!-- start of checking content-image -->
-    {{ else if $contentImage }}
-
-    <!-- start of image range -->
-    {{ range $contentImage }}
-    {{ $image:= $page.Resources.GetMatch (printf "*%s*" .) }}
-    {{ $imageExt := path.Ext $image }}
-    {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
-    `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`) }}
-
-    {{ partial "image-pipe.html" (dict "Context" $scratch "Height" $height "Width" $width "Command" $command "Webp"
-    $webp "Image" $image "Option" $option "Zoomable" $zoomable) }}
-    {{ $imageHeight:= $scratch.Get "image-height" }}
-    {{ $imageWidth:= $scratch.Get "image-width" }}
-
-
-
-    <div class="{{$classImage}}">
-        <img loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" alt="{{ .Name }}"
-            onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" data-uk-cover />
-    </div>
-
-    {{ end }}
-    {{ end }}
-
-
-    <!-- end of image range -->
-
-    <!-- start of checking static-image -->
-    {{ else if os.FileExists $staticImage }}
-
-    {{ range (readDir $staticImage) }}
-    {{ if and (ne .Name ".DS_Store") (not .IsDir) }}
-    {{ $image := print "/" $folderDir "/" .Name }}
-    {{ $imageExt := path.Ext $image }}
-    {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
-    `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`) }}
-
-    <div class="{{$classImage}}">
-        <img loading="{{ $loading }}" src="{{ $image }}" alt="{{ .Name }}" height="{{ $height }}"
-            width="{{ $width }}" />
-    </div>
-
-    {{ end }}
-    {{ end }}
-    {{ end }}
-
-    <!-- start of checking remote-image -->
-    {{ else if $remoteImage }}
-    <!-- start of image range -->
-    {{ range $remoteImage }}
-    {{ $image := resources.GetRemote . }}
-    {{ $imageExt := path.Ext $image }}
-    {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
-    `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`) }}
-
-    {{ partial "image-pipe.html" (dict "Context" $scratch "Height" $height "Width" $width "Command" $command "Webp"
-    $webp "Image" $image "Option" $option "Zoomable" $zoomable) }}
-    {{ $imageHeight:= $scratch.Get "image-height" }}
-    {{ $imageWidth:= $scratch.Get "image-width" }}
-
-
-    <div class="{{$classImage}}">
-        <img loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" alt="{{ . }}"
-            onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" data-uk-cover />
-    </div>
-
-    {{ end }}
-    {{ end }}
-
-
-    <!-- end of image range -->
-
-    {{ else }}
-    <!-- if directory does not exist -->
-    <strong style="display: inline-block; margin-top:15px">
-        Nothing to show in [{{ site.BaseURL }}<span style="color:red">
-            {{ $folderDir }}
-        </span>
-        ] or folder does not exist
-    </strong>
-    {{ end }}
-    <!-- end of checking image directory -->
+  {{ end }}
+  <!-- end of checking image directory -->
 </div>
 <!-- end of slider wrapper -->

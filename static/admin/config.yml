@@ -1,0 +1,81 @@
+backend:
+  name: github
+  repo: behboud/monte-web
+  branch: main # Branch to update (optional; defaults to master)
+  commit_messages:
+    create: Create {{collection}} {{slug}} {{author-name}}
+    update: Update {{collection}} {{slug}} {{author-name}}
+    delete: Delete {{collection}} {{slug}} {{author-name}}
+    uploadMedia: Upload {{path}} {{author-name}}
+    deleteMedia: Delete {{path}} {{author-name}}
+    openAuthoring: "{{message}} {{author-name}}"
+site_url: "https://behboud.github.io/monte-web"
+media_folder: /assets/images
+public_folder: /monte-web/images
+display_url: "https://behboud.github.io/monte-web"
+logo_url: /monte-web/images/logo-montessorischulegilching.gif
+locale: "de"
+collections:
+  - name: "aktuelles"
+    label: "Aktuelles"
+    folder: "content/de/aktuelles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Datum Veröffentlichung", name: "publishdate", widget: "datetime" }
+      - { label: "Stimmungsbild", name: "image", widget: "image" }
+      - { label: "Author", name: "author", widget: "string" }
+      - name: "tags"
+        widget: "select"
+        label: "Tags"
+        multiple: true
+        create: true
+        options: ["Mitglieder", "Termin", "Projekt", "Verein"]
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+      - { label: "Datum", name: "date", widget: "hidden", default: "{{now}}" }
+  - name: "pages"
+    label: "Einzelseiten"
+    files:
+      - label: "Startseite"
+        name: "index"
+        file: "content/de/_index.md"
+        fields:
+          - label: "Banner"
+            name: "banner"
+            widget: "object"
+            fields:
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Untertitel", name: "content", widget: "string" }
+              - { label: "Bild", name: "image", widget: "image" }
+          - label: "Slider Gallery"
+            name: "slider"
+            widget: object
+            fields:
+              - label: "Bilder"
+                name: "images"
+                widget: image
+                multiple: true
+                allow_add: true
+                default: []
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - label: "Kontakt"
+        name: "kontakt"
+        file: "content/de/pages/kontakt.md"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - label: "Impressum"
+        name: "impressum"
+        file: "content/de/pages/impressum.md"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - label: "Datenschutz"
+        name: "datenschutz"
+        file: "content/de/pages/datenschutz.md"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
