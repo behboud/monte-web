@@ -1,11 +1,12 @@
 ---
 title: Mitgliederversammlung CMS 2025
-date: 2025-03-24T11:53:00.000Z
+publishdate: 2025-03-24T11:58:00.000Z
 image: /monte-web/images/image-placeholder.png
 author: Behboud
 tags:
   - Mitglieder
   - Termin
+date: 2025-03-24T11:53:00.000Z
 ---
 # Hi
 
