@@ -48,7 +48,7 @@ collections:
             widget: "object"
             fields:
               - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Untertitel", name: "content", widget: "string" }
+              - { label: "Untertitel", name: "content", widget: "string", required: false }
               - { label: "Bild", name: "image", widget: "image" }
           - label: "Slider Gallery"
             name: "slider"
@@ -60,7 +60,7 @@ collections:
                 multiple: true
                 allow_add: true
                 default: []
-          - { label: "Inhalt", name: "body", widget: "markdown" }
+          - { label: "Inhalt", name: "body", widget: "markdown", required: false }
       - label: "Kontakt"
         name: "kontakt"
         file: "content/de/pages/kontakt.md"
