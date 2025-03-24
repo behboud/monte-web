@@ -24,6 +24,7 @@ export default {
                 body: "#fff",
                 light: "#fcfaf7",
                 monte: "#222477",
+                foreground: "#222477",
                 bgLight: "#fcfaf7",
             },
             fontFamily: {
