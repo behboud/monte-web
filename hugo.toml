@@ -53,6 +53,17 @@ path = 'page'
     source = 'hugo_stats.json'
     target = 'assets/notwatching/hugo_stats.json'
 
+[related]
+  threshold = 80
+  includeNewer = true
+  toLower = true
+  [[related.indices]]   
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "date"
+    weight = 10 
+
 
 ############################# Outputs ############################
 [outputs]
