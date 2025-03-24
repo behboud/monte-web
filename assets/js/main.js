@@ -44,6 +44,12 @@
     }
   });
   */
+  document.addEventListener('DOMContentLoaded', function() {
+    const mailtoLinks = document.querySelectorAll('a[href^="mailto:"]');
+    mailtoLinks.forEach(link => {
+      link.innerHTML = '<i class="fa fa-envelope"></i>&nbsp;' + link.innerHTML;
+    });
+  });
 
   // Mmenu plugin
   // ----------------------------------------

@@ -22,7 +22,7 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
-      preview: true
+      preview: false
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Datum Veröffentlichung", name: "publishdate", widget: "datetime" }

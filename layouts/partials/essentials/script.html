@@ -2,33 +2,34 @@
 {{ $scripts := slice }}
 {{ $scriptsLazy := slice }}
 {{ range site.Params.plugins.js }}
-{{ if findRE "^http" .link }}
-<script src="{{ .link | relURL }}" type="{{ .type }}" {{ .attributes | safeHTMLAttr }}></script>
-{{ else }}
-{{ if not .lazy }}
-{{ $scripts = $scripts | append (resources.Get .link) }}
-{{ else }}
-{{ $scriptsLazy = $scriptsLazy | append (resources.Get .link) }}
-{{ end }}
-{{ end }}
+  {{ if findRE "^http" .link }}
+    <script src="{{ .link | relURL }}" type="{{ .type }}" {{ .attributes | safeHTMLAttr }}></script>
+  {{ else }}
+    {{ if not .lazy }}
+      {{ $scripts = $scripts | append (resources.Get .link) }}
+    {{ else }}
+      {{ $scriptsLazy = $scriptsLazy | append (resources.Get .link) }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
 {{ with resources.Get "js/app.js" }}
-{{ $opts := dict
-"minify" hugo.IsProduction
-"sourceMap" (cond hugo.IsProduction "" "external")
-"targetPath" "js/app.js"
-}}
-{{ with . | js.Build $opts }}
-{{ if hugo.IsProduction }}
-{{ with . | fingerprint }}
-<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+  {{ $opts := dict
+    "minify" hugo.IsProduction
+    "sourceMap" (cond hugo.IsProduction "" "external")
+    "targetPath" "js/app.js"
+  }}
+  {{ with . | js.Build $opts }}
+    {{ if hugo.IsProduction }}
+      {{ with . | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+      {{ end }}
+    {{ else }}
+      <script src="{{ .RelPermalink }}"></script>
+    {{ end }}
+  {{ end }}
 {{ end }}
-{{ else }}
-<script src="{{ .RelPermalink }}"></script>
-{{ end }}
-{{ end }}
-{{ end }}
+
 
 <!-- main script -->
 {{ $scripts = $scripts | append (resources.Get "js/main.js") }}
@@ -37,16 +38,15 @@
 {{ $scriptsLazy = $scriptsLazy | resources.Concat "js/script-lazy.js" }}
 
 {{ if hugo.IsProduction }}
-{{ $scripts = $scripts | minify | fingerprint }}
-{{ $scriptsLazy = $scriptsLazy | minify | fingerprint }}
+  {{ $scripts = $scripts | minify | fingerprint }}
+  {{ $scriptsLazy = $scriptsLazy | minify | fingerprint }}
 {{ end }}
 
 {{/* scripts */}}
 <script crossorigin="anonymous" integrity="{{ $scripts.Data.Integrity }}" src="{{ $scripts.RelPermalink }}"></script>
 
 {{/* scripts lazy */}}
-<script defer async crossorigin="anonymous" integrity="{{ $scriptsLazy.Data.Integrity }}"
-  src="{{ $scriptsLazy.RelPermalink }}"></script>
+<script defer async crossorigin="anonymous" integrity="{{ $scriptsLazy.Data.Integrity }}" src="{{ $scriptsLazy.RelPermalink }}"></script>
 
 <!-- progressive web app -->
 {{ partialCached "pwa.html" . }}
