@@ -52,6 +52,10 @@
     mailtoLinks.forEach((link) => {
       link.innerHTML = '<i class="fa fa-envelope"></i>&nbsp;' + link.innerHTML;
     });
+    // query the ul under navigation
+    const ulUnderNav = document.querySelector("#mymenu");
+    // remove hidden class from ul under navigation
+    ulUnderNav.classList.remove("hidden");
     new Mmenu(
       "#mymenu",
       {
@@ -67,6 +71,7 @@
           selected: "active",
         },
         offCanvas: {
+          clone: false,
           page: {
             selector: "#page",
           },
