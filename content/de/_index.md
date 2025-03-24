@@ -6,6 +6,6 @@ banner:
 slider:
   images:
     - /images/stuhl-im-haus.jpeg
-    - /monte-web/images/werkstatt.jpg
-    - /monte-web/images/zaun2.jpg
+    - /images/werkstatt.jpg
+    - /images/zaun2.jpg
 ---
