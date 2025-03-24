@@ -1,44 +1,48 @@
 <!doctype html>
-<html itemscope class="{{- if not site.Params.theme_switcher -}}
+<html
+  itemscope
+  class="{{- if not site.Params.theme_switcher -}}
     {{- site.Params.theme_default -}}
-  {{- end -}}" lang="{{ site.LanguageCode | default `de-DE` }}" itemtype="http://schema.org/WebPage">
-
-<head>
-  <!-- head (don't cache it) -->
-  {{ partial "essentials/head.html" . }}
-
-
-  <!-- style (always cache it) -->
-  {{ partialCached "essentials/style.html" . }}
-
-</head>
-
-<body class="bg-body container mx-auto">
-  <div id="page">
-    <!-- cache partial only in production -->
-    {{ if hugo.IsProduction }}
-    {{ partialCached "preloader.html" . }}
-    {{ else }}
-    {{ partial "preloader.html" . }}
-    <!-- tailwind size indicator -->
-    {{ partial "components/tw-size-indicator.html" . }}
-    {{ end }}
-
-    <!-- header (don't cache it) -->
-    {{ partial "essentials/header.html" . }}
+  {{- end -}}
+  "
+  lang="{{ site.LanguageCode | default `de-DE` }}"
+  itemtype="http://schema.org/WebPage">
+  <head>
+    <!-- head (don't cache it) -->
+    {{ partial "essentials/head.html" . }}
 
 
-    <main class="m-3">
-      {{ block "main" . }}{{ end }}
-    </main>
+    <!-- style (always cache it) -->
+    {{ partialCached "essentials/style.html" . }}
 
-    <!-- footer -->
-    {{ partial "essentials/footer.html" . }}
+  </head>
+
+  <body class="bg-body container mx-auto">
+    <div id="page">
+      <!-- cache partial only in production -->
+      {{ if hugo.IsProduction }}
+        {{ partialCached "preloader.html" . }}
+      {{ else }}
+        {{ partial "preloader.html" . }}
+        <!-- tailwind size indicator -->
+        {{ partial "components/tw-size-indicator.html" . }}
+      {{ end }}
 
 
-    <!-- script (always cache it) -->
-    {{ partialCached "essentials/script.html" . }}
-  </div>
-</body>
+      <!-- header (don't cache it) -->
+      {{ partial "essentials/header.html" . }}
 
+
+      <main class="m-3">
+        {{ block "main" . }}{{ end }}
+      </main>
+
+      <!-- footer -->
+      {{ partial "essentials/footer.html" . }}
+
+
+      <!-- script (always cache it) -->
+      {{ partialCached "essentials/script.html" . }}
+    </div>
+  </body>
 </html>

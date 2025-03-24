@@ -1,8 +1,8 @@
 {{- $page := .page }}
 {{- $menuID := .menuID }}
 {{- with index site.Menus $menuID }}
-  <nav id="mymenu">
-    <ul>
+  <nav id="mymenu" class="hidden">
+    <ul class="NoListView">
       {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
     </ul>
   </nav>
@@ -26,7 +26,7 @@
     <li {{- range $k, $v :=$attrs }}{{- with $v }}{{- printf " %s=%q" $k $v | safeHTMLAttr }}{{- end }}{{- end -}}>
       <a {{- range $k, $v :=$attrs }}{{- with $v }}{{- printf " %s=%q" $k $v | safeHTMLAttr }}{{- end }}{{- end -}}>{{ $name }}</a>
       {{- with .Children }}
-        <ul>
+        <ul class="NoListView">
           {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
         </ul>
       {{- end }}

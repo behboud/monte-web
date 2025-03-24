@@ -44,48 +44,42 @@
     }
   });
   */
-  document.addEventListener('DOMContentLoaded', function() {
-    const mailtoLinks = document.querySelectorAll('a[href^="mailto:"]');
-    mailtoLinks.forEach(link => {
-      link.innerHTML = '<i class="fa fa-envelope"></i>&nbsp;' + link.innerHTML;
-    });
-  });
 
   // Mmenu plugin
   // ----------------------------------------
-  document.addEventListener(
-    "DOMContentLoaded", () => {
-      new Mmenu("#mymenu", {
+  document.addEventListener("DOMContentLoaded", () => {
+    const mailtoLinks = document.querySelectorAll('a[href^="mailto:"]');
+    mailtoLinks.forEach((link) => {
+      link.innerHTML = '<i class="fa fa-envelope"></i>&nbsp;' + link.innerHTML;
+    });
+    new Mmenu(
+      "#mymenu",
+      {
         navbar: {
-          title: "Montessorischule Gilching"
+          title: "Montessorischule Gilching",
         },
         offCanvas: {
-          position: "left-front"
-        }
-      }, {
-        classNames: {
-          selected: "active"
+          position: "left-front",
+        },
       },
+      {
+        classNames: {
+          selected: "active",
+        },
         offCanvas: {
           page: {
-            selector: "#page"
-          }
-        }
-      });
-    }
-  );
+            selector: "#page",
+          },
+        },
+      },
+    );
+  });
 
   const htmlElement = document.documentElement;
 
-  const __FRANKEN__ = JSON.parse(
-    localStorage.getItem("__FRANKEN__") || "{}"
-  );
+  const __FRANKEN__ = JSON.parse(localStorage.getItem("__FRANKEN__") || "{}");
 
-  if (
-    __FRANKEN__.mode === "dark" ||
-    (!__FRANKEN__.mode &&
-      window.matchMedia("(prefers-color-scheme: light)").matches)
-  ) {
+  if (__FRANKEN__.mode === "dark" || (!__FRANKEN__.mode && window.matchMedia("(prefers-color-scheme: light)").matches)) {
     htmlElement.classList.add("dark");
   } else {
     htmlElement.classList.remove("dark");
