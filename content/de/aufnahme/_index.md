@@ -1,4 +1,4 @@
 ---
-title: "Verein"
+title: "Aufnahme"
 draft: false
 ---

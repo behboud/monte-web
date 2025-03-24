@@ -36,8 +36,8 @@ collections:
         options: ["Mitglieder", "Termin", "Projekt", "Verein"]
       - { label: "Inhalt", name: "body", widget: "markdown" }
       - { label: "Datum", name: "date", widget: "hidden", default: "{{now}}" }
-  - name: "pages"
-    label: "Einzelseiten"
+  - name: "start"
+    label: "Startseite"
     editor:
       preview: false
     files:
@@ -63,21 +63,57 @@ collections:
                 allow_add: true
                 default: []
           - { label: "Inhalt", name: "body", widget: "markdown", required: false }
-      - label: "Kontakt"
-        name: "kontakt"
-        file: "content/de/pages/kontakt.md"
-        fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
-      - label: "Impressum"
-        name: "impressum"
-        file: "content/de/pages/impressum.md"
-        fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
-      - label: "Datenschutz"
-        name: "datenschutz"
-        file: "content/de/pages/datenschutz.md"
-        fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "pages"
+    label: "Einzelseiten"
+    create: true
+    folder: "content/de/pages"
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "aufnahme"
+    label: "Aufnahme"
+    folder: "content/de/aufnahme"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "schule"
+    label: "Schule"
+    folder: "content/de/schule"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "elternengagement"
+    label: "Elternengagement"
+    folder: "content/de/elternengagement"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "konzept"
+    label: "Konzept"
+    folder: "content/de/konzept"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "konzept"
+    label: "Konzept"
+    folder: "content/de/konzept"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
