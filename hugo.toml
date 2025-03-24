@@ -171,7 +171,3 @@ lazy = true
 [[params.plugins.js]]
 link = "plugins/youtube-lite.js"
 lazy = true
-[[params.plugins.js]]
-link = "https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/9.3.0/mmenu.min.js"
-lazy = false
-type = "application/javascript"

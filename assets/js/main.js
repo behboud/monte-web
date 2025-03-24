@@ -63,6 +63,9 @@
           position: "left-front"
         }
       }, {
+        classNames: {
+          selected: "active"
+      },
         offCanvas: {
           page: {
             selector: "#page"

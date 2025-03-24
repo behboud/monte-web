@@ -108,12 +108,3 @@ collections:
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "konzept"
-    label: "Konzept"
-    folder: "content/de/konzept"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
