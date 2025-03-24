@@ -1,0 +1,4 @@
+---
+title: "Elternbeirat"
+draft: false
+---

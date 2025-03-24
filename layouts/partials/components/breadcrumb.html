@@ -1,28 +1,23 @@
 {{ $context := .Context }}
-{{ $class := .Class }}
 {{ $base := site.Home.Permalink }}
 
 
-<ul class="{{ $class }} inline-flex space-x-1 font-bold text-lg text-monte uppercase">
+<ul class="uk-breadcrumb uppercase mt-2 font-bold text-lg text-monte">
   <li>
     <a href="{{ $base }}">
-      {{ T "home" | default "Home" }}
+      {{ T "home" | default "Startseite" }}
     </a>
-    <span class="inlin-block mr-1">></span>
   </li>
   {{ range $i, $e:= $context.Ancestors.Reverse }}
-  {{ if and (not .IsHome) (ne .Title "Pages") }}
-  <li>
-    <a href="{{ .RelPermalink }}">
-      {{ T (printf "%s" (lower .Title)) | default .Title }}
-    </a>
-    <span class="inlin-block mr-1">></span>
-  </li>
-  {{ end }}
+    {{ if and (not .IsHome) (ne .Title "Pages") }}
+      <li class="{{ if (not .IsPage) }}uk-disabled{{ end }}">
+        <a href="{{ .RelPermalink }}">{{ T (printf "%s" (lower .Title)) | default .Title }}</a>
+      </li>
+    {{ end }}
   {{ end }}
   <li>
-    <h6 class="text-dark ">
+    <span class="text-dark ">
       {{ T (printf "%s" (lower $context.Title)) | default $context.Title }}
-    </h6>
+    </span>
   </li>
 </ul>

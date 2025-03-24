@@ -13,7 +13,7 @@ weight = 2
 
 [[top]]
 name = "SPENDEN"
-pageRef = "/spenden"
+pageRef = "/spenden/spenden"
 weight = 3
 
 [[top]]
@@ -31,53 +31,170 @@ pageRef = "/"
 weight = 1
 
 [[main]]
-name = "News"
-pageRef = "/news"
+name = "Unsere Schule"
 weight = 2
 
 [[main]]
-name = "Kontakt"
-pageRef = "/contact"
+name = "Konzept"
+weight = 1
+parent = "Unsere Schule"
+
+[[main]]
+name = "Qualitäten"
+weight = 1
+parent = "Konzept"
+pageRef = "/schule/konzept/qualitaeten"
+
+[[main]]
+name = "Maria Montessori"
+weight = 2
+parent = "Konzept"
+
+[[main]]
+name = "Zur Person"
+weight = 1
+parent = "Maria Montessori"
+pageRef = "/schule/konzept/maria-montessori/zur-person"
+
+[[main]]
+name = "Grundzüge der Pädagogik"
+weight = 2
+parent = "Maria Montessori"
+pageRef = "/schule/konzept/maria-montessori/grundzuege-der-paedagogik"
+
+
+[[main]]
+name = "Schulhaus"
+weight = 2
+parent = "Unsere Schule"
+
+[[main]]
+name = "Haus"
+weight = 1
+parent = "Schulhaus"
+pageRef = "/schule/schulhaus/haus"
+
+[[main]]
+name = "Küche"
+weight = 2
+parent = "Schulhaus"
+pageRef = "/schule/schulhaus/kueche"
+
+[[main]]
+name = "Schulgeld"
+weight = 3
+parent = "Schulhaus"
+pageRef = "/schule/schulhaus/schulgeld"
+
+[[main]]
+name = "Schulordnung"
+weight = 4
+parent = "Schulhaus"
+pageRef = "/schule/schulhaus/schulordnung"
+
+[[main]]
+name = "Verwaltung"
+weight = 3
+parent = "Unsere Schule"
+pageRef = "/schule/verwaltung"
+
+[[main]]
+name = "Pädagogisches Team"
+weight = 4
+parent = "Unsere Schule"
+pageRef = "/schule/paedagogisches-team"
+
+[[main]]
+name = "Schüler*innen"
+weight = 5
+parent = "Unsere Schule"
+pageRef = "/schule/schuelerinnen"
+
+[[main]]
+name = "Elternengagement"
+weight = 6
+parent = "Unsere Schule"
+
+[[main]]
+name = "Elternbeirat"
+weight = 1
+parent = "Elternengagement"
+pageRef = "/schule/elternengagement/elternbeirat"
+
+[[main]]
+name = "AGs und Dienste"
+weight = 2
+parent = "Elternengagement"
+pageRef = "/schule/elternengagement/ags-und-dienste"
+
+[[main]]
+name = "Aufnahme"
 weight = 3
 
 [[main]]
-weight = 4
-name = "Spenden"
-pageRef = "/spenden"
+name = "Anmeldeunterlagen"
+weight = 1
+parent = "Aufnahme"
+pageRef = "/aufnahme/anmeldeunterlagen"
 
 [[main]]
-weight = 5
-parent = "Spenden"
+name = "Schulgeld"
+weight = 2
+parent = "Aufnahme"
+pageRef = "/aufnahme/schulgeld"
+
+[[main]]
+weight = 4
+name = "Spenden und Förderer"
+
+[[main]]
+weight = 1
+parent = "Spenden und Förderer"
 name = "Förderer"
 pageRef = "/spenden/foerderer"
 
+[[main]]
+weight = 2
+parent = "Spenden und Förderer"
+name = "Spenden"
+pageRef = "/spenden/spenden"
+
+[[main]]
+weight = 5
+name = "Verein"
+
+[[main]]
+weight = 1
+parent = "Verein"
+name = "Vorstand"
+pageRef = "/verein/vorstand"
+
+[[main]]
+weight = 2
+parent = "Verein"
+name = "Satzung"
+pageRef = "/verein/satzung"
 
 [[main]]
 weight = 6
-name = "Schule"
-pageRef = "/schule"
+name = "Karriere"
+pageRef = "/pages/karriere"
 
 [[main]]
 weight = 7
-parent = "Schule"
-name = "Elternengagement"
-pageRef = "/schule/eltern"
+name = "Presse"
+pageRef = "/pages/presse"
 
-[[main]]
-weight = 8
-parent = "Elternengagement"
-name = "Arbeitsgruppen & Elterndienste"
-pageRef = "/schule/eltern/arbeitsgruppen_und_elterndienste"
 
 # footer menu
 [[footer]]
 name = "Impressum"
-pageRef = "/impressum"
+pageRef = "/pages/impressum"
 weight = 1
 
 [[footer]]
 name = "Datenschutzerklärung"
-pageRef = "/datenschutzerklaerung"
+pageRef = "/pages/datenschutz"
 weight = 2
 
 [[footer]]

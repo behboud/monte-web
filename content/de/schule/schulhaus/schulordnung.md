@@ -1,0 +1,4 @@
+---
+title: "Schulordnung"
+draft: false
+---

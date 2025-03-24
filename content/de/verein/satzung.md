@@ -1,0 +1,4 @@
+---
+title: "Satzung"
+draft: false
+---
