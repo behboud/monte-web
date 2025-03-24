@@ -62,3 +62,8 @@
 .share-icon svg {
   @apply fill-monte;
 }
+
+.uk-breadcrumb > :nth-child(n + 2):not(.uk-first-column)::before {
+  content: ">";
+  color: @apply text-monte;
+}
