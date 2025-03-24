@@ -1,13 +1,11 @@
 ---
-# Banner
 banner:
-  title: "Willkommen"
+  title: Willkommen
   content: ""
-  image: "/images/stuhl-im-haus.jpeg"
-# Slider Gallery
+  image: /images/stuhl-im-haus.jpeg
 slider:
-  images: 
-    - "/images/arbeitsgruppen-gallery/bauwagen.jpg"
-    - "/images/arbeitsgruppen-gallery/federmappe.jpg"
-    - "/images/arbeitsgruppen-gallery/fussballer.jpg"
+  images:
+    - /images/stuhl-im-haus.jpeg
+    - /images/werkstatt.jpg
+    - /images/zaun2.jpg
 ---
