@@ -11,7 +11,7 @@ backend:
     openAuthoring: "{{message}} {{author-name}}"
 site_url: "https://behboud.github.io/monte-web"
 media_folder: /assets/images
-public_folder: /monte-web/images
+public_folder: /images
 display_url: "https://behboud.github.io/monte-web"
 logo_url: /monte-web/images/logo-montessorischulegilching.gif
 locale: "de"
@@ -38,6 +38,8 @@ collections:
       - { label: "Datum", name: "date", widget: "hidden", default: "{{now}}" }
   - name: "pages"
     label: "Einzelseiten"
+    editor:
+      preview: false
     files:
       - label: "Startseite"
         name: "index"
