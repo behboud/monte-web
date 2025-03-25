@@ -40,7 +40,7 @@
                 {{- end -}}"></a>
             {{ end }}
             <a
-              class="uk-btn uk-btn-text font-bold"
+              class="uk-btn uk-btn-text font-bold {{ if .Params.icon }}hidden sm:inline-block{{ end }}"
               {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
               href="{{- if findRE `^#` .URL -}}
                 {{- if not $.IsHome -}}
