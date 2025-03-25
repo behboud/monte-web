@@ -1,7 +1,7 @@
 <footer class="bg-light pl-3 pr-3 ">
   <div class="container">
     <div class="items-center py-8">
-      <div class="mb-8 text-center lg:mb-0 lg:text-left">
+      <div class="mb-8 text-center lg:mb-0">
         <!-- navbar brand/logo -->
         <a class="inline-block" href="{{ site.Home.RelPermalink }}">
           {{ partial "logo" }}
@@ -10,26 +10,30 @@
       <div class="mb-8 text-center lg:mb-0">
         <ul>
           {{ range site.Menus.footer }}
-          <li class="m-3 inline-block">
-            <a {{ if findRE `^http` .URL }} target="_self" rel="noopener" {{ end }} href="{{ if findRE `^#` .URL }}
+            <li class="m-3 inline-block">
+              <a
+                {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
+                href="{{ if findRE `^#` .URL }}
                   {{ if not $.IsHome }}
                     {{ site.Home.RelPermalink }}
                   {{ end }}{{ .URL }}
                 {{ else }}
                   {{ .URL | relLangURL }}
-                {{ end }}">{{ .Name }}</a>
-          </li>
+                {{ end }}">
+                {{ .Name }}
+              </a>
+            </li>
           {{ end }}
         </ul>
       </div>
       <div class="mb-8 text-center lg:mb-0 lg:mt-0 lg:text-right">
         <ul class="flex justify-center text-monte text-xl mt-2">
           {{ range site.Data.social.main }}
-          <li>
-            <a target="_blank" aria-label="{{ .name }}" rel="nofollow noopener" href="{{ .link | safeURL }}">
-              <i class="{{ .icon }} mx-6"></i>
-            </a>
-          </li>
+            <li>
+              <a target="_blank" aria-label="{{ .name }}" rel="nofollow noopener" href="{{ .link | safeURL }}">
+                <i class="{{ .icon }} mx-6"></i>
+              </a>
+            </li>
           {{ end }}
         </ul>
       </div>
