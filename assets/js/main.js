@@ -84,11 +84,7 @@
 
   const __FRANKEN__ = JSON.parse(localStorage.getItem("__FRANKEN__") || "{}");
 
-  if (__FRANKEN__.mode === "dark" || (!__FRANKEN__.mode && window.matchMedia("(prefers-color-scheme: light)").matches)) {
-    htmlElement.classList.add("dark");
-  } else {
-    htmlElement.classList.remove("dark");
-  }
+  htmlElement.classList.remove("dark");
 
   htmlElement.classList.add(__FRANKEN__.theme || "uk-theme-zinc");
   htmlElement.classList.add(__FRANKEN__.radii || "uk-radii-md");
