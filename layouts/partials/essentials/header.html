@@ -21,27 +21,37 @@
       <div class="flex flex-row">
         {{ $currentPage := . }}
         {{ range site.Menus.top }}
-        {{ $menuURL := .URL | absLangURL }}
-        {{ $pageURL:= $currentPage.Permalink | absLangURL }}
-        {{ $active := eq $menuURL $pageURL }}
-        <li class="m-3 hidden sm:block pt-1">
-          {{ if .Params.icon }} <a class="{{ .Params.icon }} hover:text-primary" {{ if findRE `^http` .URL }}
-            target="_self" rel="noopener" {{ end }} href="{{- if findRE `^#` .URL -}}
+          {{ $menuURL := .URL | absLangURL }}
+          {{ $pageURL:= $currentPage.Permalink | absLangURL }}
+          {{ $active := eq $menuURL $pageURL }}
+          <li class="m-3 pt-1">
+            {{ if .Params.icon }}
+              <a
+                class="{{ .Params.icon }} hover:text-primary"
+                {{ if findRE `^http` .URL }}
+                  target="_self" rel="noopener"
+                {{ end }}
+                href="{{- if findRE `^#` .URL -}}
+                  {{- if not $.IsHome -}}
+                    {{- site.Home.RelPermalink -}}
+                  {{- end }}{{- .URL -}}
+                {{- else -}}
+                  {{- .URL | relLangURL -}}
+                {{- end -}}"></a>
+            {{ end }}
+            <a
+              class="uk-btn uk-btn-text font-bold"
+              {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
+              href="{{- if findRE `^#` .URL -}}
                 {{- if not $.IsHome -}}
                   {{- site.Home.RelPermalink -}}
                 {{- end }}{{- .URL -}}
               {{- else -}}
                 {{- .URL | relLangURL -}}
-              {{- end -}}"></a> {{ end}}
-          <a class="uk-btn uk-btn-text font-bold" {{ if findRE `^http` .URL }} target="_self" rel="noopener" {{ end }}
-            href="{{- if findRE `^#` .URL -}}
-                    {{- if not $.IsHome -}}
-                      {{- site.Home.RelPermalink -}}
-                    {{- end }}{{- .URL -}}
-                  {{- else -}}
-                    {{- .URL | relLangURL -}}
-                  {{- end -}}">{{ .Name }}</a>
-        </li>
+              {{- end -}}">
+              {{ .Name }}
+            </a>
+          </li>
         {{ end }}
       </div>
     </ul>
