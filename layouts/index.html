@@ -30,6 +30,7 @@
     {{ end }}
   </div>
   <!-- /Aktuelles -->
+  {{ .Content | markdownify}}
 </div>
 <!-- Slider -->
 {{ with .Params.slider }}
