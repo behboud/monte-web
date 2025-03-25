@@ -7,18 +7,20 @@
     </h3>
     <ul class="mb-4">
       <li class="mr-4 inline-block">
-        <i class="fa-regular fa-calendar mr-2"></i>{{ .Params.date | dateFormat "Monday, 2 January 2006" }}
+        <i class="fa-regular fa-calendar"></i>
+        {{ .Params.date | dateFormat "Monday, 2 January 2006" }}
       </li>
       {{ $tags:= .Params.tags }}
       {{ if $tags }}
-      <li class="mr-4 inline-block">
-        {{ range $i,$p:= $tags }}
-        <a class="uk-btn uk-btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
-          <i class="fa fa-tag mr-1"></i>{{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
+        <li class="mr-4 inline-block">
+          {{ range $i,$p:= $tags }}
+            <a class="uk-btn uk-btn-text mr-1" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
+              <i class="fa fa-tag mr-1"></i>
+              {{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
+              {{ end }}
+            </a>
           {{ end }}
-        </a>
-        {{ end }}
-      </li>
+        </li>
       {{ end }}
     </ul>
     <p class="mb-6">{{ .Summary | plainify }}</p>
