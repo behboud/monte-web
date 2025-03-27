@@ -9,13 +9,34 @@ backend:
     uploadMedia: Upload {{path}} {{author-name}}
     deleteMedia: Delete {{path}} {{author-name}}
     openAuthoring: "{{message}} {{author-name}}"
-site_url: "https://behboud.github.io/monte-web"
+site_url: "https://behboud.github.io/monte-web/"
 media_folder: /assets/images
 public_folder: /images
-display_url: "https://behboud.github.io/monte-web"
+display_url: "https://behboud.github.io/monte-web/"
 logo_url: /monte-web/images/logo-montessorischulegilching.gif
 locale: "de"
 collections:
+  - name: "site_settings"
+    label: "Site Settings"
+    files:
+      - file: "data/social.json"
+        label: Social Media
+        name: social_media
+        fields:
+          - label: List of Social Media links
+            name: main
+            widget: list
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Icon (Font Awesome), name: icon, widget: string }
+              - { label: Link, name: link, widget: string }
+      - file: "hugo.toml"
+        label: Site Config
+        name: config
+        editor:
+          preview: false
+        fields:
+          - { label: Site Title for Browser Tab, name: title, widget: string }
   - name: "aktuelles"
     label: "Aktuelles"
     folder: "content/de/aktuelles"
@@ -92,7 +113,7 @@ collections:
       - { label: "Inhalt", name: "body", widget: "markdown" }
   - name: "elternengagement"
     label: "Elternengagement"
-    folder: "content/de/elternengagement"
+    folder: "content/de/schule/elternengagement"
     create: false
     editor:
       preview: false
@@ -101,7 +122,43 @@ collections:
       - { label: "Inhalt", name: "body", widget: "markdown" }
   - name: "konzept"
     label: "Konzept"
-    folder: "content/de/konzept"
+    folder: "content/de/schule/konzept"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "mariamontessori"
+    label: "Maria Montessori"
+    folder: "content/de/schule/konzept/maria-montessori"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "schulhaus"
+    label: "Schulhaus"
+    folder: "content/de/schule/schulhaus"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "spenden"
+    label: "Spenden"
+    folder: "content/de/spenden"
+    create: false
+    editor:
+      preview: false
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "verein"
+    label: "Verein"
+    folder: "content/de/verein"
     create: false
     editor:
       preview: false
