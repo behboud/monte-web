@@ -4,16 +4,6 @@
       "name": "facebook",
       "icon": "fab fa-facebook",
       "link": "https://www.facebook.com/"
-    },
-    {
-      "name": "youtube",
-      "icon": "fab fa-youtube",
-      "link": "https://youtube.com/"
-    },
-    {
-      "name": "linkedin",
-      "icon": "fab fa-linkedin",
-      "link": "https://www.linkedin.com/"
     }
   ]
 }
