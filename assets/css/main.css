@@ -15,7 +15,7 @@
 @layer base {
   @font-face {
     font-family: Zapfino;
-    font-weight: 400;
+    font-weight: 1 1000;
     font-style: italic;
     font-display: swap;
     src: url("../fonts/ZapfinoExtraLT-One.woff2") format("woff2");
@@ -66,4 +66,9 @@
 .uk-breadcrumb > :nth-child(n + 2):not(.uk-first-column)::before {
   content: ">";
   color: @apply text-monte;
+}
+
+.mm-menu {
+  --mm-color-text: #222477;
+  --mm-color-button: #222477;
 }
