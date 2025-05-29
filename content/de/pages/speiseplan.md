@@ -1,0 +1,4 @@
+---
+title: "Speiseplan"
+draft: false
+---
