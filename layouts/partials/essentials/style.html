@@ -2,30 +2,28 @@
 <meta http-equiv="x-dns-prefetch-control" content="on" />
 <link rel="preconnect" href="https://use.fontawesome.com" crossorigin />
 <link rel="preconnect" href="//cdnjs.cloudflare.com" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="dns-prefetch" href="https://use.fontawesome.com" />
 <link rel="dns-prefetch" href="//ajax.googleapis.com" />
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
 <link rel="dns-prefetch" href="//fonts.googleapis.com" />
 <link rel="dns-prefetch" href="//connect.facebook.net" />
 
-
 <!-- main styles -->
 {{ $styles := slice }}
 {{ $stylesLazy := slice }}
 
 {{ range site.Params.plugins.css }}
-{{ if findRE "^http" .link }}
-<link crossorigin="anonymous" media="all" rel="stylesheet" href="{{ .link | relURL }}" {{ .attributes | safeHTMLAttr
-  }} />
-{{ else }}
-{{ if not .lazy }}
-{{ $styles = $styles | append (resources.Get .link) }}
-{{ else }}
-{{ $stylesLazy = $stylesLazy | append (resources.Get .link) }}
-{{ end }}
-{{ end }}
+  {{ if findRE "^http" .link }}
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="{{ .link | relURL }}" {{ .attributes | safeHTMLAttr }} />
+  {{ else }}
+    {{ if not .lazy }}
+      {{ $styles = $styles | append (resources.Get .link) }}
+    {{ else }}
+      {{ $stylesLazy = $stylesLazy | append (resources.Get .link) }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
 {{ $mainCSS := resources.Get "css/main.css" }}
@@ -37,16 +35,15 @@
 {{ $stylesLazy = $stylesLazy | resources.Concat "css/style-lazy.css" }}
 
 {{ if hugo.IsProduction }}
-{{ $styles = $styles | minify | fingerprint }}
-{{ $stylesLazy = $stylesLazy | minify | fingerprint }}
+  {{ $styles = $styles | minify | fingerprint }}
+  {{ $stylesLazy = $stylesLazy | minify | fingerprint }}
 {{ end }}
 
-<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap"
-  rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet" />
 
 <!-- link main style -->
 <link href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" rel="stylesheet" />
 
 <!-- link lazy style -->
-<link defer async rel="stylesheet" href="{{ $stylesLazy.RelPermalink }}" integrity="{{ $stylesLazy.Data.Integrity }}"
-  media="print" onload="this.media='all'; this.onload=null;" />
+<link defer async rel="stylesheet" href="{{ $stylesLazy.RelPermalink }}" integrity="{{ $stylesLazy.Data.Integrity }}" media="print" onload="this.media='all'; this.onload=null;" />

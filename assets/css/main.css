@@ -13,13 +13,6 @@
 @import "notice.css";
 
 @layer base {
-  @font-face {
-    font-family: Zapfino;
-    font-weight: 1 1000;
-    font-style: italic;
-    font-display: swap;
-    src: url("../fonts/Zapfino.woff") format("woff2");
-  }
   h1,
   h2,
   h3,
