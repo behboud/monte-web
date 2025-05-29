@@ -15,10 +15,10 @@
 @layer base {
   @font-face {
     font-family: Zapfino;
-    font-weight: 200;
+    font-weight: 1 1000;
     font-style: italic;
     font-display: swap;
-    src: url("../fonts/ZapfinoExtraLT-One.woff2") format("woff2");
+    src: url("../fonts/Zapfino.woff") format("woff2");
   }
   h1,
   h2,
