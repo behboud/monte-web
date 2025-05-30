@@ -2,6 +2,7 @@ backend:
   name: github
   repo: behboud/monte-web
   branch: main # Branch to update (optional; defaults to master)
+  base_url: https://sveltia-cms-auth.b-kalantary.workers.dev
   commit_messages:
     create: Create {{collection}} {{slug}} {{author-name}}
     update: Update {{collection}} {{slug}} {{author-name}}

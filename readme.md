@@ -1,5 +1,11 @@
 # Wo man was findet
-# Entwicklung im code
+# Entwicklung
+
+## Installation
+1. hugo installieren: https://gohugo.io/installation/
+
+
+## Lokale Umgebung starten
 Das lokale starten erfolgt mittels:
 `hugo server`
 
