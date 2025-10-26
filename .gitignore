@@ -1,11 +1,13 @@
+# System files
 Thumbs.db
 .DS_Store
-.dist
-.tmp
-.lock
 .sass-cache
 npm-debug.log
 node_modules
+# Hugo build artifacts (legacy)
+.dist
+.tmp
+.lock
 builds
 public
 resources
@@ -14,3 +16,53 @@ jsconfig.json
 hugo_stats.json
 go.sum
 yarn.lock
+
+# WordPress core files
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/readme.html
+/license.txt
+
+# WordPress configuration (exclude local, keep production example)
+wp-config.php
+.htaccess
+
+# WordPress uploads and cache
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup*/
+wp-content/upgrade/
+wp-content/wp-cache-config.php
+
+# WordPress plugins (all third-party)
+wp-content/plugins/
+wp-content/mu-plugins/
+
+# WordPress default themes (keep only custom monte-theme)
+wp-content/themes/twenty*/
+
+# WordPress languages (generated)
+wp-content/languages/
+
+# WordPress database and debug files
+wp-content/db.php
+wp-content/debug.log
+wp-content/object-cache.php
+
+# WordPress index.php files (security)
+wp-content/index.php
+
+# Node modules in theme
+wp-content/themes/monte-theme/node_modules/
+wp-content/themes/monte-theme/package-lock.json
+
+# Compiled/generated theme assets
+wp-content/themes/monte-theme/dist/
+wp-content/themes/monte-theme/assets/css/main.css
+
+# Environment files (keep .env.production.example)
+.env
+.env.local
+.env.developmentnode_modules/
