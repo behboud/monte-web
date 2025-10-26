@@ -1,0 +1,48 @@
+# WordPress Environment
+wp-content/uploads/
+wp-content/plugins/
+wp-content/themes/
+!wp-content/themes/index.php
+!wp-content/plugins/index.php
+
+# Database
+*.sql
+mysql-init/
+
+# Environment files
+.env.local
+.env.production
+
+# Logs
+*.log
+content-migration/logs/
+
+# Cache
+wp-content/cache/
+wp-content/advanced-cache.php
+
+# Backups
+*.tar.gz
+*.zip
+backups/
+
+# Node modules (if any)
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+docker-compose.override.yml.local
