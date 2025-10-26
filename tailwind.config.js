@@ -13,7 +13,7 @@ import franken from "franken-ui/shadcn-ui/preset-quick";
 export default {
   presets: [franken],
   files: ["hugo_stats.json"],
-  content: ["content/**/*.md", "layouts/**/*.html"],
+  content: ["content/**/*.md", "layouts/**/*.html", "wp-content/themes/monte-theme/**/*.php"],
   theme: {
     extend: {
       colors: {

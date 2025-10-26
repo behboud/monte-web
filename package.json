@@ -17,5 +17,9 @@
   "dependencies": {
     "franken-ui": "2.0.0",
     "mmenu-js": "^9.3.0"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/main.css -o ./wp-content/themes/monte-theme/dist/css/main.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/main.css -o ./wp-content/themes/monte-theme/dist/css/main.css --watch"
   }
 }

@@ -65,3 +65,36 @@
   --mm-color-text: #222477;
   --mm-color-button: #222477;
 }
+
+/* Top Menu Styling */
+@layer components {
+  .top-menu > li {
+    @apply m-3 pt-1;
+  }
+  
+  .top-menu > li > a {
+    @apply uk-btn uk-btn-text font-bold hover:text-primary;
+  }
+  
+  .top-menu .fa {
+    @apply inline-block sm:inline-block;
+  }
+  
+  .top-menu .menu-item-description {
+    @apply hidden sm:inline-block;
+  }
+}
+
+/* Mobile Menu Styling */
+.NoListView {
+  @apply list-none p-0 m-0;
+}
+
+/* Footer Menu Styling */
+footer ul li {
+  @apply m-3 inline-block;
+}
+
+footer ul li a {
+  @apply hover:text-monte transition-colors;
+}
