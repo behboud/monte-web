@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
 require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/acf-fields.php';
 require_once get_template_directory() . '/inc/class-menu-walker.php';
+require_once get_template_directory() . '/inc/seo-migration.php';
 
 function monte_theme_setup() {
     load_theme_textdomain('monte-theme', get_template_directory() . '/languages');
