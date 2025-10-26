@@ -7,6 +7,7 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<div id="page">
 
 <div class="pl-3 pr-3">
     <header>
