@@ -148,6 +148,15 @@ migrate_file() {
         return
     fi
     
+    # Check if post already exists (by slug)
+    local existing_id=$($WP_CLI post list --post_type=$post_type --name="$filename" --field=ID --format=csv 2>/dev/null | head -n1)
+    
+    if [ -n "$existing_id" ]; then
+        warning "Post already exists: $title (ID: $existing_id, slug: $filename)"
+        echo ""
+        return
+    fi
+    
     # Determine status
     local status="publish"
     if [ "$draft" = "true" ]; then
@@ -214,7 +223,7 @@ migrate_file() {
     echo ""
 }
 
-# Migrate a section
+# Migrate a section (recursively processes subdirectories)
 migrate_section() {
     local section="$1"
     local post_type="$2"
@@ -229,12 +238,12 @@ migrate_section() {
         return
     fi
     
-    # Find all markdown files except _index.md
-    for file in "$section_dir"/*.md; do
+    # Find all markdown files recursively, excluding _index.md
+    while IFS= read -r -d '' file; do
         if [ "$(basename "$file")" != "_index.md" ]; then
             migrate_file "$file" "$post_type"
         fi
-    done
+    done < <(find "$section_dir" -type f -name "*.md" -print0)
 }
 
 # Main migration
@@ -246,8 +255,8 @@ migrate_section "aktuelles" "news"
 migrate_section "aufnahme" "admission"
 migrate_section "spenden" "donation"
 migrate_section "verein" "association"
-migrate_section "schule" "pages"
-migrate_section "pages" "pages"
+migrate_section "schule" "page"      # Changed to 'page' (WordPress default)
+migrate_section "pages" "page"       # Changed to 'page' (WordPress default)
 
 # Print statistics
 echo ""
