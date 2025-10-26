@@ -40,25 +40,21 @@ function monte_enqueue_assets() {
     // Enqueue Font Awesome
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
     
-    // Enqueue mmenu-js CSS
-    wp_enqueue_style('mmenu-js', 'https://cdn.jsdelivr.net/npm/mmenu-js@9.3.0/dist/mmenu.css', array(), '9.3.0');
-    
-    // Enqueue Swiper CSS
-    wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), '11.0.0');
-    
     wp_enqueue_style('monte-style', get_stylesheet_uri(), array(), wp_get_theme()->get('Version'));
+    
+    // Main Tailwind CSS
     if (file_exists(get_template_directory() . '/dist/css/main.css')) {
-        wp_enqueue_style('monte-main-style', get_template_directory_uri() . '/dist/css/main.css', array('monte-fonts', 'font-awesome', 'mmenu-js', 'swiper'), filemtime(get_template_directory() . '/dist/css/main.css'));
+        wp_enqueue_style('monte-main-style', get_template_directory_uri() . '/dist/css/main.css', array('monte-fonts', 'font-awesome'), filemtime(get_template_directory() . '/dist/css/main.css'));
     }
     
-    // Enqueue mmenu-js JavaScript
-    wp_enqueue_script('mmenu-js', 'https://cdn.jsdelivr.net/npm/mmenu-js@9.3.0/dist/mmenu.js', array(), '9.3.0', true);
+    // Webpack bundled CSS (includes Mmenu.js and Swiper styles)
+    if (file_exists(get_template_directory() . '/dist/css/main-bundle.css')) {
+        wp_enqueue_style('monte-bundle-style', get_template_directory_uri() . '/dist/css/main-bundle.css', array('monte-main-style'), filemtime(get_template_directory() . '/dist/css/main-bundle.css'));
+    }
     
-    // Enqueue Swiper JavaScript
-    wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11.0.0', true);
-    
+    // Main bundled JavaScript (includes Mmenu.js and Swiper)
     if (file_exists(get_template_directory() . '/dist/js/main.js')) {
-        wp_enqueue_script('monte-main-script', get_template_directory_uri() . '/dist/js/main.js', array('jquery', 'mmenu-js', 'swiper'), filemtime(get_template_directory() . '/dist/js/main.js'), true);
+        wp_enqueue_script('monte-main-script', get_template_directory_uri() . '/dist/js/main.js', array('jquery'), filemtime(get_template_directory() . '/dist/js/main.js'), true);
         wp_localize_script('monte-main-script', 'monteData', array('ajaxUrl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('monte-nonce'), 'homeUrl' => home_url('/')));
     }
 }
