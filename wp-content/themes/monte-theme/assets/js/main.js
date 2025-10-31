@@ -1,8 +1,10 @@
 /**
  * Monte Theme JavaScript
- * Mmenu.js and Swiper implementation
+ * Franken UI, Mmenu.js and Swiper implementation
  */
 
+import "franken-ui/js/core.iife";
+import "franken-ui/js/icon.iife";
 import Mmenu from "mmenu-js";
 import "mmenu-js/dist/mmenu.css";
 import Swiper from "swiper/bundle";

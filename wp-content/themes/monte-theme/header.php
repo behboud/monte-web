@@ -11,12 +11,20 @@
 
 <div class="pl-3 pr-3">
     <header>
-        <div class="container pr-0">
+        <div class="container pr-0" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/header-zaun.jpg);background-size: cover;background-position: center center;background-repeat: no-repeat;">
             <!-- logo -->
             <div class="justify-self-end">
                 <?php if (has_custom_logo()) : ?>
+                    <?php 
+                    // Get custom logo with proper classes applied
+                    $custom_logo_id = get_theme_mod('custom_logo');
+                    $logo = wp_get_attachment_image($custom_logo_id, 'full', false, array(
+                        'class' => 'custom-logo',
+                        'alt' => get_bloginfo('name'),
+                    ));
+                    ?>
                     <a id="logo-link" class="block pt-2 pb-2 pr-2" href="<?php echo esc_url(home_url('/')); ?>">
-                        <?php the_custom_logo(); ?>
+                        <?php echo $logo; ?>
                     </a>
                 <?php else : ?>
                     <a id="logo-link" class="block pt-2 pb-2 pr-2" href="<?php echo esc_url(home_url('/')); ?>">

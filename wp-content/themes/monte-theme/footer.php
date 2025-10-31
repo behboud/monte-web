@@ -6,8 +6,16 @@
             <!-- Logo -->
             <div class="mb-8 text-center lg:mb-0">
                 <?php if (has_custom_logo()) : ?>
+                    <?php 
+                    // Get custom logo with proper classes applied
+                    $custom_logo_id = get_theme_mod('custom_logo');
+                    $logo = wp_get_attachment_image($custom_logo_id, 'full', false, array(
+                        'class' => 'custom-logo',
+                        'alt' => get_bloginfo('name'),
+                    ));
+                    ?>
                     <a class="inline-block" href="<?php echo esc_url(home_url('/')); ?>">
-                        <?php the_custom_logo(); ?>
+                        <?php echo $logo; ?>
                     </a>
                 <?php else : ?>
                     <a class="inline-block" href="<?php echo esc_url(home_url('/')); ?>">

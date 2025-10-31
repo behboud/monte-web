@@ -66,3 +66,4 @@ wp-content/themes/monte-theme/assets/css/main.css
 .env
 .env.local
 .env.developmentnode_modules/
+venv

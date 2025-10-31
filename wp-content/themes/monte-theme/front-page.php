@@ -74,7 +74,7 @@ get_header(); ?>
                 <li>
                     <img src="<?php echo esc_url($image['url']); ?>" 
                          alt="<?php echo esc_attr($image['alt']); ?>"
-                         class="uk-anmt-kenburns uk-anmt-reverse uk-position-cover uk-transform-origin-center-left" 
+                         class="uk-animation-kenburns uk-animation-reverse uk-position-cover uk-transform-origin-center-left" 
                          data-uk-cover />
                 </li>
                 <?php endforeach; ?>

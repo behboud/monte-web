@@ -22,7 +22,7 @@ function monte_theme_setup() {
     add_image_size('monte-featured', 800, 450, true);
     add_image_size('monte-thumbnail', 400, 300, true);
     add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script'));
-    add_theme_support('custom-logo', array('height' => 100, 'width' => 400, 'flex-height' => true, 'flex-width' => true));
+    add_theme_support('custom-logo', array('height' => 118, 'width' => 88, 'flex-height' => true, 'flex-width' => true));
     register_nav_menus(array(
         'top-menu' => __('Top Menu', 'monte-theme'),
         'main-menu' => __('Main Menu', 'monte-theme'),
@@ -122,3 +122,20 @@ function monte_customize_register($wp_customize) {
     ));
 }
 add_action('customize_register', 'monte_customize_register');
+
+// Add container and mx-auto classes to body to match Hugo layout
+function monte_body_classes($classes) {
+    $classes[] = 'bg-body';
+    $classes[] = 'container';
+    $classes[] = 'mx-auto';
+    return $classes;
+}
+add_filter('body_class', 'monte_body_classes');
+
+// Add favicon to head
+function monte_add_favicon() {
+    $favicon_url = get_template_directory_uri() . '/assets/images/favicon-96x96.png';
+    echo '<link rel="icon" type="image/png" sizes="96x96" href="' . esc_url($favicon_url) . '">' . "\n";
+    echo '<link rel="shortcut icon" type="image/png" href="' . esc_url($favicon_url) . '">' . "\n";
+}
+add_action('wp_head', 'monte_add_favicon');

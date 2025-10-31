@@ -1,22 +1,26 @@
-module.exports = {
-  content: [
-    './**/*.php',
-    './assets/js/**/*.js'
-  ],
+import franken from "franken-ui/shadcn-ui/preset-quick";
+import typography from "@tailwindcss/typography";
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  presets: [franken],
+  content: ["./**/*.php", "./assets/js/**/*.js", "./assets/css/**/*.css"],
   theme: {
     extend: {
       colors: {
-        primary: '#121212',
-        monte: '#222477',
-        light: '#fcfaf7',
+        primary: "#121212",
+        body: "#fff",
+        light: "#fcfaf7",
+        monte: "#222477",
+        foreground: "#222477",
+        bgLight: "#fcfaf7",
       },
       fontFamily: {
-        sans: ['Overpass', 'sans-serif'],
-        calligraphy: ['Tangerine', 'cursive'],
+        calligraphy: ["Tangerine", "cursive"],
+        sans: ["Overpass", "sans-serif"],
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography')
-  ],
+  safelist: ["uk-h1", "uk-h2", "uk-h3", "uk-h4", "uk-h5", "uk-paragraph", "uk-codespan", "uk-btn", "uk-btn-text", "ProseMirror", "ProseMirror-focused", "tiptap", "mr-2", "mt-2", "opacity-50"],
+  plugins: [typography],
 };

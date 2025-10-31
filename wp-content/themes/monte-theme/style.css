@@ -6,3 +6,12 @@ Version: 1.0.0
 Author: Monte Team
 Text Domain: monte-theme
 */
+
+/* Logo positioning to match Hugo site */
+.custom-logo-link {
+  display: block !important;
+}
+
+.custom-logo {
+  display: block;
+}
