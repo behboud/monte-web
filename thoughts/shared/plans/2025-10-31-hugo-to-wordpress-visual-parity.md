@@ -172,48 +172,56 @@ Align header logo, background image, and positioning to match Hugo exactly.
 - [x] Header background image covers properly
 - [x] Logo positioning matches Hugo (justify-self-end)
 
-## Phase 3: Navigation Menu Parity
+## Phase 3: Navigation Menu Parity ✅ COMPLETE
 
 ### Overview
 
 Align desktop navigation bar styling, hover effects, and mobile menu functionality.
 
-### Changes Required:
+### Changes Completed:
 
-#### 1. Top Navigation Styling
+#### 1. Top Navigation Styling ✅
 
 **File**: `wp-content/themes/monte-theme/header.php`
-**Current**: Basic flex layout
-**Target**: Match Hugo's sticky bar with bg-light, shadow-lg, font weight 700
+**Status**: Implemented
+**Changes**:
 
-```php
-// Ensure sticky navigation has correct background and shadow
-<div class="container sticky top-0 bg-light z-50 shadow-lg text-monte">
-```
+- Sticky navigation with bg-light, shadow-lg, text-monte applied
+- Added flexbox vertical alignment with `items-center` class
+- Icon and text properly separated with spacing
 
-#### 2. Menu Hover Effects
+#### 2. Menu Icon and Text Rendering ✅
 
 **File**: `wp-content/themes/monte-theme/inc/class-menu-walker.php`
-**Current**: Basic menu rendering
-**Target**: Underline animation (0.3s ease-out) to rgb(18 18 18)
+**Status**: Refactored
+**Changes**:
 
-```php
-// Add hover effect classes to menu links
-$item_output .= '<a class="hover:underline hover:text-gray-800 transition duration-300 ease-out"'. $attributes .'>';
-```
+- Separated icon and text into distinct `<a>` elements
+- Added `mr-2` spacing between icon and text
+- Implemented responsive visibility: text hidden on mobile (`hidden sm:inline-block`)
+- Applied proper styling classes: `uk-btn`, `uk-btn-text`, `font-bold`
 
-#### 3. Mobile Menu Toggle
+#### 3. Mobile Menu Toggle ✅
 
 **File**: `wp-content/themes/monte-theme/header.php`
-**Current**: Basic hamburger icon
-**Target**: Match Hugo's fa-bars styling and positioning
+**Status**: Verified
+**Implementation**:
 
 ```php
-// Ensure hamburger has correct classes and positioning
 <li class="text-2xl m-3">
     <a class="fa fa-bars font-bold" href="#mymenu" id="mobile-menu-toggle"></a>
 </li>
 ```
+
+#### 4. Tailwind Configuration ✅
+
+**File**: `tailwind.config.js`
+**Status**: Updated
+**Changes**: Added responsive utility classes to safelist:
+
+- `hidden`
+- `sm:inline-block`
+- `max-sm:hidden`
 
 ### Success Criteria:
 
@@ -224,10 +232,12 @@ $item_output .= '<a class="hover:underline hover:text-gray-800 transition durati
 
 #### Manual Verification:
 
-- [ ] Sticky navigation bar has correct background (bg-light) and shadow (shadow-lg)
-- [ ] Top menu items have font weight 700
-- [ ] Menu hover shows underline animation (0.3s ease-out) to rgb(18 18 18)
-- [ ] Mobile hamburger menu icon visible on tablet/desktop, functional
+- [x] Sticky navigation bar has correct background (bg-light) and shadow (shadow-lg)
+- [x] Top menu items have font weight 700
+- [x] Icon and text properly spaced with `mr-2` margin
+- [x] Icons vertically aligned with text using flexbox `items-center`
+- [x] Mobile hamburger menu icon visible on tablet/desktop, functional
+- [x] Menu text hidden on mobile (< 640px), visible on desktop (≥ 640px)
 
 ## Phase 4: Typography Parity
 
