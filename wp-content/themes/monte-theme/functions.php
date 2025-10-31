@@ -35,8 +35,8 @@ function monte_theme_setup() {
 add_action('after_setup_theme', 'monte_theme_setup');
 
 function monte_enqueue_assets() {
-    // Enqueue Google Fonts
-    wp_enqueue_style('monte-fonts', 'https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;500;600;700;800&family=Tangerine:wght@400;700&display=swap', array(), null);
+    // Enqueue Google Fonts (using variable weight to match Hugo)
+    wp_enqueue_style('monte-fonts', 'https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Tangerine:wght@400;700&display=swap', array(), null);
     
     // Enqueue Font Awesome
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');

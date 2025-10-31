@@ -40,6 +40,9 @@ export default {
     "mr-2",
     "mt-2",
     "opacity-50",
+    "hidden",
+    "sm:inline-block",
+    "max-sm:hidden",
   ],
   plugins: [],
 };

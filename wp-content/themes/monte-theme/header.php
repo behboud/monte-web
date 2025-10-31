@@ -39,12 +39,12 @@
     <div class="container sticky top-0 bg-light z-50 shadow-lg text-monte">
         <?php if (has_nav_menu('top-menu')) : ?>
             <ul class="flex flex-row justify-between navbar-nav order-3 w-full space-x-2 pb-0 xl:space-x-8">
-                <div class="flex flex-row">
+                <div class="flex flex-row items-center">
                     <li class="text-2xl m-3">
                         <a class="fa fa-bars font-bold" href="#mymenu" id="mobile-menu-toggle"></a>
                     </li>
                 </div>
-                <div class="flex flex-row">
+                <div class="flex flex-row items-center">
                     <?php
                     wp_nav_menu(array(
                         'theme_location' => 'top-menu',

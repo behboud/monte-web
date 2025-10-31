@@ -35,6 +35,12 @@ class Monte_Menu_Walker extends Walker_Nav_Menu {
             $classes[] = 'has-children';
         }
         
+        // Add styling for top menu items at depth 0
+        if ($depth === 0 && isset($args->theme_location) && $args->theme_location === 'top-menu') {
+            $classes[] = 'm-3';
+            $classes[] = 'pt-1';
+        }
+        
         $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args, $depth));
         $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
         
@@ -50,11 +56,13 @@ class Monte_Menu_Walker extends Walker_Nav_Menu {
         $atts['href']   = !empty($item->url) ? $item->url : '';
         
         // Check for icon in description field
-        $icon = '';
+        $has_icon = false;
+        $icon_class = '';
         if (!empty($item->description)) {
             // Check if description contains Font Awesome class
             if (strpos($item->description, 'fa-') !== false) {
-                $icon = '<i class="' . esc_attr($item->description) . '"></i> ';
+                $has_icon = true;
+                $icon_class = $item->description;
             }
         }
         
@@ -69,8 +77,24 @@ class Monte_Menu_Walker extends Walker_Nav_Menu {
         }
         
         $item_output = $args->before;
-        $item_output .= '<a'. $attributes .'>';
-        $item_output .= $icon;
+        
+        // If item has icon, create separate icon link with spacing
+        if ($has_icon && $depth === 0 && isset($args->theme_location) && $args->theme_location === 'top-menu') {
+            $item_output .= '<a class="' . esc_attr($icon_class) . ' hover:text-primary mr-2"' . $attributes . '></a>';
+        }
+        
+        // Add styling classes for top menu items (depth 0) - uk-btn, font-bold (hover from CSS)
+        $link_classes = '';
+        if ($depth === 0 && isset($args->theme_location) && $args->theme_location === 'top-menu') {
+            $link_classes = ' class="uk-btn uk-btn-text font-bold';
+            // Hide text on mobile if icon exists (matches Hugo)
+            if ($has_icon) {
+                $link_classes .= ' hidden sm:inline-block';
+            }
+            $link_classes .= '"';
+        }
+        
+        $item_output .= '<a'. $attributes . $link_classes .'>';
         $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
         $item_output .= '</a>';
         $item_output .= $args->after;

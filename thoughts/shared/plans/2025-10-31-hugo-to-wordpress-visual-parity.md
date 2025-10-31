@@ -219,8 +219,8 @@ $item_output .= '<a class="hover:underline hover:text-gray-800 transition durati
 
 #### Automated Verification:
 
-- [ ] Navigation menu renders: `curl -s http://localhost:8080/ | grep -i "navbar-nav"`
-- [ ] Mobile menu toggle present: `curl -s http://localhost:8080/ | grep -i "mobile-menu-toggle"`
+- [x] Navigation menu renders: `curl -s http://localhost:8080/ | grep -i "navbar-nav"`
+- [x] Mobile menu toggle present: `curl -s http://localhost:8080/ | grep -i "mobile-menu-toggle"`
 
 #### Manual Verification:
 
