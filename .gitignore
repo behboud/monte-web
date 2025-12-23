@@ -60,7 +60,8 @@ wp-content/themes/monte-theme/package-lock.json
 
 # Compiled/generated theme assets
 wp-content/themes/monte-theme/dist/
-wp-content/themes/monte-theme/assets/css/main.css
+# TEMPORARILY COMMENTED TO ALLOW EDITING main.css
+# wp-content/themes/monte-theme/assets/css/main.css
 
 # Environment files (keep .env.production.example)
 .env
