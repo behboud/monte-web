@@ -215,16 +215,7 @@ setup: ## Setup WordPress
 	@$(COMPOSE_CMD) exec -T wordpress wp site switch-language de_DE --allow-root
 	@echo ""
 	@echo "📦 Installing essential plugins..."
-	@$(COMPOSE_CMD) exec -T wordpress wp plugin install \
-		advanced-custom-fields \
-		contact-form-7 \
-		wordpress-seo \
-		custom-post-type-ui \
-		wp-migrate-db \
-		query-monitor \
-		redirection \
-		really-simple-csv-importer \
-		--activate --allow-root
+	@echo "✅ No plugins to install - using only core WordPress features"
 	@echo ""
 	@echo "🌍 Installing German translations..."
 	@$(COMPOSE_CMD) exec -T wordpress wp language plugin install --all de_DE --allow-root

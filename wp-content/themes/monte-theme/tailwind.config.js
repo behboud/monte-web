@@ -18,6 +18,7 @@ export default {
       fontFamily: {
         calligraphy: ["Tangerine", "cursive"],
         sans: ["Overpass", "sans-serif"],
+        zapfino: ["Zapfino", "cursive"],
       },
     },
   },

@@ -1,0 +1,11 @@
+/* Custom Zapfino Font Faces */
+
+@font-face {
+  font-family: "Zapfino";
+  src:
+    url("../fonts/ZapfinoExtraLT-One.woff2") format("woff2"),
+    url("../fonts/Zapfino.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

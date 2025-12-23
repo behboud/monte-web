@@ -9,7 +9,6 @@ if (!defined('ABSPATH')) {
 
 // Theme includes
 require_once get_template_directory() . '/inc/custom-post-types.php';
-require_once get_template_directory() . '/inc/acf-fields.php';
 require_once get_template_directory() . '/inc/class-menu-walker.php';
 require_once get_template_directory() . '/inc/seo-migration.php';
 
@@ -35,6 +34,9 @@ function monte_theme_setup() {
 add_action('after_setup_theme', 'monte_theme_setup');
 
 function monte_enqueue_assets() {
+    // Enqueue custom fonts (Zapfino)
+    wp_enqueue_style('monte-custom-fonts', get_template_directory_uri() . '/assets/css/fonts.css', array(), wp_get_theme()->get('Version'));
+    
     // Enqueue Google Fonts (using variable weight to match Hugo)
     wp_enqueue_style('monte-fonts', 'https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Tangerine:wght@400;700&display=swap', array(), null);
     
@@ -60,6 +62,24 @@ function monte_enqueue_assets() {
     }
 }
 add_action('wp_enqueue_scripts', 'monte_enqueue_assets');
+
+function monte_enqueue_editor_assets() {
+    // Enqueue custom fonts in editor
+    wp_enqueue_style('monte-editor-fonts', get_template_directory_uri() . '/assets/css/fonts.css', array(), wp_get_theme()->get('Version'));
+    
+    // Enqueue Google Fonts in editor
+    wp_enqueue_style('monte-editor-google-fonts', 'https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Tangerine:wght@400;700&display=swap', array(), null);
+    
+    // Enqueue editor-specific styles
+    wp_enqueue_style('monte-editor-styles', get_template_directory_uri() . '/assets/css/editor-styles.css', array('monte-editor-fonts'), wp_get_theme()->get('Version'));
+    
+    // Enqueue editor JavaScript to inject fonts into preview
+    wp_enqueue_script('monte-editor-script', get_template_directory_uri() . '/assets/js/editor.js', array(), wp_get_theme()->get('Version'), false);
+    wp_localize_script('monte-editor-script', 'monteThemeData', array(
+        'themeUrl' => get_template_directory_uri(),
+    ));
+}
+add_action('enqueue_block_editor_assets', 'monte_enqueue_editor_assets');
 
 function monte_widgets_init() {
     register_sidebar(array(
