@@ -21,6 +21,6 @@ export default {
       },
     },
   },
-  safelist: ["uk-h1", "uk-h2", "uk-h3", "uk-h4", "uk-h5", "uk-paragraph", "uk-codespan", "uk-btn", "uk-btn-text", "ProseMirror", "ProseMirror-focused", "tiptap", "mr-2", "mt-2", "opacity-50"],
+  safelist: ["uk-h1", "uk-h2", "uk-h3", "uk-h4", "uk-h5", "uk-paragraph", "uk-codespan", "uk-btn", "uk-btn-text", "ProseMirror", "ProseMirror-focused", "tiptap", "mr-2", "mt-2", "opacity-50", "hidden", "sm:inline-block", "max-sm:hidden"],
   plugins: [typography],
 };
