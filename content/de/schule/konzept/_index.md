@@ -1,4 +1,0 @@
----
-title: "Konzept"
-draft: false
----

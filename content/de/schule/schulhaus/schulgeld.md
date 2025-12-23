@@ -1,4 +1,0 @@
----
-title: "Schulgeld"
-draft: false
----

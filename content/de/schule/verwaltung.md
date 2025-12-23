@@ -1,4 +1,0 @@
----
-title: "Verwaltung"
-draft: false
----
