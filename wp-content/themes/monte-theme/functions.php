@@ -139,3 +139,146 @@ function monte_add_favicon() {
     echo '<link rel="shortcut icon" type="image/png" href="' . esc_url($favicon_url) . '">' . "\n";
 }
 add_action('wp_head', 'monte_add_favicon');
+
+// Automatically create default menus from Hugo configuration
+function monte_create_default_menus() {
+    // Only run once
+    if (get_option('monte_menus_created')) {
+        return;
+    }
+    
+    // Check if menus already exist
+    $menus = wp_get_nav_menus();
+    $menu_names = wp_list_pluck($menus, 'name');
+    
+    // Define menu structure from Hugo's menus.de.toml with full hierarchy
+    $menu_structures = array(
+        'Top Menu' => array(
+            'NEWS' => array('url' => home_url('/aktuelles/'), 'weight' => 1),
+            'KONTAKT' => array('url' => home_url('/pages/kontakt/'), 'weight' => 2),
+            'SPENDEN' => array('url' => home_url('/spenden/spenden/'), 'weight' => 3),
+            'SPEISEPLAN' => array('url' => home_url('/pages/speiseplan/'), 'weight' => 4, 'icon' => 'fa fa-utensils'),
+            'ELTERN-LOGIN' => array('url' => 'https://www.montessorischule-gilching.de/login', 'weight' => 5, 'icon' => 'fa fa-user-lock'),
+        ),
+        'Main Menu' => array(
+            'Startseite' => array('url' => home_url('/'), 'weight' => 1),
+            'Unsere Schule' => array('url' => '#', 'weight' => 2,
+                'children' => array(
+                    'Konzept' => array('url' => '#', 'weight' => 1,
+                        'children' => array(
+                            'Qualitäten' => array('url' => home_url('/schule/konzept/qualitaeten/'), 'weight' => 1),
+                            'Maria Montessori' => array('url' => '#', 'weight' => 2,
+                                'children' => array(
+                                    'Zur Person' => array('url' => home_url('/schule/konzept/maria-montessori/zur-person/'), 'weight' => 1),
+                                    'Grundzüge der Pädagogik' => array('url' => home_url('/schule/konzept/maria-montessori/grundzuege-der-paedagogik/'), 'weight' => 2),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'Schulhaus' => array('url' => '#', 'weight' => 2,
+                        'children' => array(
+                            'Haus' => array('url' => home_url('/schule/schulhaus/haus/'), 'weight' => 1),
+                            'Küche' => array('url' => home_url('/schule/schulhaus/kueche/'), 'weight' => 2),
+                            'Schulgeld' => array('url' => home_url('/schule/schulhaus/schulgeld/'), 'weight' => 3),
+                            'Schulordnung' => array('url' => home_url('/schule/schulhaus/schulordnung/'), 'weight' => 4),
+                        ),
+                    ),
+                    'Verwaltung' => array('url' => home_url('/schule/verwaltung/'), 'weight' => 3),
+                    'Pädagogisches Team' => array('url' => home_url('/schule/paedagogisches-team/'), 'weight' => 4),
+                    'Schüler*innen' => array('url' => home_url('/schule/schuelerinnen/'), 'weight' => 5),
+                    'Elternengagement' => array('url' => '#', 'weight' => 6,
+                        'children' => array(
+                            'Elternbeirat' => array('url' => home_url('/schule/elternengagement/elternbeirat/'), 'weight' => 1),
+                            'AGs und Dienste' => array('url' => home_url('/schule/elternengagement/ags-und-dienste/'), 'weight' => 2),
+                        ),
+                    ),
+                ),
+            ),
+            'Aufnahme' => array('url' => '#', 'weight' => 3,
+                'children' => array(
+                    'Anmeldeunterlagen' => array('url' => home_url('/aufnahme/anmeldeunterlagen/'), 'weight' => 1),
+                    'Schulgeld' => array('url' => home_url('/aufnahme/schulgeld/'), 'weight' => 2),
+                ),
+            ),
+            'Spenden und Förderer' => array('url' => '#', 'weight' => 4,
+                'children' => array(
+                    'Förderer' => array('url' => home_url('/spenden/foerderer/'), 'weight' => 1),
+                    'Spenden' => array('url' => home_url('/spenden/spenden/'), 'weight' => 2),
+                ),
+            ),
+            'Verein' => array('url' => '#', 'weight' => 5,
+                'children' => array(
+                    'Vorstand' => array('url' => home_url('/verein/vorstand/'), 'weight' => 1),
+                    'Satzung' => array('url' => home_url('/verein/satzung/'), 'weight' => 2),
+                ),
+            ),
+            'Karriere' => array('url' => home_url('/pages/karriere/'), 'weight' => 6),
+            'Presse' => array('url' => home_url('/pages/presse/'), 'weight' => 7),
+        ),
+        'Footer Menu' => array(
+            'Impressum' => array('url' => home_url('/pages/impressum/'), 'weight' => 1),
+            'Datenschutzerklärung' => array('url' => home_url('/pages/datenschutz/'), 'weight' => 2),
+            'Login' => array('url' => 'https://www.montessorischule-gilching.de/login', 'weight' => 3),
+        ),
+    );
+    
+    $locations = get_theme_mod('nav_menu_locations');
+    
+    foreach ($menu_structures as $menu_name => $items) {
+        // Create menu if it doesn't exist
+        if (!in_array($menu_name, $menu_names)) {
+            $menu_id = wp_create_nav_menu($menu_name);
+            
+            // Add menu items recursively
+            foreach ($items as $title => $item_data) {
+                monte_add_menu_item($menu_id, $title, $item_data, 0);
+            }
+            
+            // Assign menu to location
+            $location_key = strtolower(str_replace(' ', '-', $menu_name));
+            if ($location_key === 'main-menu') {
+                $locations['main-menu'] = $menu_id;
+            } elseif ($location_key === 'top-menu') {
+                $locations['top-menu'] = $menu_id;
+            } elseif ($location_key === 'footer-menu') {
+                $locations['footer-menu'] = $menu_id;
+            }
+        }
+    }
+    
+    // Save menu locations
+    set_theme_mod('nav_menu_locations', $locations);
+    
+    // Mark as created
+    update_option('monte_menus_created', true);
+}
+
+function monte_add_menu_item($menu_id, $title, $item_data, $parent_id = 0) {
+    $menu_item_data = array(
+        'menu-item-title' => $title,
+        'menu-item-url' => $item_data['url'],
+        'menu-item-status' => 'publish',
+        'menu-item-type' => 'custom',
+        'menu-item-parent-id' => $parent_id,
+    );
+    
+    // Add icon to description field if provided
+    if (isset($item_data['icon'])) {
+        $menu_item_data['menu-item-description'] = $item_data['icon'];
+    }
+    
+    $item_id = wp_update_nav_menu_item($menu_id, 0, $menu_item_data);
+    
+    // Update menu order
+    if (isset($item_data['weight'])) {
+        update_post_meta($item_id, 'menu_order', $item_data['weight']);
+    }
+    
+    // Add children recursively
+    if (isset($item_data['children'])) {
+        foreach ($item_data['children'] as $child_title => $child_data) {
+            monte_add_menu_item($menu_id, $child_title, $child_data, $item_id);
+        }
+    }
+}
+add_action('after_setup_theme', 'monte_create_default_menus', 20);
