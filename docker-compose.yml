@@ -67,9 +67,9 @@ services:
     container_name: monte-node
     working_dir: /app
     volumes:
-      - ./wp-content/themes/monte-theme:/app
+      - ./wp-content/themes/monte-block:/app
       - node_modules:/app/node_modules
-    command: sh -c "if [ -f package.json ]; then npm install && npm run watch; else tail -f /dev/null; fi"
+    command: sh -c "tail -f /dev/null"
     networks:
       - monte-network
 

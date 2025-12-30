@@ -26,7 +26,7 @@ BLUE := \033[0;34m
 NC := \033[0m # No Color
 
 # Configuration
-THEME_NAME := monte-theme
+THEME_NAME := monte-block
 LOCAL_THEME_PATH := wp-content/themes/$(THEME_NAME)
 PROD_SERVER ?= user@production-server.com
 PROD_PATH ?= /var/www/html
@@ -246,32 +246,19 @@ setup: ## Setup WordPress
 # Build Commands
 #
 build: ## Build theme assets for production
-	@echo "$(BLUE)🏗️  Building production assets...$(NC)"
-	@if [ ! -d "$(LOCAL_THEME_PATH)" ]; then \
-		echo "$(RED)❌ Theme directory not found: $(LOCAL_THEME_PATH)$(NC)"; \
-		exit 1; \
-	fi
-	@cd $(LOCAL_THEME_PATH) && \
-		if [ ! -f "package.json" ]; then \
-			echo "$(RED)❌ package.json not found in theme directory$(NC)"; \
-			exit 1; \
-		fi && \
-		if [ ! -d "node_modules" ]; then \
-			echo "Installing dependencies..."; \
-			npm install; \
-		fi && \
-		echo "Building CSS and JavaScript..." && \
-		npm run build
-	@echo "$(GREEN)✓ Assets built successfully$(NC)"
+	@echo "$(BLUE)ℹ️  Monte Block is a Full Site Editing (FSE) block theme.$(NC)"
+	@echo "   No build process required - theme uses native WordPress block patterns."
+	@echo "   Customizations are made through theme.json and the block editor."
 
 build-dev: ## Build theme assets for development
-	@echo "$(BLUE)🏗️  Building development assets...$(NC)"
-	@cd $(LOCAL_THEME_PATH) && npm run dev
-	@echo "$(GREEN)✓ Development assets built$(NC)"
+	@echo "$(BLUE)ℹ️  Monte Block is a Full Site Editing (FSE) block theme.$(NC)"
+	@echo "   No build process required - theme uses native WordPress block patterns."
+	@echo "   Customizations are made through theme.json and the block editor."
 
 watch: ## Watch and rebuild theme assets
-	@echo "$(BLUE)👀 Watching for changes...$(NC)"
-	@cd $(LOCAL_THEME_PATH) && npm run watch
+	@echo "$(BLUE)ℹ️  Monte Block is a Full Site Editing (FSE) block theme.$(NC)"
+	@echo "   No watch process required - changes in theme.json are applied immediately."
+	@echo "   Use the WordPress block editor for template changes."
 
 #
 # Deployment Commands
@@ -301,11 +288,6 @@ _deploy:
 		exit 1; \
 	fi
 	@echo "$(GREEN)✓ Production server accessible$(NC)"
-	@if [ -d "$(LOCAL_THEME_PATH)/node_modules" ]; then \
-		echo "$(YELLOW)⚠ node_modules found - it will be excluded from deployment$(NC)"; \
-	fi
-	@echo ""
-	@$(MAKE) build
 	@echo ""
 	@TIMESTAMP=$$(date +%Y%m%d-%H%M%S) && \
 	BACKUP_FILE="theme-$$TIMESTAMP.tar.gz" && \
@@ -514,6 +496,7 @@ clean: ## Clean build artifacts
 		rm -rf $(LOCAL_THEME_PATH)/dist && \
 		echo "$(GREEN)✓ Removed dist$(NC)"; \
 	fi
+	@echo "$(YELLOW)ℹ️  Monte Block is a block theme - no build artifacts by default.$(NC)"
 	@echo "$(GREEN)✅ Clean complete$(NC)"
 
 wp-cli: ## Access WP-CLI shell

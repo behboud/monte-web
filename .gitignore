@@ -40,7 +40,7 @@ wp-content/wp-cache-config.php
 wp-content/plugins/
 wp-content/mu-plugins/
 
-# WordPress default themes (keep only custom monte-theme)
+# WordPress default themes (keep only custom monte-block)
 wp-content/themes/twenty*/
 
 # WordPress languages (generated)
@@ -54,14 +54,7 @@ wp-content/object-cache.php
 # WordPress index.php files (security)
 wp-content/index.php
 
-# Node modules in theme
-wp-content/themes/monte-theme/node_modules/
-wp-content/themes/monte-theme/package-lock.json
-
-# Compiled/generated theme assets
-wp-content/themes/monte-theme/dist/
-# TEMPORARILY COMMENTED TO ALLOW EDITING main.css
-# wp-content/themes/monte-theme/assets/css/main.css
+# Monte Block theme - block theme, no build artifacts by default
 
 # Environment files (keep .env.production.example)
 .env
