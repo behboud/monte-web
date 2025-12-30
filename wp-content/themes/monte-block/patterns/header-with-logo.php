@@ -1,0 +1,25 @@
+<?php
+/**
+ * Title: Header with Logo
+ * Slug: monte-block/header-with-logo
+ * Categories: header
+ * Block Types: core/template-part/header
+ * Description: Custom header with logo and background image.
+ *
+ * @package WordPress
+ * @subpackage Monte_Block
+ * @since Monte Block 1.0
+ */
+
+?>
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"right":"0","left":"0"},"blockGap":"0"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull" style="padding-right:0;padding-left:0">
+<!-- wp:group {"tagName":"header","style":{"background":{"backgroundImage":{"url":"http://localhost:8080/wp-content/uploads/2025/12/header-zaun.jpg","id":86,"source":"file","title":"header-zaun"},"backgroundSize":"cover"},"spacing":{"padding":{"right":"0","left":"0","top":"0","bottom":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
+<header class="wp-block-group" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
+<!-- wp:image {"id":7,"sizeSlug":"full","linkDestination":"none","style":{"spacing":{"margin":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|20","right":"var:preset|spacing|20"}}}} -->
+<figure class="wp-block-image size-full" style="margin-top:var(--wp--preset--spacing--20);margin-right:var(--wp--preset--spacing--20);margin-bottom:var(--wp--preset--spacing--20);margin-left:var(--wp--preset--spacing--20)"><img src="http://localhost:8080/wp-content/uploads/2025/12/logo_01.gif" alt="" class="wp-image-7"/></figure>
+<!-- /wp:image -->
+</header>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
