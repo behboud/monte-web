@@ -25,8 +25,9 @@
 	"browserslist": [
 		"extends @wordpress/browserslist-config"
 	],
-  "scripts": {
-    "build": "postcss style.css --use cssnano -o style.min.css --no-map",
-    "watch": "postcss style.css --use cssnano -o style.min.css --no-map --watch"
-  }
+	"scripts": {
+		"build": "postcss style.css --use cssnano -o style.min.css --no-map",
+		"watch": "postcss style.css --use cssnano -o style.min.css --no-map --watch",
+		"validate:theme": "node scripts/validate-theme-json.js"
+	}
 }

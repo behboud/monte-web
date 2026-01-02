@@ -150,9 +150,19 @@
       ],
       "fontFamilies": [
         {
+          "fontFamily": "\"Zapfino\", cursive",
           "name": "Zapfino",
           "slug": "zapfino",
-          "fontFamily": "Zapfino, cursive"
+          "fontFace": [
+            {
+              "fontFamily": "Zapfino",
+              "fontWeight": "400",
+              "fontStyle": "normal",
+              "src": [
+                "file:./assets/fonts/Zapfino.woff"
+              ]
+            }
+          ]
         },
         {
           "name": "Manrope",
