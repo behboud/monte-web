@@ -4,7 +4,7 @@ Static website for Montessori Schule Gilching, built with Hugo and Tailwind CSS.
 
 ## Technologie-Stack
 
-- **Hugo Extended 0.145.0** - Static site generator
+- **Hugo Extended 0.155.1** - Static site generator
 - **Tailwind CSS 4.2.1** - Utility-first CSS framework
 - **Sveltia CMS** - Git-based headless CMS for content management
 - **mmenu-js 9.3.0** - Mobile navigation library
@@ -15,7 +15,7 @@ Static website for Montessori Schule Gilching, built with Hugo and Tailwind CSS.
 ### Voraussetzungen
 
 1. **Hugo Extended**: https://gohugo.io/installation/ (erfordert die extended Version für PostCSS-Support)
-2. **Node.js**: Version 16 oder höher für Build-Tools
+2. **Node.js**: Version 18 oder höher für Build-Tools
 
 ### Schritte
 
@@ -38,15 +38,7 @@ hugo server
 
 Der Server läuft unter http://localhost:1313 mit Live-Reload bei Dateiänderungen.
 
-Für besseres Development-Erlebnis mit Tailwind-Watch:
-
-```bash
-# Terminal 1: Hugo Server
-hugo server
-
-# Terminal 2: Tailwind Watch (falls benötigt)
-npx tailwindcss -i ./assets/css/main.css -o ./public/css/style.css --watch
-```
+Hinweis: Für die lokale Entwicklung reicht `hugo server`; der separate Tailwind-Watch ist nicht erforderlich.
 
 ## Deployment
 
@@ -54,7 +46,7 @@ Das Projekt wird automatisch zu GitHub Pages deployed, wenn Änderungen auf den 
 
 **Deployment-Pipeline** (`.github/workflows/main.yml`):
 
-1. Hugo Extended wird installiert (Version 0.145.0)
+1. Hugo Extended wird installiert (Version 0.155.1)
 2. npm-Abhängigkeiten werden installiert
 3. Hugo Build mit `hugo --gc --minify`
 4. Statische Dateien werden zu `public/` generiert
@@ -326,6 +318,6 @@ Empfohlene Erweiterungen in `.vscode/extensions.json`:
 - Prettier
 - Markdown-All-in-One
 
-##Lizenz
+## Lizenz
 
 MIT

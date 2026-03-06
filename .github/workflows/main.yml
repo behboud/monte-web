@@ -24,7 +24,7 @@ defaults:
 # Environment variables available to all jobs and steps in this workflow
 env:
   HUGO_ENV: production
-  HUGO_VERSION: "0.145.0"
+  HUGO_VERSION: "0.155.1"
 
 jobs:
   # Build job
@@ -56,8 +56,7 @@ jobs:
           path: |
             ${{ runner.temp }}/hugo_cache
           key: hugo-${{ github.run_id }}
-          restore-keys:
-            hugo-
+          restore-keys: hugo-
 
       - name: Build with Hugo
         run: |
