@@ -65,11 +65,9 @@ monte-web/
 │   │   └── main.js         # Main-JS (mmenu-Initialisierung)
 │   ├── plugins/            # Drittanbieter-Bibliotheken
 │   └── images/             # Bilder für Templates
-├── config/_default/        # Hugo-Konfiguration
-│   ├── languages.toml      # Sprachkonfiguration
-│   ├── menus.de.toml       # Navigationsmenüs
-│   ├── module.toml         # Hugo-Module
-│   └── params.toml         # Site-Parameter und Plugins
+├── config/
+│   └── development/
+│       └── config.toml     # Lokaler baseURL-Override für hugo server
 ├── content/                # Content-Dateien (Markdown)
 │   └── de/                 # Deutscher Content
 │       ├── aktuelles/      # News-Bereich
@@ -120,7 +118,7 @@ monte-web/
 
 ### Navigation ändern
 
-**Datei**: `config/_default/menus.de.toml`
+**Datei**: `hugo.toml` unter `languages.de.menus`
 
 Menüpunkte werden hier definiert mit:
 
@@ -133,11 +131,11 @@ Menüpunkte werden hier definiert mit:
 Beispiel für neuen Menüpunkt:
 
 ```toml
-[[top]]
+[[languages.de.menus.top]]
 name = "SPEISEPLAN"
 pageRef = "/pages/speiseplan"
 weight = 4
-[top.params]
+[languages.de.menus.top.params]
 icon = "fa fa-utensils"
 ```
 
@@ -145,13 +143,25 @@ Icons: https://fontawesome.com/search (mit `fa-` Präfix)
 
 ### Konfiguration ändern
 
-| Einstellung         | Datei                            |
-| ------------------- | -------------------------------- |
-| Site-Titel, BaseURL | `hugo.toml`                      |
-| Plugins (CSS/JS)    | `hugo.toml` (params.plugins)     |
-| Menüs               | `config/_default/menus.de.toml`  |
-| Parameter           | `config/_default/params.toml`    |
-| Sprachen            | `config/_default/languages.toml` |
+| Einstellung                 | Datei                                               |
+| --------------------------- | --------------------------------------------------- |
+| Site-Titel, BaseURL         | `hugo.toml`                                         |
+| Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                      |
+| Menüs                       | `hugo.toml` (`languages.de.menus`)                  |
+| Parameter                   | `hugo.toml` (`params`)                              |
+| Sprachen                    | `hugo.toml` (`languages`)                           |
+| Lokaler Entwicklungs-Server | `config/development/config.toml` (nur lokale Basis) |
+
+### Hugo-Konfigurationspolicy
+
+- Primäre Konfigurationsquelle ist `hugo.toml`.
+- Nur lokale Entwicklungs-Overrides liegen in `config/development/config.toml`.
+- Nach Konfigurationsänderungen immer validieren mit:
+
+```bash
+hugo --gc --minify
+npx playwright test tests/ui/style-regression.spec.ts --project=desktop-chromium --project=mobile-chromium
+```
 
 ### Social Media Links
 
@@ -226,7 +236,6 @@ Dieser Worker fungiert als OAuth-Proxy zwischen dem CMS und GitHub.
 **Voraussetzung**: Ein Deployment von decap-proxy mit spezifischer Konfiguration.
 
 1. **GitHub OAuth App erstellen**:
-
    - https://github.com/settings/applications/new
    - `Authorization callback URL`: `https://decap-proxy-domain/callback`
    - Client ID und Secret speichern
