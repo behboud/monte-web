@@ -16,3 +16,6 @@ go.sum
 yarn.lock
 thoughts/
 .agents/skills
+skills-lock.json
+playwright-report/
+test-results/

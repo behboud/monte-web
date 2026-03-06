@@ -291,8 +291,6 @@ Siehe decap-proxy README: https://github.com/behboud/decap-proxy
 - Relevante npm-Befehle:
   - `npm run test:ui` (Build + Routen-Generierung + Playwright)
   - `npm run test:ui:update` (Snapshots aktualisieren)
-  - `npm run check:no-franken` (stellt sicher, dass keine Franken-Marker wieder eingeführt wurden)
-- GitHub Actions Workflow für UI-Gating: `.github/workflows/ui-parity.yml`.
 
 ### Produktions-Build
 

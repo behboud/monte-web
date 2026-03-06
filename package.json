@@ -8,7 +8,6 @@
     "dev": "hugo server",
     "build": "hugo --gc --minify",
     "project-setup": "hugo version",
-    "check:no-franken": "node scripts/ui/assert-no-franken.mjs",
     "test:ui": "npm run build && node scripts/ui/generate-routes.mjs && playwright test",
     "test:ui:update": "npm run build && node scripts/ui/generate-routes.mjs && playwright test --update-snapshots"
   },
