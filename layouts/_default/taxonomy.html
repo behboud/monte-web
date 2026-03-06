@@ -1,13 +1,6 @@
 {{ define "main" }}
   {{ partial "page-header" . }}
-
-
   <section class="container">
-    <!-- aktuelles posts -->
-    {{ range .Data.Pages }}
-      <div class="mb-14">
-        {{ partial "components/aktuelles-card" . }}
-      </div>
-    {{ end }}
+    {{ partial "components/aktuelles-grid.html" (dict "Pages" .Data.Pages "ItemClass" "mb-14") }}
   </section>
 {{ end }}
