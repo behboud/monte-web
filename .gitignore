@@ -19,3 +19,8 @@ thoughts/
 skills-lock.json
 playwright-report/
 test-results/
+
+# bv (beads viewer) local config and caches
+.bv/
+.beads
+docs/hugo-setup-review-2026-03.md
