@@ -81,34 +81,45 @@
   });
 
   const htmlElement = document.documentElement;
-
-  const __FRANKEN__ = JSON.parse(localStorage.getItem("__FRANKEN__") || "{}");
-
   htmlElement.classList.remove("dark");
 
-  htmlElement.classList.add(__FRANKEN__.theme || "uk-theme-zinc");
-  htmlElement.classList.add(__FRANKEN__.radii || "uk-radii-md");
-  htmlElement.classList.add(__FRANKEN__.shadows || "uk-shadows-sm");
-  htmlElement.classList.add(__FRANKEN__.font || "uk-font-sm");
-  htmlElement.classList.add(__FRANKEN__.chart || "uk-chart-default");
+  const heroSliderElement = document.querySelector(".hero-slider");
+  if (heroSliderElement && typeof Swiper !== "undefined") {
+    new Swiper(heroSliderElement, {
+      effect: "fade",
+      loop: true,
+      speed: 800,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".hero-slider-pagination",
+        clickable: true,
+      },
+    });
+  }
 
   // Testimonial Slider
   // ----------------------------------------
-  new Swiper(".testimonial-slider", {
-    spaceBetween: 24,
-    loop: true,
-    pagination: {
-      el: ".testimonial-slider-pagination",
-      type: "bullets",
-      clickable: true,
-    },
-    breakpoints: {
-      768: {
-        slidesPerView: 2,
+  const testimonialSliderElement = document.querySelector(".testimonial-slider");
+  if (testimonialSliderElement && typeof Swiper !== "undefined") {
+    new Swiper(testimonialSliderElement, {
+      spaceBetween: 24,
+      loop: true,
+      pagination: {
+        el: ".testimonial-slider-pagination",
+        type: "bullets",
+        clickable: true,
       },
-      992: {
-        slidesPerView: 3,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        },
+        992: {
+          slidesPerView: 3,
+        },
       },
-    },
-  });
+    });
+  }
 })();

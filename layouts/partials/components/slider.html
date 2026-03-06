@@ -1,5 +1,6 @@
 <!-- get value from params -->
 {{ $images:= .Images }}
+{{ $containerClass:= .ContainerClass }}
 {{ $class:= .Class }}
 {{ $classImage:= .ClassImage }}
 {{ $height:= replace (replace (.Height) "px" "") "x" "" }}
@@ -16,34 +17,36 @@
 
 
 <!-- start of slider wrapper -->
-<div class="{{ $class }}">
-  <!-- start of checking asset-image -->
-  {{ if $images }}
-    <!-- start of image range -->
-    {{ range $images }}
-      {{ $image := resources.Get . }}
-      {{ $imageExt := path.Ext $image }}
-      {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
-        `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`)
-      }}
-
-        {{ partial "components/image-pipe.html" (dict "Context" $scratch "Height" $height "Width" $width "Command" $command
-          "Webp"
-          $webp "Image" $image "Option" $option "Zoomable" $zoomable)
+<div class="{{ $containerClass }}">
+  <div class="{{ $class }}">
+    <!-- start of checking asset-image -->
+    {{ if $images }}
+      <!-- start of image range -->
+      {{ range $images }}
+        {{ $image := resources.Get . }}
+        {{ $imageExt := path.Ext $image }}
+        {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
+          `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`)
         }}
-        {{ $imageHeight:= $scratch.Get "image-height" }}
-        {{ $imageWidth:= $scratch.Get "image-width" }}
+
+          {{ partial "components/image-pipe.html" (dict "Context" $scratch "Height" $height "Width" $width "Command" $command
+            "Webp"
+            $webp "Image" $image "Option" $option "Zoomable" $zoomable)
+          }}
+          {{ $imageHeight:= $scratch.Get "image-height" }}
+          {{ $imageWidth:= $scratch.Get "image-width" }}
 
 
-        <div class="{{ $classImage }}">
-          <img loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" data-uk-cover />
-        </div>
+          <div class="{{ $classImage }}">
+            <img class="h-full w-full object-cover" loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" />
+          </div>
+        {{ end }}
       {{ end }}
+
+
+      <!-- end of image range -->
     {{ end }}
-
-
-    <!-- end of image range -->
-  {{ end }}
-  <!-- end of checking image directory -->
+    <!-- end of checking image directory -->
+  </div>
 </div>
 <!-- end of slider wrapper -->

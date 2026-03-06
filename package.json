@@ -4,18 +4,28 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "behboud kalantary",
+  "scripts": {
+    "dev": "hugo server",
+    "build": "hugo --gc --minify",
+    "project-setup": "hugo version",
+    "check:no-franken": "node scripts/ui/assert-no-franken.mjs",
+    "test:ui": "npm run build && node scripts/ui/generate-routes.mjs && playwright test",
+    "test:ui:update": "npm run build && node scripts/ui/generate-routes.mjs && playwright test --update-snapshots"
+  },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@tailwindcss/postcss": "^4.2.1",
     "autoprefixer": "^10.4.21",
+    "http-server": "^14.1.1",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "postcss-import": "^16.1.0",
     "prettier": "^3.5.3",
     "prettier-plugin-go-template": "0.0.15",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^4.2.1"
   },
   "dependencies": {
-    "franken-ui": "2.0.0",
     "mmenu-js": "^9.3.0"
   }
 }

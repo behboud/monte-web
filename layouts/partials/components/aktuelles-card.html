@@ -1,6 +1,6 @@
-<div class="uk-card uk-card-body h-full flex flex-col justify-between">
+<div class="card card-body flex h-full flex-col justify-between">
   <div class="container">
-    <h3 class="uk-card-title text-monte mb-2">
+    <h3 class="card-title mb-2 text-monte">
       <a href="{{ .RelPermalink }}">
         {{ .Title }}
       </a>
@@ -14,7 +14,7 @@
       {{ if $tags }}
         <li class="mr-4 inline-block">
           {{ range $i,$p:= $tags }}
-            <a class="uk-btn uk-btn-text mr-1" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
+            <a class="btn btn-text mr-1" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
               <i class="fa fa-tag mr-1"></i>
               {{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
               {{ end }}
@@ -25,7 +25,7 @@
     </ul>
     <p class="mb-6">{{ .Summary | plainify }}</p>
   </div>
-  <a class="uk-btn uk-btn-default w-fit" href="{{ .RelPermalink }}">
+  <a class="btn btn-default w-fit" href="{{ .RelPermalink }}">
     {{ T "read_more" }}
   </a>
 </div>

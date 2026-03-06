@@ -1,12 +1,11 @@
 # Montessori Schule Gilching - Website
 
-Static website for Montessori Schule Gilching, built with Hugo, Tailwind CSS, and Franken-UI.
+Static website for Montessori Schule Gilching, built with Hugo and Tailwind CSS.
 
 ## Technologie-Stack
 
 - **Hugo Extended 0.145.0** - Static site generator
-- **Tailwind CSS 3.4.17** - Utility-first CSS framework
-- **Franken-UI 2.0.0** - UI component library (based on UIKit)
+- **Tailwind CSS 4.2.1** - Utility-first CSS framework
 - **Sveltia CMS** - Git-based headless CMS for content management
 - **mmenu-js 9.3.0** - Mobile navigation library
 - **GitHub Pages** - Static site hosting
@@ -70,7 +69,7 @@ monte-web/
 ├── assets/                  # Verarbeitete Assets (CSS, JS, Bilder)
 │   ├── css/main.css        # Haupt-Stylesheet (Tailwind-Einstiegspunkt)
 │   ├── js/
-│   │   ├── app.js          # JS-Bundle (Franken-UI, mmenu)
+│   │   ├── app.js          # JS-Bundle (mmenu)
 │   │   └── main.js         # Main-JS (mmenu-Initialisierung)
 │   ├── plugins/            # Drittanbieter-Bibliotheken
 │   └── images/             # Bilder für Templates
@@ -104,34 +103,35 @@ monte-web/
 
 ### Design und Layout ändern
 
-| Änderung | Datei |
-|----------|-------|
-| Farben, Schriften | `tailwind.config.js` |
-| CSS-Styles | `assets/css/main.css` |
-| PostCSS-Plugins | `postcss.config.js` |
-| Header-Layout | `layouts/partials/essentials/header.html` |
-| Footer-Layout | `layouts/partials/essentials/footer.html` |
-| Navigation-Menü | `layouts/partials/essentials/menu.html` |
-| Homepage-Layout | `layouts/index.html` |
-| News-Templates | `layouts/aktuelles/list.html`, `layouts/aktuelles/single.html` |
+| Änderung          | Datei                                                          |
+| ----------------- | -------------------------------------------------------------- |
+| Farben, Schriften | `tailwind.config.js`                                           |
+| CSS-Styles        | `assets/css/main.css`                                          |
+| PostCSS-Plugins   | `postcss.config.js`                                            |
+| Header-Layout     | `layouts/partials/essentials/header.html`                      |
+| Footer-Layout     | `layouts/partials/essentials/footer.html`                      |
+| Navigation-Menü   | `layouts/partials/essentials/menu.html`                        |
+| Homepage-Layout   | `layouts/index.html`                                           |
+| News-Templates    | `layouts/aktuelles/list.html`, `layouts/aktuelles/single.html` |
 
 ### Content ändern
 
-| Content | Datei/Ordner |
-|---------|--------------|
-| News/Artikel | `content/de/aktuelles/` |
-| Schul-Information | `content/de/schule/` |
-| Aufnahme | `content/de/aufnahme/` |
-| Spenden | `content/de/spenden/` |
-| Verein | `content/de/verein/` |
-| Statische Seiten | `content/de/pages/` |
-| Startseite | `content/de/_index.md` |
+| Content           | Datei/Ordner            |
+| ----------------- | ----------------------- |
+| News/Artikel      | `content/de/aktuelles/` |
+| Schul-Information | `content/de/schule/`    |
+| Aufnahme          | `content/de/aufnahme/`  |
+| Spenden           | `content/de/spenden/`   |
+| Verein            | `content/de/verein/`    |
+| Statische Seiten  | `content/de/pages/`     |
+| Startseite        | `content/de/_index.md`  |
 
 ### Navigation ändern
 
 **Datei**: `config/_default/menus.de.toml`
 
 Menüpunkte werden hier definiert mit:
+
 - `name`: Anzeigename
 - `pageRef`: Interne Seite (z.B. `/pages/speiseplan`)
 - `url`: Externe Links
@@ -153,13 +153,13 @@ Icons: https://fontawesome.com/search (mit `fa-` Präfix)
 
 ### Konfiguration ändern
 
-| Einstellung | Datei |
-|-------------|-------|
-| Site-Titel, BaseURL | `hugo.toml` |
-| Plugins (CSS/JS) | `hugo.toml` (params.plugins) |
-| Menüs | `config/_default/menus.de.toml` |
-| Parameter | `config/_default/params.toml` |
-| Sprachen | `config/_default/languages.toml` |
+| Einstellung         | Datei                            |
+| ------------------- | -------------------------------- |
+| Site-Titel, BaseURL | `hugo.toml`                      |
+| Plugins (CSS/JS)    | `hugo.toml` (params.plugins)     |
+| Menüs               | `config/_default/menus.de.toml`  |
+| Parameter           | `config/_default/params.toml`    |
+| Sprachen            | `config/_default/languages.toml` |
 
 ### Social Media Links
 
@@ -169,18 +169,19 @@ Icons: https://fontawesome.com/search (mit `fa-` Präfix)
 
 ## UI-Komponenten und Bibliotheken
 
-### Franken-UI (Haupt-Designsystem)
+### Designsystem
 
-Classes beginnen mit `uk-`:
-- Buttons: `uk-btn`, `uk-btn-default`, `uk-btn-text`
-- Cards: `uk-card`, `uk-card-body`, `uk-card-title`
-- Breadcrumbs: `uk-breadcrumb`
-- Headings: `uk-h1`, `uk-h2`, `uk-h3`
-- Formulare: `uk-input`, `uk-select`
+Das Frontend nutzt Tailwind Utilities plus projektinterne Komponentenklassen in `assets/css/main.css`:
+
+- Buttons: `.btn`, `.btn-default`, `.btn-text`
+- Cards: `.card`, `.card-body`, `.card-title`
+- Breadcrumbs: `.breadcrumb`
+- Typografie: globale Headline/Paragraph-Code Styles im `@layer base`
 
 ### Custom Farben
 
 In `tailwind.config.js` definiert:
+
 - `text-primary`: #121212
 - `text-monte`: #222477 (Brand-Farbe)
 - `bg-light`: #fcfaf7
@@ -233,11 +234,13 @@ Dieser Worker fungiert als OAuth-Proxy zwischen dem CMS und GitHub.
 **Voraussetzung**: Ein Deployment von decap-proxy mit spezifischer Konfiguration.
 
 1. **GitHub OAuth App erstellen**:
+
    - https://github.com/settings/applications/new
    - `Authorization callback URL`: `https://decap-proxy-domain/callback`
    - Client ID und Secret speichern
 
 2. **Worker konfigurieren** (`wrangler.toml`):
+
    ```toml
    name = "decap-proxy"
    main = "src/index.ts"
@@ -247,6 +250,7 @@ Dieser Worker fungiert als OAuth-Proxy zwischen dem CMS und GitHub.
    ```
 
 3. **OAuth Secrets setzen**:
+
    ```bash
    npx wrangler secret put GITHUB_OAUTH_ID
    npx wrangler secret put GITHUB_OAUTH_SECRET
@@ -272,15 +276,23 @@ Siehe decap-proxy README: https://github.com/behboud/decap-proxy
 1. `assets/css/main.css` ist Einstiegspunkt
 2. PostCSS verarbeitet durch:
    - `postcss-import`: @imports auflösen
-   - `tailwindcss`: Tailwind-Classes generieren
-   - `franken-ui/postcss`: CSS-Selektoren deduplizieren
-   - `autoprefixer`: Vendor-Prefixes hinzufügen
+   - `@tailwindcss/postcss`: Tailwind v4 Utility-Generierung
 
 ### JS-Build
 
-1. `assets/js/app.js` importiert Franken-UI und mmenu-js
+1. `assets/js/app.js` importiert mmenu-js
 2. esbuild (Hugo-intern) bündelt JavaScript
-3. `assets/js/main.js` enthält mmenu-Initialisierung
+3. `assets/js/main.js` enthält mmenu- und Slider-Initialisierung
+
+## UI Teststrategie (Parität)
+
+- Playwright-basierte Visual-Regression + Interaktionstests in `tests/ui/`.
+- Route-Abdeckung wird aus `public/sitemap.xml` generiert (`scripts/ui/generate-routes.mjs`).
+- Relevante npm-Befehle:
+  - `npm run test:ui` (Build + Routen-Generierung + Playwright)
+  - `npm run test:ui:update` (Snapshots aktualisieren)
+  - `npm run check:no-franken` (stellt sicher, dass keine Franken-Marker wieder eingeführt wurden)
+- GitHub Actions Workflow für UI-Gating: `.github/workflows/ui-parity.yml`.
 
 ### Produktions-Build
 
@@ -294,22 +306,23 @@ Erzeugt minifizierte, fingerprinted Assets mit Subresource Integrity.
 
 ### Verfügbare Partials
 
-| Partial | Zweck |
-|---------|-------|
-| `components/aktuelles-card.html` | News-Card-Komponente |
-| `components/breadcrumb.html` | Brotkrümelnavigation |
-| `components/slider.html` | Bild-Slider |
-| `components/image-pipe.html` | Bildverarbeitung |
-| `essentials/head.html` | HTML-Head |
-| `essentials/header.html` | Header mit Navigation |
-| `essentials/footer.html` | Footer |
-| `essentials/menu.html` | Navigationsmenü |
-| `essentials/style.html` | CSS-Laden |
-| `essentials/script.html` | JavaScript-Laden |
+| Partial                          | Zweck                 |
+| -------------------------------- | --------------------- |
+| `components/aktuelles-card.html` | News-Card-Komponente  |
+| `components/breadcrumb.html`     | Brotkrümelnavigation  |
+| `components/slider.html`         | Bild-Slider           |
+| `components/image-pipe.html`     | Bildverarbeitung      |
+| `essentials/head.html`           | HTML-Head             |
+| `essentials/header.html`         | Header mit Navigation |
+| `essentials/footer.html`         | Footer                |
+| `essentials/menu.html`           | Navigationsmenü       |
+| `essentials/style.html`          | CSS-Laden             |
+| `essentials/script.html`         | JavaScript-Laden      |
 
 ## VS Code
 
 Empfohlene Erweiterungen in `.vscode/extensions.json`:
+
 - Hugo-Syntax-Highlighting
 - Tailwind CSS IntelliSense
 - Prettier

@@ -2,7 +2,7 @@
 {{ $base := site.Home.Permalink }}
 
 
-<ul class="uk-breadcrumb uppercase mt-2 font-bold text-lg text-monte">
+<ul class="breadcrumb mt-2 text-lg font-bold uppercase">
   <li>
     <a href="{{ $base }}">
       {{ T "home" | default "Startseite" }}
@@ -10,13 +10,13 @@
   </li>
   {{ range $i, $e:= $context.Ancestors.Reverse }}
     {{ if and (not .IsHome) (ne .Title "Pages") }}
-      <li class="{{ if (not .IsPage) }}uk-disabled{{ end }}">
+      <li class="{{ if (not .IsPage) }}is-disabled{{ end }}">
         <a href="{{ .RelPermalink }}">{{ T (printf "%s" (lower .Title)) | default .Title }}</a>
       </li>
     {{ end }}
   {{ end }}
   <li>
-    <span class="text-dark ">
+    <span class="text-monte">
       {{ T (printf "%s" (lower $context.Title)) | default $context.Title }}
     </span>
   </li>

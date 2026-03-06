@@ -19,7 +19,7 @@
         {{ if $tags }}
           <li class="mr-4 inline-block">
             {{ range $i,$p:= $tags }}
-              <a class="uk-btn uk-btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
+              <a class="btn btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
                 <i class="fa fa-tag mr-1"></i>
                 {{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
                 {{ end }}
@@ -28,7 +28,7 @@
           </li>
         {{ end }}
       </ul>
-      <div class="content mb-10 uk-heading-divider">
+      <div class="content heading-divider mb-10">
         {{ .Content }}
       </div>
       <div class="text-monte">
@@ -46,8 +46,8 @@
       <div class="ml-3 basis-1/4">
         <h4 class="mb-2">{{ T "related_posts" }}:</h4>
         {{ range sort . "Date" "desc" }}
-          <div class="uk-heading-divider">
-            <h3 class="uk-card-title text-monte mb-2 ">
+          <div class="heading-divider">
+            <h3 class="card-title mb-2 text-monte ">
               <a href="{{ .RelPermalink }}">
                 {{ .Title }}
               </a>
