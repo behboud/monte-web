@@ -2,7 +2,7 @@
   <header>
     <div class="container pr-0" {{ partial `bg-image` (dict `Src` site.Params.header_image_banner ) | safeHTMLAttr }}>
       <!-- logo -->
-      <div class="justify-self-end">
+      <div class="flex justify-end">
         <!-- navbar brand/logo -->
         <a id="logo-link" class="block pt-2 pb-2 pr-2" href="{{ site.Home.RelPermalink }}">
           {{ partial "logo" }}

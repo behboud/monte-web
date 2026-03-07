@@ -69,6 +69,8 @@ In unserem pädagogischen Alltag leben wir ganzheitliche Bildung: Entwicklung de
 
 Das Fundament unserer Arbeit ist die Pädagogik von Maria Montessori. Die Kinder lernen in einer vorbereiteten Umgebung mit speziell entwickeltem Material unter Berücksichtigung sensibler Entwicklungsphasen.
 
+![Foto-Platzhalter Qualitäten](/images/image-placeholder.png)
+
 ## 5 Säulen
 
 Unsere Schule lebt von aktiver Mitbestimmung und wird von fünf Säulen getragen:
@@ -114,6 +116,8 @@ Das offizielle Schulende ist um 15:30 Uhr. Darüber hinaus besteht die Möglichk
 
 An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir darum, Aufgaben, die im Unterricht nicht fertiggestellt wurden, zu Hause abzuschließen.
 
+![Foto-Platzhalter Schultag](/images/image-placeholder.png)
+
 ## Maria Montessori
 
 Unter den nachstehenden Links finden Sie ausführliche Informationen:
@@ -140,6 +144,8 @@ Auf spezielle Bedürfnisse (Allergien, Diabetes etc.) wird in Absprache mit den 
 
 Die Kinder werden in Entstehungs- und Verarbeitungsprozesse eingebunden: Am wöchentlichen Kinderkochtag unterstützen jeweils zwei Kinder das Küchenteam. Einmal pro Monat darf von den Klassen ein Wunschmenü zusammengestellt werden.
 
+![Foto-Platzhalter Mittagsverpflegung](/images/image-placeholder.png)
+
 [Hier finden Sie unseren aktuellen Speiseplan](/pages/speiseplan)
 
 ## Das sind wir
@@ -165,6 +171,8 @@ Seit März 2011 sind die Partizipationsmöglichkeiten unserer Schüler\*innen in
 
 Aus jeder Klasse werden zwei Schülersprecher\*innen gewählt. Durch die etablierten Mitbestimmungsformen erleben Kinder früh demokratische Verantwortung. Das übergeordnete Ziel ist die Erziehung zur Demokratiefähigkeit.
 
+![Foto-Platzhalter Schüler*innen](/images/image-placeholder.png)
+
 ### Unser Vorstand
 
 Unsere Schule wurde 2004 dank einer Elterninitiative als gemeinnütziger Verein gegründet. Das Vorstandsteam des Fördervereins unterstützt die Schule bis heute als eine der fünf tragenden Säulen.
@@ -181,6 +189,8 @@ Möglichkeiten sind unter anderem:
 - [Mitarbeit in AGs und Diensten](/schule/elternengagement/ags-und-dienste)
 - Durchführung eines eigenen Nachmittagsprojekts
 - Unterstützung bei Basteltagen und Projektwochen
+
+![Foto-Platzhalter Elternengagement](/images/image-placeholder.png)
 
 ## Der Weg an unsere Schule
 
