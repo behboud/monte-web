@@ -1,7 +1,17 @@
 {{ define "main" }}
   {{ partial "page-header" . }}
-  <div class="ml-3 mb-8 mt-8 text-8xl font-calligraphy font-italic text-center text-monte">{{ .Params.uberschrift }}</div>
-  {{ range $i, $e:= .Params.spenden }}
+  {{ partial "components/page-title" (dict "Context" . "Title" .Params.uberschrift) }}
+
+
+  <section class="container ml-3 mb-10">
+    <div class="spenden-cta-bar">
+      <a class="btn btn-default spenden-cta-primary" href="/pages/kontakt">Jetzt online spenden</a>
+      <a class="btn btn-default spenden-cta-secondary" href="/pages/kontakt">Als Förderer mitmachen</a>
+      <a class="btn btn-default spenden-cta-secondary" href="mailto:info@montessorischule-gilching.de">Sachspende anbieten</a>
+    </div>
+  </section>
+
+  {{ range .Params.spenden }}
     <div class="mb-10 ml-3">
       <div class="container grid grid-cols-[120px_1fr] items-start gap-4 sm:grid-cols-[160px_1fr] sm:gap-5 md:grid-cols-[220px_1fr] md:gap-6">
         <div class="overflow-hidden rounded-md">

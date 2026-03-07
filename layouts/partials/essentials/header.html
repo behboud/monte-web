@@ -27,7 +27,8 @@
           <li class="m-3 pt-1">
             {{ if .Params.icon }}
               <a
-                class="{{ .Params.icon }} hover:text-primary"
+                class="{{ .Params.icon }} btn btn-text font-bold transition-colors duration-150 hover:text-primary"
+                aria-label="{{ .Name }}"
                 {{ if findRE `^http` .URL }}
                   target="_self" rel="noopener"
                 {{ end }}

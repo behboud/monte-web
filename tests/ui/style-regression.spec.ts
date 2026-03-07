@@ -43,8 +43,8 @@ test.describe("style regressions", () => {
     expect(currentColor).toMatch(/(rgb|oklch)\(/);
   });
 
-  test("foerderer entries keep consistent media sizing", async ({ page }) => {
-    await page.goto("/spenden/foerderer/", { waitUntil: "networkidle" });
+  test("spenden entries keep consistent media sizing", async ({ page }) => {
+    await page.goto("/spenden/", { waitUntil: "networkidle" });
 
     const media = page.locator("main .container.grid > div:first-child");
     const count = await media.count();

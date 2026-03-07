@@ -1,0 +1,47 @@
+{{ $ctx := .Context }}
+{{ $sliderImages := .SliderImages | default (slice "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg") }}
+
+{{ partial "components/page-title" (dict "Context" $ctx "Title" .Title) }}
+
+
+<section class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4 mb-10">
+  {{ partial "components/slider.html" (dict
+    "Images" $sliderImages
+    "ContainerClass" "schule-slider schule-slider-panorama swiper h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]"
+    "Class" "swiper-wrapper"
+    "ClassImage" "swiper-slide")
+  }}
+  <div class="hero-slider-pagination mt-4 text-center"></div>
+</section>
+
+<section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
+  <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
+    <div class="card card-body schule-toc">
+      <h3 class="mb-3 text-lg">Seitenübersicht</h3>
+      {{ if $ctx.Params.toc }}
+        <nav aria-label="Seitenübersicht">
+          <ul>
+            {{ range $ctx.Params.toc }}
+              <li>
+                <a href="{{ .href }}">{{ .label }}</a>
+                {{ with .children }}
+                  <ul>
+                    {{ range . }}
+                      <li><a href="{{ .href }}">{{ .label }}</a></li>
+                    {{ end }}
+                  </ul>
+                {{ end }}
+              </li>
+            {{ end }}
+          </ul>
+        </nav>
+      {{ else }}
+        {{ $ctx.TableOfContents }}
+      {{ end }}
+    </div>
+  </aside>
+
+  <article class="card card-body schule-content">
+    {{ $ctx.Content }}
+  </article>
+</section>
