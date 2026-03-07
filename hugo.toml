@@ -175,31 +175,36 @@ defaultContentLanguage = "de"
 
 ############################# Menus ################################
     [[languages.de.menus.top]]
-      name = "NEWS"
-      pageRef = "/aktuelles"
+      name = "Home"
+      pageRef = "/"
       weight = 1
 
     [[languages.de.menus.top]]
-      name = "KONTAKT"
-      pageRef = "/pages/kontakt"
+      name = "Schule & Aufnahme"
+      pageRef = "/schule"
       weight = 2
 
     [[languages.de.menus.top]]
-      name = "SPENDEN"
+      name = "Spenden"
       pageRef = "/spenden/spenden"
       weight = 3
 
     [[languages.de.menus.top]]
-      name = "SPEISEPLAN"
-      pageRef = "/pages/speiseplan"
+      name = "Verein"
+      pageRef = "/verein/vorstand"
       weight = 4
+
+    [[languages.de.menus.top]]
+      name = "Speiseplan"
+      pageRef = "/pages/speiseplan"
+      weight = 5
       [languages.de.menus.top.params]
         icon = "fa fa-utensils"
 
     [[languages.de.menus.top]]
-      name = "ELTERN-LOGIN"
+      name = "Eltern-Login"
       url = "https://www.montessorischule-gilching.de/login"
-      weight = 5
+      weight = 6
       [languages.de.menus.top.params]
         icon = "fa fa-user-lock"
 
@@ -373,9 +378,19 @@ defaultContentLanguage = "de"
       weight = 2
 
     [[languages.de.menus.footer]]
-      name = "login"
-      url = "https://www.montessorischule-gilching.de/login"
+      name = "Kontakt"
+      pageRef = "/pages/kontakt"
       weight = 3
+
+    [[languages.de.menus.footer]]
+      name = "Presse"
+      pageRef = "/pages/presse"
+      weight = 4
+
+    [[languages.de.menus.footer]]
+      name = "Login"
+      url = "https://www.montessorischule-gilching.de/login"
+      weight = 5
 
 ############################# Params ###############################
 [params]

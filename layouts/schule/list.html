@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <section class="container ml-3 mt-10 mb-12 text-center">
+    <h1 class="text-6xl md:text-8xl font-calligraphy leading-none">{{ .Title }}</h1>
+  </section>
+
+  <section class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4 mb-10">
+    {{ $schuleSliderImages := slice "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg" }}
+    {{ partial "components/slider.html" (dict
+      "Images" $schuleSliderImages
+      "ContainerClass" "schule-slider schule-slider-panorama swiper h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]"
+      "Class" "swiper-wrapper"
+      "ClassImage" "swiper-slide")
+    }}
+    <div class="hero-slider-pagination mt-4 text-center"></div>
+  </section>
+
+  <section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
+    <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
+      <div class="card card-body schule-toc">
+        <h3 class="mb-3 text-lg">Inhaltsverzeichnis</h3>
+        {{ .TableOfContents }}
+      </div>
+    </aside>
+
+    <article class="card card-body schule-content">
+      {{ .Content }}
+    </article>
+  </section>
+{{ end }}

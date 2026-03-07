@@ -54,6 +54,9 @@
     });
     // query the ul under navigation
     const ulUnderNav = document.querySelector("#mymenu");
+    if (!ulUnderNav || typeof Mmenu === "undefined") {
+      return;
+    }
     // remove hidden class from ul under navigation
     ulUnderNav.classList.remove("hidden");
     new Mmenu(
@@ -86,6 +89,23 @@
   const heroSliderElement = document.querySelector(".hero-slider");
   if (heroSliderElement && typeof Swiper !== "undefined") {
     new Swiper(heroSliderElement, {
+      effect: "fade",
+      loop: true,
+      speed: 800,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".hero-slider-pagination",
+        clickable: true,
+      },
+    });
+  }
+
+  const schuleSliderElement = document.querySelector(".schule-slider");
+  if (schuleSliderElement && typeof Swiper !== "undefined") {
+    new Swiper(schuleSliderElement, {
       effect: "fade",
       loop: true,
       speed: 800,

@@ -107,6 +107,60 @@
   .hero-3xl {
     @apply text-7xl font-bold leading-none md:text-9xl;
   }
+
+  .schule-hero {
+    background: #fffdf8;
+    border: 1px solid rgba(34, 36, 119, 0.11);
+    box-shadow: 0 10px 24px -24px rgba(34, 36, 119, 0.35);
+  }
+
+  .schule-layout {
+    scroll-margin-top: 5rem;
+  }
+
+  .schule-toc {
+    border-color: rgba(34, 36, 119, 0.1);
+    background: #fff;
+    box-shadow: 0 10px 26px -24px rgba(34, 36, 119, 0.4);
+  }
+
+  .schule-toc nav > ul {
+    @apply m-0 p-0 list-none space-y-2;
+  }
+
+  .schule-toc nav > ul ul {
+    @apply mt-1 ml-3 space-y-1;
+  }
+
+  .schule-toc a {
+    @apply block rounded-md px-2 py-1 text-sm text-monte/80 transition-all duration-150 hover:bg-[#f6f2e8] hover:text-monte;
+  }
+
+  .schule-content {
+    border-color: rgba(34, 36, 119, 0.08);
+    background: #fff;
+    box-shadow: 0 14px 28px -26px rgba(34, 36, 119, 0.35);
+    @apply p-5 md:p-8;
+  }
+
+  .schule-content h2 {
+    @apply mt-10 mb-4 text-monte;
+    scroll-margin-top: 6rem;
+  }
+
+  .schule-content h3 {
+    @apply mt-6 mb-3;
+    scroll-margin-top: 6rem;
+  }
+
+  .schule-content blockquote {
+    border-left: 3px solid rgba(34, 36, 119, 0.25);
+    @apply my-5 px-4 py-2 italic text-monte;
+  }
+
+  .schule-content ul {
+    @apply my-3 space-y-2;
+  }
 }
 
 .share-icons {
@@ -129,4 +183,9 @@
 
 .hero-slider-pagination .swiper-pagination-bullet {
   background-color: #222477;
+}
+
+.schule-slider-panorama .swiper-slide img {
+  object-fit: cover;
+  object-position: center 42%;
 }
