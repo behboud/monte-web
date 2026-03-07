@@ -3,7 +3,49 @@ title: "Schule & Aufnahme"
 meta_title: ""
 description: "Alles Wichtige zu unserer Schule, unserem Konzept und dem Aufnahmeverfahren."
 draft: false
+toc:
+  - label: "Wofür wir stehen"
+    href: "#wofür-wir-stehen"
+  - label: "Unsere Qualitäten"
+    href: "#diese-qualitäten-prägen-unsere-pädagogische-arbeit"
+  - label: "Unsere 5 Säulen"
+    href: "#5-säulen"
+  - label: "Ganztag & Zeiten"
+    href: "#ganztag-und-unterrichtszeiten"
+  - label: "Schulgeld"
+    href: "#schulgeld"
+  - label: "Ein Schultag"
+    href: "#wie-sieht-ein-schultag-aus"
+  - label: "Montessori"
+    href: "#maria-montessori"
+  - label: "Schulgeschichte"
+    href: "#schulgeschichte"
+  - label: "Mittagsverpflegung"
+    href: "#mittagsverpflegung"
+  - label: "Das sind wir"
+    href: "#das-sind-wir"
+    children:
+      - label: "Unser Team"
+        href: "#unser-team"
+      - label: "Unsere Schüler*innen"
+        href: "#unsere-schülerinnen"
+      - label: "Unser Vorstand"
+        href: "#unser-vorstand"
+  - label: "Elternengagement"
+    href: "#elternengagement"
+  - label: "Aufnahme"
+    href: "#der-weg-an-unsere-schule"
+    children:
+      - label: "1. Klasse"
+        href: "#aufnahme-in-die-1-klasse"
+      - label: "Quereinstieg"
+        href: "#quereinstieg"
+      - label: "Aufnahme ins Team"
+        href: "#aufnahme-ins-team"
 ---
+
+## WOFÜR WIR STEHEN
+
 > „Ich halte es für möglich, eine neue Gesellschaft vorauszusehen, in der der Mensch fähiger sein wird, weil man Vertrauen in ihn setzte, als er ein Kind war.“  
 > Maria Montessori
 

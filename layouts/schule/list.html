@@ -18,7 +18,26 @@
     <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
       <div class="card card-body schule-toc">
         <h3 class="mb-3 text-lg">Inhaltsverzeichnis</h3>
-        {{ .TableOfContents }}
+        {{ if .Params.toc }}
+          <nav aria-label="Inhaltsverzeichnis">
+            <ul>
+              {{ range .Params.toc }}
+                <li>
+                  <a href="{{ .href }}">{{ .label }}</a>
+                  {{ with .children }}
+                    <ul>
+                      {{ range . }}
+                        <li><a href="{{ .href }}">{{ .label }}</a></li>
+                      {{ end }}
+                    </ul>
+                  {{ end }}
+                </li>
+              {{ end }}
+            </ul>
+          </nav>
+        {{ else }}
+          {{ .TableOfContents }}
+        {{ end }}
       </div>
     </aside>
 
