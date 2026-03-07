@@ -180,31 +180,36 @@ defaultContentLanguage = "de"
       weight = 1
 
     [[languages.de.menus.top]]
-      name = "Schule & Aufnahme"
+      name = "Schule"
       pageRef = "/schule"
       weight = 2
 
     [[languages.de.menus.top]]
-      name = "Spenden"
-      pageRef = "/spenden/spenden"
+      name = "Elternarbeit"
+      pageRef = "/schule/elternengagement"
       weight = 3
 
     [[languages.de.menus.top]]
-      name = "Verein"
-      pageRef = "/verein/vorstand"
+      name = "Spenden"
+      pageRef = "/spenden"
       weight = 4
+
+    [[languages.de.menus.top]]
+      name = "Verein"
+      pageRef = "/verein"
+      weight = 5
 
     [[languages.de.menus.top]]
       name = "Speiseplan"
       pageRef = "/pages/speiseplan"
-      weight = 5
+      weight = 6
       [languages.de.menus.top.params]
         icon = "fa fa-utensils"
 
     [[languages.de.menus.top]]
       name = "Eltern-Login"
       url = "https://www.montessorischule-gilching.de/login"
-      weight = 6
+      weight = 7
       [languages.de.menus.top.params]
         icon = "fa fa-user-lock"
 
@@ -326,36 +331,14 @@ defaultContentLanguage = "de"
       pageRef = "/aufnahme/schulgeld"
 
     [[languages.de.menus.main]]
-      name = "Spenden und Förderer"
+      name = "Spenden"
+      pageRef = "/spenden"
       weight = 4
 
     [[languages.de.menus.main]]
-      name = "Förderer"
-      weight = 1
-      parent = "Spenden und Förderer"
-      pageRef = "/spenden/foerderer"
-
-    [[languages.de.menus.main]]
-      name = "Spenden"
-      weight = 2
-      parent = "Spenden und Förderer"
-      pageRef = "/spenden/spenden"
-
-    [[languages.de.menus.main]]
       name = "Verein"
+      pageRef = "/verein"
       weight = 5
-
-    [[languages.de.menus.main]]
-      name = "Vorstand"
-      weight = 1
-      parent = "Verein"
-      pageRef = "/verein/vorstand"
-
-    [[languages.de.menus.main]]
-      name = "Satzung"
-      weight = 2
-      parent = "Verein"
-      pageRef = "/verein/satzung"
 
     [[languages.de.menus.main]]
       name = "Karriere"

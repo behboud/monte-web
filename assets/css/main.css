@@ -108,6 +108,10 @@
     @apply text-7xl font-bold leading-none md:text-9xl;
   }
 
+  .page-title-calligraphy {
+    @apply text-8xl font-calligraphy font-normal text-monte;
+  }
+
   .schule-hero {
     background: #fffdf8;
     border: 1px solid rgba(34, 36, 119, 0.11);
@@ -160,6 +164,18 @@
 
   .schule-content ul {
     @apply my-3 space-y-2;
+  }
+
+  .spenden-cta-bar {
+    @apply flex flex-wrap justify-center gap-3;
+  }
+
+  .spenden-cta-primary {
+    @apply border-monte bg-monte text-white hover:bg-primary;
+  }
+
+  .spenden-cta-secondary {
+    @apply border-slate-400 bg-white text-monte hover:bg-slate-50;
   }
 }
 
