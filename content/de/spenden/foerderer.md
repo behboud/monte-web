@@ -11,7 +11,7 @@ spenden:
 
     - title: "Spielgenuß (Gisela Wöhrl)"      
       image: "/images/baum2.jpg"
-      content: "Geldspende"
+      content: "Geldspende an Monte Schule"
 
     - title: "Privater Spender"
       image: "/images/zaun2.jpg"
