@@ -1,23 +1,15 @@
 ---
-title: "Die nächste Mitgliederversammelung"
-meta_title: ""
-description: "this is meta description"
+title: Unsere Mitgliederversammlung
+publishdate: 2026-03-07T17:14:00
+image: /images/image-placeholder.png
+author: Sam Wilson
+tags:
+  - Mitglieder
+  - Termin
 date: 2023-05-04T05:00:00Z
-publishdate: 2025-01-04T05:00:00Z
-image: "/images/image-placeholder.png"
-author: "Sam Wilson"
-tags: ["Mitglieder", "Termin"]
 draft: false
+description: this is meta description
+meta_title: ''
 ---
 
-Nemo vel ad consectetur namut rutrum ex, venenatis sollicitudin urna. Aliquam erat volutpat. Integer eu ipsum sem. Ut bibendum lacus vestibulum maximus suscipit. Quisque vitae nibh iaculis neque blandit euismod.
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo vel ad consectetur ut aperiam. Itaque eligendi natus aperiam? Excepturi repellendus consequatur quibusdam optio expedita praesentium est adipisci dolorem ut eius!
-
-## Creative Design
-
-Nam ut rutrum ex, venenatis sollicitudin urna. Aliquam erat volutpat. Integer eu ipsum sem. Ut bibendum lacus vestibulum maximus suscipit. Quisque vitae nibh iaculis neque blandit euismod.
-
-> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo vel ad consectetur ut aperiam. Itaque eligendi natus aperiam? Excepturi repellendus consequatur quibusdam optio expedita praesentium est adipisci dolorem ut eius!
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo vel ad consectetur ut aperiam. Itaque eligendi natus aperiam? Excepturi repellendus consequatur quibusdam optio expedita praesentium est adipisci dolorem ut eius!
+Kommt zahlreich!
