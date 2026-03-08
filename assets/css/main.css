@@ -112,12 +112,6 @@
     @apply text-8xl font-calligraphy font-normal text-monte;
   }
 
-  .schule-hero {
-    background: #fffdf8;
-    border: 1px solid rgba(34, 36, 119, 0.11);
-    box-shadow: 0 10px 24px -24px rgba(34, 36, 119, 0.35);
-  }
-
   .schule-layout {
     scroll-margin-top: 5rem;
   }
