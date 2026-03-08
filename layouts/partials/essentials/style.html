@@ -34,7 +34,7 @@
 
 {{ $stylesLazy = $stylesLazy | resources.Concat "css/style-lazy.css" }}
 
-{{ if and hugo.IsProduction (not hugo.IsServer) }}
+{{ if and hugo.IsProduction (not .Site.IsServer) }}
   {{ $styles = $styles | minify | fingerprint }}
   {{ $stylesLazy = $stylesLazy | minify | fingerprint }}
 {{ end }}

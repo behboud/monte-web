@@ -28,7 +28,7 @@
       </div>
       <div class="mb-8 text-center lg:mb-0 lg:mt-0 lg:text-right">
         {{ $contactPage := site.GetPage "/pages/kontakt" }}
-        {{ $socialLinks := cond (and $contactPage $contactPage.Params.social_links) $contactPage.Params.social_links site.Data.social.main }}
+        {{ $socialLinks := cond (and $contactPage $contactPage.Params.social_links) $contactPage.Params.social_links (slice) }}
         <ul class="flex justify-center text-monte text-xl mt-2">
           {{ range $socialLinks }}
             <li>

@@ -160,9 +160,16 @@ npx playwright test tests/ui/style-regression.spec.ts --project=desktop-chromium
 
 ### Social Media Links
 
-**Admin-Oberfläche**: Site Settings -> Social Media
+**Ort**: `content/de/pages/kontakt.md` im Frontmatter unter `social_links`.
 
-**Oder direkt**: `data/social.json`
+Beispiel:
+
+```yaml
+social_links:
+  - name: facebook
+    icon: fab fa-facebook
+    link: https://www.facebook.com/
+```
 
 ## UI-Komponenten und Bibliotheken
 

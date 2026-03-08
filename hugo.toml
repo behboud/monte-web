@@ -1,5 +1,5 @@
 ######################## default configuration ####################
-baseURL = "https://behboud.github.io/monte-web/"
+baseURL = "/"
 title = "Montessori Schule Gilching (München West)"
 timeZone = "Europe/Berlin"
 summaryLength = 10

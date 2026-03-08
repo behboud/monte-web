@@ -20,17 +20,6 @@ collections:
   - name: "site_settings"
     label: "Site Settings"
     files:
-      - file: "data/social.json"
-        label: Social Media
-        name: social_media
-        fields:
-          - label: List of Social Media links
-            name: main
-            widget: list
-            fields:
-              - { label: Name, name: name, widget: string }
-              - { label: Icon (Font Awesome), name: icon, widget: string }
-              - { label: Link, name: link, widget: string }
       - file: "hugo.toml"
         label: Site Config
         name: config
@@ -94,6 +83,25 @@ collections:
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "kontakt_settings"
+    label: "Kontakt & Social"
+    editor:
+      preview: false
+    files:
+      - file: "content/de/pages/kontakt.md"
+        label: "Kontakt"
+        name: "kontakt"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - label: "Social Links"
+            name: "social_links"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Icon (Font Awesome)", name: "icon", widget: "string" }
+              - { label: "Link", name: "link", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
   - name: "aufnahme"
     label: "Aufnahme"
     folder: "content/de/aufnahme"
