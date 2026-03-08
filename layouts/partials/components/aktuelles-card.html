@@ -26,6 +26,6 @@
     <p class="mb-6">{{ .Summary | plainify }}</p>
   </div>
   <a class="btn btn-default w-fit" href="{{ .RelPermalink }}">
-    {{ T "read_more" }}
+    {{ T "read_more" | default "Weiterlesen" }}
   </a>
 </div>

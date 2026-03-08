@@ -44,7 +44,7 @@
     {{ $related := .Site.RegularPages.Related . | first 6 }}
     {{ with $related }}
       <div class="ml-3 basis-1/4">
-        <h4 class="mb-2">{{ T "related_posts" }}:</h4>
+        <h4 class="mb-2">{{ T "related_posts" | default "Weitere Beiträge" }}:</h4>
         {{ range sort . "Date" "desc" }}
           <div class="heading-divider">
             <h3 class="card-title mb-2 text-monte ">
