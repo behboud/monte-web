@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "behboud kalantary",
   "scripts": {
-    "dev": "hugo server",
+    "dev": "hugo server --environment development --baseURL http://localhost:1313/",
     "build": "hugo --gc --minify",
     "project-setup": "hugo version",
     "test:ui": "npm run build && node scripts/ui/generate-routes.mjs && playwright test",

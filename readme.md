@@ -33,12 +33,12 @@ npm install
 Entwicklungsserver starten:
 
 ```bash
-hugo server
+hugo server --environment development --baseURL http://localhost:1313/
 ```
 
 Der Server läuft unter http://localhost:1313 mit Live-Reload bei Dateiänderungen.
 
-Hinweis: Für die lokale Entwicklung reicht `hugo server`; der separate Tailwind-Watch ist nicht erforderlich.
+Hinweis: Für die lokale Entwicklung reicht der obige `hugo server`-Befehl; der separate Tailwind-Watch ist nicht erforderlich.
 
 ## Deployment
 
@@ -65,13 +65,9 @@ monte-web/
 │   │   └── main.js         # Main-JS (mmenu-Initialisierung)
 │   ├── plugins/            # Drittanbieter-Bibliotheken
 │   └── images/             # Bilder für Templates
-├── config/
-│   └── development/
-│       └── config.toml     # Lokaler baseURL-Override für hugo server
 ├── content/                # Content-Dateien (Markdown)
 │   └── de/                 # Deutscher Content
 │       ├── aktuelles/      # News-Bereich
-│       ├── aufnahme/       # Aufnahme-Bereich
 │       ├── pages/          # Statische Seiten
 │       ├── schule/         # Schul-Bereich
 │       ├── spenden/        # Spenden-Bereich
@@ -110,7 +106,6 @@ monte-web/
 | ----------------- | ----------------------- |
 | News/Artikel      | `content/de/aktuelles/` |
 | Schul-Information | `content/de/schule/`    |
-| Aufnahme          | `content/de/aufnahme/`  |
 | Spenden           | `content/de/spenden/`   |
 | Verein            | `content/de/verein/`    |
 | Statische Seiten  | `content/de/pages/`     |
@@ -143,19 +138,19 @@ Icons: https://fontawesome.com/search (mit `fa-` Präfix)
 
 ### Konfiguration ändern
 
-| Einstellung                 | Datei                                               |
-| --------------------------- | --------------------------------------------------- |
-| Site-Titel, BaseURL         | `hugo.toml`                                         |
-| Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                      |
-| Menüs                       | `hugo.toml` (`languages.de.menus`)                  |
-| Parameter                   | `hugo.toml` (`params`)                              |
-| Sprachen                    | `hugo.toml` (`languages`)                           |
-| Lokaler Entwicklungs-Server | `config/development/config.toml` (nur lokale Basis) |
+| Einstellung                 | Datei                                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Site-Titel, BaseURL         | `hugo.toml`                                                                                            |
+| Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                                                                         |
+| Menüs                       | `hugo.toml` (`languages.de.menus`)                                                                     |
+| Parameter                   | `hugo.toml` (`params`)                                                                                 |
+| Sprachen                    | `hugo.toml` (`languages`)                                                                              |
+| Lokaler Entwicklungs-Server | npm-Script `npm run dev` bzw. `hugo server --environment development --baseURL http://localhost:1313/` |
 
 ### Hugo-Konfigurationspolicy
 
 - Primäre Konfigurationsquelle ist `hugo.toml`.
-- Nur lokale Entwicklungs-Overrides liegen in `config/development/config.toml`.
+- Lokale Entwicklungs-Overrides werden direkt über den Startbefehl gesetzt (`--environment development --baseURL ...`).
 - Nach Konfigurationsänderungen immer validieren mit:
 
 ```bash
@@ -216,7 +211,6 @@ News-Beiträge und Seiten können über das CMS bearbeitet werden. Änderungen w
 - **aktuelles**: News-Artikel (create: true)
 - **pages**: Statische Seiten (create: true)
 - **schule**: Schul-Informationen (read-only)
-- **aufnahme**: Aufnahme-Informationen (read-only)
 - **spenden**: Spenden-Informationen (read-only)
 - **verein**: Verein-Informationen (read-only)
 
