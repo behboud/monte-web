@@ -30,6 +30,19 @@
 {{ with $ctx.Params.toc.sections }}
   {{ $tocEntries = . }}
 {{ end }}
+{{ $hasTocContent := false }}
+{{ range $tocEntries }}
+  {{ if .content }}
+    {{ $hasTocContent = true }}
+  {{ end }}
+  {{ with .children }}
+    {{ range . }}
+      {{ if .content }}
+        {{ $hasTocContent = true }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 
 {{ if $tocEntries }}
   <section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
@@ -80,29 +93,33 @@
     </aside>
 
     <article class="card card-body schule-content">
-      {{ range $tocEntries }}
-        {{ $sectionTitle := .title | default .label }}
-        {{ $sectionID := .id }}
-        {{ if not $sectionID }}
-          {{ $sectionID = $sectionTitle | anchorize }}
-        {{ end }}
-        <h2 id="{{ $sectionID }}">{{ $sectionTitle }}</h2>
-        {{ with .content }}
-          {{ . | markdownify }}
-        {{ end }}
-        {{ with .children }}
-          {{ range . }}
-            {{ $childTitle := .title | default .label }}
-            {{ $childID := .id }}
-            {{ if not $childID }}
-              {{ $childID = $childTitle | anchorize }}
-            {{ end }}
-            <h3 id="{{ $childID }}">{{ $childTitle }}</h3>
-            {{ with .content }}
-              {{ . | markdownify }}
+      {{ if $hasTocContent }}
+        {{ range $tocEntries }}
+          {{ $sectionTitle := .title | default .label }}
+          {{ $sectionID := .id }}
+          {{ if not $sectionID }}
+            {{ $sectionID = $sectionTitle | anchorize }}
+          {{ end }}
+          <h2 id="{{ $sectionID }}">{{ $sectionTitle }}</h2>
+          {{ with .content }}
+            {{ . | markdownify }}
+          {{ end }}
+          {{ with .children }}
+            {{ range . }}
+              {{ $childTitle := .title | default .label }}
+              {{ $childID := .id }}
+              {{ if not $childID }}
+                {{ $childID = $childTitle | anchorize }}
+              {{ end }}
+              <h3 id="{{ $childID }}">{{ $childTitle }}</h3>
+              {{ with .content }}
+                {{ . | markdownify }}
+              {{ end }}
             {{ end }}
           {{ end }}
         {{ end }}
+      {{ else }}
+        {{ $ctx.Content }}
       {{ end }}
     </article>
   </section>

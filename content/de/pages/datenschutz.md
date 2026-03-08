@@ -1,6 +1,23 @@
 ---
 title: "Datenschutz"
 draft: false
+toc:
+  title: "Seitenübersicht"
+  sections:
+    - label: "Datenschutz auf einen Blick"
+      title: "1. Datenschutz auf einen Blick"
+    - label: "Hosting"
+      title: "2. Hosting"
+    - label: "Pflichtinformationen"
+      title: "3. Allgemeine Hinweise und Pflichtinformationen"
+    - label: "Datenerfassung"
+      title: "4. Datenerfassung auf dieser Website"
+    - label: "Analyse und Werbung"
+      title: "5. Analyse-Tools und Werbung"
+    - label: "Audio- und Videokonferenzen"
+      title: "6. Audio- und Videokonferenzen"
+    - label: "Eigene Dienste"
+      title: "7. Eigene Dienste"
 ---
 
 ## Datenschutzerklärung

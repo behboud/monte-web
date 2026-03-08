@@ -1,6 +1,19 @@
 ---
 title: "Impressum"
 draft: false
+toc:
+  title: "Seitenübersicht"
+  sections:
+    - label: "Impressum"
+      title: "Impressum"
+    - label: "Kontakt"
+      title: "Kontakt"
+    - label: "Aufsichtsbehörde"
+      title: "Aufsichtsbehörde"
+    - label: "Redaktion"
+      title: "Redaktionell verantwortlich"
+    - label: "Streitbeilegung"
+      title: "Verbraucherstreitbeilegung/Universalschlichtungsstelle"
 ---
 
 ## Impressum
