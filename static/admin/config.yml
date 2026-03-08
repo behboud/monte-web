@@ -98,15 +98,16 @@ collections:
             name: "meal_plan"
             widget: "object"
             fields:
-              - { label: "Woche", name: "week_label", widget: "string" }
-              - { label: "Heutiges Datum (Test)", name: "test_today", widget: "date", required: false, hint: "Nur für Hervorhebung von Heute" }
               - label: "Tage"
                 name: "days"
                 widget: "list"
                 min: 1
                 fields:
-                  - { label: "Tag", name: "day", widget: "string" }
-                  - { label: "Datum", name: "date", widget: "date", required: false }
+                  - label: "Datum"
+                    name: "date"
+                    widget: "datetime"
+                    time_format: false
+                    required: false
                   - { label: "Hauptgericht", name: "main", widget: "string" }
                   - { label: "Beilage", name: "side", widget: "string", required: false }
                   - { label: "Nachtisch", name: "dessert", widget: "string", required: false }
