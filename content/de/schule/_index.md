@@ -120,11 +120,7 @@ An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir
 
 ## Maria Montessori
 
-Unter den nachstehenden Links finden Sie ausführliche Informationen:
-
-- [Zur Person Maria Montessori](/schule/konzept/maria-montessori/zur-person)
-- [Grundzüge der Pädagogik](/schule/konzept/maria-montessori/grundzuege-der-paedagogik)
-- [Qualitäten unseres Konzepts](/schule/konzept/qualitaeten)
+Unter den nachstehenden Informationen finden Sie einen kompakten Überblick zu Maria Montessori und zur pädagogischen Ausrichtung unserer Schule auf dieser Seite.
 
 ## Schulgeschichte
 
@@ -157,10 +153,7 @@ Die Kinder werden in Entstehungs- und Verarbeitungsprozesse eingebunden: Am wöc
 - Verwaltung
 - Team fürs Mittagessen
 
-Weiterführend:
-
-- [Unser pädagogisches Team](/schule/paedagogisches-team)
-- [Unsere Verwaltung](/schule/verwaltung)
+Weiterführende Informationen zu Team und Verwaltung werden auf dieser Seite ergänzt.
 
 ### Unsere Schüler\*innen
 
@@ -185,8 +178,8 @@ Die Montessorischule Gilching wurde vor über 20 Jahren durch eine Elterninitiat
 
 Möglichkeiten sind unter anderem:
 
-- [Engagement im Elternbeirat](/schule/elternengagement/elternbeirat)
-- [Mitarbeit in AGs und Diensten](/schule/elternengagement/ags-und-dienste)
+- Mitwirkung als Elternvertretung und in Arbeitsgruppen
+- Unterstützung bei Schulprojekten, Festen und Aktionen
 - Durchführung eines eigenen Nachmittagsprojekts
 - Unterstützung bei Basteltagen und Projektwochen
 

@@ -27,5 +27,4 @@ Eltern gestalten den Alltag aktiv mit, übernehmen Verantwortung und bringen ihr
 
 ## Weiterführende Seiten
 
-- [Elternbeirat](/schule/elternengagement/elternbeirat)
-- [AGs und Dienste](/schule/elternengagement/ags-und-dienste)
+Weitere Informationen werden fortlaufend direkt auf dieser Seite ergänzt.

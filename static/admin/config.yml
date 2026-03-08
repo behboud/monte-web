@@ -102,75 +102,79 @@ collections:
               - { label: "Icon (Font Awesome)", name: "icon", widget: "string" }
               - { label: "Link", name: "link", widget: "string" }
           - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "aufnahme"
-    label: "Aufnahme"
-    folder: "content/de/aufnahme"
-    create: false
+  - name: "sections"
+    label: "Bereiche"
     editor:
       preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "schule"
-    label: "Schule"
-    folder: "content/de/schule"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "elternengagement"
-    label: "Elternengagement"
-    folder: "content/de/schule/elternengagement"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "konzept"
-    label: "Konzept"
-    folder: "content/de/schule/konzept"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "mariamontessori"
-    label: "Maria Montessori"
-    folder: "content/de/schule/konzept/maria-montessori"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "schulhaus"
-    label: "Schulhaus"
-    folder: "content/de/schule/schulhaus"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "spenden"
-    label: "Spenden"
-    folder: "content/de/spenden"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
-  - name: "verein"
-    label: "Verein"
-    folder: "content/de/verein"
-    create: false
-    editor:
-      preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
+    files:
+      - file: "content/de/schule/_index.md"
+        label: "Schule & Aufnahme"
+        name: "schule"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Meta Title", name: "meta_title", widget: "string", required: false }
+          - { label: "Beschreibung", name: "description", widget: "string", required: false }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Seitenübersicht (TOC)"
+            name: "toc"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Anker-Link", name: "href", widget: "string" }
+              - label: "Unterpunkte"
+                name: "children"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Anker-Link", name: "href", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - file: "content/de/elternengagement/_index.md"
+        label: "Elternengagement"
+        name: "elternengagement"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Meta Title", name: "meta_title", widget: "string", required: false }
+          - { label: "Beschreibung", name: "description", widget: "string", required: false }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Seitenübersicht (TOC)"
+            name: "toc"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Anker-Link", name: "href", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - file: "content/de/spenden/_index.md"
+        label: "Spenden"
+        name: "spenden"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Meta Title", name: "meta_title", widget: "string", required: false }
+          - { label: "Beschreibung", name: "description", widget: "string", required: false }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
+          - label: "Förderer/Spendenliste"
+            name: "spenden"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Name", name: "title", widget: "string" }
+              - { label: "Bild", name: "image", widget: "image" }
+              - { label: "Text", name: "content", widget: "text" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - file: "content/de/verein/_index.md"
+        label: "Verein"
+        name: "verein"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Seitenübersicht (TOC)"
+            name: "toc"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Anker-Link", name: "href", widget: "string" }
+          - { label: "Inhalt", name: "body", widget: "markdown" }

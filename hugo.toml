@@ -15,6 +15,9 @@ defaultContentLanguage = "de"
 [permalinks.page]
   pages = "/:slugorcontentbasename/"
 
+[permalinks.section]
+  elternengagement = "/elternengagement/"
+
 ########################## Pagination ############################
 [pagination]
   disableAliases = false
@@ -186,7 +189,7 @@ defaultContentLanguage = "de"
 
     [[languages.de.menus.top]]
       name = "Elternarbeit"
-      pageRef = "/schule/elternengagement"
+      pageRef = "/elternengagement"
       weight = 3
 
     [[languages.de.menus.top]]
@@ -219,100 +222,14 @@ defaultContentLanguage = "de"
       weight = 1
 
     [[languages.de.menus.main]]
-      name = "Unsere Schule"
+      name = "Schule"
+      pageRef = "/schule"
       weight = 2
-
-    [[languages.de.menus.main]]
-      name = "Konzept"
-      weight = 1
-      parent = "Unsere Schule"
-
-    [[languages.de.menus.main]]
-      name = "Qualitäten"
-      weight = 1
-      parent = "Konzept"
-      pageRef = "/schule/konzept/qualitaeten"
-
-    [[languages.de.menus.main]]
-      name = "Maria Montessori"
-      weight = 2
-      parent = "Konzept"
-
-    [[languages.de.menus.main]]
-      name = "Zur Person"
-      weight = 1
-      parent = "Maria Montessori"
-      pageRef = "/schule/konzept/maria-montessori/zur-person"
-
-    [[languages.de.menus.main]]
-      name = "Grundzüge der Pädagogik"
-      weight = 2
-      parent = "Maria Montessori"
-      pageRef = "/schule/konzept/maria-montessori/grundzuege-der-paedagogik"
-
-    [[languages.de.menus.main]]
-      name = "Schulhaus"
-      weight = 2
-      parent = "Unsere Schule"
-
-    [[languages.de.menus.main]]
-      name = "Haus"
-      weight = 1
-      parent = "Schulhaus"
-      pageRef = "/schule/schulhaus/haus"
-
-    [[languages.de.menus.main]]
-      name = "Küche"
-      weight = 2
-      parent = "Schulhaus"
-      pageRef = "/schule/schulhaus/kueche"
-
-    [[languages.de.menus.main]]
-      name = "Schulgeld"
-      weight = 3
-      parent = "Schulhaus"
-      pageRef = "/schule/schulhaus/schulgeld"
-
-    [[languages.de.menus.main]]
-      name = "Schulordnung"
-      weight = 4
-      parent = "Schulhaus"
-      pageRef = "/schule/schulhaus/schulordnung"
-
-    [[languages.de.menus.main]]
-      name = "Verwaltung"
-      weight = 3
-      parent = "Unsere Schule"
-      pageRef = "/schule/verwaltung"
-
-    [[languages.de.menus.main]]
-      name = "Pädagogisches Team"
-      weight = 4
-      parent = "Unsere Schule"
-      pageRef = "/schule/paedagogisches-team"
-
-    [[languages.de.menus.main]]
-      name = "Schüler*innen"
-      weight = 5
-      parent = "Unsere Schule"
-      pageRef = "/schule/schuelerinnen"
 
     [[languages.de.menus.main]]
       name = "Elternengagement"
-      weight = 6
-      parent = "Unsere Schule"
-
-    [[languages.de.menus.main]]
-      name = "Elternbeirat"
-      weight = 1
-      parent = "Elternengagement"
-      pageRef = "/schule/elternengagement/elternbeirat"
-
-    [[languages.de.menus.main]]
-      name = "AGs und Dienste"
-      weight = 2
-      parent = "Elternengagement"
-      pageRef = "/schule/elternengagement/ags-und-dienste"
+      pageRef = "/elternengagement"
+      weight = 3
 
     [[languages.de.menus.main]]
       name = "Spenden"

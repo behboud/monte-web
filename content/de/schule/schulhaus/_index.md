@@ -1,4 +1,0 @@
----
-title: "Schulhaus"
-draft: false
----
