@@ -160,6 +160,15 @@
     @apply my-3 space-y-2;
   }
 
+  .schule-content a[href^="mailto:"] {
+    @apply font-semibold text-monte underline decoration-monte/35 underline-offset-4 hover:text-primary;
+  }
+
+  .schule-content h2 + p,
+  .schule-content h2 + ul {
+    @apply mt-1;
+  }
+
   .spenden-cta-bar {
     @apply flex flex-wrap justify-center gap-3;
   }
