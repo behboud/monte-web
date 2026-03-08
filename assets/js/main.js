@@ -119,4 +119,64 @@
       },
     });
   }
+
+  const mobileToc = document.querySelector("[data-mobile-toc]");
+  if (mobileToc) {
+    const toggle = mobileToc.querySelector("[data-mobile-toc-toggle]");
+    const panel = mobileToc.querySelector("[data-mobile-toc-panel]");
+    const current = mobileToc.querySelector("[data-mobile-toc-current]");
+    const tocTitle = mobileToc.getAttribute("data-toc-title") || "Seitenübersicht";
+    const links = [...mobileToc.querySelectorAll("[data-mobile-toc-link]")];
+    const headings = [...document.querySelectorAll(".schule-content h2[id], .schule-content h3[id]")];
+
+    const setOpen = (open) => {
+      mobileToc.setAttribute("data-open", open ? "true" : "false");
+      toggle?.setAttribute("aria-expanded", open ? "true" : "false");
+      if (panel) {
+        panel.classList.toggle("hidden", !open);
+      }
+    };
+
+    setOpen(false);
+
+    toggle?.addEventListener("click", () => {
+      const isOpen = mobileToc.getAttribute("data-open") === "true";
+      setOpen(!isOpen);
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    const headingIndex = new Map();
+    links.forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      if (!href.startsWith("#")) {
+        return;
+      }
+      const id = href.slice(1);
+      if (id && !headingIndex.has(id)) {
+        headingIndex.set(id, link.textContent?.trim() || "");
+      }
+    });
+
+    const updateCurrent = () => {
+      if (!headings.length || !current) {
+        return;
+      }
+      const marker = window.scrollY + 140;
+      let active = headings[0];
+      headings.forEach((h) => {
+        if (h.offsetTop <= marker) {
+          active = h;
+        }
+      });
+      const id = active.getAttribute("id") || "";
+      const label = headingIndex.get(id) || active.textContent?.trim() || tocTitle;
+      current.textContent = `${tocTitle} > ${label}`;
+    };
+
+    window.addEventListener("scroll", updateCurrent, { passive: true });
+    updateCurrent();
+  }
 })();

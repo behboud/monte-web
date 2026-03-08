@@ -118,7 +118,7 @@ monte-web/
 Menüpunkte werden hier definiert mit:
 
 - `name`: Anzeigename
-- `pageRef`: Interne Seite (z.B. `/pages/speiseplan`)
+- `pageRef`: Interne Seite (z.B. `/speiseplan`)
 - `url`: Externe Links
 - `weight`: Reihenfolge
 - `params.icon`: Font Awesome Icon (z.B. `fa fa-utensils`)
@@ -129,6 +129,7 @@ Beispiel für neuen Menüpunkt:
 [[languages.de.menus.top]]
 name = "SPEISEPLAN"
 pageRef = "/pages/speiseplan"
+pageRef = "/speiseplan"
 weight = 4
 [languages.de.menus.top.params]
 icon = "fa fa-utensils"

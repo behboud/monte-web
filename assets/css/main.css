@@ -235,6 +235,43 @@
   .speiseplan-notes {
     @apply rounded-xl border border-monte/15 bg-white p-4;
   }
+
+  .mobile-toc {
+    @apply rounded-xl border border-monte/15 bg-white;
+    box-shadow: 0 10px 22px -20px rgba(34, 36, 119, 0.35);
+  }
+
+  .mobile-toc-trigger {
+    @apply flex w-full items-center justify-between px-4 py-3 text-sm font-semibold text-monte;
+  }
+
+  .mobile-toc-current {
+    @apply truncate;
+  }
+
+  .mobile-toc-chevron {
+    @apply ml-3 text-xs transition-transform duration-200;
+  }
+
+  .mobile-toc[data-open="true"] .mobile-toc-chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-toc-panel {
+    @apply border-t border-monte/10 px-3 py-2;
+  }
+
+  .mobile-toc-panel ul {
+    @apply list-none m-0 p-0;
+  }
+
+  .mobile-toc-panel ul ul {
+    @apply ml-3 mt-1;
+  }
+
+  .mobile-toc-panel a {
+    @apply block rounded-md px-2 py-1.5 text-sm text-monte/85 hover:bg-[#f6f2e8] hover:text-monte;
+  }
 }
 
 .share-icons {

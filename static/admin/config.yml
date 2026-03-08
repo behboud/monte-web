@@ -76,13 +76,76 @@ collections:
           - { label: "Inhalt", name: "body", widget: "markdown", required: false }
   - name: "pages"
     label: "Einzelseiten"
-    create: true
-    folder: "content/de/pages"
     editor:
       preview: false
-    fields:
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Inhalt", name: "body", widget: "markdown" }
+    files:
+      - file: "content/de/pages/impressum.md"
+        label: "Impressum"
+        name: "impressum"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Seitenübersicht (ein TOC)"
+            name: "toc"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - label: "Bereiche"
+                name: "sections"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - file: "content/de/pages/datenschutz.md"
+        label: "Datenschutz"
+        name: "datenschutz"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Seitenübersicht (ein TOC)"
+            name: "toc"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - label: "Bereiche"
+                name: "sections"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - file: "content/de/pages/karriere.md"
+        label: "Karriere"
+        name: "karriere"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
+      - file: "content/de/pages/presse.md"
+        label: "Presse"
+        name: "presse"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Seitenübersicht (ein TOC)"
+            name: "toc"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - label: "Bereiche"
+                name: "sections"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+          - { label: "Inhalt", name: "body", widget: "markdown" }
   - name: "speiseplan"
     label: "Speiseplan"
     editor:

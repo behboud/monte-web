@@ -20,7 +20,7 @@ test.describe("style regressions", () => {
   });
 
   test("breadcrumb keeps trail muted and current item highlighted", async ({ page }) => {
-    await page.goto("/schule/konzept/maria-montessori/zur-person/", {
+    await page.goto("/schule/", {
       waitUntil: "networkidle",
     });
 

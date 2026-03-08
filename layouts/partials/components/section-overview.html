@@ -30,6 +30,10 @@
 {{ with $ctx.Params.toc.sections }}
   {{ $tocEntries = . }}
 {{ end }}
+{{ $tocTitle := "Seitenübersicht" }}
+{{ with $ctx.Params.toc.title }}
+  {{ $tocTitle = . }}
+{{ end }}
 {{ $hasTocContent := false }}
 {{ range $tocEntries }}
   {{ if .content }}
@@ -45,13 +49,54 @@
 {{ end }}
 
 {{ if $tocEntries }}
+  <section class="container ml-3 mb-4 lg:hidden">
+    <div class="mobile-toc" data-mobile-toc data-toc-title="{{ $tocTitle }}">
+      <button class="mobile-toc-trigger" type="button" data-mobile-toc-toggle aria-expanded="false" aria-controls="mobile-toc-panel">
+        <span class="mobile-toc-current" data-mobile-toc-current>{{ $tocTitle }}</span>
+        <span class="fa fa-chevron-down mobile-toc-chevron" aria-hidden="true"></span>
+      </button>
+      <nav id="mobile-toc-panel" class="mobile-toc-panel hidden" aria-label="Seitenübersicht" data-mobile-toc-panel>
+        <ul>
+          {{ range $tocEntries }}
+            {{ $sectionTitle := .title | default .label }}
+            {{ $href := .href }}
+            {{ if not $href }}
+              {{ with .id }}
+                {{ $href = printf "#%s" (strings.TrimPrefix "#" .) }}
+              {{ end }}
+            {{ end }}
+            {{ if not $href }}
+              {{ $href = printf "#%s" ($sectionTitle | anchorize) }}
+            {{ end }}
+            <li>
+              <a href="{{ $href }}" data-mobile-toc-link>{{ .label }}</a>
+              {{ with .children }}
+                <ul>
+                  {{ range . }}
+                    {{ $childTitle := .title | default .label }}
+                    {{ $childHref := .href }}
+                    {{ if not $childHref }}
+                      {{ with .id }}
+                        {{ $childHref = printf "#%s" (strings.TrimPrefix "#" .) }}
+                      {{ end }}
+                    {{ end }}
+                    {{ if not $childHref }}
+                      {{ $childHref = printf "#%s" ($childTitle | anchorize) }}
+                    {{ end }}
+                    <li><a href="{{ $childHref }}" data-mobile-toc-link>{{ .label }}</a></li>
+                  {{ end }}
+                </ul>
+              {{ end }}
+            </li>
+          {{ end }}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
   <section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
-    <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
+    <aside class="hidden lg:block schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
       <div class="card card-body schule-toc">
-        {{ $tocTitle := "Seitenübersicht" }}
-        {{ with $ctx.Params.toc.title }}
-          {{ $tocTitle = . }}
-        {{ end }}
         <h3 class="mb-3 text-lg">{{ $tocTitle }}</h3>
         <nav aria-label="Seitenübersicht">
           <ul>
