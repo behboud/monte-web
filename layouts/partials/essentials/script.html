@@ -37,7 +37,7 @@
 
 {{ $scriptsLazy = $scriptsLazy | resources.Concat "js/script-lazy.js" }}
 
-{{ if and hugo.IsProduction (not .Site.IsServer) }}
+{{ if and hugo.IsProduction (not hugo.IsServer) }}
   {{ $scripts = $scripts | minify | fingerprint }}
   {{ $scriptsLazy = $scriptsLazy | minify | fingerprint }}
 {{ end }}
@@ -49,7 +49,7 @@
 <script defer async crossorigin="anonymous" integrity="{{ $scriptsLazy.Data.Integrity }}" src="{{ $scriptsLazy.RelPermalink }}"></script>
 
 <!-- progressive web app -->
-{{ if and hugo.IsProduction (not .Site.IsServer) }}
+{{ if and hugo.IsProduction (not hugo.IsServer) }}
   {{ partialCached "pwa.html" . }}
 {{ end }}
 

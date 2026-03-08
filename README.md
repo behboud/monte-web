@@ -289,7 +289,7 @@ Siehe decap-proxy README: https://github.com/behboud/decap-proxy
 ## UI Teststrategie (Parität)
 
 - Playwright-basierte Visual-Regression + Interaktionstests in `tests/ui/`.
-- Route-Abdeckung wird aus `public/sitemap.xml` generiert (`scripts/ui/generate-routes.mjs`).
+- Route-Abdeckung wird aus `public/sitemap.xml` generiert (`tests/ui/generate-routes.mjs`).
 - Relevante npm-Befehle:
   - `npm run test:ui` (Build + Routen-Generierung + Playwright)
   - `npm run test:ui:update` (Snapshots aktualisieren)

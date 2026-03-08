@@ -8,8 +8,8 @@
     "dev": "hugo server --environment development --baseURL http://localhost:1313/",
     "build": "hugo --gc --minify",
     "project-setup": "hugo version",
-    "test:ui": "npm run build && node scripts/ui/generate-routes.mjs && playwright test",
-    "test:ui:update": "npm run build && node scripts/ui/generate-routes.mjs && playwright test --update-snapshots"
+    "test:ui": "npm run build && node tests/ui/generate-routes.mjs && playwright test",
+    "test:ui:update": "npm run build && node tests/ui/generate-routes.mjs && playwright test --update-snapshots"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

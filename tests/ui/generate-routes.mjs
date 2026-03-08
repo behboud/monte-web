@@ -16,8 +16,12 @@ const locationMatches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
 
 const routes = locationMatches
   .map((match) => {
+    const raw = match[1]?.trim();
+    if (!raw) {
+      return null;
+    }
     try {
-      const parsed = new URL(match[1]);
+      const parsed = new URL(raw, "http://localhost");
       const pathname = parsed.pathname;
       if (!pathname || pathname.includes(".xml") || pathname.includes(".json")) {
         return null;
