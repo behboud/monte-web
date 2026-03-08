@@ -1,6 +1,5 @@
 ---
 title: "Kontakt"
-meta_title: ""
 description: "das ist eine Meta Beschreibung"
 draft: false
 social_links:

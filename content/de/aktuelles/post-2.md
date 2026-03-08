@@ -9,7 +9,6 @@ tags:
 date: 2023-05-04T05:00:00Z
 draft: false
 description: this is meta description
-meta_title: ''
 ---
 
 Kommt zahlreich!

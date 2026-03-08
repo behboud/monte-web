@@ -18,17 +18,45 @@
 <section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
   <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
     <div class="card card-body schule-toc">
-      <h3 class="mb-3 text-lg">Seitenübersicht</h3>
-      {{ if $ctx.Params.toc }}
+      {{ $tocTitle := "Seitenübersicht" }}
+      {{ with $ctx.Params.toc.title }}
+        {{ $tocTitle = . }}
+      {{ end }}
+      <h3 class="mb-3 text-lg">{{ $tocTitle }}</h3>
+      {{ $tocEntries := $ctx.Params.toc }}
+      {{ with $ctx.Params.toc.sections }}
+        {{ $tocEntries = . }}
+      {{ end }}
+      {{ if $tocEntries }}
         <nav aria-label="Seitenübersicht">
           <ul>
-            {{ range $ctx.Params.toc }}
+            {{ range $tocEntries }}
               <li>
-                <a href="{{ .href }}">{{ .label }}</a>
+                {{ $sectionTitle := .title | default .label }}
+                {{ $href := .href }}
+                {{ if not $href }}
+                  {{ with .id }}
+                    {{ $href = printf "#%s" (strings.TrimPrefix "#" .) }}
+                  {{ end }}
+                {{ end }}
+                {{ if not $href }}
+                  {{ $href = printf "#%s" ($sectionTitle | anchorize) }}
+                {{ end }}
+                <a href="{{ $href }}">{{ .label }}</a>
                 {{ with .children }}
                   <ul>
                     {{ range . }}
-                      <li><a href="{{ .href }}">{{ .label }}</a></li>
+                      {{ $childTitle := .title | default .label }}
+                      {{ $childHref := .href }}
+                      {{ if not $childHref }}
+                        {{ with .id }}
+                          {{ $childHref = printf "#%s" (strings.TrimPrefix "#" .) }}
+                        {{ end }}
+                      {{ end }}
+                      {{ if not $childHref }}
+                        {{ $childHref = printf "#%s" ($childTitle | anchorize) }}
+                      {{ end }}
+                      <li><a href="{{ $childHref }}">{{ .label }}</a></li>
                     {{ end }}
                   </ul>
                 {{ end }}
@@ -43,6 +71,33 @@
   </aside>
 
   <article class="card card-body schule-content">
-    {{ $ctx.Content }}
+    {{ with $ctx.Params.toc.sections }}
+      {{ range . }}
+        {{ $sectionTitle := .title | default .label }}
+        {{ $sectionID := .id }}
+        {{ if not $sectionID }}
+          {{ $sectionID = $sectionTitle | anchorize }}
+        {{ end }}
+        <h2 id="{{ $sectionID }}">{{ $sectionTitle }}</h2>
+        {{ with .content }}
+          {{ . | markdownify }}
+        {{ end }}
+        {{ with .children }}
+          {{ range . }}
+            {{ $childTitle := .title | default .label }}
+            {{ $childID := .id }}
+            {{ if not $childID }}
+              {{ $childID = $childTitle | anchorize }}
+            {{ end }}
+            <h3 id="{{ $childID }}">{{ $childTitle }}</h3>
+            {{ with .content }}
+              {{ . | markdownify }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ else }}
+      {{ $ctx.Content }}
+    {{ end }}
   </article>
 </section>

@@ -1,6 +1,5 @@
 ---
 title: "Noch eine Mitgliederversammelung"
-meta_title: ""
 description: "this is meta description"
 date: 2024-06-04T05:00:00Z
 publishdate: 2025-01-04T05:00:00Z

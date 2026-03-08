@@ -112,46 +112,58 @@ collections:
         name: "schule"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Meta Title", name: "meta_title", widget: "string", required: false }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Seitenübersicht (TOC)"
+          - label: "Seitenübersicht (ein TOC)"
             name: "toc"
-            widget: "list"
+            widget: "object"
             required: false
             fields:
-              - { label: "Label", name: "label", widget: "string" }
-              - { label: "Anker-Link", name: "href", widget: "string" }
-              - label: "Unterpunkte"
-                name: "children"
+              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - label: "Bereiche"
+                name: "sections"
                 widget: "list"
                 required: false
                 fields:
                   - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Anker-Link", name: "href", widget: "string" }
+                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Inhalt", name: "content", widget: "markdown", required: false }
+                  - label: "Unterpunkte"
+                    name: "children"
+                    widget: "list"
+                    required: false
+                    fields:
+                      - { label: "Label", name: "label", widget: "string" }
+                      - { label: "Überschrift", name: "title", widget: "string", required: false }
+                      - { label: "Inhalt", name: "content", widget: "markdown", required: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
       - file: "content/de/elternengagement/_index.md"
         label: "Elternengagement"
         name: "elternengagement"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Meta Title", name: "meta_title", widget: "string", required: false }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Seitenübersicht (TOC)"
+          - label: "Seitenübersicht (ein TOC)"
             name: "toc"
-            widget: "list"
+            widget: "object"
             required: false
             fields:
-              - { label: "Label", name: "label", widget: "string" }
-              - { label: "Anker-Link", name: "href", widget: "string" }
+              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - label: "Bereiche"
+                name: "sections"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Inhalt", name: "content", widget: "markdown", required: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
       - file: "content/de/spenden/_index.md"
         label: "Spenden"
         name: "spenden"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Meta Title", name: "meta_title", widget: "string", required: false }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
           - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
@@ -170,11 +182,18 @@ collections:
         fields:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Seitenübersicht (TOC)"
+          - label: "Seitenübersicht (ein TOC)"
             name: "toc"
-            widget: "list"
+            widget: "object"
             required: false
             fields:
-              - { label: "Label", name: "label", widget: "string" }
-              - { label: "Anker-Link", name: "href", widget: "string" }
+              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - label: "Bereiche"
+                name: "sections"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Inhalt", name: "content", widget: "markdown", required: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
