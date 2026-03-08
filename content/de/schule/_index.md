@@ -202,10 +202,12 @@ Der nächste Schritt ist das verpflichtende Elternseminar, in dem die Grundlagen
 
 Wenn Sie überzeugt sind, senden Sie bitte die vollständigen Bewerbungsunterlagen fristgerecht an uns. Kurz darauf laden wir Ihr Kind zu einem Kennenlernvormittag ein und führen anschließend ein Elterngespräch. In der Aufnahmekonferenz wird entschieden, welche Kinder einen Platz erhalten.
 
-Unterlagen und Informationen:
+#### Unterlagen Schulanfänger\*innen
 
-- [Anmeldeunterlagen Schulanfänger\*innen](/aufnahme/anmeldeunterlagen)
-- [Kostenübersicht](/aufnahme/anmeldeunterlagen)
+- [Anmeldeunterlagen Schulanfänger\*innen (PDF)](#) _(Platzhalter)_
+- [Kostenübersicht Schulanfänger\*innen (PDF)](#) _(Platzhalter)_
+- [Einverständniserklärung (PDF)](#) _(Platzhalter)_
+- [Datenschutzerklärung Aufnahmeverfahren (PDF)](#) _(Platzhalter)_
 
 Aktuelle Termine Schuljahr 2025/26:
 
@@ -216,10 +218,12 @@ Aktuelle Termine Schuljahr 2025/26:
 
 Leider haben wir nur vereinzelt Kapazitäten für Quereinsteiger\*innen. Sie können uns jederzeit - auch während des laufenden Schuljahres - unverbindlich eine Bewerbung für einen gegebenenfalls freiwerdenden Platz zukommen lassen. Sollte sich eine Möglichkeit ergeben, setzen wir uns mit Ihnen in Verbindung.
 
-Unterlagen für Quereinsteiger\*innen:
+#### Unterlagen Quereinstieg
 
-- [Aufnahmeantrag und Unterlagen](/aufnahme/anmeldeunterlagen)
-- [Kostenübersicht](/aufnahme/anmeldeunterlagen)
+- [Aufnahmeantrag Quereinstieg (PDF)](#) _(Platzhalter)_
+- [Entwicklungsbericht (PDF)](#) _(Platzhalter)_
+- [Checkliste Quereinstieg (PDF)](#) _(Platzhalter)_
+- [Kostenübersicht Quereinstieg (PDF)](#) _(Platzhalter)_
 
 ### Aufnahme ins Team
 

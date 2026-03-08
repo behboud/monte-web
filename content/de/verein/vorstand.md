@@ -1,4 +1,0 @@
----
-title: "Vorstand"
-draft: false
----

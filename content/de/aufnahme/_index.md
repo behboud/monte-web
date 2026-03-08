@@ -1,4 +1,0 @@
----
-title: "Aufnahme"
-draft: false
----

@@ -315,22 +315,6 @@ defaultContentLanguage = "de"
       pageRef = "/schule/elternengagement/ags-und-dienste"
 
     [[languages.de.menus.main]]
-      name = "Aufnahme"
-      weight = 3
-
-    [[languages.de.menus.main]]
-      name = "Anmeldeunterlagen"
-      weight = 1
-      parent = "Aufnahme"
-      pageRef = "/aufnahme/anmeldeunterlagen"
-
-    [[languages.de.menus.main]]
-      name = "Schulgeld"
-      weight = 2
-      parent = "Aufnahme"
-      pageRef = "/aufnahme/schulgeld"
-
-    [[languages.de.menus.main]]
       name = "Spenden"
       pageRef = "/spenden"
       weight = 4
