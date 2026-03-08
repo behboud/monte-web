@@ -118,7 +118,7 @@ toc:
 
         ![Foto-Platzhalter Mittagsverpflegung](/images/image-placeholder.png)
 
-        [Hier finden Sie unseren aktuellen Speiseplan](/pages/speiseplan)
+        [Hier finden Sie unseren aktuellen Speiseplan](/speiseplan)
 
     - label: "Das sind wir"
       title: "Das sind wir"

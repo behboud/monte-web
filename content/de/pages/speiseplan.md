@@ -1,4 +1,0 @@
----
-title: "Speiseplan"
-draft: false
----

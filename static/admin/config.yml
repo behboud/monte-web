@@ -83,6 +83,40 @@ collections:
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Inhalt", name: "body", widget: "markdown" }
+  - name: "speiseplan"
+    label: "Speiseplan"
+    editor:
+      preview: false
+    files:
+      - file: "content/de/speiseplan/_index.md"
+        label: "Speiseplan"
+        name: "speiseplan"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Wochenplan"
+            name: "meal_plan"
+            widget: "object"
+            fields:
+              - { label: "Woche", name: "week_label", widget: "string" }
+              - { label: "Heutiges Datum (Test)", name: "test_today", widget: "date", required: false, hint: "Nur für Hervorhebung von Heute" }
+              - label: "Tage"
+                name: "days"
+                widget: "list"
+                min: 1
+                fields:
+                  - { label: "Tag", name: "day", widget: "string" }
+                  - { label: "Datum", name: "date", widget: "date", required: false }
+                  - { label: "Hauptgericht", name: "main", widget: "string" }
+                  - { label: "Beilage", name: "side", widget: "string", required: false }
+                  - { label: "Nachtisch", name: "dessert", widget: "string", required: false }
+                  - { label: "Getränk", name: "drink", widget: "string", required: false }
+              - label: "Hinweise"
+                name: "notes"
+                widget: "list"
+                required: false
+                field: { label: "Hinweis", widget: "string" }
+          - { label: "Mittagsverpflegung (Text)", name: "body", widget: "markdown" }
   - name: "kontakt_settings"
     label: "Kontakt & Social"
     editor:

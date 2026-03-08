@@ -180,6 +180,61 @@
   .spenden-cta-secondary {
     @apply border-slate-400 bg-white text-monte hover:bg-slate-50;
   }
+
+  .speiseplan-week {
+    border-color: rgba(34, 36, 119, 0.12);
+    background: #fffdf7;
+    box-shadow: 0 12px 28px -24px rgba(34, 36, 119, 0.35);
+  }
+
+  .speiseplan-kicker {
+    @apply text-xs uppercase tracking-[0.12em] text-monte/70;
+  }
+
+  .speiseplan-grid {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .speiseplan-day {
+    border-color: rgba(34, 36, 119, 0.12);
+    background: #fff;
+    box-shadow: 0 8px 22px -22px rgba(34, 36, 119, 0.5);
+    @apply p-4;
+  }
+
+  .speiseplan-day-current {
+    border-color: rgba(200, 151, 51, 0.6);
+    background: #fff8e8;
+    box-shadow: 0 14px 28px -24px rgba(200, 151, 51, 0.5);
+  }
+
+  .speiseplan-date {
+    @apply mb-2 text-xs text-monte/70;
+  }
+
+  .speiseplan-today {
+    @apply mb-3 inline-block w-fit rounded-full border border-[#c89733]/50 bg-[#fff1cc] px-2 py-0.5 text-xs font-semibold text-monte;
+  }
+
+  .speiseplan-row {
+    @apply mb-3 rounded-lg border border-slate-200 bg-slate-50/60 px-3 py-2;
+  }
+
+  .speiseplan-label {
+    @apply mb-1 text-xs uppercase tracking-[0.08em] text-monte/70;
+  }
+
+  .speiseplan-value {
+    @apply m-0 text-sm text-monte;
+  }
+
+  .speiseplan-drink {
+    @apply mb-0 border-monte/20 bg-[#eef4ff];
+  }
+
+  .speiseplan-notes {
+    @apply rounded-xl border border-monte/15 bg-white p-4;
+  }
 }
 
 .share-icons {

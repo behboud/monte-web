@@ -1,0 +1,83 @@
+{{ define "main" }}
+  {{ partial "page-header" . }}
+  {{ partial "components/page-title" (dict "Context" .) }}
+
+
+  <section class="container ml-3 mb-10">
+    <div class="speiseplan-week card card-body">
+      {{ $weekdayMap := dict "Monday" "montag" "Tuesday" "dienstag" "Wednesday" "mittwoch" "Thursday" "donnerstag" "Friday" "freitag" "Saturday" "samstag" "Sunday" "sonntag" }}
+      {{ $activeDateStr := .Params.meal_plan.test_today | default "2026-03-04" }}
+      {{ $activeDate := time.AsTime $activeDateStr }}
+      <p class="speiseplan-kicker">Aktuelle Woche</p>
+      <h2 class="mt-1 mb-6">{{ .Params.meal_plan.week_label }}</h2>
+
+      <div class="speiseplan-grid">
+        {{ range .Params.meal_plan.days }}
+          {{ $dayEntry := . }}
+          {{ $menuDay := $dayEntry.day }}
+          {{ $isCurrent := false }}
+          {{ with $dayEntry.date }}
+            {{ $dayDate := time.AsTime (printf "%v" .) }}
+            {{ $sameDate := eq (time.Format "2006-01-02" $dayDate) (time.Format "2006-01-02" $activeDate) }}
+            {{ $weekdayDe := index $weekdayMap (time.Format "Monday" $dayDate) }}
+            {{ $sameWeekday := in (lower $menuDay) $weekdayDe }}
+            {{ $isCurrent = and $sameDate $sameWeekday }}
+          {{ end }}
+          <article class="speiseplan-day card card-body {{ if $isCurrent }}speiseplan-day-current{{ end }}">
+            <h3 class="mb-1 text-monte">{{ $dayEntry.day }}</h3>
+            {{ with $dayEntry.date }}
+              <p class="speiseplan-date">{{ time.Format "02.01.2006" (time.AsTime (printf "%v" .)) }}</p>
+            {{ end }}
+            {{ if $isCurrent }}
+              <p class="speiseplan-today">Heute</p>
+            {{ end }}
+
+
+            <div class="speiseplan-row">
+              <p class="speiseplan-label">Hauptgericht</p>
+              <p class="speiseplan-value">{{ $dayEntry.main }}</p>
+            </div>
+
+            {{ with $dayEntry.side }}
+              <div class="speiseplan-row">
+                <p class="speiseplan-label">Beilage</p>
+                <p class="speiseplan-value">{{ . }}</p>
+              </div>
+            {{ end }}
+
+            {{ with $dayEntry.dessert }}
+              <div class="speiseplan-row">
+                <p class="speiseplan-label">Nachtisch</p>
+                <p class="speiseplan-value">{{ . }}</p>
+              </div>
+            {{ end }}
+
+            {{ with $dayEntry.drink }}
+              <div class="speiseplan-row speiseplan-drink">
+                <p class="speiseplan-label">Getränk</p>
+                <p class="speiseplan-value">{{ . }}</p>
+              </div>
+            {{ end }}
+          </article>
+        {{ end }}
+      </div>
+
+      {{ with .Params.meal_plan.notes }}
+        <div class="speiseplan-notes mt-6">
+          <h3 class="mb-3 text-monte">Hinweise</h3>
+          <ul>
+            {{ range . }}
+              <li>{{ . }}</li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="container ml-3 mb-12">
+    <article class="card card-body schule-content">
+      {{ .Content }}
+    </article>
+  </section>
+{{ end }}

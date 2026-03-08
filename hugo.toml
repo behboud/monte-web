@@ -204,7 +204,7 @@ defaultContentLanguage = "de"
 
     [[languages.de.menus.top]]
       name = "Speiseplan"
-      pageRef = "/pages/speiseplan"
+      pageRef = "/speiseplan"
       weight = 6
       [languages.de.menus.top.params]
         icon = "fa fa-utensils"
