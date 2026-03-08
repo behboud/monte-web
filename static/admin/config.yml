@@ -114,6 +114,17 @@ collections:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Slider"
+            name: "slider"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Aktivieren", name: "enable", widget: "boolean", required: false, default: false }
+              - label: "Bilder"
+                name: "images"
+                widget: "list"
+                required: false
+                field: { label: "Bild", widget: "image" }
           - label: "Seitenübersicht (ein TOC)"
             name: "toc"
             widget: "object"
@@ -144,6 +155,17 @@ collections:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Slider"
+            name: "slider"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Aktivieren", name: "enable", widget: "boolean", required: false, default: false }
+              - label: "Bilder"
+                name: "images"
+                widget: "list"
+                required: false
+                field: { label: "Bild", widget: "image" }
           - label: "Seitenübersicht (ein TOC)"
             name: "toc"
             widget: "object"
@@ -182,6 +204,17 @@ collections:
         fields:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Slider"
+            name: "slider"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Aktivieren", name: "enable", widget: "boolean", required: false, default: false }
+              - label: "Bilder"
+                name: "images"
+                widget: "list"
+                required: false
+                field: { label: "Bild", widget: "image" }
           - label: "Seitenübersicht (ein TOC)"
             name: "toc"
             widget: "object"

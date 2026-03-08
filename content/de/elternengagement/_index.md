@@ -2,6 +2,12 @@
 title: "Elternengagement"
 description: "Eltern gestalten das Schulleben aktiv mit und übernehmen Verantwortung in AGs, Diensten und Projekten."
 draft: false
+slider:
+  enable: true
+  images:
+    - /images/Schuleeingang.jpeg
+    - /images/Schuleeingang.jpeg
+    - /images/Schuleeingang.jpeg
 toc:
   title: "Seitenübersicht"
   sections:

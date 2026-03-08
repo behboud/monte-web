@@ -1,33 +1,45 @@
 {{ $ctx := .Context }}
-{{ $sliderImages := .SliderImages | default (slice "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg") }}
+{{ $sliderImages := .SliderImages }}
+{{ with $ctx.Params.slider.images }}
+  {{ $sliderImages = . }}
+{{ end }}
+{{ $showSlider := false }}
+{{ with $ctx.Params.slider.enable }}
+  {{ $showSlider = . }}
+{{ end }}
+{{ if and (not $showSlider) $sliderImages }}
+  {{ $showSlider = gt (len $sliderImages) 0 }}
+{{ end }}
 
 {{ partial "page-header" $ctx }}
 {{ partial "components/page-title" (dict "Context" $ctx "Title" .Title) }}
 
+{{ if $showSlider }}
+  <section class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4 mb-10">
+    {{ partial "components/slider.html" (dict
+      "Images" $sliderImages
+      "ContainerClass" "schule-slider schule-slider-panorama swiper h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]"
+      "Class" "swiper-wrapper"
+      "ClassImage" "swiper-slide")
+    }}
+    <div class="hero-slider-pagination mt-4 text-center"></div>
+  </section>
+{{ end }}
 
-<section class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4 mb-10">
-  {{ partial "components/slider.html" (dict
-    "Images" $sliderImages
-    "ContainerClass" "schule-slider schule-slider-panorama swiper h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]"
-    "Class" "swiper-wrapper"
-    "ClassImage" "swiper-slide")
-  }}
-  <div class="hero-slider-pagination mt-4 text-center"></div>
-</section>
+{{ $tocEntries := $ctx.Params.toc }}
+{{ with $ctx.Params.toc.sections }}
+  {{ $tocEntries = . }}
+{{ end }}
 
-<section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
-  <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
-    <div class="card card-body schule-toc">
-      {{ $tocTitle := "Seitenübersicht" }}
-      {{ with $ctx.Params.toc.title }}
-        {{ $tocTitle = . }}
-      {{ end }}
-      <h3 class="mb-3 text-lg">{{ $tocTitle }}</h3>
-      {{ $tocEntries := $ctx.Params.toc }}
-      {{ with $ctx.Params.toc.sections }}
-        {{ $tocEntries = . }}
-      {{ end }}
-      {{ if $tocEntries }}
+{{ if $tocEntries }}
+  <section class="container ml-3 mb-12 schule-layout grid gap-6 lg:grid-cols-[280px_1fr]">
+    <aside class="schule-toc-wrap lg:sticky lg:top-24 lg:self-start">
+      <div class="card card-body schule-toc">
+        {{ $tocTitle := "Seitenübersicht" }}
+        {{ with $ctx.Params.toc.title }}
+          {{ $tocTitle = . }}
+        {{ end }}
+        <h3 class="mb-3 text-lg">{{ $tocTitle }}</h3>
         <nav aria-label="Seitenübersicht">
           <ul>
             {{ range $tocEntries }}
@@ -64,15 +76,11 @@
             {{ end }}
           </ul>
         </nav>
-      {{ else }}
-        {{ $ctx.TableOfContents }}
-      {{ end }}
-    </div>
-  </aside>
+      </div>
+    </aside>
 
-  <article class="card card-body schule-content">
-    {{ with $ctx.Params.toc.sections }}
-      {{ range . }}
+    <article class="card card-body schule-content">
+      {{ range $tocEntries }}
         {{ $sectionTitle := .title | default .label }}
         {{ $sectionID := .id }}
         {{ if not $sectionID }}
@@ -96,8 +104,12 @@
           {{ end }}
         {{ end }}
       {{ end }}
-    {{ else }}
+    </article>
+  </section>
+{{ else }}
+  <section class="container ml-3 mb-12">
+    <article class="card card-body schule-content">
       {{ $ctx.Content }}
-    {{ end }}
-  </article>
-</section>
+    </article>
+  </section>
+{{ end }}

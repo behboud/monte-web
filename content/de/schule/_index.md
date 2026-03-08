@@ -2,6 +2,12 @@
 title: "Schule & Aufnahme"
 description: "Alles Wichtige zu unserer Schule, unserem Konzept und dem Aufnahmeverfahren."
 draft: false
+slider:
+  enable: true
+  images:
+    - /images/Schuleeingang.jpeg
+    - /images/Schuleeingang.jpeg
+    - /images/Schuleeingang.jpeg
 toc:
   title: "Seitenübersicht"
   sections:

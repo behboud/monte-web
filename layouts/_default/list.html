@@ -1,6 +1,3 @@
 {{ define "main" }}
-  {{ partial "page-header" . }}
-  <section class="container">
-    {{ .Content }}
-  </section>
+  {{ partial "components/section-overview" (dict "Context" .) }}
 {{ end }}

@@ -1,6 +1,12 @@
 ---
 title: "Verein"
 draft: false
+slider:
+  enable: true
+  images:
+    - /images/Schuleeingang.jpeg
+    - /images/Schuleeingang.jpeg
+    - /images/Schuleeingang.jpeg
 toc:
   title: "Seitenübersicht"
   sections:
