@@ -27,8 +27,10 @@
         </ul>
       </div>
       <div class="mb-8 text-center lg:mb-0 lg:mt-0 lg:text-right">
+        {{ $contactPage := site.GetPage "/pages/kontakt" }}
+        {{ $socialLinks := cond (and $contactPage $contactPage.Params.social_links) $contactPage.Params.social_links site.Data.social.main }}
         <ul class="flex justify-center text-monte text-xl mt-2">
-          {{ range site.Data.social.main }}
+          {{ range $socialLinks }}
             <li>
               <a target="_blank" aria-label="{{ .name }}" rel="nofollow noopener" href="{{ .link | safeURL }}">
                 <i class="{{ .icon }} mx-6"></i>

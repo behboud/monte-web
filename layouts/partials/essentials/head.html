@@ -8,7 +8,7 @@
 
 
 <!-- manifest -->
-{{ if hugo.IsProduction }}
+{{ if and hugo.IsProduction (not hugo.IsServer) }}
   {{ partialCached "manifest" . }}
 {{ end }}
 

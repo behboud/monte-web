@@ -3,6 +3,10 @@ title: "Kontakt"
 meta_title: ""
 description: "das ist eine Meta Beschreibung"
 draft: false
+social_links:
+  - name: facebook
+    icon: fab fa-facebook
+    link: https://www.facebook.com/
 ---
 
 Wir möchten darauf hinweisen, dass das Versenden unverschlüsselter Emails kein sicheres Kommunikationsmittel i.S.d. Datenschutzes ist.
@@ -15,7 +19,6 @@ Frühlingstraße 16a <br/>
 
 Tel: 0 81 05 - 77 35 48 <br/>
 Fax: 0 81 05 - 77 35 76
-
 
 ### Schulleitung
 

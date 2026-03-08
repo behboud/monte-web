@@ -1,6 +1,7 @@
 {{ $ctx := .Context }}
 {{ $sliderImages := .SliderImages | default (slice "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg" "/images/Schuleeingang.jpeg") }}
 
+{{ partial "page-header" $ctx }}
 {{ partial "components/page-title" (dict "Context" $ctx "Title" .Title) }}
 
 
