@@ -41,44 +41,6 @@ toc:
         Das Fundament unserer Arbeit ist die Pädagogik von Maria Montessori. Die Kinder lernen in einer vorbereiteten Umgebung mit speziell entwickeltem Material unter Berücksichtigung sensibler Entwicklungsphasen.
 
         [Foto-Platzhalter Qualitäten](/images/image-placeholder.png)![](/images/6-_DSC7336.jpg)
-    - label: Unsere 5 Säulen
-      title: DIE FÜNF SÄULEN UNSERER SCHULE
-      content: |-
-        ![](/images/16-_DSC7588.jpg)
-
-        Unsere Schule lebt von aktiver Mitbestimmung und wird von **fünf Säulen** getragen:
-
-        - Schüler\*innen
-        - Eltern
-        - Pädagogisches Team
-        - Vorstand/Förderverein
-        - Verwaltung und Schulorganisation
-
-        > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
-    - label: Unsere Unterrichtszeiten - gebundene Ganztagesschule
-      title: GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN
-      content: |-
-        Wir sind eine gebundene Ganztagesschule. Die Ganztagsbetreuung ermöglicht es uns, den Kindern die Zeit zu geben, die sie für sich und ihre Arbeit brauchen. So ist eine differenzierte Förderung jedes Einzelnen möglich.
-
-        **Unterrichtszeiten**
-
-        - Mo-Do: 08:00 - 15:30 Uhr (Betreuung an diesen Tagen möglich bis 16:15 Uhr)
-        - Fr: 08:00 - 12:30 Uhr
-    - label: Schulgeld
-      title: SCHULGELD
-      content: |-
-        Der Träger unserer Grundschule ist der Montessori Förderverein Gilching e.V. Staatlich anerkannte Montessorischulen in Bayern erhalten nur einen geringen Förderbetrag. Deshalb sind wir auf Schulgeldzahlungen angewiesen.
-
-        Ab dem Schuljahr 2026/27 beträgt das Schulgeld unserer Schule monatlich XXX. Das schließt die Betreuung bis 15.30 Uhr (Mo-Do) mit ein.
-
-        Damit Kinder unabhängig vom Einkommen ihrer Eltern unsere Schule besuchen können, kann das Schulgeld reduziert werden. Detaillierte Infos finden Sie [hier](Schulgeldtabelle).
-
-        Das monatliche Schulgeld und die Essenspauschale werden ausschließlich per SEPA-Lastschriftmandat eingezogen. Die notwendigen Formulare erhalten Sie zusammen mit dem Schulvertrag. Die Essenspauschale ist nicht im Schulgeld enthalten.
-
-        Für das Zustandekommen eines Schulvertrags verpflichten sich die Eltern, nach erfolgter Zusage eines Schulplatzes ein zinsloses Darlehen in Höhe von EUR 2.000 pro Kind zu gewähren. Das Darlehen wird zurückerstattet, wenn das Kind planmäßig die fünfte Jahrgangsstufe erreicht hat. Verlässt das Kind die Schule vorzeitig, wird das Darlehen zeitnah zurückgezahlt.
-
-        Alle relevanten Kosten im Rahmen des Aufnahmeverfahrens bzw. des Schulalltags entnehmen Sie bitte der [aktuellen Kostenübersicht](aktuellen Kostenübersicht).
-      id: schulgeld
     - label: Wie sieht ein Schultag bei uns aus?
       title: WIE SIEHT EIN SCHULTAG AN DER MONTESSORISCHULE GILCHING AUS?
       content: |-
@@ -95,6 +57,44 @@ toc:
         ![](/images/12-_DSC7076.jpg)
 
         ![](/images/Freiarbeit_1.jpeg)
+    - label: Unsere Unterrichtszeiten - gebundene Ganztagesschule
+      title: GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN
+      content: |-
+        Wir sind eine gebundene Ganztagesschule. Die Ganztagsbetreuung ermöglicht es uns, den Kindern die Zeit zu geben, die sie für sich und ihre Arbeit brauchen. So ist eine differenzierte Förderung jedes Einzelnen möglich.
+
+        **Unterrichtszeiten**
+
+        - Mo-Do: 08:00 - 15:30 Uhr (Betreuung an diesen Tagen möglich bis 16:15 Uhr)
+        - Fr: 08:00 - 12:30 Uhr
+    - label: Unsere 5 Säulen
+      title: DIE FÜNF SÄULEN UNSERER SCHULE
+      content: |-
+        ![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
+
+        Unsere Schule lebt von aktiver Mitbestimmung und wird von **fünf Säulen** getragen:
+
+        - Schüler\*innen
+        - Eltern
+        - Pädagogisches Team
+        - Vorstand/Förderverein
+        - Verwaltung und Schulorganisation
+
+        > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
+    - label: Schulgeld
+      title: SCHULGELD
+      content: |-
+        Der Träger unserer Grundschule ist der Montessori Förderverein Gilching e.V. Staatlich anerkannte Montessorischulen in Bayern erhalten nur einen geringen Förderbetrag. Deshalb sind wir auf Schulgeldzahlungen angewiesen.
+
+        Ab dem Schuljahr 2026/27 beträgt das Schulgeld unserer Schule monatlich XXX. Das schließt die Betreuung bis 15.30 Uhr (Mo-Do) mit ein.
+
+        Damit Kinder unabhängig vom Einkommen ihrer Eltern unsere Schule besuchen können, kann das Schulgeld reduziert werden. Detaillierte Infos finden Sie [hier](Schulgeldtabelle).
+
+        Das monatliche Schulgeld und die Essenspauschale werden ausschließlich per SEPA-Lastschriftmandat eingezogen. Die notwendigen Formulare erhalten Sie zusammen mit dem Schulvertrag. Die Essenspauschale ist nicht im Schulgeld enthalten.
+
+        Für das Zustandekommen eines Schulvertrags verpflichten sich die Eltern, nach erfolgter Zusage eines Schulplatzes ein zinsloses Darlehen in Höhe von EUR 2.000 pro Kind zu gewähren. Das Darlehen wird zurückerstattet, wenn das Kind planmäßig die fünfte Jahrgangsstufe erreicht hat. Verlässt das Kind die Schule vorzeitig, wird das Darlehen zeitnah zurückgezahlt.
+
+        Alle relevanten Kosten im Rahmen des Aufnahmeverfahrens bzw. des Schulalltags entnehmen Sie bitte der [aktuellen Kostenübersicht](aktuellen Kostenübersicht).
+      id: schulgeld
     - label: Maria Montessori und die Montessori-Pädagogik
       title: MARIA MONTESSORI UND DIE MONTESSORI-PÄDAGOGIK
       content: Für  einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir sie auf die sehr informative Seite des [Montessorilandesverbands](https://www.montessoribayern.de/landesverband/paedagogik) verweisen.
