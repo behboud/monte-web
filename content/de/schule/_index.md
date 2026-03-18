@@ -26,7 +26,7 @@ toc:
 
         Seit 2004 bereichert unsere Schule als gebundene Ganztagesgrundschule mit dem Schwerpunkt Naturerfahrung das Bildungsangebot für Kinder aus Gilching und Umgebung. Seit dem Schuljahr 2017/18 bietet unser neu gebautes Schulhaus eine anregende, vorbereitete Lernumgebung für vier jahrgangsgemischte Klassen (1-4).
     - label: Was unseren Schulalltag prägt
-      title: Diese Qualitäten prägen unsere pädagogische Arbeit
+      title: QUALITÄTEN UNSERER PÄDAGOGISCHEN ARBEIT
       content: |-
         - **selbstständig lernen** - Wir geben den Kindern Raum, eigenverantwortlich zu arbeiten und ihre Lernprozesse aktiv zu steuern.
         - **vielfältig lernen** - Wir fördern unterschiedliche Lernerfahrungen, um individuelle Talente und Kompetenzen zu entwickeln.
@@ -42,7 +42,7 @@ toc:
 
         [Foto-Platzhalter Qualitäten](/images/image-placeholder.png)
     - label: Unsere 5 Säulen
-      title: 5 Säulen
+      title: DIE FÜNF SÄULEN UNSERER SCHULE
       content: |-
         Unsere Schule lebt von aktiver Mitbestimmung und wird von **fünf Säulen** getragen:
 
@@ -54,7 +54,7 @@ toc:
 
         > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.
     - label: Unsere Unterrichtszeiten - gebundene Ganztagesschule
-      title: Ganztag und Unterrichtszeiten
+      title: GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN
       content: |-
         Wir sind eine gebundene Ganztagesschule. Die Ganztagsbetreuung ermöglicht es uns, den Kindern die Zeit zu geben, die sie für sich und ihre Arbeit brauchen. So ist eine differenzierte Förderung jedes Einzelnen möglich.
 
@@ -63,7 +63,7 @@ toc:
         - Mo-Do: 08:00 - 15:30 Uhr (Betreuung an diesen Tagen möglich bis 16:15 Uhr)
         - Fr: 08:00 - 12:30 Uhr
     - label: Schulgeld
-      title: ''
+      title: SCHULGELD
       content: |-
         Der Träger unserer Grundschule ist der Montessori Förderverein Gilching e.V. Staatlich anerkannte Montessorischulen in Bayern erhalten nur einen geringen Förderbetrag. Deshalb sind wir auf Schulgeldzahlungen angewiesen.
 
@@ -78,7 +78,7 @@ toc:
         Alle relevanten Kosten im Rahmen des Aufnahmeverfahrens bzw. des Schulalltags entnehmen Sie bitte der [aktuellen Kostenübersicht](aktuellen Kostenübersicht).
       id: schulgeld
     - label: Wie sieht ein Schultag bei uns aus?
-      title: Wie sieht ein Schultag aus?
+      title: WIE SIEHT EIN SCHULTAG AN DER MONTESSORISCHULE GILCHING AUS?
       content: |-
         Wir beginnen den Tag in jeder Klasse mit einem gemeinsamen Morgenkreis. Anschließend arbeiten die Kinder in der Freiarbeit an den Themen ihres Wochenplans.
 
@@ -92,7 +92,7 @@ toc:
 
         ![Foto-Platzhalter Schultag](/images/image-placeholder.png)
     - label: Maria Montessori und die Montessori-Pädagogik
-      title: ''
+      title: MARIA MONTESSORI UND DIE MONTESSORI-PÄDAGOGIK
       content: Für  einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir sie auf die sehr informative Seite des [Montessorilandesverbands](https://www.montessoribayern.de/landesverband/paedagogik) verweisen.
       id: maria-montessori
     - label: Unsere Geschichte
