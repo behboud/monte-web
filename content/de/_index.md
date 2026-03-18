@@ -1,7 +1,7 @@
 ---
 banner:
   title: Willkommen
-  content: ''
+  content: Willkommen
   image: /images/stuhl-im-haus.jpeg
 slider:
   images:
