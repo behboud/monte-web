@@ -6,8 +6,10 @@ slider:
   enable: true
   images:
     - /images/Schuleeingang.jpeg
-    - /images/Schuleeingang.jpeg
-    - /images/Schuleeingang.jpeg
+    - /images/3-_DSC7569.jpg
+    - /images/5-_DSC7577.jpg
+    - /images/7-_DSC7580.jpg
+    - /images/Mon-0768.jpg
 toc:
   title: Seitenübersicht
   sections:
