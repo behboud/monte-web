@@ -6,9 +6,9 @@ slider:
   enable: true
   images:
     - /images/Schuleeingang.jpeg
-    - /images/3-_DSC7569.jpg
-    - /images/5-_DSC7577.jpg
     - /images/7-_DSC7580.jpg
+    - /images/3-_DSC7569.jpg
+    - /images/81-_DSC7519.jpg
     - /images/Mon-0768.jpg
 toc:
   title: Seitenübersicht
@@ -40,10 +40,12 @@ toc:
 
         Das Fundament unserer Arbeit ist die Pädagogik von Maria Montessori. Die Kinder lernen in einer vorbereiteten Umgebung mit speziell entwickeltem Material unter Berücksichtigung sensibler Entwicklungsphasen.
 
-        [Foto-Platzhalter Qualitäten](/images/image-placeholder.png)
+        [Foto-Platzhalter Qualitäten](/images/image-placeholder.png)![](/images/6-_DSC7336.jpg)
     - label: Unsere 5 Säulen
       title: DIE FÜNF SÄULEN UNSERER SCHULE
       content: |-
+        ![](/images/16-_DSC7588.jpg)
+
         Unsere Schule lebt von aktiver Mitbestimmung und wird von **fünf Säulen** getragen:
 
         - Schüler\*innen
@@ -52,7 +54,7 @@ toc:
         - Vorstand/Förderverein
         - Verwaltung und Schulorganisation
 
-        > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.
+        > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
     - label: Unsere Unterrichtszeiten - gebundene Ganztagesschule
       title: GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN
       content: |-
@@ -90,7 +92,9 @@ toc:
 
         An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir darum, Aufgaben, die im Unterricht nicht fertiggestellt wurden, zu Hause abzuschließen.
 
-        ![Foto-Platzhalter Schultag](/images/image-placeholder.png)
+        ![](/images/12-_DSC7076.jpg)
+
+        ![](/images/Freiarbeit_1.jpeg)
     - label: Maria Montessori und die Montessori-Pädagogik
       title: MARIA MONTESSORI UND DIE MONTESSORI-PÄDAGOGIK
       content: Für  einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir sie auf die sehr informative Seite des [Montessorilandesverbands](https://www.montessoribayern.de/landesverband/paedagogik) verweisen.
