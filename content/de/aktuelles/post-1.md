@@ -1,12 +1,14 @@
 ---
-title: "Mitgliederversammelung 2022"
-description: "this is meta description"
+title: Elternsprechabend
+publishdate: 0002-03-08T06:00:00
+image: /images/image-placeholder.png
+author: Anna
+tags:
+  - Mitglieder
+  - Termin
 date: 2022-04-04T05:00:00Z
-publishdate: 2025-01-04T05:00:00Z
-image: "/images/image-placeholder.png"
-author: "John Doe"
-tags: ["Mitglieder", "Termin"]
 draft: false
+description: this is meta description
 ---
 
 Nemo vel ad consectetur namut rutrum ex, venenatis sollicitudin urna. Aliquam erat volutpat. Integer eu ipsum sem. Ut bibendum lacus vestibulum maximus suscipit. Quisque vitae nibh iaculis neque blandit euismod.
