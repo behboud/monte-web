@@ -95,7 +95,7 @@ toc:
       title: MARIA MONTESSORI UND DIE MONTESSORI-PÄDAGOGIK
       content: Für  einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir sie auf die sehr informative Seite des [Montessorilandesverbands](https://www.montessoribayern.de/landesverband/paedagogik) verweisen.
       id: maria-montessori
-    - label: Unsere Geschichte
+    - label: DIE GESCHICHTE UNSERER SCHULE
       title: ''
       content: |-
         Im Jahr 2004 hatten die großen Anstrengungen einer engagierten Elterninitiative Erfolg: Die Montessorischule Gilching startete mit ihrer ersten Klasse - damals noch in den Räumlichkeiten einer ehemaligen Bankfiliale.
@@ -107,7 +107,7 @@ toc:
         > Fotos und Einblicke in unsere Oase werden hier ergänzt.
       id: schulgeschichte
     - label: Mittagsverpflegung
-      title: ''
+      title: MITTAGSVERPFLEGUNG
       content: |-
         In unserer gebundenen Ganztagsschule essen die Kinder von Montag bis Donnerstag gemeinsam zu Mittag. In der schuleigenen Küche werden täglich gesunde, ausgewogene und auf Kinder abgestimmte Mahlzeiten zubereitet. Unser Küchenteam verwendet bevorzugt hochwertige, regional erzeugte Produkte.
 
@@ -120,14 +120,14 @@ toc:
         [Hier finden Sie unseren aktuellen Speiseplan](/speiseplan)
       id: mittagsverpflegung
     - label: Das sind wir
-      title: Das sind wir
+      title: DAS SIND WIR
       content: ''
       children:
         - label: Schulleitung und pädagogisches Team
-          title: Das Team
+          title: DAS PÄDAGOGISCHE TEAM
           content: ''
-        - label: Unser Team
-          title: Unser Team
+        - label: Die Verwaltung
+          title: DIE VERWALTUNG
           content: |-
             - Schulleitung
             - Pädagogisches Team
@@ -136,7 +136,7 @@ toc:
 
             Weiterführende Informationen zu Team und Verwaltung werden auf dieser Seite ergänzt.
         - label: Unsere Schüler*innen
-          title: Unsere Schüler*innen
+          title: UNSERE SCHÜLER*INNEN
           content: |-
             > „Wenn Kinder sich in der Zukunft bewähren sollen, so müssen wir ihnen Mut machen, ihnen helfen, dass sie Charakterstärke, Verantwortungsbereitschaft und praktische Fähigkeiten erwerben können.“
             > Maria Montessori
@@ -147,13 +147,13 @@ toc:
 
             ![Foto-Platzhalter Schüler\*innen](/images/image-placeholder.png)
         - label: Unser Vorstand
-          title: Unser Vorstand
+          title: UNSER VORSTAND
           content: |-
             Unsere Schule wurde 2004 dank einer Elterninitiative als gemeinnütziger Verein gegründet. Das Vorstandsteam des Fördervereins unterstützt die Schule bis heute als eine der fünf tragenden Säulen.
 
             Die Vorstandsmitglieder werden im Zwei-Jahres-Rhythmus im Rahmen der Mitgliederversammlung gewählt. Das Protokoll kann im Schulbüro zu den Bürozeiten eingesehen werden.
     - label: Die Eltern
-      title: ''
+      title: DIE ELTERN
       content: |-
         Die Montessorischule Gilching wurde vor über 20 Jahren durch eine Elterninitiative ins Leben gerufen. Dieses Engagement prägt das Verständnis von Elternarbeit bis heute. Jede Familie ist verpflichtet, im Schuljahr 40 Stunden Arbeitszeit in die Gemeinschaft einzubringen.
 
@@ -167,11 +167,11 @@ toc:
         ![Foto-Platzhalter Elternengagement](/images/image-placeholder.png)
       id: elternengagement
     - label: Aufnahme
-      title: Der Weg an unsere Schule
+      title: DER WEG AN UNSERE SCHULE
       content: ''
       children:
         - label: 1. Klasse
-          title: Aufnahme in die 1. Klasse
+          title: AUFNAHME IN UNSERE 1.KLASSE
           content: |-
             Am Tag der offenen Tür öffnen wir unsere Pforten und geben Ihnen die Möglichkeit, unser pädagogisches Team und das Schulhaus kennenzulernen.
 
