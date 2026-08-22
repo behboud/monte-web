@@ -2,7 +2,7 @@
 title: Spenden
 description: This is meta description
 draft: true
-uberschrift: Danke für die Unterstützung
+uberschrift: Herzlichen Dank für die Unterstützung
 spenden:
   - title: Jürgen Steinheimer
     image: /images/Bildschirmfoto 2023-11-26 um 13.50.07.png
