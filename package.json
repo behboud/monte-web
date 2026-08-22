@@ -12,17 +12,17 @@
     "test:ui:update": "npm run build && node tests/ui/generate-routes.mjs && playwright test --update-snapshots"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
-    "@tailwindcss/postcss": "^4.2.1",
-    "autoprefixer": "^10.4.27",
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.5.4",
     "http-server": "^14.1.1",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.26",
     "postcss-cli": "^11.0.1",
-    "postcss-import": "^16.1.1",
-    "prettier": "^3.8.1",
+    "postcss-import": "^17.0.0",
+    "prettier": "^3.9.6",
     "prettier-plugin-go-template": "0.0.15",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "tailwindcss": "^4.2.1"
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.3"
   },
   "dependencies": {
     "mmenu-js": "^9.3.0"

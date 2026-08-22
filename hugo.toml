@@ -39,7 +39,7 @@ defaultContentLanguage = "de"
 [module]
   [module.hugoVersion]
     extended = true
-    min = "0.141.0"
+    min = "0.165.0"
 
   [[module.mounts]]
     source = "assets"
@@ -128,8 +128,18 @@ defaultContentLanguage = "de"
 
 ############################# Imaging ############################
 [imaging]
-  quality = 80
   resampleFilter = "Lanczos"
+  [imaging.jpeg]
+    quality = 80
+  [imaging.webp]
+    quality = 80
+  [imaging.avif]
+    quality = 80
+
+########################### Security ##############################
+[security.node.permissions]
+  allowAddons = ["postcss"]
+  allowRead = ["."]
 
 ############################ Caches ##############################
 [caches]
@@ -171,8 +181,8 @@ defaultContentLanguage = "de"
 ########################### Languages ##############################
 [languages]
   [languages.de]
-    languageName = "Deutsch"
-    languageCode = "de-DE"
+    label = "Deutsch"
+    locale = "de-DE"
     contentDir = "content/de"
     weight = 1
 

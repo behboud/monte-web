@@ -4,8 +4,8 @@ Static website for Montessori Schule Gilching, built with Hugo and Tailwind CSS.
 
 ## Technologie-Stack
 
-- **Hugo Extended 0.155.1** - Static site generator
-- **Tailwind CSS 4.2.1** - Utility-first CSS framework
+- **Hugo Extended 0.165.0** - Static site generator
+- **Tailwind CSS 4.3.3** - Utility-first CSS framework
 - **Sveltia CMS** - Git-based headless CMS for content management
 - **mmenu-js 9.3.0** - Mobile navigation library
 - **GitHub Pages** - Static site hosting
@@ -15,7 +15,7 @@ Static website for Montessori Schule Gilching, built with Hugo and Tailwind CSS.
 ### Voraussetzungen
 
 1. **Hugo Extended**: https://gohugo.io/installation/ (erfordert die extended Version für PostCSS-Support)
-2. **Node.js**: Version 18 oder höher für Build-Tools
+2. **Node.js**: Version 20 oder höher für Build-Tools
 
 ### Schritte
 
@@ -46,7 +46,7 @@ Das Projekt wird automatisch zu GitHub Pages deployed, wenn Änderungen auf den 
 
 **Deployment-Pipeline** (`.github/workflows/main.yml`):
 
-1. Hugo Extended wird installiert (Version 0.155.1)
+1. Hugo Extended wird installiert (Version 0.165.0)
 2. npm-Abhängigkeiten werden installiert
 3. Hugo Build mit `hugo --gc --minify`
 4. Statische Dateien werden zu `public/` generiert
