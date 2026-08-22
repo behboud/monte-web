@@ -1,7 +1,7 @@
 ---
 title: Spenden
 description: This is meta description
-draft: true
+draft: false
 uberschrift: Herzlichen Dank für die Unterstützung
 spenden:
   - title: Jürgen Steinheimer
