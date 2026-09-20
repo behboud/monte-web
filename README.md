@@ -222,6 +222,12 @@ News-Beiträge und Seiten können über das CMS bearbeitet werden. Änderungen w
 - **spenden**: Spenden-Informationen und obere Buttons
 - **verein**: Verein-Informationen (read-only)
 
+### Datenschutz und öffentliche Ressourcen
+
+Der technische Datenschutz-Stand ist in [docs/datenschutz-umsetzung.md](docs/datenschutz-umsetzung.md) dokumentiert. Der ergänzende technische Plan steht in [docs/privacy-relaunch-plan.md](docs/privacy-relaunch-plan.md).
+
+Die geprüften öffentlichen Seiten laden benötigte Assets lokal und setzen keine Cookies. Technische Änderungen in diesem Zusammenhang haben keine Inhalte gelöscht oder geändert. Offene Punkte sind unter anderem der Hosting-Anbieter, die Anpassung der Datenschutzerklärung und die interne Prüfung von Veröffentlichungsrechten.
+
 ## CMS-Authentifizierung (GitHub OAuth)
 
 Das CMS nutzt **GitHub OAuth** für die Authentifizierung statt Netlify Identity. Dies ermöglicht es Benutzern, sich mit ihrem GitHub-Konto anzumelden.
@@ -291,6 +297,7 @@ Siehe decap-proxy README: https://github.com/behboud/decap-proxy
 
 - Playwright-basierte Browser-Regressionstests und Interaktionstests in `tests/ui/`.
 - Die Tests prüfen gezielt stabile Layout-Verträge wie Navigation, responsive Footer-Abstände, Seitenreihenfolge, Breadcrumbs und zentrale Benutzerinteraktionen.
+- Datenschutz-Regressionstests prüfen unter anderem Cookies, externe Ressourcen, Manifest/Service Worker und Browser-Speicher.
 - Relevanter npm-Befehl:
   - `npm run test:ui` (Build + Playwright-Regressionstests)
 
