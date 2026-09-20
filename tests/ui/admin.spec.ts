@@ -23,17 +23,21 @@ test.describe("CMS admin", () => {
     expect(config).toContain("optimize: true");
   });
 
-  test("CMS logo points to an existing anniversary logo", async ({ request }) => {
+  test("CMS logo uses an opaque anniversary logo", async ({ request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
     const logoUrl = config.match(/^logo_url:\s*([^\n]+)$/m)?.[1]?.trim();
 
-    expect(logoUrl).toBe("/monte-web/images/logo_20_jahre_140mm_400dpi.png");
+    expect(logoUrl).toBe("/monte-web/admin/cms-logo.png");
 
     const localLogoPath = logoUrl.replace(/^\/monte-web/, "");
     const logoResponse = await request.get(localLogoPath);
     expect(logoResponse).toBeOK();
     expect(logoResponse.headers()["content-type"]).toMatch(/^image\/png/);
+
+    const logoBytes = await logoResponse.body();
+    // PNG color type 2 is truecolor RGB without an alpha channel.
+    expect(logoBytes[25]).toBe(2);
   });
 
   test("CMS serves a local favicon instead of falling back to the domain root", async ({ request }) => {
