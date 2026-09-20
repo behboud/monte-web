@@ -6,13 +6,16 @@ import { expect, test } from "@playwright/test";
 
 const deploymentBaseURL = new URL(process.env.TEST_DEPLOYMENT_BASE_URL ?? "https://example.test/site-prefix/");
 const linkAttributePattern = /\b(?:href|src)=(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi;
+const cssURLPattern = /url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)/gi;
 
-const findHTMLFiles = (directory: string): string[] =>
+const findFiles = (directory: string, predicate: (path: string) => boolean): string[] =>
   readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) return findHTMLFiles(path);
-    return entry.name.endsWith(".html") ? [path] : [];
+    if (entry.isDirectory()) return findFiles(path, predicate);
+    return predicate(path) ? [path] : [];
   });
+
+const findHTMLFiles = (directory: string): string[] => findFiles(directory, (path) => path.endsWith(".html"));
 
 const pageURLForFile = (file: string, destination: string): URL => {
   const outputPath = relative(destination, file).replaceAll("\\", "/");
@@ -68,6 +71,34 @@ test("production internal links stay under the deployment base path", ({}, testI
     }
 
     expect(invalidLinks).toEqual([]);
+  } finally {
+    rmSync(destination, { recursive: true, force: true });
+  }
+});
+
+test("production CSS assets stay under the deployment base path", ({}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium", "The generated-asset contract runs once.");
+
+  const destination = mkdtempSync(join(tmpdir(), "monte-public-assets-"));
+  try {
+    execFileSync(process.env.HUGO_BIN ?? "hugo", ["--gc", "--minify", "--baseURL", deploymentBaseURL.toString(), "--destination", destination], { stdio: "ignore" });
+
+    const invalidAssets: string[] = [];
+    for (const file of findFiles(destination, (path) => path.endsWith(".css"))) {
+      const cssURL = new URL(relative(destination, file).replaceAll("\\\\", "/"), deploymentBaseURL);
+      const css = readFileSync(file, "utf8");
+      for (const match of css.matchAll(cssURLPattern)) {
+        const rawURL = (match[1] ?? match[2] ?? match[3] ?? "").trim();
+        if (!rawURL || /^(?:data|https?:|#)/i.test(rawURL)) continue;
+
+        const resolvedURL = new URL(rawURL, cssURL);
+        if (resolvedURL.origin === deploymentBaseURL.origin && !resolvedURL.pathname.startsWith(deploymentBaseURL.pathname)) {
+          invalidAssets.push(`${relative(destination, file)} -> ${rawURL}`);
+        }
+      }
+    }
+
+    expect(invalidAssets).toEqual([]);
   } finally {
     rmSync(destination, { recursive: true, force: true });
   }
