@@ -24,7 +24,7 @@ defaults:
 # Environment variables available to all jobs and steps in this workflow
 env:
   HUGO_ENV: production
-  HUGO_VERSION: "0.165.0"
+  HUGO_VERSION: "0.166.0"
 
 jobs:
   # Build job
