@@ -1,0 +1,45 @@
+{{ $footerImage := resources.Get "images/zaun.png" }}
+
+
+<footer class="bg-body pl-3 pr-3 pb-8">
+  <div class="container">
+    <div class="items-center pt-8">
+      <div class="relative mb-0">
+        <a class="block py-6 xl:py-0" href="{{ site.Home.RelPermalink }}">
+          <img class="img w-full" src="{{ $footerImage.RelPermalink }}" alt="Bunter Zaun der Montessori Schule Gilching" width="{{ $footerImage.Width }}" height="{{ $footerImage.Height }}" />
+        </a>
+        <div class="absolute inset-x-0 top-0 px-2 pt-1 text-center text-xs text-monte xl:px-4 xl:pt-2 xl:text-sm">
+          {{ $contactPage := site.GetPage "/pages/kontakt" }}
+          {{ $socialLinks := cond (and $contactPage $contactPage.Params.social_links) $contactPage.Params.social_links (slice) }}
+          <ul class="flex flex-wrap items-center justify-center">
+            {{ range site.Menus.footer }}
+              <li class="mx-1 inline-block md:mx-2 xl:m-3">
+                <a
+                  {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
+                  href="{{ if findRE `^#` .URL }}
+                    {{ if not $.IsHome }}
+                      {{ site.Home.RelPermalink }}
+                    {{ end }}{{ .URL }}
+                  {{ else }}
+                    {{ .URL | relLangURL }}
+                  {{ end }}">
+                  {{ .Name }}
+                </a>
+              </li>
+            {{ end }}
+            {{ range $socialLinks }}
+              <li class="mx-0 inline-flex items-center leading-none text-base md:mx-2 xl:mx-3 xl:text-xl">
+                <a target="_blank" aria-label="{{ .name }}" rel="nofollow noopener" href="{{ .link | safeURL }}">
+                  <i class="{{ .icon }}"></i>
+                </a>
+              </li>
+            {{ end }}
+          </ul>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 px-2 pb-1 text-center text-xs text-primary xl:px-4 xl:pb-2 xl:text-sm">
+          <p class="whitespace-nowrap">{{ site.Params.copyright | markdownify }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

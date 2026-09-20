@@ -1,0 +1,24 @@
+{{ $entry := .Entry }}
+{{ $level := .Level }}
+{{ $sectionTitle := $entry.title | default $entry.label }}
+{{ $sectionID := $entry.id }}
+{{ if not $sectionID }}
+  {{ $sectionID = $sectionTitle | anchorize }}
+{{ end }}
+
+{{ partial "components/section-image" (dict "Image" $entry.image "Alt" $sectionTitle) }}
+{{ if eq $level 0 }}
+  <h2 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h2>
+{{ else if eq $level 1 }}
+  <h3 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h3>
+{{ else }}
+  <h4 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h4>
+{{ end }}
+{{ with $entry.content }}
+  {{ . | markdownify }}
+{{ end }}
+{{ with $entry.children }}
+  {{ range . }}
+    {{ partial "components/section-content" (dict "Entry" . "Level" (add $level 1)) }}
+  {{ end }}
+{{ end }}

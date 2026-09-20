@@ -1,0 +1,5 @@
+{{ define "main" }}
+  {{ partial "page-header" . }}
+  {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
+  {{ partial "components/aktuelles-grid.html" (dict "Pages" $pages.ByDate.Reverse) }}
+{{ end }}

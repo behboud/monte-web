@@ -1,0 +1,8 @@
+{{ define "main" }}
+  {{ partial "page-header" . }}
+  <div class="container">
+    {{ if eq .Permalink (`tags/` | absLangURL) }}
+      {{ partial "components/tags-terms-list.html" . }}
+    {{ end }}
+  </div>
+{{ end }}

@@ -1,0 +1,39 @@
+{{ define "main" }}
+  <!-- Banner -->
+  {{ with .Params.banner }}
+    <div class="ml-3">
+      <div class="container pt-8">
+        <div class="justify-center text-center">
+          <div class="text-8xl font-calligraphy text-monte">
+            {{ .title }}
+          </div>
+          {{ if .content }}
+            <p class="mb-2">
+              {{ .content | markdownify }}
+            </p>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  {{ end }}
+  <!-- /Banner -->
+
+  <!-- Slider -->
+  {{ with .Params.slider }}
+    <div class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4">
+      {{ partial "components/slider.html" (dict "Images" .images "ContainerClass" "hero-slider swiper h-[240px] sm:h-[320px] md:h-[440px] lg:h-[600px]" "Class" "swiper-wrapper" "ClassImage" "swiper-slide") }}
+    </div>
+  {{ end }}
+  <!-- /Slider -->
+
+  <div class="ml-3">
+    <!-- Aktuelles -->
+    <div class="ml-1">
+      <h2 class="text-monte text-start text-lg font-bold">AKTUELLES</h2>
+    </div>
+    {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
+    {{ partial "components/aktuelles-grid.html" (dict "Pages" $pages.ByDate.Reverse "Limit" 4) }}
+    <!-- /Aktuelles -->
+    {{ .Content | markdownify }}
+  </div>
+{{ end }}

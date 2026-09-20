@@ -1,0 +1,5 @@
+{{ define "main" }}
+  {{ partial "components/page-intro" (dict "Context" . "Title" .Params.uberschrift) }}
+
+  {{ partial "components/donation-cards" (dict "Items" .Params.projekte "SectionLabel" "Unsere Förderprojekte") }}
+{{ end }}

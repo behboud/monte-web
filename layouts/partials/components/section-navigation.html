@@ -1,0 +1,20 @@
+{{ range .Entries }}
+  {{ $sectionTitle := .title | default .label }}
+  {{ $href := .href }}
+  {{ if not $href }}
+    {{ with .id }}
+      {{ $href = printf "#%s" (strings.TrimPrefix "#" .) }}
+    {{ end }}
+  {{ end }}
+  {{ if not $href }}
+    {{ $href = printf "#%s" ($sectionTitle | anchorize) }}
+  {{ end }}
+  <li>
+    <a href="{{ $href }}" data-mobile-toc-link>{{ .label | default $sectionTitle }}</a>
+    {{ with .children }}
+      <ul>
+        {{ partial "components/section-navigation" (dict "Entries" .) }}
+      </ul>
+    {{ end }}
+  </li>
+{{ end }}

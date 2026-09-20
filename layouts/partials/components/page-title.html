@@ -1,0 +1,7 @@
+{{ $ctx := .Context }}
+{{ $title := .Title | default $ctx.Title }}
+
+
+<section class="container ml-3 mt-10 mb-12 text-center">
+  <h1 class="page-title-calligraphy">{{ $title }}</h1>
+</section>

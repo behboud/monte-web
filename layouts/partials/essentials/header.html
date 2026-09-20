@@ -1,0 +1,70 @@
+{{ $anniversaryLogo := resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
+
+
+<div class="sticky-navigation sticky top-0 z-50 pl-3 pr-3" data-sticky-navigation>
+  <div class="container bg-body text-monte">
+    <!-- top navbar -->
+    <ul class="flex h-14 flex-row items-center justify-between navbar-nav order-3 w-full space-x-2 pb-0 uppercase md:h-[52px] xl:space-x-8">
+      <div class="flex flex-row md:hidden">
+        <li class="text-2xl m-3">
+          <a class="fa fa-bars font-bold" href="#mymenu" aria-label="Menü öffnen"></a>
+        </li>
+      </div>
+      <div class="flex min-w-0 flex-1 flex-row">
+        {{ $currentPage := . }}
+        {{ $iconGroupStarted := false }}
+        {{ range site.Menus.top }}
+          {{ $pushIconsRight := and .Params.icon (not $iconGroupStarted) }}
+          {{ if .Params.icon }}
+            {{ $iconGroupStarted = true }}
+          {{ end }}
+          {{ $menuURL := .URL | absLangURL }}
+          {{ $pageURL:= $currentPage.Permalink | absLangURL }}
+          {{ $active := eq $menuURL $pageURL }}
+          {{ $itemClass := "m-3 pt-1" }}
+          {{ if not .Params.icon }}
+            {{ $itemClass = "m-3 pt-1 hidden md:block" }}
+          {{ else if $pushIconsRight }}
+            {{ $itemClass = "m-3 pt-1 ml-auto" }}
+          {{ end }}
+          <li class="{{ $itemClass }}">
+            {{ if .Params.icon }}
+              <a
+                class="{{ .Params.icon }} btn btn-text font-bold transition-colors duration-150 hover:text-primary"
+                aria-label="{{ .Name }}"
+                {{ if findRE `^http` .URL }}
+                  target="_self" rel="noopener"
+                {{ end }}
+                href="{{- if findRE `^#` .URL -}}
+                  {{- if not $.IsHome -}}
+                    {{- site.Home.RelPermalink -}}
+                  {{- end }}{{- .URL -}}
+                {{- else -}}
+                  {{- .URL | relLangURL -}}
+                {{- end -}}"></a>
+            {{ end }}
+            <a
+              class="btn btn-text font-bold hover:underline underline-offset-4 {{ if .Params.icon }}hidden{{ end }}"
+              {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
+              href="{{- if findRE `^#` .URL -}}
+                {{- if not $.IsHome -}}
+                  {{- site.Home.RelPermalink -}}
+                {{- end }}{{- .URL -}}
+              {{- else -}}
+                {{- .URL | relLangURL -}}
+              {{- end -}}">
+              {{ .Name }}
+            </a>
+          </li>
+        {{ end }}
+      </div>
+      <li class="mx-3 flex h-full shrink-0 items-center">
+        <a class="flex h-full items-center" href="{{ site.Home.RelPermalink }}" aria-label="20 Jahre Montessori Schule Gilching">
+          <img class="block h-[95%] w-auto object-contain" src="{{ $anniversaryLogo.RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ $anniversaryLogo.Width }}" height="{{ $anniversaryLogo.Height }}" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{{ partial "essentials/menu" (dict "page" . "menuID" "top") }}
