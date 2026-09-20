@@ -216,6 +216,8 @@ Sveltia CMS ist in `static/admin/index.html` bewusst auf Version `0.217.0` festg
 
 News-Beiträge und Seiten können über das CMS bearbeitet werden. Änderungen werden als Git-Commits gespeichert.
 
+Bilder, die über das CMS hochgeladen werden, werden vor dem Speichern im Browser automatisch als WebP mit maximal 2048 × 2048 Pixeln und Qualität 82 verarbeitet. Kleinere Bilder werden nicht vergrößert; SVG-Dateien werden optimiert. Die Originaldatei wird dabei nicht in das öffentliche Repository übernommen. Hochauflösende Originale sollten separat und intern archiviert werden.
+
 - **aktuelles**: News-Artikel (create: true)
 - **pages**: Statische Seiten (create: true)
 - **schule**: Schul-Informationen (read-only)

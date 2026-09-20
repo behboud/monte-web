@@ -15,6 +15,14 @@ test.describe("CMS admin", () => {
     await expect(page.getByText(/Sveltia CMS/)).toBeVisible();
   });
 
+  test("optimizes uploaded images before storing them", async ({ request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+
+    expect(config).toMatch(/media_libraries:\s+all:\s+transformations:\s+raster_image:\s+format: webp\s+quality: 82\s+width: 2048\s+height: 2048/);
+    expect(config).toContain("optimize: true");
+  });
+
   test("documents publication review without changing public content", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();

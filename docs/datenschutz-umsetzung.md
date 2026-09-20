@@ -12,7 +12,7 @@
 - Spenden-, Förderer- und Projekt-Einträge haben optionale Prüfhinweise. Diese Hinweise ändern oder verstecken keinen Inhalt.
 - Es wurden keine Inhalte gelöscht oder geändert.
 
-Tests: `npm run test:ui` ist erfolgreich. 56 Tests liefen durch, 4 Tests wurden übersprungen.
+Tests: `npm run test:ui` ist erfolgreich. 58 Tests liefen durch, 4 Tests wurden übersprungen.
 
 ## Noch offen
 
