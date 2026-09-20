@@ -1,0 +1,30 @@
+{{ $items := .Items }}
+{{ with $items }}
+  <section class="section-cards mb-12" aria-label="Bereiche dieser Seite">
+    <div class="section-cards-grid">
+      {{ range . }}
+        {{ $title := .title | default .label }}
+        {{ $href := .href }}
+        {{ if not $href }}
+          {{ with .id }}
+            {{ $href = printf "#%s" (strings.TrimPrefix "#" .) }}
+          {{ end }}
+        {{ end }}
+        {{ if not $href }}
+          {{ $href = printf "#%s" ($title | anchorize) }}
+        {{ end }}
+        <a class="section-card group" href="{{ $href }}">
+          {{ with .image }}
+            {{ with resources.Get . }}
+              <img class="section-card-image" src="{{ .RelPermalink }}" alt="{{ $title }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" />
+            {{ end }}
+          {{ end }}
+          <h2 class="section-card-title">{{ $title }}</h2>
+          {{ with .description }}
+            <p class="section-card-description">{{ . }}</p>
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

@@ -1,0 +1,29 @@
+{{ define "main" }}
+  {{ partial "components/page-intro" (dict "Context" . "Title" .Params.uberschrift) }}
+
+  {{ with .Params.top_buttons }}
+    <section class="container ml-3 mb-10">
+      <div class="spenden-cta-bar">
+        {{ range . }}
+          {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
+          {{ $class := "spenden-cta-secondary" }}
+          {{ if eq .style "primary" }}{{ $class = "spenden-cta-primary" }}{{ end }}
+          <a class="btn btn-default {{ $class }}" {{ if $isExternal }}target="_self" rel="noopener"{{ end }} href="{{ if $isExternal }}{{ .url }}{{ else }}{{ .url | relLangURL }}{{ end }}">{{ .label }}</a>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+
+  {{ partial "components/donation-cards" (dict "Items" .Params.spenden "SectionLabel" "Unsere Unterstützerinnen und Unterstützer") }}
+
+  {{ $projectPage := site.GetPage "/foerderer/" }}
+  {{ $highlightedProjects := slice }}
+  {{ with $projectPage }}
+    {{ range .Params.projekte }}
+      {{ if and .highlight .url }}
+        {{ $highlightedProjects = $highlightedProjects | append . }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+  {{ partial "components/donation-highlight-popup" (dict "Projects" $highlightedProjects) }}
+{{ end }}

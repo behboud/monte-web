@@ -1,0 +1,29 @@
+{
+  "name": "monte-gilching",
+  "description": "Montessori Website Gilching",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "behboud kalantary",
+  "scripts": {
+    "dev": "hugo server --environment development --baseURL http://localhost:1313/",
+    "build": "hugo --gc --minify",
+    "project-setup": "hugo version",
+    "test:ui": "npm run build && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.5.4",
+    "http-server": "^14.1.1",
+    "postcss": "^8.5.26",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^17.0.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-go-template": "0.0.15",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.3"
+  },
+  "dependencies": {
+    "mmenu-js": "^9.3.0"
+  }
+}

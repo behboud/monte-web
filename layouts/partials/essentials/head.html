@@ -1,0 +1,25 @@
+<meta charset="utf-8" />
+
+<!-- responsive meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- favicon -->
+{{ partialCached "favicon" . }}
+
+
+<!-- manifest -->
+{{ if and hugo.IsProduction (not hugo.IsServer) }}
+  {{ partialCached "manifest" . }}
+{{ end }}
+
+
+<!-- opengraph and twitter card -->
+{{ partial "basic-seo.html" . }}
+
+
+<!-- custom script -->
+{{ partialCached "custom-script.html" . }}
+
+
+<!-- search index -->
+{{ partial "search-index.html" . }}

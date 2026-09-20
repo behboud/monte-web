@@ -1,0 +1,34 @@
+{{ $items := .Items }}
+{{ $sectionLabel := .SectionLabel | default "Unsere Förderprojekte" }}
+{{ with $items }}
+  <section class="container ml-3 mb-12" aria-label="{{ $sectionLabel }}">
+    <div class="spenden-grid">
+      {{ range . }}
+        <article class="spenden-card card">
+          <div class="spenden-card-image">
+            {{ partial "image" (dict "Src" .image "Alt" (printf "Unterstützung durch %s" .title) "Class" "h-full w-full object-cover") }}
+          </div>
+          <div class="spenden-card-body">
+            <h2 class="spenden-card-title">{{ .title | markdownify }}</h2>
+            <div class="spenden-card-content">{{ .content | markdownify }}</div>
+            {{ if .url }}
+              {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
+              <a
+                class="spenden-card-link"
+                aria-label="Jetzt fördern: {{ .title }}"
+                {{ if $isExternal }}target="_self" rel="noopener"{{ end }}
+                href="{{ if $isExternal }}
+                  {{ .url }}
+                {{ else }}
+                  {{ .url | relLangURL }}
+                {{ end }}">
+                Jetzt fördern
+                <span class="fa fa-arrow-right" aria-hidden="true"></span>
+              </a>
+            {{ end }}
+          </div>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
