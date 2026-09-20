@@ -14,4 +14,17 @@ test.describe("CMS admin", () => {
     await expect(page.getByRole("button", { name: /GitHub/ })).toBeVisible({ timeout: 15_000 });
     await expect(page.getByText(/Sveltia CMS/)).toBeVisible();
   });
+
+  test("documents publication review without changing public content", async ({ page, request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+
+    expect(config).toContain('name: "publication_review"');
+    expect(config).toContain("Interne Prüfinformation");
+    expect(config).toContain('type: "date"');
+    expect(config).toContain("Bitte vor der Veröffentlichung");
+
+    await page.goto("/spenden/", { waitUntil: "networkidle" });
+    await expect(page.getByText("Privater Spender", { exact: true })).toBeVisible();
+  });
 });

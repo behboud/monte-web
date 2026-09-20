@@ -48,12 +48,6 @@
 {{/* scripts lazy */}}
 <script defer async crossorigin="anonymous" integrity="{{ $scriptsLazy.Data.Integrity }}" src="{{ $scriptsLazy.RelPermalink }}"></script>
 
-<!-- progressive web app -->
-{{ if and hugo.IsProduction (not hugo.IsServer) }}
-  {{ partialCached "pwa.html" . }}
-{{ end }}
-
-
 <!-- cookie consent -->
 {{ partialCached "cookie-consent.html" . }}
 

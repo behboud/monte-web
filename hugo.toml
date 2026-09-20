@@ -54,16 +54,10 @@ defaultContentLanguage = "de"
     path = "github.com/gethugothemes/hugo-modules/search"
 
   [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/pwa"
-
-  [[module.imports]]
     path = "github.com/gethugothemes/hugo-modules/images"
 
   [[module.imports]]
     path = "github.com/gethugothemes/hugo-modules/videos"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/icons/font-awesome"
 
   [[module.imports]]
     path = "github.com/gethugothemes/hugo-modules/gzip-caching"
@@ -124,7 +118,7 @@ defaultContentLanguage = "de"
 
 ############################# Outputs ############################
 [outputs]
-  home = ["HTML", "RSS", "WebAppManifest", "SearchIndex"]
+  home = ["HTML", "RSS", "SearchIndex"]
 
 ############################# Imaging ############################
 [imaging]
@@ -162,16 +156,8 @@ defaultContentLanguage = "de"
     endLevel = 5
     ordered = true
 
-########################### Media types ###########################
-[mediaTypes]
-  [mediaTypes."application/manifest+json"]
-    suffixes = ["webmanifest"]
-
 ########################### Output Format ##########################
 [outputFormats]
-  [outputFormats.WebAppManifest]
-    mediaType = "application/manifest+json"
-    rel = "manifest"
   [outputFormats.SearchIndex]
     mediaType = "application/json"
     baseName = "searchindex"
@@ -383,7 +369,7 @@ defaultContentLanguage = "de"
     lazy = true
 
   [[params.plugins.css]]
-    link = "https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/9.3.0/mmenu.min.css"
+    link = "plugins/mmenu/mmenu.css"
     lazy = false
 
   [[params.plugins.js]]

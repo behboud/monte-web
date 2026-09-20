@@ -37,7 +37,7 @@ collections:
       preview: false
     fields:
       - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Stimmungsbild", name: "image", widget: "image" }
+      - { label: "Stimmungsbild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
       - name: "tags"
         widget: "select"
         label: "Tags"
@@ -71,6 +71,7 @@ collections:
                 multiple: true
                 allow_add: true
                 default: []
+                comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen. Bei mehreren Bildern die Prüfung je Bild dokumentieren."
           - { label: "Inhalt", name: "body", widget: "markdown", required: false }
   - name: "pages"
     label: "Einzelseiten"
@@ -219,7 +220,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image" }
+                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Wochenplan"
             name: "meal_plan"
             widget: "object"
@@ -328,7 +329,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image" }
+                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Bereichslinks"
             name: "section_cards"
             widget: "object"
@@ -397,7 +398,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image" }
+                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Bereichslinks"
             name: "section_cards"
             widget: "object"
@@ -448,7 +449,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image" }
+                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
           - label: "Obere Buttons"
             name: "top_buttons"
@@ -470,8 +471,26 @@ collections:
             required: false
             fields:
               - { label: "Name", name: "title", widget: "string" }
-              - { label: "Bild", name: "image", widget: "image" }
+              - { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
               - { label: "Text", name: "content", widget: "markdown" }
+              - label: "Prüfung der Veröffentlichung"
+                name: "publication_review"
+                widget: "object"
+                required: false
+                comment: "Interne Prüfinformation. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
+                fields:
+                  - label: "Status"
+                    name: "status"
+                    widget: "select"
+                    required: false
+                    default: "not_reviewed"
+                    options:
+                      - { label: "Nicht geprüft", value: "not_reviewed" }
+                      - { label: "Geprüft", value: "reviewed" }
+                      - { label: "Rückfrage nötig", value: "needs_review" }
+                  - { label: "Nachweis/Referenz", name: "reference", widget: "string", required: false }
+                  - { label: "Prüfdatum", name: "reviewed_at", widget: "datetime", type: "date", required: false }
+                  - { label: "Wiedervorlage", name: "review_until", widget: "datetime", type: "date", required: false }
       - file: "content/de/foerderer/_index.md"
         label: "Förderprojekte"
         name: "foerderer"
@@ -489,7 +508,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image" }
+                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
           - label: "Förderprojekte"
             name: "projekte"
@@ -497,10 +516,28 @@ collections:
             required: false
             fields:
               - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Bild", name: "image", widget: "image" }
+              - { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
               - { label: "Im Förder-Popup hervorheben", name: "highlight", widget: "boolean", required: false, default: false }
               - { label: "Text", name: "content", widget: "markdown" }
               - { label: "Förderlink", name: "url", widget: "string" }
+              - label: "Prüfung der Veröffentlichung"
+                name: "publication_review"
+                widget: "object"
+                required: false
+                comment: "Interne Prüfinformation für Projekt, Organisation, Logo und Link. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
+                fields:
+                  - label: "Status"
+                    name: "status"
+                    widget: "select"
+                    required: false
+                    default: "not_reviewed"
+                    options:
+                      - { label: "Nicht geprüft", value: "not_reviewed" }
+                      - { label: "Geprüft", value: "reviewed" }
+                      - { label: "Rückfrage nötig", value: "needs_review" }
+                  - { label: "Nachweis/Referenz", name: "reference", widget: "string", required: false }
+                  - { label: "Prüfdatum", name: "reviewed_at", widget: "datetime", type: "date", required: false }
+                  - { label: "Wiedervorlage", name: "review_until", widget: "datetime", type: "date", required: false }
       - file: "content/de/verein/_index.md"
         label: "Verein"
         name: "verein"
@@ -517,7 +554,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image" }
+                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Bereichslinks"
             name: "section_cards"
             widget: "object"
