@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 import { expect, test } from "@playwright/test";
 
-const deploymentBaseURL = new URL("https://example.test/monte-web/");
+const deploymentBaseURL = new URL(process.env.TEST_DEPLOYMENT_BASE_URL ?? "https://example.test/site-prefix/");
 const linkAttributePattern = /\b(?:href|src)=(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi;
 
 const findHTMLFiles = (directory: string): string[] =>
