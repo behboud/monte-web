@@ -1,0 +1,5 @@
+{{- $url := . -}}
+{{- if hasPrefix $url "/" -}}
+  {{- $url = replaceRE `^/` `` $url -}}
+{{- end -}}
+{{- $url | relLangURL -}}

@@ -298,6 +298,7 @@ Siehe decap-proxy README: https://github.com/behboud/decap-proxy
 - Playwright-basierte Browser-Regressionstests und Interaktionstests in `tests/ui/`.
 - Die Tests prüfen gezielt stabile Layout-Verträge wie Navigation, responsive Footer-Abstände, Seitenreihenfolge, Breadcrumbs und zentrale Benutzerinteraktionen.
 - Datenschutz-Regressionstests prüfen unter anderem Cookies, externe Ressourcen, Manifest/Service Worker und Browser-Speicher.
+- Ein Produktions-Build-Test prüft alle internen Links und Ressourcen auf den konfigurierten Deployment-Pfad.
 - Relevanter npm-Befehl:
   - `npm run test:ui` (Build + Playwright-Regressionstests)
 
