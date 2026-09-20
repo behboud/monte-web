@@ -210,7 +210,7 @@ Swiper-Bibliothek für Carousels. Homepage-Slideshow in `layouts/index.html`.
 
 **CMS-Konfiguration**: `static/admin/config.yml`
 
-Sveltia CMS ist in `static/admin/index.html` bewusst auf Version `0.205.2` festgelegt. So können Änderungen an der CMS-Validierung nicht ungeprüft live gehen. Bei einem Upgrade die Version dort ändern, die Release Notes prüfen und die CMS-Konfiguration testen.
+Sveltia CMS ist in `static/admin/index.html` bewusst auf Version `0.217.0` festgelegt. So können Änderungen an der CMS-Validierung nicht ungeprüft live gehen. Bei einem Upgrade die Version dort ändern, die Release Notes prüfen und die CMS-Konfiguration testen.
 
 ### Content-Editor
 
