@@ -41,6 +41,7 @@ test.describe("CMS admin", () => {
     const adminHtml = await adminResponse.text();
 
     expect(adminHtml).toContain('<link rel="icon" href="./favicon.png" type="image/png" />');
+    expect(adminHtml).toContain('<link rel="shortcut icon" href="./favicon.png" type="image/png" />');
 
     const faviconResponse = await request.get("/admin/favicon.png");
     expect(faviconResponse).toBeOK();
