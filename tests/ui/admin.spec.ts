@@ -36,6 +36,17 @@ test.describe("CMS admin", () => {
     expect(logoResponse.headers()["content-type"]).toMatch(/^image\/png/);
   });
 
+  test("CMS serves a local favicon instead of falling back to the domain root", async ({ request }) => {
+    const adminResponse = await request.get("/admin/");
+    const adminHtml = await adminResponse.text();
+
+    expect(adminHtml).toContain('<link rel="icon" href="./favicon.png" type="image/png" />');
+
+    const faviconResponse = await request.get("/admin/favicon.png");
+    expect(faviconResponse).toBeOK();
+    expect(faviconResponse.headers()["content-type"]).toMatch(/^image\/png/);
+  });
+
   test("documents publication review without changing public content", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
