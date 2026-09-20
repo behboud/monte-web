@@ -26,7 +26,7 @@ media_libraries:
       svg:
         optimize: true
 display_url: "https://behboud.github.io/monte-web/"
-logo_url: /monte-web/images/logo-montessorischulegilching.gif
+logo_url: /monte-web/images/logo_20_jahre_140mm_400dpi.png
 locale: "de"
 app_title: "Montessorri Schule Gilching CMS"
 collections:

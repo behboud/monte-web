@@ -23,6 +23,19 @@ test.describe("CMS admin", () => {
     expect(config).toContain("optimize: true");
   });
 
+  test("CMS logo points to an existing anniversary logo", async ({ request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+    const logoUrl = config.match(/^logo_url:\s*([^\n]+)$/m)?.[1]?.trim();
+
+    expect(logoUrl).toBe("/monte-web/images/logo_20_jahre_140mm_400dpi.png");
+
+    const localLogoPath = logoUrl.replace(/^\/monte-web/, "");
+    const logoResponse = await request.get(localLogoPath);
+    expect(logoResponse).toBeOK();
+    expect(logoResponse.headers()["content-type"]).toMatch(/^image\/png/);
+  });
+
   test("documents publication review without changing public content", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
