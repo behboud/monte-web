@@ -236,7 +236,7 @@ toc:
 
             Ab dem Schuljahr 2026/27 beträgt das Schulgeld unserer Schule monatlich XXX. Das schließt die Betreuung bis 15.30 Uhr (Mo-Do) mit ein.
 
-            Damit Kinder unabhängig vom Einkommen ihrer Eltern unsere Schule besuchen können, kann das Schulgeld reduziert werden. Detaillierte Infos finden Sie [hier](Schulgeldtabelle).
+            Damit Kinder unabhängig vom Einkommen ihrer Eltern unsere Schule besuchen können, kann das Schulgeld reduziert werden. Detaillierte Informationen erhalten Sie auf Anfrage.
 
             Das monatliche Schulgeld und die Essenspauschale werden ausschließlich per SEPA-Lastschriftmandat eingezogen. Die notwendigen Formulare erhalten Sie zusammen mit dem Schulvertrag. Die Essenspauschale ist nicht im Schulgeld enthalten.
 

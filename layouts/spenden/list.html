@@ -8,7 +8,7 @@
           {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
           {{ $class := "spenden-cta-secondary" }}
           {{ if eq .style "primary" }}{{ $class = "spenden-cta-primary" }}{{ end }}
-          <a class="btn btn-default {{ $class }}" {{ if $isExternal }}target="_self" rel="noopener"{{ end }} href="{{ if $isExternal }}{{ .url }}{{ else }}{{ .url | relLangURL }}{{ end }}">{{ .label }}</a>
+          <a class="btn btn-default {{ $class }}" {{ if $isExternal }}target="_self" rel="noopener"{{ end }} href="{{ if $isExternal }}{{ .url }}{{ else }}{{ partial "components/link-url.html" .url }}{{ end }}">{{ .label }}</a>
         {{ end }}
       </div>
     </section>

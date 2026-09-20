@@ -20,7 +20,7 @@
                 href="{{ if $isExternal }}
                   {{ .url }}
                 {{ else }}
-                  {{ .url | relLangURL }}
+                  {{ partial "components/link-url.html" .url }}
                 {{ end }}">
                 Jetzt fördern
                 <span class="fa fa-arrow-right" aria-hidden="true"></span>
