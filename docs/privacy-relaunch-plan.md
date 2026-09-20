@@ -37,4 +37,4 @@ Es enthält keine Einzelfälle zu Personen, keine privaten Kontaktdaten und kein
 
 ## Tests
 
-`npm run test:ui` ist erfolgreich: 54 Tests liefen durch, 2 wurden übersprungen.
+`npm run test:ui` ist erfolgreich: 56 Tests liefen durch, 4 wurden übersprungen.
