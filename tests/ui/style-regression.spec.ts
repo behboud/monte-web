@@ -1,6 +1,20 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("style regressions", () => {
+  test("mobile menu opens and closes with local mmenu assets", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const menu = page.locator("#mymenu");
+    await expect(menu).toHaveClass(/mm-menu/);
+
+    await page.locator('a[href="#mymenu"]').click();
+    await expect(menu).toHaveClass(/mm-menu--opened/);
+
+    await page.locator(".mm-wrapper__blocker").click({ force: true });
+    await expect(menu).not.toHaveClass(/mm-menu--opened/);
+  });
+
   test("navigation starts at the top without the masthead", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
