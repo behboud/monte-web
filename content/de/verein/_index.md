@@ -29,6 +29,6 @@ toc:
         Weitere Informationen folgen in Kürze auf dieser Seite.
     - label: Vorstand
       title: Vorstand
-      image: ''
+      image: /images/bauwagen.jpg
       content: Lore ipsum
 ---
