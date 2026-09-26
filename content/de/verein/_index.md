@@ -1,5 +1,5 @@
 ---
-title: "Verein"
+title: Verein
 draft: false
 slider:
   enable: true
@@ -7,15 +7,18 @@ slider:
     - /images/Schuleeingang.jpeg
     - /images/Schuleeingang.jpeg
     - /images/Schuleeingang.jpeg
+section_cards: null
 toc:
-  title: "Seitenübersicht"
+  enable: false
+  title: Seitenübersicht
   sections:
-    - label: "Verein"
-      title: "Verein"
-      content: |
+    - label: Verein
+      title: Verein
+      image: ''
+      content: |-
         Unser Trägerverein ist die Montessori Fördergemeinschaft Gilching e.V.
 
-        Als gemeinnütziger Verein trägt er die Verantwortung für die langfristige Entwicklung unserer Schule, die organisatorischen Rahmenbedingungen und die enge Zusammenarbeit mit Eltern, Pädagog*innen und Vorstand.
+        Als gemeinnütziger Verein trägt er die Verantwortung für die langfristige Entwicklung unserer Schule, die organisatorischen Rahmenbedingungen und die enge Zusammenarbeit mit Eltern, Pädagog\*innen und Vorstand.
 
         Der Verein bildet das organisatorische Fundament unserer Schulgemeinschaft. Er schafft den rechtlichen und finanziellen Rahmen, in dem pädagogische Arbeit, Elternengagement und Schulentwicklung verlässlich wachsen können.
 
@@ -24,4 +27,8 @@ toc:
         Die enge Zusammenarbeit mit Eltern und Team ist ein zentraler Bestandteil unserer Vereinskultur.
 
         Weitere Informationen folgen in Kürze auf dieser Seite.
+    - label: Vorstand
+      title: Vorstand
+      image: ''
+      content: Lore ipsum
 ---
