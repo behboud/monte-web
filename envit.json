@@ -1,0 +1,40 @@
+{
+  "repos": [
+    "emdash-cms/emdash",
+    "alchemy-run/alchemy"
+  ],
+  "skills": {
+    "github/awesome-copilot": [
+      "azure-deployment-preflight",
+      "microsoft-agent-framework",
+      "multi-stage-dockerfile"
+    ],
+    "Leonxlnx/taste-skill": [
+      "brandkit",
+      "design-taste-frontend",
+      "high-end-visual-design",
+      "image-to-code",
+      "imagegen-frontend-mobile",
+      "imagegen-frontend-web",
+      "minimalist-ui",
+      "redesign-existing-projects"
+    ],
+    "vojtaholik/good-css": [
+      "good-css"
+    ],
+    "AgentMemoryRepo/agentmemoryrepo": [
+      "agent-memory-repo"
+    ],
+    "kunchenguid/chrome-devtools-axi": [
+      "chrome-devtools-axi"
+    ],
+    "kunchenguid/gh-axi": [
+      "gh-axi"
+    ],
+    "backnotprop/pstack": "*",
+    "humanlayer/skills": [
+      "show-me"
+    ],
+    "emdash-cms/skills": "*"
+  }
+}
