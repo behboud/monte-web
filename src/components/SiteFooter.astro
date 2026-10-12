@@ -1,0 +1,70 @@
+---
+import { getMenu, getSiteSettings } from "emdash";
+import { sitePath } from "../lib/site-path";
+
+const menu = await getMenu("footer", { trailingSlash: "always" });
+const links = menu?.items ?? [];
+const settings = await getSiteSettings();
+const socialProfiles = [
+  { key: "twitter", name: "Twitter", icon: "fab fa-twitter", base: "https://twitter.com/" },
+  { key: "github", name: "GitHub", icon: "fab fa-github", base: "https://github.com/" },
+  { key: "facebook", name: "Facebook", icon: "fab fa-facebook", base: "https://www.facebook.com/" },
+  { key: "instagram", name: "Instagram", icon: "fab fa-instagram", base: "https://www.instagram.com/" },
+  { key: "linkedin", name: "LinkedIn", icon: "fab fa-linkedin", base: "https://www.linkedin.com/in/" },
+  { key: "youtube", name: "YouTube", icon: "fab fa-youtube", base: "https://www.youtube.com/" },
+] as const;
+const socialLinks = socialProfiles.flatMap((profile) => {
+  const value = settings.social?.[profile.key]?.trim();
+  if (!value) return [];
+  const path = value.replace(/^@/, "");
+  const href = /^(?:https?:)?\/\//i.test(value)
+    ? value
+    : profile.key === "youtube" && value.startsWith("@")
+      ? `${profile.base}@${path}`
+      : `${profile.base}${encodeURIComponent(path)}`;
+  return [{ ...profile, href }];
+});
+const hrefFor = (href: string) => /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(href) ? href : sitePath(href);
+---
+
+<footer class="bg-body pl-3 pr-3 pb-8">
+  <div class="container">
+    <div class="items-center pt-8">
+      <div class="relative mb-0">
+        <a class="block py-6 xl:py-0" href={sitePath("/")}>
+          <img
+            class="img w-full"
+            src={sitePath("/images/zaun.png")}
+            alt="Bunter Zaun der Montessori Schule Gilching"
+            width="2048"
+            height="353"
+          />
+        </a>
+        <div class="absolute inset-x-0 top-0 px-2 pt-1 text-center text-xs text-monte xl:px-4 xl:pt-2 xl:text-sm">
+          <ul class="flex flex-wrap items-center justify-center">
+            {links.map((item) => {
+              const external = /^(?:https?:|mailto:)/i.test(item.url);
+              return (
+                <li class="mx-1 inline-block md:mx-2 xl:m-3">
+                  <a target={item.target} rel={external ? "noopener" : undefined} href={hrefFor(item.url)}>
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
+            {socialLinks.map((social) => (
+              <li class="mx-0 inline-flex items-center leading-none text-base md:mx-2 xl:mx-3 xl:text-xl">
+                <a target="_blank" aria-label={social.name} rel="nofollow noopener" href={social.href}>
+                  <i class={social.icon}></i>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 px-2 pb-1 text-center text-xs text-primary xl:px-4 xl:pb-2 xl:text-sm">
+          <p class="whitespace-nowrap">© Montessori Schule Gilching (Münchner Westen)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

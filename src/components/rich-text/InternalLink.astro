@@ -1,0 +1,27 @@
+---
+import { sanitizeHref } from "emdash";
+import { isExternalPath, sitePath } from "../../lib/site-path";
+
+interface Props {
+  node: {
+    markDef?: {
+      href?: string;
+      blank?: boolean;
+    };
+  };
+}
+
+const { node } = Astro.props;
+const href = sanitizeHref(node.markDef?.href);
+const external = isExternalPath(href);
+const samePageAnchor = href.startsWith("#");
+const blank = !samePageAnchor && node.markDef?.blank === true;
+---
+
+<a
+  href={external ? href : sitePath(href)}
+  target={blank ? "_blank" : undefined}
+  rel={blank ? "noopener noreferrer" : undefined}
+>
+  <slot />
+</a>

@@ -1,0 +1,42 @@
+---
+import type { SitePage } from "../../lib/site-content";
+import PageContent from "../PageContent.astro";
+import PageIntro from "../PageIntro.astro";
+import SectionCards from "../SectionCards.astro";
+
+interface Props {
+  page: SitePage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageIntro page={page} />
+{page.data.section_cards.length > 0 && <SectionCards cards={page.data.section_cards} />}
+
+<section class="container ml-3 mb-12">
+  <article class="card card-body schule-content">
+    <PageContent value={page.data.body} />
+  </article>
+</section>
+
+<style>
+  .schule-content :global(.emdash-image) {
+    margin: 0;
+  }
+
+  .schule-content :global(.emdash-image--align-full) {
+    overflow: clip;
+    border-radius: 0.5rem;
+  }
+
+  .schule-content :global(.emdash-image img) {
+    display: block;
+    width: auto;
+    height: auto;
+  }
+
+  .schule-content :global(.emdash-image--align-full img) {
+    width: 100%;
+  }
+</style>

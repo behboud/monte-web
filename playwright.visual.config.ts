@@ -1,0 +1,47 @@
+import { defineConfig, devices } from "@playwright/test";
+
+const baseURL = process.env.VISUAL_BASE_URL ?? "http://localhost:4173";
+if (new URL(baseURL).hostname !== "localhost") {
+  throw new Error("VISUAL_BASE_URL must use localhost.");
+}
+
+export default defineConfig({
+  testDir: "./tests/ui",
+  testMatch: "visual-parity.spec.ts",
+  fullyParallel: true,
+  timeout: 60_000,
+  expect: {
+    timeout: 10_000,
+    toHaveScreenshot: {
+      animations: "disabled",
+      caret: "hide",
+      scale: "css",
+      maxDiffPixels: 0,
+    },
+  },
+  use: {
+    baseURL,
+    locale: "de-DE",
+    timezoneId: "Europe/Berlin",
+    colorScheme: "light",
+    reducedMotion: "reduce",
+    screenshot: "only-on-failure",
+    trace: "retain-on-failure",
+  },
+  projects: [
+    {
+      name: "desktop-chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1366, height: 900 },
+      },
+    },
+    {
+      name: "mobile-chromium",
+      use: {
+        ...devices["Pixel 7"],
+      },
+    },
+  ],
+  reporter: [["list"]],
+});

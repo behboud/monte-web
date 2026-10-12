@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import MealPlanPage from "../components/pages/MealPlanPage.astro";
+import NotFoundPage from "../components/pages/NotFoundPage.astro";
+import { getMealPlan, getSitePage } from "../lib/site-content";
+
+const page = await getSitePage("speiseplan");
+if (!page) Astro.response.status = 404;
+const mealPlan = page ? await getMealPlan() : null;
+---
+
+<SiteLayout pageTitle={page?.data.title ?? "Seite nicht gefunden"} description={page?.data.description}>
+  {page ? <MealPlanPage page={page} mealPlan={mealPlan} /> : <NotFoundPage />}
+</SiteLayout>

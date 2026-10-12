@@ -1,0 +1,12 @@
+---
+import type { PortableTextBlock } from "emdash/client";
+import PortableTextView from "./PortableTextView.astro";
+
+interface Props {
+  value: PortableTextBlock[];
+}
+
+const { value } = Astro.props;
+---
+
+<PortableTextView value={value} />

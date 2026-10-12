@@ -1,0 +1,29 @@
+---
+import { Image } from "emdash/ui";
+import type { PageSlide } from "../lib/site-content";
+
+interface Props {
+  images: PageSlide[];
+  variant: "hero" | "panorama";
+}
+
+const { images, variant } = Astro.props;
+const slides = images.filter(
+  (slide): slide is PageSlide & { image: NonNullable<PageSlide["image"]> } => slide.image !== null,
+);
+const containerClass = variant === "hero"
+  ? "hero-slider swiper h-[240px] sm:h-[320px] md:h-[440px] lg:h-[600px]"
+  : "schule-slider schule-slider-panorama swiper h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]";
+---
+
+{slides.length > 0 && (
+  <div class={containerClass}>
+    <div class="swiper-wrapper">
+      {slides.map((slide) => (
+        <div class="swiper-slide">
+          <Image image={slide.image} alt="" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+)}

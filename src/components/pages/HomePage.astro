@@ -1,0 +1,37 @@
+---
+import type { SitePage, NewsPost } from "../../lib/site-content";
+import PageContent from "../PageContent.astro";
+import Slider from "../Slider.astro";
+import NewsGrid from "../NewsGrid.astro";
+
+interface Props {
+  page: SitePage;
+  posts: NewsPost[];
+}
+
+const { page, posts } = Astro.props;
+---
+
+{page.data.banner_title && (
+  <div class="ml-3">
+    <div class="container pt-8">
+      <div class="justify-center text-center">
+        <div class="text-8xl font-calligraphy text-monte">{page.data.banner_title}</div>
+      </div>
+    </div>
+  </div>
+)}
+
+{page.data.slides.length > 0 && (
+  <div class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4">
+    <Slider images={page.data.slides} variant="hero" />
+  </div>
+)}
+
+<div class="ml-3">
+  <div class="ml-1">
+    <h2 class="text-monte text-start text-lg font-bold">AKTUELLES</h2>
+  </div>
+  <NewsGrid posts={posts} limit={4} />
+  <PageContent value={page.data.body} />
+</div>

@@ -1,0 +1,105 @@
+---
+import {
+  formatMealDate,
+  formatMealWeek,
+  type MealPlan,
+  type SitePage,
+} from "../../lib/site-content";
+import PageContent from "../PageContent.astro";
+import PageIntro from "../PageIntro.astro";
+
+interface Props {
+  page: SitePage;
+  mealPlan: MealPlan | null;
+}
+
+const { page, mealPlan } = Astro.props;
+const days = mealPlan?.data.days ?? [];
+const todayKey = new Intl.DateTimeFormat("en-CA", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  timeZone: "Europe/Berlin",
+}).format(new Date());
+const dayName = (value: string) => {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? ""
+    : new Intl.DateTimeFormat("de-DE", { weekday: "long", timeZone: "Europe/Berlin" }).format(date);
+};
+const isToday = (value: string) => {
+  const date = new Date(value);
+  return !Number.isNaN(date.getTime()) && new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "Europe/Berlin",
+  }).format(date) === todayKey;
+};
+---
+
+<PageIntro page={page} />
+
+<section class="container ml-3 mb-10">
+  <div class="speiseplan-week card card-body">
+    <p class="speiseplan-kicker">Aktuelle Woche</p>
+    {mealPlan ? (
+      <>
+        <h2 class="mt-1 mb-6">{formatMealWeek(days)}</h2>
+        <div class="speiseplan-grid">
+          {days.map((day) => {
+            const current = isToday(day.date);
+            return (
+              <article class:list={["speiseplan-day card card-body", current && "speiseplan-day-current"]}>
+                <h3 class="mb-1 text-monte">{dayName(day.date)}</h3>
+                <p class="speiseplan-date">{formatMealDate(day.date)}</p>
+                {current && <p class="speiseplan-today">Heute</p>}
+
+                <div class="speiseplan-row">
+                  <p class="speiseplan-label">Hauptgericht</p>
+                  <p class="speiseplan-value">{day.main}</p>
+                </div>
+
+                {day.side && (
+                  <div class="speiseplan-row">
+                    <p class="speiseplan-label">Beilage</p>
+                    <p class="speiseplan-value">{day.side}</p>
+                  </div>
+                )}
+
+                {day.dessert && (
+                  <div class="speiseplan-row">
+                    <p class="speiseplan-label">Nachtisch</p>
+                    <p class="speiseplan-value">{day.dessert}</p>
+                  </div>
+                )}
+
+                {day.drink && (
+                  <div class="speiseplan-row speiseplan-drink">
+                    <p class="speiseplan-label">Getränk</p>
+                    <p class="speiseplan-value">{day.drink}</p>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+
+        {mealPlan.data.notes.length > 0 && (
+          <div class="speiseplan-notes mt-6">
+            <h3 class="mb-3 text-monte">Hinweise</h3>
+            <ul>{mealPlan.data.notes.map((note) => <li>{note}</li>)}</ul>
+          </div>
+        )}
+      </>
+    ) : (
+      <p>Derzeit ist kein Speiseplan hinterlegt.</p>
+    )}
+  </div>
+</section>
+
+<section class="container ml-3 mb-12">
+  <article class="card card-body schule-content">
+    <PageContent value={page.data.body} />
+  </article>
+</section>

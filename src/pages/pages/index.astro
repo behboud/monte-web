@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+---
+
+<SiteLayout pageTitle="Pages">
+  <section class="container ml-3 mt-10 mb-12 text-center">
+    <h1 class="page-title-calligraphy">Pages</h1>
+  </section>
+  <PageHeader items={[{ label: "Pages" }]} />
+  <section class="container ml-3 mb-12">
+    <article class="card card-body schule-content"></article>
+  </section>
+</SiteLayout>

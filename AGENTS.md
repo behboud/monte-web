@@ -1,6 +1,6 @@
-## Deployment lesson
+## Runtime
 
-GitHub Pages serves the site below `/monte-web/`. CSS assets emitted under `/css/` must use relative URLs such as `../fonts/...` for self-hosted fonts so they resolve under the deployment prefix. The production CSS asset regression in `tests/ui/public-links.spec.ts` protects this contract.
+This Astro app uses the Node standalone adapter and a persistent SQLite database plus uploads directory. Do not treat it as a static GitHub Pages site. Self-hosted font URLs in CSS under `/css/` must stay relative, such as `../fonts/...`, so they resolve under a deployment prefix; `tests/ui/public-links.spec.ts` protects this contract.
 
 <!-- envit:begin -->
 ## envit: repo context

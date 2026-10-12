@@ -10,9 +10,9 @@
 - Es werden keine Cookies gesetzt. Die Spenden-Popup nutzt nur `sessionStorage`.
 - Das CMS zeigt Hinweise zur Prüfung von Bildrechten und Veröffentlichungen.
 - Spenden-, Förderer- und Projekt-Einträge haben optionale Prüfhinweise. Diese Hinweise ändern oder verstecken keinen Inhalt.
-- Es wurden keine Inhalte gelöscht oder geändert.
+- Die Migration ins EmDash-Modell hat veröffentlichte Inhalte konvertiert; der leere `Pages.aktuelles`-Platzhalter wurde soft-deleted. Projects wurde zu Donations migriert; Projects und die ungenutzte `page_sections`-Collection wurden nach einer SQLite-Sicherung entfernt.
 
-Tests: `npm run test:ui` ist erfolgreich. 58 Tests liefen durch, 4 Tests wurden übersprungen.
+Tests: `npm run test:ui` ist erfolgreich. 24 Tests liefen durch, 2 projektbedingte Tests wurden übersprungen.
 
 ## Noch offen
 

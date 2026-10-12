@@ -1,0 +1,42 @@
+---
+import { Image } from "emdash/ui";
+import { sitePath } from "../lib/site-path";
+import type { SectionCard } from "../lib/site-content";
+
+interface Props {
+  cards: SectionCard[];
+}
+
+const { cards } = Astro.props;
+const slugify = (value: string) => value
+  .normalize("NFKD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-|-$/g, "");
+---
+
+{cards.length > 0 && (
+  <section class="section-cards mb-12" aria-label="Bereiche dieser Seite">
+    <div class="section-cards-grid">
+      {cards.map((card) => {
+        const title = card.title;
+        const href = card.href || `#${slugify(title)}`;
+        return (
+          <a class="section-card group" href={href.startsWith("#") ? href : sitePath(href)}>
+            {card.image && (
+              <Image
+                image={card.image}
+                alt={card.image.alt || title}
+                class="section-card-image"
+                loading="lazy"
+              />
+            )}
+            <h2 class="section-card-title">{title}</h2>
+            {card.description && <p class="section-card-description">{card.description}</p>}
+          </a>
+        );
+      })}
+    </div>
+  </section>
+)}

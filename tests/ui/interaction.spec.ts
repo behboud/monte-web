@@ -51,18 +51,18 @@ test.describe("core interactions", () => {
     await expect(page.locator("article, main").first()).toBeVisible();
   });
 
-  test("spenden page offers a highlighted project popup", async ({ page }) => {
+  test("spenden page offers a highlighted donation popup", async ({ page }) => {
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
     const popup = page.locator("[data-donation-popup]");
     await expect(popup).toHaveAttribute("data-open", "true");
     await expect(popup.locator("[data-donation-highlight-option]")).toHaveCount(2);
 
-    const selectedProject = popup.locator("[data-donation-highlight-option]:not([hidden])");
-    await expect(selectedProject).toHaveCount(1);
-    await expect(selectedProject.locator("h2")).toBeVisible();
-    await expect(selectedProject.locator(".donation-popup-action")).toHaveText(/Jetzt fördern/);
-    await expect(selectedProject.locator(".donation-popup-action")).toHaveAttribute("href", "/kontakt/");
+    const selectedDonation = popup.locator("[data-donation-highlight-option]:not([hidden])");
+    await expect(selectedDonation).toHaveCount(1);
+    await expect(selectedDonation.locator("h2")).toBeVisible();
+    await expect(selectedDonation.locator(".donation-popup-action")).toHaveText(/Jetzt fördern/);
+    await expect(selectedDonation.locator(".donation-popup-action")).toHaveAttribute("href", "/kontakt/");
 
     const closeButton = popup.locator("[data-donation-popup-close]");
     const closeBox = await closeButton.boundingBox();

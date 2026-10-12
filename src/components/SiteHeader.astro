@@ -1,0 +1,108 @@
+---
+import { getMenu, type MenuItem } from "emdash";
+import { sitePath } from "../lib/site-path";
+
+const menu = await getMenu("top", { trailingSlash: "always" });
+const items = menu?.items ?? [];
+const firstIconIndex = items.findIndex((item) => Boolean(item.cssClasses));
+const currentPath = Astro.url.pathname;
+const samePage = (href: string) => {
+  if (/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(href)) return false;
+  const current = currentPath.replace(/\/$/, "") || "/";
+  const target = new URL(sitePath(href), Astro.url).pathname.replace(/\/$/, "") || "/";
+  return current === target;
+};
+const menuHref = (item: MenuItem) => /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(item.url)
+  ? item.url
+  : sitePath(item.url);
+const activeClass = (item: MenuItem) => samePage(item.url) ? "active" : undefined;
+---
+
+<div class="sticky-navigation sticky top-0 z-50 pl-3 pr-3" data-sticky-navigation data-scrolled="false">
+  <div class="container bg-body text-monte">
+    <ul class="flex h-14 flex-row items-center justify-between navbar-nav order-3 w-full space-x-2 pb-0 uppercase md:h-[52px] xl:space-x-8">
+      <div class="flex flex-row md:hidden">
+        <li class="text-2xl m-3">
+          <a class="fa fa-bars font-bold" href="#mymenu" aria-label="Menü öffnen"></a>
+        </li>
+      </div>
+      <div class="flex min-w-0 flex-1 flex-row">
+        {items.map((item, index) => {
+          const href = menuHref(item);
+          const isIcon = Boolean(item.cssClasses);
+          const external = /^(?:https?:|mailto:)/i.test(item.url);
+          return (
+            <li class:list={["m-3 pt-1", isIcon ? index === firstIconIndex && "ml-auto" : "hidden md:block"]}>
+              {isIcon ? (
+                <>
+                  <a
+                    class={`${item.cssClasses} btn btn-text font-bold transition-colors duration-150 hover:text-primary`}
+                    aria-label={item.label}
+                    target={item.target}
+                    rel={external ? "noopener" : undefined}
+                    href={href}
+                  ></a>
+                  <a
+                    class="btn btn-text font-bold hover:underline underline-offset-4 hidden"
+                    target={item.target}
+                    rel={external ? "noopener" : undefined}
+                    href={href}
+                  >
+                    {item.label}
+                  </a>
+                </>
+              ) : (
+                <a
+                  class="btn btn-text font-bold hover:underline underline-offset-4"
+                  href={href}
+                >
+                  {item.label}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </div>
+      <li class="mx-3 flex h-full shrink-0 items-center">
+        <a class="flex h-full items-center" href={sitePath("/")} aria-label="20 Jahre Montessori Schule Gilching">
+          <img
+            class="block h-[95%] w-auto object-contain"
+            src={sitePath("/images/logo_20_jahre_140mm_400dpi.png")}
+            alt="20 Jahre Montessori Schule Gilching"
+            width="440"
+            height="428"
+          />
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{menu && (
+  <nav id="mymenu" class="hidden">
+    <ul class="NoListView">
+      {items.map((item) => {
+        const active = activeClass(item);
+        const href = menuHref(item);
+        return (
+          <li class={active}>
+            <a class={active} href={href}>{item.label}</a>
+            {item.children.length > 0 && (
+              <ul class="NoListView">
+                {item.children.map((child) => {
+                  const childActive = activeClass(child);
+                  const childHref = menuHref(child);
+                  return (
+                    <li class={childActive}>
+                      <a class={childActive} href={childHref}>{child.label}</a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+)}

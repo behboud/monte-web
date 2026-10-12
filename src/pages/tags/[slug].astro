@@ -1,0 +1,21 @@
+---
+import { getTerm } from "emdash";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import NewsGrid from "../../components/NewsGrid.astro";
+import { getNewsPosts } from "../../lib/site-content";
+
+const slug = Astro.params.slug ?? "";
+const term = await getTerm("tag", slug, { includeCounts: false, locale: "de" });
+if (!term) Astro.response.status = 404;
+const posts = term
+  ? (await getNewsPosts()).filter((post) => post.data.terms.tag.some((tag) => tag.slug === term.slug))
+  : [];
+---
+
+<SiteLayout pageTitle={term?.label ?? "Tag nicht gefunden"}>
+  <PageHeader items={[{ label: "Tags", href: "/tags/", disabled: true }, { label: term?.label ?? "Tag nicht gefunden" }]} />
+  <section class="container">
+    <NewsGrid posts={posts} itemClass="mb-14" />
+  </section>
+</SiteLayout>

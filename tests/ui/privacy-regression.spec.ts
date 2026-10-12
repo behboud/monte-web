@@ -4,7 +4,7 @@ const publicRoutes = ["/", "/schule/", "/spenden/", "/foerderer/", "/kontakt/", 
 
 const isExternalRequest = (url: string) => {
   const hostname = new URL(url).hostname;
-  return hostname !== "127.0.0.1" && hostname !== "localhost";
+  return hostname !== "localhost";
 };
 
 test.describe("privacy regressions", () => {

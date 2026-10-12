@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const baseURL = process.env.UI_BASE_URL ?? "http://localhost:4173";
+if (new URL(baseURL).hostname !== "localhost") {
+  throw new Error("UI_BASE_URL must use localhost.");
+}
+
 export default defineConfig({
   testDir: "./tests/ui",
   fullyParallel: true,
@@ -14,7 +19,7 @@ export default defineConfig({
     },
   },
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL,
     locale: "de-DE",
     timezoneId: "Europe/Berlin",
     colorScheme: "light",
@@ -36,11 +41,5 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: "npx http-server public -p 4173 -c-1 --silent",
-    url: "http://127.0.0.1:4173",
-    reuseExistingServer: true,
-    timeout: 60_000,
-  },
   reporter: [["html"], ["list"]],
 });

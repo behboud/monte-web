@@ -5,25 +5,29 @@
   "license": "MIT",
   "author": "behboud kalantary",
   "scripts": {
-    "dev": "hugo server --environment development --baseURL http://localhost:1313/",
-    "build": "hugo --gc --minify",
-    "project-setup": "hugo version",
-    "test:ui": "npm run build && playwright test"
+    "dev": "astro dev --host localhost --port 4173",
+    "build": "astro check && astro build",
+    "preview": "astro preview --host localhost --port 4173",
+    "seed:generate": "node scripts/create-emdash-seed.mjs",
+    "seed:local": "emdash seed seed/seed.json --database ./data.db --uploads-dir ./uploads",
+    "migrate:content-model": "node scripts/migrate-content-model.mjs",
+    "test:content-model": "node --test tests/content-model.test.mjs",
+    "test:ui": "playwright test tests/ui/admin.spec.ts tests/ui/interaction.spec.ts tests/ui/privacy-regression.spec.ts tests/ui/public-links.spec.ts",
+    "test:visual": "playwright test --config=playwright.visual.config.ts"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.10",
     "@playwright/test": "^1.63.0",
-    "@tailwindcss/postcss": "^4.3.3",
-    "autoprefixer": "^10.6.1",
-    "http-server": "^14.1.1",
-    "postcss": "^8.5.28",
-    "postcss-cli": "^11.0.1",
-    "postcss-import": "^17.0.0",
+    "gray-matter": "^4.0.3",
     "prettier": "^3.9.8",
-    "prettier-plugin-go-template": "0.0.15",
-    "prettier-plugin-tailwindcss": "^0.8.1",
-    "tailwindcss": "^4.3.3"
+    "typescript": "6.0.3"
   },
   "dependencies": {
-    "mmenu-js": "^9.3.0"
+    "@astrojs/node": "11.1.7",
+    "@astrojs/react": "7.0.1",
+    "astro": "7.3.8",
+    "emdash": "1.2.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   }
 }

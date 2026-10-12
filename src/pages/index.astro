@@ -1,0 +1,17 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import HomePage from "../components/pages/HomePage.astro";
+import NotFoundPage from "../components/pages/NotFoundPage.astro";
+import { getNewsPosts, getSitePage } from "../lib/site-content";
+
+const page = await getSitePage("home");
+if (!page) Astro.response.status = 404;
+const posts = page ? await getNewsPosts() : [];
+---
+
+<SiteLayout
+  pageTitle="Montessori Schule Gilching (München West)"
+  description={page?.data.description || "Montessori Schule Gilching (München Westen)"}
+>
+  {page ? <HomePage page={page} posts={posts} /> : <NotFoundPage />}
+</SiteLayout>

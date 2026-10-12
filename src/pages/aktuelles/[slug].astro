@@ -1,0 +1,26 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import NewsArticlePage from "../../components/pages/NewsArticlePage.astro";
+import { getNewsPost, getNewsPosts } from "../../lib/site-content";
+
+const slug = Astro.params.slug ?? "";
+const post = await getNewsPost(slug);
+if (!post) Astro.response.status = 404;
+const posts = post ? await getNewsPosts() : [];
+const tagSlugs = new Set(post?.data.terms.tag.map((tag) => tag.slug) ?? []);
+const related = posts
+  .filter((candidate) => candidate.slug !== post?.slug)
+  .filter((candidate) => candidate.data.terms.tag.some((tag) => tagSlugs.has(tag.slug)))
+  .slice(0, 6);
+---
+
+<SiteLayout pageTitle={post?.data.title ?? "Seite nicht gefunden"}>
+  {post ? (
+    <NewsArticlePage post={post} related={related} />
+  ) : (
+    <div class="container ml-3 mt-10 mb-12">
+      <h1>Seite nicht gefunden</h1>
+      <p><a href="/">Zur Startseite</a></p>
+    </div>
+  )}
+</SiteLayout>

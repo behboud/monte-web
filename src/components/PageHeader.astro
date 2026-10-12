@@ -1,0 +1,32 @@
+---
+import { sitePath } from "../lib/site-path";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="container ml-3">
+  <div>
+    <ul class="breadcrumb mt-2 text-lg font-bold uppercase">
+      <li><a href={sitePath("/")}>Startseite</a></li>
+      {items.map((item) => (
+        <li class:list={{ "is-disabled": item.disabled || !item.href }}>
+          {item.href ? (
+            <a href={sitePath(item.href)}>{item.label}</a>
+          ) : (
+            <span class="text-monte">{item.label}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+---
+import { getMenu } from "emdash";
+import type { Donation, SitePage, Supporter } from "../../lib/site-content";
+import PageIntro from "../PageIntro.astro";
+import DonationCards from "../DonationCards.astro";
+import DonationPopup from "../DonationPopup.astro";
+import { sitePath } from "../../lib/site-path";
+
+interface Props {
+  page: SitePage;
+  supporters: Supporter[];
+  donations: Donation[];
+}
+
+const { page, supporters, donations } = Astro.props;
+const donationMenu = await getMenu("donation-actions");
+const buttons = donationMenu?.items ?? [];
+---
+
+<PageIntro page={page} />
+
+{buttons.length > 0 && (
+  <section class="container ml-3 mb-10">
+    <div class="spenden-cta-bar">
+      {buttons.map((button) => {
+        const external = /^(?:https?:|mailto:)/i.test(button.url);
+        const buttonClass = button.cssClasses?.trim() || "spenden-cta-secondary";
+        return (
+          <a
+            class={`btn btn-default ${buttonClass}`}
+            target={button.target || (external ? "_self" : undefined)}
+            rel={external ? "noopener" : undefined}
+            href={external ? button.url : sitePath(button.url)}
+          >
+            {button.label}
+          </a>
+        );
+      })}
+    </div>
+  </section>
+)}
+
+<DonationCards items={supporters} sectionLabel="Unsere Unterstützerinnen und Unterstützer" />
+<DonationPopup donations={donations} />

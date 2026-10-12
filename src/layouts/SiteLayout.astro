@@ -1,0 +1,73 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { sitePath } from "../lib/site-path";
+
+interface Props {
+  pageTitle?: string;
+  description?: string;
+}
+
+const { pageTitle = "Montessori Schule Gilching (München West)", description = "Montessori Schule Gilching (München Westen)" } = Astro.props;
+const title = pageTitle === "Willkommen" ? "Montessori Schule Gilching (München West)" : pageTitle;
+---
+
+<!doctype html>
+<html itemscope class="light" lang="de-DE" itemtype="http://schema.org/WebPage">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="shortcut icon" href={sitePath("/images/favicon-96x96.png")} type="image/x-icon" />
+    <link rel="icon" href={sitePath("/images/favicon-96x96.png")} type="image/x-icon" />
+    <link rel="icon" type="image/png" sizes="48x48" href={sitePath("/images/favicon-96x96.png")} />
+    <link rel="icon" type="image/png" sizes="96x96" href={sitePath("/images/favicon-96x96.png")} />
+    <link rel="apple-touch-icon" sizes="144x144" href={sitePath("/images/favicon-96x96.png")} />
+    <title>{title}</title>
+    <meta name="keywords" content="Montessori,Grundschule,Schule,Gilching,München,Westen" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Monrtessori Schule Gilching" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={sitePath("/")} />
+    <meta property="og:image" content={sitePath("/")} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={sitePath(Astro.url.pathname)} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:creator" content="@Monrtessori Schule Gilching" />
+    <script is:inline define:vars={{ searchIndex: sitePath("/searchindex.json") }}>
+      let indexURL = searchIndex;
+      let includeSectionsInSearch = ["aktuelles"];
+      let search_no_results = "0 results for";
+      let search_initial_message = "";
+    </script>
+    <link
+      href={sitePath("/css/site.css")}
+      integrity="sha256-8VBJ8rrePAGBJ9tI15TubZAgjtyRh4zXXLPynMiX1t4="
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href={sitePath("/css/site-lazy.css")}
+      integrity="sha256-l0IvfJr9Vz/I5rOUdBqOfsRCjNwkdqB29WWHdaJGHgk="
+      media="all"
+      onload="this.media='all';this.onload=null"
+    />
+  </head>
+  <body class="bg-body container mx-auto">
+    <div id="page">
+      <SiteHeader />
+      <main class="m-3">
+        <slot />
+      </main>
+      <SiteFooter />
+      <button class="back-to-top" type="button" data-back-to-top aria-label="Nach oben" aria-hidden="true" tabindex="-1">
+        <span class="fa fa-chevron-up" aria-hidden="true"></span>
+      </button>
+      <script src={sitePath("/js/app.js")} integrity="sha256-450FAiYfqkJqptBRpoO2iYl9JbLej4bVwPw+ftdd0rE=" crossorigin="anonymous"></script>
+      <script src={sitePath("/js/site.js")} integrity="sha256-465WbHGKGLEggjFBqiOKuayATr8F8a4Lrod6evw6GiQ=" crossorigin="anonymous"></script>
+      <script defer async src={sitePath("/js/site-lazy.js")} integrity="sha256-ERVlJv0r9BVw+veEd5+D3oOJuHI8UEMwuPAD0a8FNhY=" crossorigin="anonymous"></script>
+    </div>
+  </body>
+</html>

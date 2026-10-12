@@ -1,343 +1,80 @@
-# Montessori Schule Gilching - Website
+# Montessori Schule Gilching
 
-Static website for Montessori Schule Gilching, built with Hugo and Tailwind CSS.
+Astro site backed by EmDash CMS. The CMS and site run as a Node.js server with a persistent SQLite database and media directory.
 
-## Technologie-Stack
+## Local setup
 
-- **Hugo Extended 0.166.0** - Static site generator
-- **Tailwind CSS 4.3.3** - Utility-first CSS framework
-- **Sveltia CMS** - Git-based headless CMS for content management
-- **mmenu-js 9.3.0** - Mobile navigation library
-- **GitHub Pages** - Static site hosting
-
-## Installation
-
-### Voraussetzungen
-
-1. **Hugo Extended**: https://gohugo.io/installation/ (erfordert die extended Version für PostCSS-Support)
-2. **Node.js**: Version 20 oder höher für Build-Tools
-
-### Schritte
+Requirements: Node.js 20.19+ (or 22.12+).
 
 ```bash
-# Repository klonen
-git clone https://github.com/behboud/monte-web.git
-cd monte-web
-
-# npm-Abhängigkeiten installieren
 npm install
+npm run dev
 ```
 
-## Lokale Entwicklung
+Open `http://localhost:4173/`; the EmDash editor is at `http://localhost:4173/_emdash/admin/`. For local passkey setup, use the dev bypass shown by the server or visit:
 
-Entwicklungsserver starten:
+```text
+http://localhost:4173/_emdash/api/setup/dev-bypass?redirect=/_emdash/admin
+```
+
+The default database and uploads are `data.db` and `uploads/`; both are local state and are excluded from Git. Do not run the seed against a database with content you need to preserve.
+
+## Content model
+
+- **Pages**: `home` and standard pages share one form and renderer; section cards are optional page-owned content.
+- **News**: articles feed the home page and `/aktuelles/` archive.
+- **Donations**: editable fundraising opportunities shown on `/foerderer/` and in the donation highlight.
+- **Supporters**: acknowledgements shown on the donation page.
+- **Meal plans**: weekly menus shown on `/speiseplan/`.
+
+Only Pages and News have public entry routes. Donations, Supporters, and Meal plans are non-routable list data. Legacy Projects were copied to Donations, and the duplicate Projects and `page_sections` collections were removed after backup.
+
+`seed/seed.json` is the seed for a new database. Its source content and images are kept under `seed/source/`; regenerate the seed with `npm run seed:generate`, and validate it with:
 
 ```bash
-hugo server --environment development --baseURL http://localhost:1313/
+npm run test:content-model
+./node_modules/.bin/emdash seed seed/seed.json --validate
 ```
 
-Der Server läuft unter http://localhost:1313 mit Live-Reload bei Dateiänderungen.
+Use `npm run seed:local` only when intentionally creating a local database or adding non-conflicting seed entries; its default conflict policy skips existing content rather than overwriting it.
 
-Hinweis: Für die lokale Entwicklung reicht der obige `hugo server`-Befehl; der separate Tailwind-Watch ist nicht erforderlich.
+## Safe content-model migration
+
+The migration script accepts only an EmDash server on `localhost`, checks the target database against the server, and writes both a JSON export and a raw SQLite backup to `/tmp` before making changes. It supports the former Blocks and intermediate Portable Text schemas. Media files are read from `seed/source/images/` or `static/images/` and uploaded into the configured EmDash uploads directory.
+
+For a test run, copy the database and uploads first:
+
+```bash
+sqlite3 data.db ".backup '/tmp/emdash-copy.db'"
+mkdir -p /tmp/emdash-copy-uploads
+cp -R uploads/. /tmp/emdash-copy-uploads/
+```
+
+Start a server against that copy in Terminal 1:
+
+```bash
+DATABASE_URL=file:/tmp/emdash-copy.db EMDASH_UPLOADS_DIR=/tmp/emdash-copy-uploads ./node_modules/.bin/astro dev --host localhost --port 4173
+```
+
+Then migrate it in Terminal 2:
+
+```bash
+npm run migrate:content-model -- --url http://localhost:4173 --database /tmp/emdash-copy.db --uploads-dir /tmp/emdash-copy-uploads
+```
+
+Unpublished drafts block migration by default. Only when you explicitly accept migrating the published revision and superseding the pending draft, add `--ignore-drafts`. The raw database backup retains the original revisions and drafts. The empty `/aktuelles` placeholder is soft-deleted. Existing Projects are copied into Donations; the obsolete Projects and `page_sections` collections are then permanently removed. The raw SQLite backup retains their pre-migration records.
+
+## Verification
+
+With Astro already running, the admin, interaction, privacy, and public asset-link tests are read-only:
+
+```bash
+UI_BASE_URL=http://localhost:4173 npm run test:ui
+VISUAL_BASE_URL=http://localhost:4173 npm run test:visual
+```
+
+Build the server bundle with `npm run build`. The visual suite compares against the frozen snapshots; its current baseline has known failures, and neither snapshots nor thresholds should be updated without review.
 
 ## Deployment
 
-Das Projekt wird automatisch zu GitHub Pages deployed, wenn Änderungen auf den `main`-Branch gepusht werden.
-
-**Deployment-Pipeline** (`.github/workflows/main.yml`):
-
-1. Hugo Extended wird installiert (Version 0.166.0)
-2. npm-Abhängigkeiten werden installiert
-3. Hugo Build mit `hugo --gc --minify`
-4. Statische Dateien werden zu `public/` generiert
-5. Artefakt wird zu GitHub Pages deployt
-
-**URL**: https://behboud.github.io/monte-web/
-
-## Projektstruktur
-
-```
-monte-web/
-├── assets/                  # Verarbeitete Assets (CSS, JS, Bilder)
-│   ├── css/main.css        # Haupt-Stylesheet (Tailwind-Einstiegspunkt)
-│   ├── js/
-│   │   ├── app.js          # JS-Bundle (mmenu)
-│   │   └── main.js         # Main-JS (mmenu-Initialisierung)
-│   ├── plugins/            # Drittanbieter-Bibliotheken
-│   └── images/             # Bilder für Templates
-├── content/                # Content-Dateien (Markdown)
-│   └── de/                 # Deutscher Content
-│       ├── aktuelles/      # News-Bereich
-│       ├── pages/          # Statische Seiten
-│       ├── schule/         # Schul-Bereich
-│       ├── spenden/        # Spenden-Bereich
-│       └── verein/         # Verein-Bereich
-├── layouts/                # Hugo-Templates
-│   ├── _default/           # Standard-Templates (baseof, list, single)
-│   ├── aktuelles/          # News-Templates
-│   ├── spenden/            # Spenden-Templates
-│   └── partials/           # Wiederverwendbare Komponenten
-├── static/                 # Statische Dateien
-│   ├── admin/              # Sveltia CMS
-│   └── fonts/              # Benutzerdefinierte Schriften
-├── hugo.toml               # Hugo-Hauptkonfiguration
-├── tailwind.config.js      # Tailwind-Konfiguration
-└── postcss.config.js       # PostCSS-Konfiguration
-```
-
-## Wo man was findet
-
-### Design und Layout ändern
-
-| Änderung          | Datei                                                          |
-| ----------------- | -------------------------------------------------------------- |
-| Farben, Schriften | `tailwind.config.js`                                           |
-| CSS-Styles        | `assets/css/main.css`                                          |
-| PostCSS-Plugins   | `postcss.config.js`                                            |
-| Header-Layout     | `layouts/partials/essentials/header.html`                      |
-| Footer-Layout     | `layouts/partials/essentials/footer.html`                      |
-| Navigation-Menü   | `layouts/partials/essentials/menu.html`                        |
-| Homepage-Layout   | `layouts/index.html`                                           |
-| News-Templates    | `layouts/aktuelles/list.html`, `layouts/aktuelles/single.html` |
-
-### Content ändern
-
-| Content           | Datei/Ordner            |
-| ----------------- | ----------------------- |
-| News/Artikel      | `content/de/aktuelles/` |
-| Schul-Information | `content/de/schule/`    |
-| Spenden           | `content/de/spenden/`   |
-| Verein            | `content/de/verein/`    |
-| Statische Seiten  | `content/de/pages/`     |
-| Startseite        | `content/de/_index.md`  |
-
-### Navigation ändern
-
-**Datei**: `hugo.toml` unter `languages.de.menus`
-
-Menüpunkte werden hier definiert mit:
-
-- `name`: Anzeigename
-- `pageRef`: Interne Seite (z.B. `/speiseplan`)
-- `url`: Externe Links
-- `weight`: Reihenfolge
-- `params.icon`: Font Awesome Icon (z.B. `fa fa-utensils`)
-
-Beispiel für neuen Menüpunkt:
-
-```toml
-[[languages.de.menus.top]]
-name = "SPEISEPLAN"
-pageRef = "/pages/speiseplan"
-pageRef = "/speiseplan"
-weight = 4
-[languages.de.menus.top.params]
-icon = "fa fa-utensils"
-```
-
-Icons: https://fontawesome.com/search (mit `fa-` Präfix)
-
-### Konfiguration ändern
-
-| Einstellung                 | Datei                                                                                                  |
-| --------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Site-Titel, BaseURL         | `hugo.toml`                                                                                            |
-| Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                                                                         |
-| Menüs                       | `hugo.toml` (`languages.de.menus`)                                                                     |
-| Parameter                   | `hugo.toml` (`params`)                                                                                 |
-| Sprachen                    | `hugo.toml` (`languages`)                                                                              |
-| Lokaler Entwicklungs-Server | npm-Script `npm run dev` bzw. `hugo server --environment development --baseURL http://localhost:1313/` |
-
-### Hugo-Konfigurationspolicy
-
-- Primäre Konfigurationsquelle ist `hugo.toml`.
-- Lokale Entwicklungs-Overrides werden direkt über den Startbefehl gesetzt (`--environment development --baseURL ...`).
-- Nach Konfigurationsänderungen immer validieren mit:
-
-```bash
-hugo --gc --minify
-npx playwright test tests/ui/style-regression.spec.ts --project=desktop-chromium --project=mobile-chromium
-```
-
-### Social Media Links
-
-**Ort**: `content/de/pages/kontakt.md` im Frontmatter unter `social_links`.
-
-Beispiel:
-
-```yaml
-social_links:
-  - name: facebook
-    icon: fab fa-facebook
-    link: https://www.facebook.com/
-```
-
-## UI-Komponenten und Bibliotheken
-
-### Designsystem
-
-Das Frontend nutzt Tailwind Utilities plus projektinterne Komponentenklassen in `assets/css/main.css`:
-
-- Buttons: `.btn`, `.btn-default`, `.btn-text`
-- Cards: `.card`, `.card-body`, `.card-title`
-- Breadcrumbs: `.breadcrumb`
-- Typografie: globale Headline/Paragraph-Code Styles im `@layer base`
-
-### Custom Farben
-
-In `tailwind.config.js` definiert:
-
-- `text-primary`: #121212
-- `text-monte`: #222477 (Brand-Farbe)
-- `bg-light`: #fcfaf7
-
-### Custom Schriften
-
-- `font-calligraphy`: Tangerine (für Überschriften)
-- `font-sans`: Overpass (für Fließtext)
-
-### Mobile Navigation (mmenu-js)
-
-Hamburger-Icon triggert mobiles Menü. Konfiguration in `assets/js/main.js:48-81`.
-
-### Galerie/Slider
-
-Swiper-Bibliothek für Carousels. Homepage-Slideshow in `layouts/index.html`.
-
-## Content-Management (CMS)
-
-**Admin-Zugang**: `/admin` (nach dem Deployment)
-
-**CMS-Konfiguration**: `static/admin/config.yml`
-
-Sveltia CMS ist in `static/admin/index.html` bewusst auf Version `0.217.0` festgelegt. So können Änderungen an der CMS-Validierung nicht ungeprüft live gehen. Bei einem Upgrade die Version dort ändern, die Release Notes prüfen und die CMS-Konfiguration testen.
-
-### Content-Editor
-
-News-Beiträge und Seiten können über das CMS bearbeitet werden. Änderungen werden als Git-Commits gespeichert.
-
-Bilder, die über das CMS hochgeladen werden, werden vor dem Speichern im Browser automatisch als WebP mit maximal 2048 × 2048 Pixeln und Qualität 82 verarbeitet. Kleinere Bilder werden nicht vergrößert; SVG-Dateien werden optimiert. Die Originaldatei wird dabei nicht in das öffentliche Repository übernommen. Hochauflösende Originale sollten separat und intern archiviert werden.
-
-- **aktuelles**: News-Artikel (create: true)
-- **pages**: Statische Seiten (create: true)
-- **schule**: Schul-Informationen (read-only)
-- **spenden**: Spenden-Informationen und obere Buttons
-- **verein**: Verein-Informationen (read-only)
-
-### Datenschutz und öffentliche Ressourcen
-
-Der technische Datenschutz-Stand ist in [docs/datenschutz-umsetzung.md](docs/datenschutz-umsetzung.md) dokumentiert. Der ergänzende technische Plan steht in [docs/privacy-relaunch-plan.md](docs/privacy-relaunch-plan.md).
-
-Die geprüften öffentlichen Seiten laden benötigte Assets lokal und setzen keine Cookies. Technische Änderungen in diesem Zusammenhang haben keine Inhalte gelöscht oder geändert. Offene Punkte sind unter anderem der Hosting-Anbieter, die Anpassung der Datenschutzerklärung und die interne Prüfung von Veröffentlichungsrechten.
-
-## CMS-Authentifizierung (GitHub OAuth)
-
-Das CMS nutzt **GitHub OAuth** für die Authentifizierung statt Netlify Identity. Dies ermöglicht es Benutzern, sich mit ihrem GitHub-Konto anzumelden.
-
-### decap-proxy Cloudflare Worker
-
-Die Authentifizierung wird über einen separaten Cloudflare Worker abgewickelt:
-**Repository**: https://github.com/behboud/decap-proxy
-
-Dieser Worker fungiert als OAuth-Proxy zwischen dem CMS und GitHub.
-
-### Einrichtung
-
-**Voraussetzung**: Ein Deployment von decap-proxy mit spezifischer Konfiguration.
-
-1. **GitHub OAuth App erstellen**:
-   - https://github.com/settings/applications/new
-   - `Authorization callback URL`: `https://decap-proxy-domain/callback`
-   - Client ID und Secret speichern
-
-2. **Worker konfigurieren** (`wrangler.toml`):
-
-   ```toml
-   name = "decap-proxy"
-   main = "src/index.ts"
-   compatibility_date = "2025-11-17"
-   workers_dev = false
-   route = { pattern = "decap.domain.com", zone_name = "domain.com", custom_domain = true }
-   ```
-
-3. **OAuth Secrets setzen**:
-
-   ```bash
-   npx wrangler secret put GITHUB_OAUTH_ID
-   npx wrangler secret put GITHUB_OAUTH_SECRET
-   ```
-
-4. **CMS-Config anpassen** (`static/admin/config.yml`):
-   ```yaml
-   backend:
-     name: github
-     repo: "behboud/monte-web"
-     branch: main
-     base_url: "https://decap-proxy-domain"
-   ```
-
-### Weiterführende Doku
-
-Siehe decap-proxy README: https://github.com/behboud/decap-proxy
-
-## Build-Pipeline
-
-### CSS-Build
-
-1. `assets/css/main.css` ist Einstiegspunkt
-2. PostCSS verarbeitet durch:
-   - `postcss-import`: @imports auflösen
-   - `@tailwindcss/postcss`: Tailwind v4 Utility-Generierung
-
-### JS-Build
-
-1. `assets/js/app.js` importiert mmenu-js
-2. esbuild (Hugo-intern) bündelt JavaScript
-3. `assets/js/main.js` enthält mmenu- und Slider-Initialisierung
-
-## UI-Teststrategie
-
-- Playwright-basierte Browser-Regressionstests und Interaktionstests in `tests/ui/`.
-- Die Tests prüfen gezielt stabile Layout-Verträge wie Navigation, responsive Footer-Abstände, Seitenreihenfolge, Breadcrumbs und zentrale Benutzerinteraktionen.
-- Datenschutz-Regressionstests prüfen unter anderem Cookies, externe Ressourcen, Manifest/Service Worker und Browser-Speicher.
-- Ein Produktions-Build-Test prüft alle internen Links und Ressourcen auf den konfigurierten Deployment-Pfad.
-- Relevanter npm-Befehl:
-  - `npm run test:ui` (Build + Playwright-Regressionstests)
-
-### Produktions-Build
-
-```bash
-hugo --gc --minify --baseURL "https://behboud.github.io/monte-web/"
-```
-
-Erzeugt minifizierte, fingerprinted Assets mit Subresource Integrity.
-
-## Shortcodes und Templates
-
-### Verfügbare Partials
-
-| Partial                          | Zweck                 |
-| -------------------------------- | --------------------- |
-| `components/aktuelles-card.html` | News-Card-Komponente  |
-| `components/breadcrumb.html`     | Brotkrümelnavigation  |
-| `components/slider.html`         | Bild-Slider           |
-| `components/image-pipe.html`     | Bildverarbeitung      |
-| `essentials/head.html`           | HTML-Head             |
-| `essentials/header.html`         | Header mit Navigation |
-| `essentials/footer.html`         | Footer                |
-| `essentials/menu.html`           | Navigationsmenü       |
-| `essentials/style.html`          | CSS-Laden             |
-| `essentials/script.html`         | JavaScript-Laden      |
-
-## VS Code
-
-Empfohlene Erweiterungen in `.vscode/extensions.json`:
-
-- Hugo-Syntax-Highlighting
-- Tailwind CSS IntelliSense
-- Prettier
-- Markdown-All-in-One
-
-## Lizenz
-
-MIT
+The app uses Astro's Node standalone adapter and requires a Node-compatible host with persistent storage for SQLite and uploads. GitHub Pages is static-only, so no Pages deployment is configured for this EmDash app. Choose a server host and persistent-volume strategy before deploying.

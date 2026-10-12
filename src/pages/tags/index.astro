@@ -1,0 +1,25 @@
+---
+import { getTaxonomyTerms } from "emdash";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import { sitePath } from "../../lib/site-path";
+
+const terms = (await getTaxonomyTerms("tag", { includeCounts: true, locale: "de" }))
+  .toSorted((a, b) => (b.count ?? 0) - (a.count ?? 0) || a.label.localeCompare(b.label, "de"));
+---
+
+<SiteLayout pageTitle="Tags">
+  <PageHeader items={[{ label: "Tags" }]} />
+  <div class="container">
+    <ul class="text-center">
+      {terms.map((term) => (
+        <li class="m-3 inline-block">
+          <a class="bg-light text-text-dark block rounded px-4 py-2 text-xl" href={sitePath(`/tags/${term.slug}/`)}>
+            {term.label}{" "}
+            <span class="bg-body ml-2 rounded px-2">{term.count ?? 0}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</SiteLayout>

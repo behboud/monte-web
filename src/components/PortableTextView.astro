@@ -1,0 +1,33 @@
+---
+import { PortableText } from "emdash/ui";
+import type { PortableTextBlock } from "emdash/client";
+import { withHeadingAnchors } from "../lib/portable-text";
+import AnchoredHeading from "./rich-text/AnchoredHeading.astro";
+import InternalLink from "./rich-text/InternalLink.astro";
+import MarkdownBlockquote from "./rich-text/MarkdownBlockquote.astro";
+
+interface Props {
+  value: PortableTextBlock[];
+}
+
+const { value } = Astro.props;
+const renderValue = withHeadingAnchors(value);
+const components = {
+  block: {
+    h1: AnchoredHeading,
+    h2: AnchoredHeading,
+    h3: AnchoredHeading,
+    h4: AnchoredHeading,
+    h5: AnchoredHeading,
+    h6: AnchoredHeading,
+    blockquote: MarkdownBlockquote,
+  },
+  mark: { link: InternalLink },
+};
+---
+
+<PortableText value={renderValue} components={components} />
+
+<style is:global>
+  .emdash-html-block:has(> span[id]:empty) { margin-block: 0; }
+</style>

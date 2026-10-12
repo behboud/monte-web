@@ -1,28 +1,25 @@
-Thumbs.db
 .DS_Store
-.dist
-.tmp
-.lock
-.sass-cache
-npm-debug.log
-node_modules
-builds
-public
-resources
-.hugo_build.lock
-jsconfig.json
-hugo_stats.json
-go.sum
-yarn.lock
-thoughts/
-.agents/skills
-skills-lock.json
+Thumbs.db
+node_modules/
+dist/
+.astro/
+.emdash/
+emdash-env.d.ts
 playwright-report/
 test-results/
+coverage/
+.env
+.env.*
+!.env.example
+data.db
+data.db-*
+uploads/
 
-# bv (beads viewer) local config and caches
+# Local tooling
+.tmp/
+.lock/
 .bv/
 .beads
-docs/hugo-setup-review-2026-03.md
-.claude/skills
-tests/ui/visual.spec.ts-snapshots
+thoughts/
+.agents/skills/
+.claude/skills/

@@ -1,0 +1,67 @@
+---
+import { Image } from "emdash/ui";
+import { sitePath } from "../lib/site-path";
+import type { Donation } from "../lib/site-content";
+import PortableTextView from "./PortableTextView.astro";
+
+interface Props {
+  donations: Donation[];
+}
+
+const { donations } = Astro.props;
+const highlightedDonations = donations.filter((donation) => donation.data.highlight && donation.data.url);
+---
+
+{highlightedDonations.length > 0 && (
+  <div class="donation-popup" data-donation-popup hidden>
+    <div class="donation-popup-backdrop" data-donation-popup-dismiss></div>
+    <section
+      class="donation-popup-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="donation-highlight-title-0"
+    >
+      <button
+        class="donation-popup-close"
+        type="button"
+        data-donation-popup-close
+        aria-label="Förderhinweis schließen"
+      >
+        <span class="fa fa-times" aria-hidden="true"></span>
+      </button>
+
+      {highlightedDonations.map((donation, index) => {
+        const external = /^(?:https?:|mailto:)/i.test(donation.data.url);
+        return (
+          <div class="donation-popup-option" data-donation-highlight-option hidden>
+            <div class="donation-popup-option-image">
+              {donation.data.image && (
+                <Image
+                  image={donation.data.image}
+                  alt={donation.data.title}
+                  class="h-full w-full object-cover img"
+                  loading="lazy"
+                />
+              )}
+            </div>
+            <div class="donation-popup-option-content">
+              <p class="donation-popup-kicker">Ein Projekt unterstützen</p>
+              <h2 id={`donation-highlight-title-${index}`}>{donation.data.title}</h2>
+              <div class="donation-popup-description"><PortableTextView value={donation.data.content} /></div>
+              <a
+                class="donation-popup-action btn spenden-cta-primary"
+                aria-label={`Jetzt fördern: ${donation.data.title}`}
+                target={external ? "_self" : undefined}
+                rel={external ? "noopener" : undefined}
+                href={external ? donation.data.url : sitePath(donation.data.url)}
+              >
+                Jetzt fördern
+                <span class="fa fa-arrow-right" aria-hidden="true"></span>
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </section>
+  </div>
+)}

@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import DonationOpportunitiesPage from "../components/pages/DonationOpportunitiesPage.astro";
+import NotFoundPage from "../components/pages/NotFoundPage.astro";
+import { getDonations, getSitePage } from "../lib/site-content";
+
+const page = await getSitePage("foerderer");
+if (!page) Astro.response.status = 404;
+const donations = page ? await getDonations() : [];
+---
+
+<SiteLayout pageTitle={page?.data.title ?? "Seite nicht gefunden"} description={page?.data.description}>
+  {page ? <DonationOpportunitiesPage page={page} donations={donations} /> : <NotFoundPage />}
+</SiteLayout>

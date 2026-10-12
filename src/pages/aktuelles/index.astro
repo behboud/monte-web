@@ -1,0 +1,15 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import NewsGrid from "../../components/NewsGrid.astro";
+import { getNewsPosts } from "../../lib/site-content";
+
+const posts = await getNewsPosts();
+---
+
+<SiteLayout pageTitle="Aktuelles">
+  <PageHeader items={[{ label: "Aktuelles" }]} />
+  <section class="container">
+    <NewsGrid posts={posts} />
+  </section>
+</SiteLayout>

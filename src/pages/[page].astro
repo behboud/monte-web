@@ -1,0 +1,13 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import ContentPage from "../components/pages/ContentPage.astro";
+import NotFoundPage from "../components/pages/NotFoundPage.astro";
+import { getSitePage } from "../lib/site-content";
+
+const page = await getSitePage(Astro.params.page ?? "");
+if (!page) Astro.response.status = 404;
+---
+
+<SiteLayout pageTitle={page?.data.title ?? "Seite nicht gefunden"} description={page?.data.description}>
+  {page ? <ContentPage page={page} /> : <NotFoundPage />}
+</SiteLayout>

@@ -16,7 +16,7 @@ Es enthält keine Einzelfälle zu Personen, keine privaten Kontaktdaten und kein
 - Die öffentlichen Seiten setzen keine Cookies.
 - Das Spenden-Popup nutzt nur kurzlebigen `sessionStorage`.
 - Das CMS enthält Hinweise zur Prüfung von Bild- und Veröffentlichungsrechten.
-- Die bestehenden Inhalte wurden nicht geändert oder gelöscht.
+- Veröffentliche Inhalte wurden ins EmDash-Modell migriert. Der leere `Pages.aktuelles`-Platzhalter wurde soft-deleted. Projects wurde zu Donations migriert; Projects und die ungenutzte `page_sections`-Collection wurden nach einer SQLite-Sicherung entfernt.
 
 ## Offen
 
@@ -37,4 +37,4 @@ Es enthält keine Einzelfälle zu Personen, keine privaten Kontaktdaten und kein
 
 ## Tests
 
-`npm run test:ui` ist erfolgreich: 58 Tests liefen durch, 4 wurden übersprungen.
+`npm run test:ui` ist erfolgreich: 24 Tests liefen durch, 2 projektbedingte Tests wurden übersprungen.

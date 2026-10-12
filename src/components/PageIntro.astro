@@ -1,0 +1,24 @@
+---
+import type { SitePage } from "../lib/site-content";
+import PageHeader from "./PageHeader.astro";
+import Slider from "./Slider.astro";
+
+interface Props {
+  page: SitePage;
+}
+
+const { page } = Astro.props;
+const title = page.data.banner_title || page.data.title;
+---
+
+<section class="container ml-3 mt-10 mb-12 text-center">
+  <h1 class="page-title-calligraphy">{title}</h1>
+</section>
+
+{page.data.slides.length > 0 && (
+  <section class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mb-10 w-screen py-4">
+    <Slider images={page.data.slides} variant="panorama" />
+  </section>
+)}
+
+<PageHeader items={[{ label: page.data.title }]} />

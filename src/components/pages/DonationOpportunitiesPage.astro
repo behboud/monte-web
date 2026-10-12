@@ -1,0 +1,15 @@
+---
+import type { Donation, SitePage } from "../../lib/site-content";
+import PageIntro from "../PageIntro.astro";
+import DonationCards from "../DonationCards.astro";
+
+interface Props {
+  page: SitePage;
+  donations: Donation[];
+}
+
+const { page, donations } = Astro.props;
+---
+
+<PageIntro page={page} />
+<DonationCards items={donations} sectionLabel="Unsere Förderprojekte" donations />

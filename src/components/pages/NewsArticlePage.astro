@@ -1,0 +1,67 @@
+---
+import { Image } from "emdash/ui";
+import type { NewsPost } from "../../lib/site-content";
+import { formatNewsDate } from "../../lib/site-content";
+import { sitePath } from "../../lib/site-path";
+import PortableTextView from "../PortableTextView.astro";
+import ShareIcons from "../ShareIcons.astro";
+
+interface Props {
+  post: NewsPost;
+  related: NewsPost[];
+}
+
+const { post, related } = Astro.props;
+---
+
+<div class="pt-7 flex">
+  <article class="basis-3/4">
+    {post.data.image && (
+      <div class="mb-10">
+        <Image image={post.data.image} alt={post.data.title} class="w-full rounded img" loading="lazy" />
+      </div>
+    )}
+    <h1>{post.data.title}</h1>
+    <ul class="mb-4">
+      <li class="mr-4 inline-block">
+        <i class="fa-regular fa-calendar mr-2"></i>{" "}
+        {formatNewsDate(post.data.event_date)}
+      </li>
+      {post.data.terms.tag.length > 0 && (
+        <li class="mr-4 inline-block">
+          {post.data.terms.tag.map((tag) => (
+            <a class="btn btn-text mr-2" href={sitePath(`/tags/${tag.slug}/`)}>
+              <i class="fa fa-tag mr-1"></i>{" "}
+              {tag.label}
+            </a>
+          ))}
+        </li>
+      )}
+    </ul>
+    <div class="content heading-divider mb-10">
+      <PortableTextView value={post.data.body} />
+    </div>
+    <div class="text-monte">
+      <ShareIcons />
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <div class="ml-3 basis-1/4">
+      <h4 class="mb-2">Weitere Beiträge:</h4>
+      {related.map((relatedPost) => (
+        <div class="heading-divider">
+          <h3 class="card-title mb-2 text-monte">
+            <a href={sitePath(`/aktuelles/${relatedPost.slug}/`)}>{relatedPost.data.title}</a>
+          </h3>
+          <ul class="mb-4">
+            <li class="mr-4 inline-block">
+              <i class="fa-regular fa-calendar mr-2"></i>{" "}
+              {formatNewsDate(relatedPost.data.event_date)}
+            </li>
+          </ul>
+        </div>
+      ))}
+    </div>
+  )}
+</div>

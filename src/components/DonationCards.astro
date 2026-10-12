@@ -1,0 +1,51 @@
+---
+import { Image } from "emdash/ui";
+import { sitePath } from "../lib/site-path";
+import type { Donation, Supporter } from "../lib/site-content";
+import PortableTextView from "./PortableTextView.astro";
+
+interface Props {
+  items: Supporter[] | Donation[];
+  sectionLabel: string;
+  donations?: boolean;
+}
+
+const { items, sectionLabel, donations = false } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class="container ml-3 mb-12" aria-label={sectionLabel}>
+    <div class="spenden-grid">
+      {items.map((item) => (
+        <article class="spenden-card card">
+          <div class="spenden-card-image">
+            {item.data.image && (
+              <Image
+                image={item.data.image}
+                alt={donations ? item.data.title : `Unterstützung durch ${item.data.title}`}
+                class="h-full w-full object-cover img"
+                loading="lazy"
+              />
+            )}
+          </div>
+          <div class="spenden-card-body">
+            <h2 class="spenden-card-title">{item.data.title}</h2>
+            <div class="spenden-card-content"><PortableTextView value={item.data.content} /></div>
+            {donations && "url" in item.data && item.data.url && (
+              <a
+                class="spenden-card-link"
+                aria-label={`Jetzt fördern: ${item.data.title}`}
+                target={/^(?:https?:|mailto:)/i.test(item.data.url) ? "_self" : undefined}
+                rel={/^(?:https?:|mailto:)/i.test(item.data.url) ? "noopener" : undefined}
+                href={/^(?:https?:|mailto:)/i.test(item.data.url) ? item.data.url : sitePath(item.data.url)}
+              >
+                Jetzt fördern
+                <span class="fa fa-arrow-right" aria-hidden="true"></span>
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+)}
