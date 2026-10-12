@@ -110,6 +110,20 @@ test.describe("core interactions", () => {
     await expect(backToTop).toHaveAttribute("data-visible", "false");
   });
 
+  test("school section cards target rendered headings without legacy anchor spans", async ({ page }) => {
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const targets = ["schulalltag", "wer-wir-sind", "komm-zu-uns"];
+    const cards = page.locator(".section-cards a");
+    await expect(cards).toHaveCount(targets.length);
+
+    for (const [index, target] of targets.entries()) {
+      await expect(cards.nth(index)).toHaveAttribute("href", `#${target}`);
+      await expect(page.locator(`#${target}`)).toHaveCount(1);
+    }
+    await expect(page.locator(".schule-content span[id]")).toHaveCount(0);
+  });
+
   test("hero slider markup is present", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 

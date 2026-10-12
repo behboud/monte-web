@@ -214,7 +214,7 @@ const parsed = new Map();
 for (const path of await getMarkdownFiles(sourceRoot)) {
   parsed.set(relative(sourceRoot, path).split(sep).join("/"), matter(await readFile(path, "utf8")));
 }
-const pageFiles = ["_index.md", "elternengagement/_index.md", "foerderer/_index.md", "schule/_index.md", "speiseplan/_index.md", "spenden/_index.md", "verein/_index.md", "pages/datenschutz.md", "pages/impressum.md", "pages/karriere.md", "pages/kontakt.md", "pages/presse.md"];
+const pageFiles = ["_index.md", "elternengagement/_index.md", "foerderer/_index.md", "schule/_index.md", "speiseplan/_index.md", "spenden/_index.md", "verein/_index.md", "pages/datenschutz.md", "pages/impressum.md", "pages/kontakt.md", "pages/presse.md"];
 const pages = [];
 let sectionCount = 0;
 const supporters = [];
@@ -223,36 +223,35 @@ const posts = [];
 const mealPlans = [];
 const donationActions = [];
 const cardsSubFields = [
-  { slug: "title", label: "Title", type: "string" },
-  { slug: "description", label: "Description", type: "text" },
-  { slug: "image", label: "Image", type: "image" },
-  { slug: "href", label: "Link", type: "url" },
+  { slug: "title", label: "Titel", type: "string" },
+  { slug: "description", label: "Kurzbeschreibung", type: "text" },
+  { slug: "image", label: "Bild", type: "image" },
+  { slug: "href", label: "Sprunglink (optional; leer = gleichnamige Überschrift)", type: "url" },
 ];
-const slidesSubFields = [{ slug: "image", label: "Image", type: "image" }];
+const slidesSubFields = [{ slug: "image", label: "Bild", type: "image" }];
 const menuDaysSubFields = [
-  { slug: "date", label: "Date", type: "datetime" },
-  { slug: "main", label: "Main course", type: "text" },
-  { slug: "side", label: "Side dish", type: "text" },
-  { slug: "dessert", label: "Dessert", type: "text" },
-  { slug: "drink", label: "Drink", type: "text" },
+  { slug: "date", label: "Datum", type: "datetime" },
+  { slug: "main", label: "Hauptgericht", type: "text" },
+  { slug: "side", label: "Beilage", type: "text" },
+  { slug: "dessert", label: "Nachspeise", type: "text" },
+  { slug: "drink", label: "Getränk", type: "text" },
 ];
 const field = (slug, label, type, options = {}) => ({ slug, label, type, ...options });
 const repeater = (slug, label, subFields) => field(slug, label, "repeater", { validation: { subFields } });
 const pageFields = [
-  field("title", "Title", "string", { required: true, searchable: true }),
-  field("description", "Description", "text"),
-  field("banner_title", "Banner title", "string"),
-  field("body", "Page content", "portableText", { searchable: true }),
-  repeater("slides", "Slider images", slidesSubFields),
-  repeater("section_cards", "Section cards", cardsSubFields),
+  field("title", "Titel", "string", { required: true, searchable: true }),
+  field("description", "Meta-Beschreibung", "text"),
+  field("banner_title", "Banner-Überschrift", "string"),
+  field("body", "Seiteninhalt", "portableText", { searchable: true }),
+  repeater("slides", "Bild-Slider (optional)", slidesSubFields),
+  repeater("section_cards", "Abschnittskarten (optional)", cardsSubFields),
 ];
-const mealPlanFields = [field("title", "Plan title", "string", { required: true, searchable: true }), field("week_start", "Week starts", "datetime", { required: true, indexed: true }), repeater("days", "Meals", menuDaysSubFields), repeater("notes", "Notes", [{ slug: "note", label: "Note", type: "text" }])];
+const mealPlanFields = [field("title", "Titel der Woche", "string", { required: true, searchable: true }), field("week_start", "Wochenbeginn", "datetime", { required: true, indexed: true }), repeater("days", "Tagesmenüs", menuDaysSubFields), repeater("notes", "Hinweise (optional)", [{ slug: "note", label: "Hinweis", type: "text" }])];
 const resolvePageSlug = (path) => {
   if (path === "_index.md") return "home";
   if (path.endsWith("/_index.md")) return path.slice(0, -"/_index.md".length);
   return basename(path, ".md");
 };
-const escapeAttribute = (value) => String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const makeHeading = (title, level, key) => ({
   _type: "block",
   _key: key,
@@ -260,46 +259,22 @@ const makeHeading = (title, level, key) => ({
   markDefs: [],
   children: [{ _type: "span", _key: `${key}:span`, text: title, marks: [] }],
 });
-const flattenSections = (pageSlug, entries, level = 2, state = { index: 0, anchors: new Map() }) => {
+const flattenSections = (pageSlug, entries, level = 2, state = { index: 0 }) => {
   const blocks = [];
   for (const entry of entries ?? []) {
     const title = asString(entry.title || entry.label).trim();
     if (!title) throw new Error(`A section on "${pageSlug}" has no heading`);
-    const rawAnchor = asString(entry.id || slugify(title));
-    const anchorId = /^[A-Za-z][A-Za-z0-9_-]*$/.test(rawAnchor) ? rawAnchor : slugify(rawAnchor);
+    const sourceSectionId = asString(entry.id || slugify(title));
+    const stableKeyPart = /^[A-Za-z][A-Za-z0-9_-]*$/.test(sourceSectionId) ? sourceSectionId : slugify(sourceSectionId);
     const index = state.index++;
-    const headingKey = `page:${pageSlug}:section:${slugify(anchorId) || index}:${index}`;
+    const headingKey = `page:${pageSlug}:section:${slugify(stableKeyPart) || index}:${index}`;
     const image = resolveImage(entry.image, title);
     if (image) blocks.push({ _type: "image", _key: `${headingKey}:image`, asset: image, alt: title, alignment: "full" });
     blocks.push(makeHeading(title, level, headingKey));
-    state.anchors.set(headingKey, anchorId);
     blocks.push(...toPortableText(asString(entry.content)));
     blocks.push(...flattenSections(pageSlug, entry.children, level + 1, state));
   }
   return blocks;
-};
-const insertAnchorAliases = (blocks, anchors) => {
-  const occurrences = new Map();
-  const result = [];
-  for (const block of blocks) {
-    if (block._type === "block" && /^h[1-6]$/.test(block.style ?? "")) {
-      const title = (block.children ?? []).map((child) => child.text ?? "").join("");
-      const base = slugify(title) || "section";
-      const occurrence = (occurrences.get(base) ?? 0) + 1;
-      occurrences.set(base, occurrence);
-      const generatedId = occurrence === 1 ? base : `${base}-${occurrence}`;
-      const legacyId = anchors.get(block._key);
-      if (legacyId && legacyId !== generatedId) {
-        result.push({
-          _type: "htmlBlock",
-          _key: `${block._key}:anchor`,
-          html: `<span id="${escapeAttribute(legacyId)}" class="page-anchor"></span>`,
-        });
-      }
-    }
-    result.push(block);
-  }
-  return result;
 };
 const pageItems = pageFiles.map((path) => {
   const parsedFile = parsed.get(path);
@@ -309,10 +284,10 @@ const pageItems = pageFiles.map((path) => {
   const toc = frontmatter.toc ?? {};
   const topLevelSections = toc.sections ?? (Array.isArray(toc) ? toc : []);
   const hasSectionContent = (entries) => entries.some((entry) => entry.content || entry.image || (entry.children?.length ?? 0) > 0);
-  const sectionState = { index: 0, anchors: new Map() };
+  const sectionState = { index: 0 };
   const sections = hasSectionContent(topLevelSections) ? flattenSections(pageSlug, topLevelSections, 2, sectionState) : [];
-  sectionCount += [...sectionState.anchors.keys()].length;
-  const body = insertAnchorAliases([...toPortableText(parsedFile.content), ...sections], sectionState.anchors);
+  sectionCount += sectionState.index;
+  const body = [...toPortableText(parsedFile.content), ...sections];
   const mealPlan = frontmatter.meal_plan ?? {};
   const mealDays = (mealPlan.days ?? []).map((day) => ({
     date: asDate(day.date),
@@ -450,15 +425,6 @@ const topMenu = [
   { label: "Speiseplan", url: "/speiseplan/", classes: "fa fa-utensils" },
   { label: "Eltern-Login", url: "https://www.montessorischule-gilching.de/login", classes: "fa fa-user-lock", target: "_self" },
 ];
-const primaryMenu = [
-  { label: "Startseite", url: "/" },
-  { label: "Schule", url: "/schule/" },
-  { label: "Elternengagement", url: "/elternengagement/" },
-  { label: "Spenden", url: "/spenden/" },
-  { label: "Verein", url: "/verein/" },
-  { label: "Karriere", url: "/karriere/" },
-  { label: "Presse", url: "/presse/" },
-];
 const footerMenu = [
   { label: "Impressum", url: "/impressum/" },
   { label: "Datenschutzerklärung", url: "/datenschutz/" },
@@ -504,46 +470,46 @@ const seed = {
   collections: [
     {
       slug: "pages",
-      label: "Pages",
-      labelSingular: "Page",
-      description: "Pages with one full Portable Text body and optional page-owned slides and section cards.",
+      label: "Seiten",
+      labelSingular: "Seite",
+      description: "Seiteninhalte mit optionalem Bild-Slider und Abschnittskarten. Ein leeres Sprungziel nutzt die gleichnamige Überschrift im Seiteninhalt.",
       supports: ["drafts", "revisions", "search", "seo"],
       urlPattern: "/{slug}",
       fields: pageFields,
     },
     {
       slug: "posts",
-      label: "News",
-      labelSingular: "News article",
-      description: "Articles shown on the home page and in the news archive.",
+      label: "Aktuelles",
+      labelSingular: "Beitrag",
+      description: "Beiträge im Bereich Aktuelles mit Datum, Kurztext, Beitragsbild und Beitragstext.",
       supports: ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
       urlPattern: "/aktuelles/{slug}",
       dateField: "event_date",
-      fields: [field("title", "Title", "string", { required: true, searchable: true }), field("description", "Meta description", "text"), field("event_date", "Event date", "datetime", { required: true }), field("summary", "Summary", "text"), field("image", "Featured image", "image"), field("author_name", "Author", "string"), field("body", "Article content", "portableText", { searchable: true })],
+      fields: [field("title", "Titel", "string", { required: true, searchable: true }), field("description", "Meta-Beschreibung", "text"), field("event_date", "Datum", "datetime", { required: true }), field("summary", "Kurztext", "text"), field("image", "Beitragsbild", "image"), field("author_name", "Autor:in", "string"), field("body", "Beitragstext", "portableText", { searchable: true })],
     },
     {
       slug: "supporters",
-      label: "Supporters",
-      labelSingular: "Supporter",
-      description: "People and organizations acknowledged on the donation page.",
+      label: "Unterstützer",
+      labelSingular: "Unterstützer",
+      description: "Personen und Organisationen, die auf der Förderer-Seite genannt werden.",
       supports: ["drafts", "revisions", "search"],
       routable: false,
-      fields: [field("title", "Name", "string", { required: true, searchable: true }), field("sort_order", "Display order", "integer", { required: true }), field("image", "Image", "image"), field("content", "Description", "portableText")],
+      fields: [field("title", "Name", "string", { required: true, searchable: true }), field("sort_order", "Anzeigereihenfolge", "integer", { required: true }), field("image", "Bild", "image"), field("content", "Beschreibung", "portableText")],
     },
     {
       slug: "donations",
-      label: "Donations",
-      labelSingular: "Donation",
-      description: "Fundraising opportunities shown to supporters and in the donation highlight.",
+      label: "Spendenmöglichkeiten",
+      labelSingular: "Spendenmöglichkeit",
+      description: "Spendenmöglichkeiten auf der Spendenseite und im Spenden-Highlight.",
       supports: ["drafts", "revisions", "search"],
       routable: false,
-      fields: [field("title", "Title", "string", { required: true, searchable: true }), field("sort_order", "Display order", "integer", { required: true }), field("image", "Image", "image"), field("content", "Description", "portableText", { searchable: true }), field("highlight", "Show in the donation highlight", "boolean"), field("url", "Promotion URL", "url")],
+      fields: [field("title", "Titel", "string", { required: true, searchable: true }), field("sort_order", "Anzeigereihenfolge", "integer", { required: true }), field("image", "Bild", "image"), field("content", "Beschreibung", "portableText", { searchable: true }), field("highlight", "Im Spenden-Highlight anzeigen", "boolean"), field("url", "Link zur Spendenmöglichkeit", "url")],
     },
     {
       slug: "meal_plans",
-      label: "Meal plans",
-      labelSingular: "Meal plan",
-      description: "Weekly menus managed as independent content entries.",
+      label: "Speisepläne",
+      labelSingular: "Speiseplan",
+      description: "Wöchentliche Speisepläne; pro Wochentag wird ein Menüeintrag angelegt.",
       supports: ["drafts", "revisions", "search"],
       dateField: "week_start",
       routable: false,
@@ -553,15 +519,15 @@ const seed = {
   taxonomies: [
     {
       name: "tag",
-      label: "Tags",
-      labelSingular: "Tag",
+      label: "Schlagwörter",
+      labelSingular: "Schlagwort",
       hierarchical: false,
       collections: ["posts"],
       locale: "de",
       terms: [...tagLabels.entries()].map(([slug, label]) => ({ slug, label, locale: "de" })),
     },
   ],
-  menus: [menu("top", "Top navigation", topMenu), menu("main", "Main navigation", primaryMenu), menu("footer", "Footer navigation", footerMenu), menu("donation-actions", "Donation actions", donationActions)],
+  menus: [menu("top", "Hauptnavigation", topMenu), menu("footer", "Footer-Navigation", footerMenu), menu("donation-actions", "Schaltflächen der Spendenseite", donationActions)],
   content: {
     pages: pageItems,
     posts,

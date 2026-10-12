@@ -8,14 +8,11 @@ const publicRoutes = [
   { name: "news-post-3", path: "/aktuelles/post-3/" },
   { name: "news-post-4", path: "/aktuelles/post-4/" },
   { name: "news-membership-2025", path: "/aktuelles/2025-03-24-mitgliederversammlung-cms-2025/" },
-  { name: "categories", path: "/categories/" },
   { name: "privacy", path: "/datenschutz/" },
   { name: "parent-engagement", path: "/elternengagement/" },
   { name: "supporters", path: "/foerderer/" },
   { name: "imprint", path: "/impressum/" },
-  { name: "career", path: "/karriere/" },
   { name: "contact", path: "/kontakt/" },
-  { name: "pages", path: "/pages/" },
   { name: "press", path: "/presse/" },
   { name: "school", path: "/schule/" },
   { name: "meal-plan", path: "/speiseplan/" },
@@ -51,6 +48,17 @@ for (const route of publicRoutes) {
     await expect(page).toHaveScreenshot(`${route.name}.png`, { fullPage: true });
   });
 }
+
+test("empty archive URLs redirect and the removed career page is absent", async ({ request }) => {
+  for (const [path, location] of [["/categories/", "/aktuelles/"], ["/pages/", "/"]] as const) {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect(response.status()).toBe(308);
+    expect(response.headers()["location"]).toBe(location);
+  }
+
+  const career = await request.get("/karriere/", { maxRedirects: 0 });
+  expect(career.status()).toBe(404);
+});
 
 test("donation highlight popup open", async ({ page }) => {
   await page.goto("/spenden/", { waitUntil: "networkidle" });

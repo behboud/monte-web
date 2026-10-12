@@ -18,9 +18,9 @@
   "collections": [
     {
       "slug": "pages",
-      "label": "Pages",
-      "labelSingular": "Page",
-      "description": "Pages with one full Portable Text body and optional page-owned slides and section cards.",
+      "label": "Seiten",
+      "labelSingular": "Seite",
+      "description": "Seiteninhalte mit optionalem Bild-Slider und Abschnittskarten. Ein leeres Sprungziel nutzt die gleichnamige Überschrift im Seiteninhalt.",
       "supports": [
         "drafts",
         "revisions",
@@ -31,36 +31,36 @@
       "fields": [
         {
           "slug": "title",
-          "label": "Title",
+          "label": "Titel",
           "type": "string",
           "required": true,
           "searchable": true
         },
         {
           "slug": "description",
-          "label": "Description",
+          "label": "Meta-Beschreibung",
           "type": "text"
         },
         {
           "slug": "banner_title",
-          "label": "Banner title",
+          "label": "Banner-Überschrift",
           "type": "string"
         },
         {
           "slug": "body",
-          "label": "Page content",
+          "label": "Seiteninhalt",
           "type": "portableText",
           "searchable": true
         },
         {
           "slug": "slides",
-          "label": "Slider images",
+          "label": "Bild-Slider (optional)",
           "type": "repeater",
           "validation": {
             "subFields": [
               {
                 "slug": "image",
-                "label": "Image",
+                "label": "Bild",
                 "type": "image"
               }
             ]
@@ -68,28 +68,28 @@
         },
         {
           "slug": "section_cards",
-          "label": "Section cards",
+          "label": "Abschnittskarten (optional)",
           "type": "repeater",
           "validation": {
             "subFields": [
               {
                 "slug": "title",
-                "label": "Title",
+                "label": "Titel",
                 "type": "string"
               },
               {
                 "slug": "description",
-                "label": "Description",
+                "label": "Kurzbeschreibung",
                 "type": "text"
               },
               {
                 "slug": "image",
-                "label": "Image",
+                "label": "Bild",
                 "type": "image"
               },
               {
                 "slug": "href",
-                "label": "Link",
+                "label": "Sprunglink (optional; leer = gleichnamige Überschrift)",
                 "type": "url"
               }
             ]
@@ -99,9 +99,9 @@
     },
     {
       "slug": "posts",
-      "label": "News",
-      "labelSingular": "News article",
-      "description": "Articles shown on the home page and in the news archive.",
+      "label": "Aktuelles",
+      "labelSingular": "Beitrag",
+      "description": "Beiträge im Bereich Aktuelles mit Datum, Kurztext, Beitragsbild und Beitragstext.",
       "supports": [
         "drafts",
         "revisions",
@@ -115,40 +115,40 @@
       "fields": [
         {
           "slug": "title",
-          "label": "Title",
+          "label": "Titel",
           "type": "string",
           "required": true,
           "searchable": true
         },
         {
           "slug": "description",
-          "label": "Meta description",
+          "label": "Meta-Beschreibung",
           "type": "text"
         },
         {
           "slug": "event_date",
-          "label": "Event date",
+          "label": "Datum",
           "type": "datetime",
           "required": true
         },
         {
           "slug": "summary",
-          "label": "Summary",
+          "label": "Kurztext",
           "type": "text"
         },
         {
           "slug": "image",
-          "label": "Featured image",
+          "label": "Beitragsbild",
           "type": "image"
         },
         {
           "slug": "author_name",
-          "label": "Author",
+          "label": "Autor:in",
           "type": "string"
         },
         {
           "slug": "body",
-          "label": "Article content",
+          "label": "Beitragstext",
           "type": "portableText",
           "searchable": true
         }
@@ -156,9 +156,9 @@
     },
     {
       "slug": "supporters",
-      "label": "Supporters",
-      "labelSingular": "Supporter",
-      "description": "People and organizations acknowledged on the donation page.",
+      "label": "Unterstützer",
+      "labelSingular": "Unterstützer",
+      "description": "Personen und Organisationen, die auf der Förderer-Seite genannt werden.",
       "supports": [
         "drafts",
         "revisions",
@@ -175,27 +175,27 @@
         },
         {
           "slug": "sort_order",
-          "label": "Display order",
+          "label": "Anzeigereihenfolge",
           "type": "integer",
           "required": true
         },
         {
           "slug": "image",
-          "label": "Image",
+          "label": "Bild",
           "type": "image"
         },
         {
           "slug": "content",
-          "label": "Description",
+          "label": "Beschreibung",
           "type": "portableText"
         }
       ]
     },
     {
       "slug": "donations",
-      "label": "Donations",
-      "labelSingular": "Donation",
-      "description": "Fundraising opportunities shown to supporters and in the donation highlight.",
+      "label": "Spendenmöglichkeiten",
+      "labelSingular": "Spendenmöglichkeit",
+      "description": "Spendenmöglichkeiten auf der Spendenseite und im Spenden-Highlight.",
       "supports": [
         "drafts",
         "revisions",
@@ -205,45 +205,45 @@
       "fields": [
         {
           "slug": "title",
-          "label": "Title",
+          "label": "Titel",
           "type": "string",
           "required": true,
           "searchable": true
         },
         {
           "slug": "sort_order",
-          "label": "Display order",
+          "label": "Anzeigereihenfolge",
           "type": "integer",
           "required": true
         },
         {
           "slug": "image",
-          "label": "Image",
+          "label": "Bild",
           "type": "image"
         },
         {
           "slug": "content",
-          "label": "Description",
+          "label": "Beschreibung",
           "type": "portableText",
           "searchable": true
         },
         {
           "slug": "highlight",
-          "label": "Show in the donation highlight",
+          "label": "Im Spenden-Highlight anzeigen",
           "type": "boolean"
         },
         {
           "slug": "url",
-          "label": "Promotion URL",
+          "label": "Link zur Spendenmöglichkeit",
           "type": "url"
         }
       ]
     },
     {
       "slug": "meal_plans",
-      "label": "Meal plans",
-      "labelSingular": "Meal plan",
-      "description": "Weekly menus managed as independent content entries.",
+      "label": "Speisepläne",
+      "labelSingular": "Speiseplan",
+      "description": "Wöchentliche Speisepläne; pro Wochentag wird ein Menüeintrag angelegt.",
       "supports": [
         "drafts",
         "revisions",
@@ -254,47 +254,47 @@
       "fields": [
         {
           "slug": "title",
-          "label": "Plan title",
+          "label": "Titel der Woche",
           "type": "string",
           "required": true,
           "searchable": true
         },
         {
           "slug": "week_start",
-          "label": "Week starts",
+          "label": "Wochenbeginn",
           "type": "datetime",
           "required": true,
           "indexed": true
         },
         {
           "slug": "days",
-          "label": "Meals",
+          "label": "Tagesmenüs",
           "type": "repeater",
           "validation": {
             "subFields": [
               {
                 "slug": "date",
-                "label": "Date",
+                "label": "Datum",
                 "type": "datetime"
               },
               {
                 "slug": "main",
-                "label": "Main course",
+                "label": "Hauptgericht",
                 "type": "text"
               },
               {
                 "slug": "side",
-                "label": "Side dish",
+                "label": "Beilage",
                 "type": "text"
               },
               {
                 "slug": "dessert",
-                "label": "Dessert",
+                "label": "Nachspeise",
                 "type": "text"
               },
               {
                 "slug": "drink",
-                "label": "Drink",
+                "label": "Getränk",
                 "type": "text"
               }
             ]
@@ -302,13 +302,13 @@
         },
         {
           "slug": "notes",
-          "label": "Notes",
+          "label": "Hinweise (optional)",
           "type": "repeater",
           "validation": {
             "subFields": [
               {
                 "slug": "note",
-                "label": "Note",
+                "label": "Hinweis",
                 "type": "text"
               }
             ]
@@ -320,8 +320,8 @@
   "taxonomies": [
     {
       "name": "tag",
-      "label": "Tags",
-      "labelSingular": "Tag",
+      "label": "Schlagwörter",
+      "labelSingular": "Schlagwort",
       "hierarchical": false,
       "collections": [
         "posts"
@@ -344,7 +344,7 @@
   "menus": [
     {
       "name": "top",
-      "label": "Top navigation",
+      "label": "Hauptnavigation",
       "locale": "de",
       "items": [
         {
@@ -388,50 +388,8 @@
       ]
     },
     {
-      "name": "main",
-      "label": "Main navigation",
-      "locale": "de",
-      "items": [
-        {
-          "type": "custom",
-          "label": "Startseite",
-          "url": "/"
-        },
-        {
-          "type": "custom",
-          "label": "Schule",
-          "url": "/schule/"
-        },
-        {
-          "type": "custom",
-          "label": "Elternengagement",
-          "url": "/elternengagement/"
-        },
-        {
-          "type": "custom",
-          "label": "Spenden",
-          "url": "/spenden/"
-        },
-        {
-          "type": "custom",
-          "label": "Verein",
-          "url": "/verein/"
-        },
-        {
-          "type": "custom",
-          "label": "Karriere",
-          "url": "/karriere/"
-        },
-        {
-          "type": "custom",
-          "label": "Presse",
-          "url": "/presse/"
-        }
-      ]
-    },
-    {
       "name": "footer",
-      "label": "Footer navigation",
+      "label": "Footer-Navigation",
       "locale": "de",
       "items": [
         {
@@ -464,7 +422,7 @@
     },
     {
       "name": "donation-actions",
-      "label": "Donation actions",
+      "label": "Schaltflächen der Spendenseite",
       "locale": "de",
       "items": [
         {
@@ -798,11 +756,6 @@
               ]
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:qualitaeten:1:anchor",
-              "html": "<span id=\"qualitaeten\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:qualitaeten:1",
               "style": "h3",
@@ -1026,11 +979,6 @@
               "alignment": "full"
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:wie-sieht-ein-schultag-bei-uns-aus:2:anchor",
-              "html": "<span id=\"wie-sieht-ein-schultag-bei-uns-aus\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:wie-sieht-ein-schultag-bei-uns-aus:2",
               "style": "h3",
@@ -1126,11 +1074,6 @@
               },
               "alt": "GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN",
               "alignment": "full"
-            },
-            {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:unterrichtszeiten:3:anchor",
-              "html": "<span id=\"unterrichtszeiten\" class=\"page-anchor\"></span>"
             },
             {
               "_type": "block",
@@ -1313,11 +1256,6 @@
               ]
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:wofuer-wir-stehen:6:anchor",
-              "html": "<span id=\"wofuer-wir-stehen\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:wofuer-wir-stehen:6",
               "style": "h3",
@@ -1396,11 +1334,6 @@
               ]
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:paedagogik:7:anchor",
-              "html": "<span id=\"paedagogik\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:paedagogik:7",
               "style": "h3",
@@ -1448,11 +1381,6 @@
                   "marks": []
                 }
               ]
-            },
-            {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:schulgeschichte:8:anchor",
-              "html": "<span id=\"schulgeschichte\" class=\"page-anchor\"></span>"
             },
             {
               "_type": "block",
@@ -1536,11 +1464,6 @@
               },
               "alt": "DIE FÜNF SÄULEN UNSERER SCHULE",
               "alignment": "full"
-            },
-            {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:fuenf-saeulen:9:anchor",
-              "html": "<span id=\"fuenf-saeulen\" class=\"page-anchor\"></span>"
             },
             {
               "_type": "block",
@@ -1731,11 +1654,6 @@
               ]
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:verwaltung:12:anchor",
-              "html": "<span id=\"verwaltung\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:verwaltung:12",
               "style": "h4",
@@ -1828,11 +1746,6 @@
               ]
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:schuelerinnen:13:anchor",
-              "html": "<span id=\"schuelerinnen\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:schuelerinnen:13",
               "style": "h4",
@@ -1901,11 +1814,6 @@
               }
             },
             {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:vorstand:14:anchor",
-              "html": "<span id=\"vorstand\" class=\"page-anchor\"></span>"
-            },
-            {
               "_type": "block",
               "_key": "page:schule:section:vorstand:14",
               "style": "h4",
@@ -1946,11 +1854,6 @@
                   "marks": []
                 }
               ]
-            },
-            {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:eltern:15:anchor",
-              "html": "<span id=\"eltern\" class=\"page-anchor\"></span>"
             },
             {
               "_type": "block",
@@ -2083,11 +1986,6 @@
                   "marks": []
                 }
               ]
-            },
-            {
-              "_type": "htmlBlock",
-              "_key": "page:schule:section:aufnahme-erste-klasse:17:anchor",
-              "html": "<span id=\"aufnahme-erste-klasse\" class=\"page-anchor\"></span>"
             },
             {
               "_type": "block",
@@ -5237,19 +5135,6 @@
               ]
             }
           ],
-          "slides": [],
-          "section_cards": []
-        }
-      },
-      {
-        "id": "karriere",
-        "slug": "karriere",
-        "status": "published",
-        "data": {
-          "title": "Karriere",
-          "description": "",
-          "banner_title": "",
-          "body": [],
           "slides": [],
           "section_cards": []
         }

@@ -1,9 +1,5 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
-import PageHeader from "../../components/PageHeader.astro";
----
+import { sitePath } from "../../lib/site-path";
 
-<SiteLayout pageTitle="Categories">
-  <PageHeader items={[{ label: "Categories" }]} />
-  <div class="container"></div>
-</SiteLayout>
+return Astro.redirect(sitePath("/aktuelles/"), 308);
+---

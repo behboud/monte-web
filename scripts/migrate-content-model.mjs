@@ -374,37 +374,6 @@ function transformPortableText(value, mediaBySource) {
   return value.map((block) => transformPortableTextNode(block, mediaBySource));
 }
 
-function slugifyHeading(value) {
-  return String(value ?? "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/ß/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function textOfHeading(block) {
-  if (!Array.isArray(block.children)) return "";
-  return block.children.map((child) => (isRecord(child) ? text(child.text) : "")).join("");
-}
-
-function headingId(title, occurrences) {
-  const base = slugifyHeading(title) || "section";
-  const occurrence = (occurrences.get(base) ?? 0) + 1;
-  occurrences.set(base, occurrence);
-  return occurrence === 1 ? base : `${base}-${occurrence}`;
-}
-
-function escapeAttribute(value) {
-  return String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-}
-
-function safeAnchorId(value, fallback) {
-  const raw = text(value).trim() || fallback;
-  return /^[A-Za-z][A-Za-z0-9_-]*$/.test(raw) ? raw : slugifyHeading(raw) || fallback;
-}
-
 function makeHeading(title, level, key) {
   return {
     _type: "block",
@@ -412,14 +381,6 @@ function makeHeading(title, level, key) {
     style: `h${Math.max(1, Math.min(level, 6))}`,
     markDefs: [],
     children: [{ _type: "span", _key: `${key}:span`, text: title, marks: [] }],
-  };
-}
-
-function makeAnchorBlock(id, key) {
-  return {
-    _type: "htmlBlock",
-    _key: `${key}:anchor`,
-    html: `<span id="${escapeAttribute(id)}"></span>`,
   };
 }
 
@@ -431,15 +392,9 @@ function pageBodyFromLegacy(page, mediaBySource, missingSources) {
   }
 
   const output = [];
-  const occurrences = new Map();
   let sectionIndex = 0;
   const appendText = (content) => {
-    for (const block of transformPortableText(content, mediaBySource)) {
-      if (isRecord(block) && block._type === "block" && /^h[1-6]$/.test(text(block.style))) {
-        headingId(textOfHeading(block), occurrences);
-      }
-      output.push(block);
-    }
+    output.push(...transformPortableText(content, mediaBySource));
   };
 
   for (const block of blocks) {
@@ -477,9 +432,6 @@ function pageBodyFromLegacy(page, mediaBySource, missingSources) {
 
     const level = block.heading_level === "Subsection" ? 3 : block.heading_level === "Detail" ? 4 : 2;
     const heading = makeHeading(title, level, `${key}:heading`);
-    const generatedId = headingId(title, occurrences);
-    const oldId = safeAnchorId(block.anchor_id, slugifyHeading(title) || `section-${sectionIndex + 1}`);
-    if (oldId !== generatedId) output.push(makeAnchorBlock(oldId, key));
     output.push(heading);
     appendText(block.content);
     sectionIndex++;
@@ -1104,7 +1056,7 @@ try {
           menus: [
             {
               name: "donation-actions",
-              label: "Donation actions",
+              label: "Schaltflächen der Spendenseite",
               locale: "de",
               items: donationItems,
             },
