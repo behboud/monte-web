@@ -4,7 +4,6 @@ import type { NewsPost } from "../../lib/site-content";
 import { formatNewsDate } from "../../lib/site-content";
 import { sitePath } from "../../lib/site-path";
 import PortableTextView from "../PortableTextView.astro";
-import ShareIcons from "../ShareIcons.astro";
 
 interface Props {
   post: NewsPost;
@@ -40,9 +39,6 @@ const { post, related } = Astro.props;
     </ul>
     <div class="content heading-divider mb-10">
       <PortableTextView value={post.data.body} />
-    </div>
-    <div class="text-monte">
-      <ShareIcons />
     </div>
   </article>
 

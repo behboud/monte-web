@@ -51,6 +51,23 @@ test.describe("core interactions", () => {
     await expect(page.locator("article, main").first()).toBeVisible();
   });
 
+  test("news article pages omit the social sharing controls", async ({ page }) => {
+    const articlePaths = [
+      "/aktuelles/post-1/",
+      "/aktuelles/post-2/",
+      "/aktuelles/post-3/",
+      "/aktuelles/post-4/",
+      "/aktuelles/2025-03-24-mitgliederversammlung-cms-2025/",
+    ];
+
+    for (const path of articlePaths) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      await expect(page.locator("main article > h1")).toBeVisible();
+      await expect(page.locator("article .share-icons")).toHaveCount(0);
+      await expect(page.locator('article a[aria-label^="share "]')).toHaveCount(0);
+    }
+  });
+
   test("spenden page offers a highlighted donation popup", async ({ page }) => {
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
