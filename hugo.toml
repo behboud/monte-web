@@ -1,5 +1,6 @@
 ######################## default configuration ####################
 baseURL = "/"
+ignoreFiles = ["\\.envit/.*"]
 title = "Montessori Schule Gilching (München West)"
 timeZone = "Europe/Berlin"
 summaryLength = 10
