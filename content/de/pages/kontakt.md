@@ -3,8 +3,8 @@ title: "Kontakt"
 description: "Kontakt, Sprechzeiten und wichtige Ansprechpartner der Montessorischule Gilching."
 draft: false
 social_links:
-  - name: facebook
-    icon: fab fa-facebook
+  - name: instagram
+    icon: fab fa-instagram
     link: https://www.facebook.com/
 toc:
   title: "Kontakt auf einen Blick"

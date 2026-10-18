@@ -330,8 +330,10 @@ test.describe("style regressions", () => {
     await expect(footerSections).toHaveCount(1);
 
     const footerImageSection = footerSections.nth(0);
-    const facebookLink = footerImageSection.locator('a[aria-label="facebook"]');
-    await expect(facebookLink).toBeVisible();
+    const instagramLink = footerImageSection.locator('a[aria-label="instagram"]');
+    await expect(instagramLink).toBeVisible();
+    await expect(instagramLink).toHaveAttribute("href", "https://www.facebook.com/");
+    await expect(instagramLink.locator("i")).toHaveClass(/fa-instagram/);
 
     const footerImage = footerImageSection.locator("img");
     await expect(footerImage).toHaveAttribute("src", /zaun/);
@@ -344,11 +346,11 @@ test.describe("style regressions", () => {
     await expect(footerLinks.locator("p")).toHaveCount(0);
 
     const firstLinkBox = await firstFooterLink.boundingBox();
-    const facebookBox = await facebookLink.locator("..").boundingBox();
+    const instagramBox = await instagramLink.locator("..").boundingBox();
     expect(firstLinkBox).not.toBeNull();
-    expect(facebookBox).not.toBeNull();
-    expect(facebookBox?.y).toBeLessThan((firstLinkBox?.y ?? 0) + (firstLinkBox?.height ?? 0));
-    expect(firstLinkBox?.y).toBeLessThan((facebookBox?.y ?? 0) + (facebookBox?.height ?? 0));
+    expect(instagramBox).not.toBeNull();
+    expect(instagramBox?.y).toBeLessThan((firstLinkBox?.y ?? 0) + (firstLinkBox?.height ?? 0));
+    expect(firstLinkBox?.y).toBeLessThan((instagramBox?.y ?? 0) + (instagramBox?.height ?? 0));
     await expect(footer).toHaveCSS("padding-bottom", "32px");
 
     for (const width of [320, 390, 639, 640, 767, 768, 1279, 1280, 1366]) {
