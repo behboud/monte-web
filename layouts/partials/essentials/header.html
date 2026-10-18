@@ -9,21 +9,11 @@
       </div>
       <div class="flex min-w-0 flex-1 flex-row">
         {{ $currentPage := . }}
-        {{ $iconGroupStarted := false }}
         {{ range site.Menus.top }}
-          {{ $pushIconsRight := and .Params.icon (not $iconGroupStarted) }}
-          {{ if .Params.icon }}
-            {{ $iconGroupStarted = true }}
-          {{ end }}
           {{ $menuURL := .URL | absLangURL }}
           {{ $pageURL:= $currentPage.Permalink | absLangURL }}
           {{ $active := eq $menuURL $pageURL }}
-          {{ $itemClass := "m-3 pt-1" }}
-          {{ if not .Params.icon }}
-            {{ $itemClass = "m-3 pt-1 hidden md:block" }}
-          {{ else if $pushIconsRight }}
-            {{ $itemClass = "m-3 pt-1 ml-auto" }}
-          {{ end }}
+          {{ $itemClass := "m-3 pt-1 hidden md:block" }}
           <li class="{{ $itemClass }}">
             {{ if .Params.icon }}
               <a

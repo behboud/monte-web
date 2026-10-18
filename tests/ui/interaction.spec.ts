@@ -18,26 +18,18 @@ test.describe("core interactions", () => {
     await expect(menuPanel).toHaveCount(1);
   });
 
-  test("mobile navigation keeps icon links on the right", async ({ page, isMobile }) => {
+  test("mobile top navigation shows only the burger menu", async ({ page, isMobile }) => {
     test.skip(!isMobile, "mobile navigation layout is only relevant on mobile project");
 
     await page.goto("/", { waitUntil: "networkidle" });
 
     const navigation = page.locator("#page > .pl-3 > .container").first();
-    const burger = navigation.locator('a[href="#mymenu"]');
-    const utensils = navigation.locator("a.fa-utensils");
-    const login = navigation.locator("a.fa-user-lock");
+    const visibleLinks = navigation.locator(".navbar-nav a:visible");
 
-    await expect(burger).toBeVisible();
-    await expect(utensils).toBeVisible();
-    await expect(login).toBeVisible();
-
-    const burgerBox = await burger.boundingBox();
-    const utensilsBox = await utensils.boundingBox();
-    const loginBox = await login.boundingBox();
-
-    expect(utensilsBox?.x).toBeGreaterThan(burgerBox?.x ?? -1);
-    expect(loginBox?.x).toBeGreaterThan(utensilsBox?.x ?? -1);
+    await expect(visibleLinks).toHaveCount(1);
+    await expect(visibleLinks.first()).toHaveAttribute("href", "#mymenu");
+    await expect(navigation.locator("a.fa-utensils")).toBeHidden();
+    await expect(navigation.locator("a.fa-user-lock")).toBeHidden();
   });
 
   test("aktuelles card CTA is visible and navigable", async ({ page }) => {

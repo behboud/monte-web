@@ -58,7 +58,34 @@ test.describe("style regressions", () => {
     expect(styles.backgroundColor).toBe("rgb(255, 255, 255)");
     expect(styles.boxShadow).toBe("none");
     await expect(navigation.locator(".navbar-nav a").filter({ hasText: "Aktuelles" })).toHaveCSS("text-transform", "uppercase");
-    await expect(navigation.locator("a.fa-utensils").locator("..")).toHaveClass(/ml-auto/);
+    await expect(navigation.locator("a.fa-utensils").locator("..")).not.toHaveClass(/ml-auto/);
+  });
+
+  test("desktop navigation groups utility icons with the main links", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 768, "desktop navigation spacing is not relevant on mobile");
+
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const navigation = page.locator("#page > .pl-3 > .container").first();
+    const utensilsItem = navigation.locator("a.fa-utensils").locator("..");
+    const lastTextItem = utensilsItem.locator("xpath=preceding-sibling::li[1]");
+    const loginItem = navigation.locator("a.fa-user-lock").locator("..");
+    await expect(lastTextItem).toContainText("Verein");
+
+    const lastTextBox = await lastTextItem.boundingBox();
+    const utensilsBox = await utensilsItem.boundingBox();
+    const loginBox = await loginItem.boundingBox();
+    expect(lastTextBox).not.toBeNull();
+    expect(utensilsBox).not.toBeNull();
+    expect(loginBox).not.toBeNull();
+    if (!lastTextBox || !utensilsBox || !loginBox) throw new Error("The navigation items should have layout boxes.");
+
+    const gapBeforeUtilities = utensilsBox.x - (lastTextBox.x + lastTextBox.width);
+    const gapBetweenUtilities = loginBox.x - (utensilsBox.x + utensilsBox.width);
+    expect(gapBeforeUtilities).toBeGreaterThanOrEqual(0);
+    expect(gapBeforeUtilities).toBeLessThan(100);
+    expect(gapBetweenUtilities).toBeGreaterThanOrEqual(0);
+    expect(gapBetweenUtilities).toBeLessThan(100);
   });
 
   test("navigation no longer carries the anniversary logo", async ({ page }) => {
