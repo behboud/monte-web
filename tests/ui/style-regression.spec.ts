@@ -336,6 +336,7 @@ test.describe("style regressions", () => {
     const footerImage = footerImageSection.locator("img");
     await expect(footerImage).toHaveAttribute("src", /zaun/);
     await expect(footerImage).toHaveAttribute("alt", "Bunter Zaun der Montessori Schule Gilching");
+    await expect(footerImage).toHaveJSProperty("naturalWidth", 2043);
     const footerLinks = footerImageSection.locator(".footer-links");
     const firstFooterLink = footerLinks.locator("li").first();
     await expect(firstFooterLink).toContainText("Impressum");
