@@ -220,26 +220,23 @@ test.describe("style regressions", () => {
     await expect(page.locator(".swiper-pagination-bullet")).toHaveCount(0);
   });
 
-  test("top-level pages share the title, slider, breadcrumb, and content order", async ({ page }) => {
+  test("top-level pages share the title, slider, and content order without breadcrumbs", async ({ page }) => {
     for (const route of ["/schule/", "/elternengagement/", "/spenden/", "/foerderer/", "/verein/", "/speiseplan/"]) {
       await page.goto(route, { waitUntil: "networkidle" });
 
       const title = page.locator("h1.page-title-calligraphy");
       const slider = page.locator(".schule-slider").first();
-      const breadcrumb = page.locator(".breadcrumb");
       const content = page.locator(".schule-content, .spenden-cta-bar, .spenden-grid, .speiseplan-week").first();
       await expect(title).toBeVisible();
       await expect(slider).toBeVisible();
-      await expect(breadcrumb).toBeVisible();
+      await expect(page.locator(".breadcrumb")).toHaveCount(0);
       await expect(content).toBeVisible();
 
       const titleBox = await title.boundingBox();
       const sliderBox = await slider.boundingBox();
-      const breadcrumbBox = await breadcrumb.boundingBox();
       const contentBox = await content.boundingBox();
       expect(titleBox?.y).toBeLessThan(sliderBox?.y ?? Number.POSITIVE_INFINITY);
-      expect(sliderBox?.y).toBeLessThan(breadcrumbBox?.y ?? Number.POSITIVE_INFINITY);
-      expect(breadcrumbBox?.y).toBeLessThan(contentBox?.y ?? Number.POSITIVE_INFINITY);
+      expect(sliderBox?.y).toBeLessThan(contentBox?.y ?? Number.POSITIVE_INFINITY);
     }
   });
 
@@ -353,34 +350,11 @@ test.describe("style regressions", () => {
     expect(buttonStyles.color).not.toBe("rgb(255, 255, 255)");
   });
 
-  test("breadcrumb keeps trail muted and current item highlighted", async ({ page }) => {
-    await page.goto("/schule/", {
-      waitUntil: "networkidle",
-    });
-
-    const trailLink = page.locator(".breadcrumb li a").first();
-    const currentItem = page.locator(".breadcrumb > li:last-child span");
-
-    await expect(trailLink).toBeVisible();
-    await expect(currentItem).toBeVisible();
-
-    const breadcrumbBackground = page.locator(".breadcrumb").locator("..");
-    await expect(breadcrumbBackground).toHaveCSS("background-image", "none");
-    await expect(breadcrumbBackground).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(breadcrumbBackground).toHaveCSS("border-radius", "0px");
-
-    const { trailColor, currentColor } = await page.evaluate(() => {
-      const trail = document.querySelector(".breadcrumb li a");
-      const current = document.querySelector(".breadcrumb > li:last-child span");
-      return {
-        trailColor: trail ? getComputedStyle(trail).color : "",
-        currentColor: current ? getComputedStyle(current).color : "",
-      };
-    });
-
-    expect(trailColor).not.toBe(currentColor);
-    expect(trailColor).toMatch(/(rgb|oklch)\(/);
-    expect(currentColor).toMatch(/(rgb|oklch)\(/);
+  test("breadcrumbs are absent from archives and taxonomy pages", async ({ page }) => {
+    for (const route of ["/aktuelles/", "/tags/", "/tags/termin/", "/categories/"]) {
+      await page.goto(route, { waitUntil: "networkidle" });
+      await expect(page.locator(".breadcrumb")).toHaveCount(0);
+    }
   });
 
   test("foerderer cards provide configurable promotion links", async ({ page }) => {

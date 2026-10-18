@@ -180,7 +180,6 @@ Das Frontend nutzt Tailwind Utilities plus projektinterne Komponentenklassen in 
 
 - Buttons: `.btn`, `.btn-default`, `.btn-text`
 - Cards: `.card`, `.card-body`, `.card-title`
-- Breadcrumbs: `.breadcrumb`
 - Typografie: globale Headline/Paragraph-Code Styles im `@layer base`
 
 ### Custom Farben
@@ -298,7 +297,7 @@ Siehe decap-proxy README: https://github.com/behboud/decap-proxy
 ## UI-Teststrategie
 
 - Playwright-basierte Browser-Regressionstests und Interaktionstests in `tests/ui/`.
-- Die Tests prüfen gezielt stabile Layout-Verträge wie Navigation, responsive Footer-Abstände, Seitenreihenfolge, Breadcrumbs und zentrale Benutzerinteraktionen.
+- Die Tests prüfen gezielt stabile Layout-Verträge wie Navigation, responsive Footer-Abstände, Seitenreihenfolge und zentrale Benutzerinteraktionen.
 - Datenschutz-Regressionstests prüfen unter anderem Cookies, externe Ressourcen, Manifest/Service Worker und Browser-Speicher.
 - Ein Produktions-Build-Test prüft alle internen Links und Ressourcen auf den konfigurierten Deployment-Pfad.
 - Relevanter npm-Befehl:
@@ -319,7 +318,6 @@ Erzeugt minifizierte, fingerprinted Assets mit Subresource Integrity.
 | Partial                          | Zweck                 |
 | -------------------------------- | --------------------- |
 | `components/aktuelles-card.html` | News-Card-Komponente  |
-| `components/breadcrumb.html`     | Brotkrümelnavigation  |
 | `components/slider.html`         | Bild-Slider           |
 | `components/image-pipe.html`     | Bildverarbeitung      |
 | `essentials/head.html`           | HTML-Head             |

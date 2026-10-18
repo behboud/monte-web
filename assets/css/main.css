@@ -99,31 +99,6 @@
     @apply text-xl font-semibold leading-snug;
   }
 
-  .breadcrumb {
-    @apply flex flex-wrap items-center gap-2 text-slate-500;
-  }
-
-  .breadcrumb > li {
-    @apply inline-flex items-center gap-2;
-  }
-
-  .breadcrumb > li + li::before {
-    content: ">";
-    @apply text-slate-400;
-  }
-
-  .breadcrumb a {
-    @apply text-slate-500 transition-colors duration-150 hover:text-monte;
-  }
-
-  .breadcrumb > li:last-child {
-    @apply text-monte;
-  }
-
-  .breadcrumb .is-disabled a {
-    @apply pointer-events-none opacity-50;
-  }
-
   .heading-divider {
     @apply border-b border-slate-200 pb-4;
   }
