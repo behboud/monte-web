@@ -16,7 +16,7 @@
           <div class="donation-popup-option-content">
             <p class="donation-popup-kicker">Ein Projekt unterstützen</p>
             <h2 id="{{ $titleID }}">{{ .title | markdownify }}</h2>
-            <div class="donation-popup-description">{{ .content | markdownify }}</div>
+            <div class="donation-popup-description reading-measure">{{ .content | markdownify }}</div>
             {{ if .url }}
               {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
               <a

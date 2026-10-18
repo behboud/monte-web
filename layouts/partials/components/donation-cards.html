@@ -10,7 +10,7 @@
           </div>
           <div class="spenden-card-body">
             <h2 class="spenden-card-title">{{ .title | markdownify }}</h2>
-            <div class="spenden-card-content">{{ .content | markdownify }}</div>
+            <div class="spenden-card-content reading-measure">{{ .content | markdownify }}</div>
             {{ if .url }}
               {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
               <a

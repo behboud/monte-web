@@ -171,6 +171,61 @@ test.describe("style regressions", () => {
     expect(sizes[2]).toBe(80);
   });
 
+  test("long-form copy keeps a consistent reading measure across page types", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+
+    const examples = [
+      { route: "/schule/", selector: ".schule-content p" },
+      { route: "/aktuelles/post-4/", selector: ".article-reading-column p" },
+      { route: "/spenden/", selector: ".spenden-card-content" },
+    ];
+
+    for (const { route, selector } of examples) {
+      await page.goto(route, { waitUntil: "networkidle" });
+
+      const measurement = await page.locator(selector).evaluateAll((textBlocks) => {
+        const textBlock = textBlocks.find((candidate) => (candidate.textContent ?? "").trim().length > 120);
+        if (!textBlock) throw new Error("A long text block should exist on this page.");
+
+        const rectangle = textBlock.getBoundingClientRect();
+        const style = getComputedStyle(textBlock);
+        const main = document.querySelector("main");
+        if (!main) throw new Error("Page main should exist.");
+
+        return {
+          textLength: (textBlock.textContent ?? "").trim().length,
+          width: rectangle.width,
+          maxInlineSize: style.maxInlineSize,
+          mainWidth: main.getBoundingClientRect().width,
+        };
+      });
+
+      expect(measurement.textLength).toBeGreaterThan(120);
+      expect(measurement.maxInlineSize).not.toBe("none");
+      expect(measurement.width).toBeLessThan(measurement.mainWidth * 0.6);
+    }
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const mobileMeasurement = await page.locator(".schule-content p").evaluateAll((textBlocks) => {
+      const textBlock = textBlocks.find((candidate) => (candidate.textContent ?? "").trim().length > 120);
+      if (!textBlock) throw new Error("A long text block should exist on the school page.");
+
+      const content = textBlock.closest(".schule-content");
+      if (!content) throw new Error("The school content card should contain the text block.");
+
+      return {
+        textWidth: textBlock.getBoundingClientRect().width,
+        contentWidth: content.getBoundingClientRect().width,
+        documentWidth: document.documentElement.scrollWidth,
+      };
+    });
+
+    expect(mobileMeasurement.textWidth).toBeLessThanOrEqual(mobileMeasurement.contentWidth);
+    expect(mobileMeasurement.documentWidth).toBeLessThanOrEqual(390);
+  });
+
   test("homepage shows the slider before news cards without a redundant heading or pagination dots", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 

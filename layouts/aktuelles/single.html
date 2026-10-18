@@ -7,36 +7,38 @@
           {{ partial "image" (dict "Src" $image "Context" .Page "Alt" .Title "Class" "w-full rounded") }}
         </div>
       {{ end }}
-      <h1>
-        {{ .Title }}
-      </h1>
-      <ul class="mb-4">
-        <li class="mr-4 inline-block">
-          <i class="fa-regular fa-calendar mr-2"></i>
-          {{ .Params.date | dateFormat "Monday, 2 January 2006" }}
-        </li>
-        {{ $tags:= .Params.tags }}
-        {{ if $tags }}
+      <div class="article-reading-column reading-measure">
+        <h1>
+          {{ .Title }}
+        </h1>
+        <ul class="mb-4">
           <li class="mr-4 inline-block">
-            {{ range $i,$p:= $tags }}
-              <a class="btn btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
-                <i class="fa fa-tag mr-1"></i>
-                {{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
-                {{ end }}
-              </a>
-            {{ end }}
+            <i class="fa-regular fa-calendar mr-2"></i>
+            {{ .Params.date | dateFormat "Monday, 2 January 2006" }}
           </li>
-        {{ end }}
-      </ul>
-      <div class="content heading-divider mb-10">
-        {{ .Content }}
-      </div>
-      <div class="text-monte">
-        {{ partial "social-share" (dict "Context" . "Class" "share-icons" "Title" "Teilen"
-          "Whatsapp"
-          true "Telegram" false "Linkedin" false "Pinterest" false "Tumblr" false "Vk" false "Twitter" false "Reddit"
-          false)
-        }}
+          {{ $tags:= .Params.tags }}
+          {{ if $tags }}
+            <li class="mr-4 inline-block">
+              {{ range $i,$p:= $tags }}
+                <a class="btn btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
+                  <i class="fa fa-tag mr-1"></i>
+                  {{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
+                  {{ end }}
+                </a>
+              {{ end }}
+            </li>
+          {{ end }}
+        </ul>
+        <div class="content heading-divider mb-10">
+          {{ .Content }}
+        </div>
+        <div class="text-monte">
+          {{ partial "social-share" (dict "Context" . "Class" "share-icons" "Title" "Teilen"
+            "Whatsapp"
+            true "Telegram" false "Linkedin" false "Pinterest" false "Tumblr" false "Vk" false "Twitter" false "Reddit"
+            false)
+          }}
+        </div>
       </div>
     </article>
 
