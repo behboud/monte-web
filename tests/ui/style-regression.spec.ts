@@ -186,6 +186,32 @@ test.describe("style regressions", () => {
     expect(sliderBox?.y).toBeLessThan(newsHeadingBox?.y ?? Number.POSITIVE_INFINITY);
   });
 
+  test("homepage matches the title-to-slider spacing used on section pages", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const homeTitle = page.locator(".home-banner-heading");
+    const homeSlider = page.locator(".hero-slider").first();
+    const homeTitleBox = await homeTitle.boundingBox();
+    const homeSliderBox = await homeSlider.boundingBox();
+    expect(homeTitleBox).not.toBeNull();
+    expect(homeSliderBox).not.toBeNull();
+    if (!homeTitleBox || !homeSliderBox) throw new Error("Homepage title and slider should have layout boxes.");
+
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const sectionTitle = page.locator(".page-title-calligraphy");
+    const sectionSlider = page.locator(".schule-slider").first();
+    const sectionTitleBox = await sectionTitle.boundingBox();
+    const sectionSliderBox = await sectionSlider.boundingBox();
+    expect(sectionTitleBox).not.toBeNull();
+    expect(sectionSliderBox).not.toBeNull();
+    if (!sectionTitleBox || !sectionSliderBox) throw new Error("Section title and slider should have layout boxes.");
+
+    const homeGap = homeSliderBox.y - (homeTitleBox.y + homeTitleBox.height);
+    const sectionGap = sectionSliderBox.y - (sectionTitleBox.y + sectionTitleBox.height);
+    expect(Math.abs(homeGap - sectionGap)).toBeLessThanOrEqual(1);
+  });
+
   test("top-level sliders do not show pagination dots", async ({ page }) => {
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
