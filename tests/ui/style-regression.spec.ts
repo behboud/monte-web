@@ -294,6 +294,9 @@ test.describe("style regressions", () => {
   test("schule section cards link to their matching sections", async ({ page }) => {
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
+    const sectionCardSection = page.locator(".section-cards");
+    await expect(sectionCardSection).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+
     const cards = page.locator(".section-card");
     const expectedCards = [
       { title: "Schulalltag", href: "#schulalltag", image: "16-_DSC7588" },
@@ -306,6 +309,7 @@ test.describe("style regressions", () => {
       const card = cards.nth(index);
       await expect(card).toHaveAttribute("href", expected.href);
       await expect(card.locator("h2")).toHaveText(expected.title);
+      await expect(card.locator("h2")).toHaveCSS("color", "rgb(34, 36, 119)");
       await expect(card.locator("p")).toBeVisible();
       await expect(card.locator("img")).toHaveAttribute("src", new RegExp(expected.image));
       await expect(card.locator("button")).toHaveCount(0);
