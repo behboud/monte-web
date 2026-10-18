@@ -1,14 +1,10 @@
 {
   "repos": [
+    "gohugoio/hugo",
     "emdash-cms/emdash",
     "alchemy-run/alchemy"
   ],
   "skills": {
-    "github/awesome-copilot": [
-      "azure-deployment-preflight",
-      "microsoft-agent-framework",
-      "multi-stage-dockerfile"
-    ],
     "Leonxlnx/taste-skill": [
       "brandkit",
       "design-taste-frontend",
@@ -22,9 +18,6 @@
     "vojtaholik/good-css": [
       "good-css"
     ],
-    "AgentMemoryRepo/agentmemoryrepo": [
-      "agent-memory-repo"
-    ],
     "kunchenguid/chrome-devtools-axi": [
       "chrome-devtools-axi"
     ],
@@ -32,9 +25,10 @@
       "gh-axi"
     ],
     "backnotprop/pstack": "*",
-    "humanlayer/skills": [
-      "show-me"
-    ],
+    "humanlayer/skills": {
+      "path" : "plugins/show-me",
+      "pick" : "show-me"
+    },
     "emdash-cms/skills": "*"
   }
 }
