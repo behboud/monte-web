@@ -1,0 +1,1208 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Alles Wichtige zu unserer Schule, unserem Konzept und dem Aufnahmeverfahren." />
+    <title>Unsere Schule</title>
+    <link rel="icon" href="data:," />
+    <style>
+      @font-face {
+        font-family: "Overpass";
+        src: url("../../public/fonts/Overpass-Variable.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Playfair Display";
+        src: url("../../public/fonts/PlayfairDisplay-Regular.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      :root {
+        color-scheme: light;
+        --blue: oklch(0.3201 0.1379 274.3);
+        --paper: oklch(0.9858 0.0045 78.3);
+        --sand: oklch(0.9615 0.0139 88.7);
+        --ink: oklch(0.252 0 none);
+        --muted: oklch(0.47 0.012 78);
+        --gutter: clamp(1.25rem, 5.2vw, 5.25rem);
+        --section-space: clamp(4.5rem, 9vw, 8rem);
+        --measure: 88rem;
+        --size-small: 0.8125rem;
+        --size-body: 1.0625rem;
+        --size-lead: clamp(1.35rem, 2.1vw, 1.9rem);
+        --size-section: clamp(2.25rem, 3.1vw, 3.5rem);
+        --size-display: clamp(3.8rem, 7.2vw, 7rem);
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--paper);
+        scroll-padding-block-start: 5rem;
+        overflow-wrap: break-word;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Overpass", Arial, sans-serif;
+        font-size: var(--size-body);
+        line-height: 1.55;
+      }
+
+      img {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+        object-fit: cover;
+      }
+
+      a {
+        color: var(--blue);
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.22em;
+      }
+
+      a:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 4px;
+      }
+
+      a:active {
+        color: color-mix(in oklch, var(--blue) 72%, black);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        a:hover {
+          color: color-mix(in oklch, var(--blue) 75%, black);
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+
+      .skip-link {
+        position: absolute;
+        z-index: 20;
+        inset-block-start: 0.75rem;
+        inset-inline-start: var(--gutter);
+        padding: 0.65rem 0.9rem;
+        transform: translateY(-180%);
+        background: var(--blue);
+        color: var(--paper);
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .site-header {
+        position: sticky;
+        z-index: 10;
+        inset-block-start: 0;
+        background: var(--paper);
+      }
+
+      .header-inner {
+        display: flex;
+        max-inline-size: 100rem;
+        min-block-size: 4.5rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem 2.5rem;
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+
+      .main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem clamp(0.9rem, 2.35vw, 2.2rem);
+      }
+
+      .main-nav a {
+        color: var(--blue);
+        font-size: var(--size-small);
+        font-weight: 650;
+        letter-spacing: 0.03em;
+        line-height: 1.2;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .main-nav a[aria-current="page"] {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.45rem;
+      }
+
+      .hero-photo {
+        overflow: clip;
+        block-size: clamp(22rem, 52svh, 44rem);
+        margin: 0;
+        background: var(--sand);
+      }
+
+      .hero-photo img {
+        block-size: 100%;
+        object-position: center 58%;
+      }
+
+      .hero-intro {
+        display: grid;
+        max-inline-size: var(--measure);
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 27rem), 1fr));
+        align-items: end;
+        gap: clamp(2rem, 6vw, 6rem);
+        margin-inline: auto;
+        padding: clamp(3rem, 7vw, 6.5rem) var(--gutter) clamp(2.5rem, 5vw, 4.5rem);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      blockquote {
+        margin: 0;
+      }
+
+      h1,
+      .section-title,
+      .quote-text {
+        color: var(--blue);
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 400;
+        letter-spacing: -0.045em;
+      }
+
+      h1 {
+        max-inline-size: 12ch;
+        font-size: var(--size-display);
+        line-height: 0.98;
+      }
+
+      .page-description {
+        max-inline-size: 33ch;
+        margin: 0;
+        color: var(--blue);
+        font-size: var(--size-lead);
+        line-height: 1.35;
+      }
+
+      .page-index {
+        display: flex;
+        max-inline-size: var(--measure);
+        flex-wrap: wrap;
+        gap: 0.6rem 2rem;
+        margin-inline: auto;
+        padding: 1.2rem var(--gutter) 1.5rem;
+      }
+
+      .page-index a {
+        font-size: var(--size-body);
+        text-decoration: none;
+      }
+
+      .overview {
+        padding: 0 var(--gutter) var(--section-space);
+      }
+
+      .overview-grid {
+        display: grid;
+        max-inline-size: var(--measure);
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        grid-template-rows: repeat(2, minmax(12rem, 1fr));
+        gap: clamp(1.25rem, 3vw, 3rem);
+        margin-inline: auto;
+      }
+
+      .overview-item {
+        display: grid;
+        align-content: start;
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .overview-item:first-child {
+        grid-row: 1 / -1;
+      }
+
+      .overview-item:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .overview-item:nth-child(3) {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      .overview-item img {
+        aspect-ratio: 1.48;
+        margin-block-end: 1rem;
+      }
+
+      .overview-item h2 {
+        color: var(--blue);
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: var(--size-section);
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+
+      .overview-item p {
+        max-inline-size: 38ch;
+        margin: 0.45rem 0 0;
+        color: var(--ink);
+        font-size: var(--size-body);
+        line-height: 1.5;
+      }
+
+      .page-section {
+        scroll-margin-block-start: 5rem;
+        padding-block: var(--section-space);
+      }
+
+      .section-inner {
+        display: grid;
+        max-inline-size: var(--measure);
+        grid-template-columns: minmax(13rem, 0.58fr) minmax(0, 1.5fr);
+        align-items: start;
+        gap: clamp(2rem, 6vw, 6rem);
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+
+      .section-rail {
+        align-self: start;
+      }
+
+      #wer-wir-sind .section-inner {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2rem, 4vw, 3.5rem);
+      }
+
+      .section-title {
+        font-size: var(--size-section);
+        line-height: 0.98;
+        overflow-wrap: normal;
+      }
+
+      .section-body {
+        min-inline-size: 0;
+      }
+
+      .subsection {
+        scroll-margin-block-start: 6rem;
+        padding-block: clamp(2.5rem, 5vw, 4.75rem);
+      }
+
+      .subsection:first-child {
+        padding-block-start: 0;
+      }
+
+      .subsection h3,
+      .subsection h4 {
+        color: var(--blue);
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .subsection h3 {
+        max-inline-size: 100%;
+        margin-block-end: 1.35rem;
+        font-size: var(--size-lead);
+        letter-spacing: 0.015em;
+        text-wrap: balance;
+      }
+
+      .subsection h4 {
+        margin-block: 2rem 0.75rem;
+        font-size: var(--size-body);
+      }
+
+      .prose {
+        max-inline-size: 63ch;
+        font-size: var(--size-body);
+        line-height: 1.62;
+      }
+
+      .prose > * + * {
+        margin-block-start: 1.2em;
+      }
+
+      .prose p,
+      .history-copy p,
+      .people-copy p,
+      .admissions-copy p {
+        max-inline-size: 63ch;
+        margin-block: 0 1.15em;
+      }
+
+      .prose p:last-child,
+      .history-copy p:last-child,
+      .people-copy p:last-child,
+      .admissions-copy p:last-child {
+        margin-block-end: 0;
+      }
+
+      .qualities {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+        gap: 0 clamp(1.5rem, 3vw, 3rem);
+        margin: 0 0 2.25rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .qualities li {
+        padding-block: 0.7rem;
+        line-height: 1.55;
+      }
+
+      .qualities strong {
+        color: var(--blue);
+        font-weight: 700;
+      }
+
+      .photo-story,
+      .hours-layout,
+      .lunch-layout,
+      .identity-layout,
+      .history-layout,
+      .pillars-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+        align-items: start;
+        gap: clamp(2rem, 5vw, 4rem);
+      }
+
+      .photo-story figure,
+      .hours-layout figure,
+      .lunch-layout figure,
+      .identity-layout figure,
+      .pillars-layout figure,
+      .admissions-photo {
+        min-inline-size: 0;
+        margin: 0;
+      }
+
+      .photo-story img,
+      .hours-layout img,
+      .identity-layout .identity-photo,
+      .admissions-photo img {
+        aspect-ratio: 1.22;
+        object-position: center;
+      }
+
+      .photo-story img {
+        object-position: 58% center;
+      }
+
+      .sand-band {
+        background: var(--sand);
+      }
+
+      .hours-layout {
+        align-items: center;
+      }
+
+      .hours-list,
+      .documents-list,
+      .people-list,
+      .pillars-list,
+      .date-list {
+        display: grid;
+        gap: 0.55rem 1.5rem;
+        margin: 1.25rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .hours-list li,
+      .documents-list li,
+      .people-list li,
+      .pillars-list li,
+      .date-list li {
+        padding-block: 0.25rem;
+      }
+
+      .hours-list li {
+        display: block;
+      }
+
+      .lunch-layout {
+        align-items: center;
+      }
+
+      .placeholder-image {
+        aspect-ratio: 2.28;
+        object-fit: contain;
+        background: var(--sand);
+      }
+
+      .identity-layout {
+        align-items: center;
+      }
+
+      .identity-layout figure img {
+        aspect-ratio: 1.15;
+      }
+
+      .quote-text {
+        max-inline-size: 100%;
+        margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+        font-size: var(--size-lead);
+        line-height: 1.2;
+      }
+
+      blockquote cite {
+        display: block;
+        margin-block-start: 0.75rem;
+        color: var(--blue);
+        font-family: inherit;
+        font-size: var(--size-small);
+        font-style: normal;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .history-layout {
+        align-items: start;
+      }
+
+      .history-copy {
+        max-inline-size: 63ch;
+      }
+
+      .placeholder-note {
+        margin: 1.5rem 0 0;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      .pillars-layout {
+        align-items: center;
+      }
+
+      .pillars-layout figure {
+        grid-column: 1 / -1;
+      }
+
+      .pillars-layout figure img {
+        max-block-size: 29rem;
+        aspect-ratio: 2.18;
+        object-fit: contain;
+        background: var(--paper);
+      }
+
+      .five-pillars-copy {
+        max-inline-size: 63ch;
+      }
+
+      .people-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+        align-items: start;
+        gap: clamp(1.75rem, 4vw, 3.5rem);
+      }
+
+      .people-item {
+        min-inline-size: 0;
+        padding-block: 1.75rem 0;
+      }
+
+      .people-item h4 {
+        margin: 0 0 1rem;
+        color: var(--blue);
+        font-size: var(--size-body);
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .people-item blockquote {
+        max-inline-size: 63ch;
+        margin: 0 0 1rem;
+        color: var(--blue);
+        font-size: var(--size-body);
+        line-height: 1.55;
+      }
+
+      .people-item figure {
+        margin: 1.5rem 0 0;
+      }
+
+      .people-item figure img {
+        aspect-ratio: 1.7;
+        object-fit: contain;
+        background: var(--sand);
+      }
+
+      .admissions-section {
+        background: var(--paper);
+      }
+
+      .admissions-photo img {
+        aspect-ratio: 1.2;
+        object-position: 56% center;
+      }
+
+      .admissions-copy {
+        max-inline-size: 63ch;
+      }
+
+      .admissions-documents {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+        align-items: start;
+        gap: 2rem clamp(2rem, 5vw, 5rem);
+        margin-block-start: 2rem;
+      }
+
+      .admissions-documents h4 {
+        margin: 0 0 0.5rem;
+        color: var(--blue);
+        font-size: var(--size-body);
+      }
+
+      .admissions-documents ul {
+        display: grid;
+        gap: 0.35rem;
+        margin: 0;
+        padding-inline-start: 1.2rem;
+      }
+
+      .admissions-subsection {
+        display: grid;
+        grid-template-columns: minmax(12rem, 0.58fr) minmax(0, 1.5fr);
+        gap: clamp(2rem, 6vw, 6rem);
+        padding-block: clamp(2.5rem, 5vw, 4.75rem);
+      }
+
+      .admissions-subsection h3 {
+        max-inline-size: 100%;
+        color: var(--blue);
+        font-size: var(--size-lead);
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .admissions-subsection h4 {
+        margin-block: 1.5rem 0.5rem;
+        color: var(--blue);
+        font-size: var(--size-body);
+      }
+
+      .fees {
+        padding: clamp(2.5rem, 5vw, 4.75rem) var(--gutter);
+        background: var(--sand);
+      }
+
+      .fees-inner {
+        display: grid;
+        max-inline-size: var(--measure);
+        grid-template-columns: minmax(13rem, 0.58fr) minmax(0, 1.5fr);
+        gap: clamp(2rem, 6vw, 6rem);
+        margin-inline: auto;
+      }
+
+      .fees h3 {
+        color: var(--blue);
+        font-size: var(--size-lead);
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .fees-copy {
+        max-inline-size: 63ch;
+      }
+
+      .footer-links {
+        display: flex;
+        max-inline-size: 100rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem 2rem;
+        margin-inline: auto;
+        padding: 2rem var(--gutter);
+        background: var(--sand);
+        font-size: var(--size-small);
+      }
+
+      .footer-links a {
+        text-decoration: none;
+      }
+
+      [id] {
+        scroll-margin-block-start: 5.5rem;
+      }
+
+      @media (max-width: 46rem) {
+        .header-inner {
+          justify-content: center;
+          padding: 0.75rem 1rem;
+        }
+
+        .main-nav {
+          justify-content: center;
+          column-gap: 0.25rem;
+        }
+
+        .main-nav a {
+          font-size: var(--size-small);
+          letter-spacing: 0.03em;
+        }
+
+        .section-inner,
+        .admissions-subsection,
+        .fees-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .section-rail {
+          position: static;
+        }
+
+        .hero-photo {
+          block-size: 42svh;
+          min-block-size: 19rem;
+        }
+
+        .hero-intro {
+          padding-block-start: 3rem;
+        }
+
+        .overview-grid {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: auto;
+        }
+
+        .overview-item:first-child,
+        .overview-item:nth-child(2),
+        .overview-item:nth-child(3) {
+          grid-column: auto;
+          grid-row: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+        .main-nav a,
+        .page-index a,
+        .footer-links a {
+          transition: color 180ms ease;
+        }
+
+        .overview-item {
+          transition:
+            color 180ms ease,
+            transform 180ms var(--ease-out);
+        }
+
+        .overview-item:hover {
+          transform: translateY(-2px);
+        }
+      }
+
+      @keyframes hero-photo-settle {
+        from {
+          transform: scale(1.06) translateY(0.4%);
+        }
+        to {
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .js .hero-photo img {
+          animation: hero-photo-settle 1.3s var(--ease-out) both;
+        }
+
+        .js [data-reveal] {
+          opacity: 0;
+          transform: translateY(24px);
+          transition:
+            opacity 720ms var(--ease-out) var(--reveal-delay, 0ms),
+            transform 820ms var(--ease-out) var(--reveal-delay, 0ms);
+        }
+
+        .js [data-reveal].is-in {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <nav class="main-nav" aria-label="Hauptnavigation">
+          <a href="#top">Aktuelles</a>
+          <a href="#top" aria-current="page">Schule</a>
+          <a href="#top">Elternarbeit</a>
+          <a href="#top">Spenden</a>
+          <a href="#top">Verein</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="opening" aria-labelledby="page-title">
+        <figure class="hero-photo">
+          <img src="../../public/images/Schuleeingang.jpeg" alt="Unsere Schule" width="2048" height="1366" fetchpriority="high" />
+        </figure>
+
+        <div class="hero-intro">
+          <h1 id="page-title">Unsere Schule</h1>
+          <p class="page-description">Alles Wichtige zu unserer Schule, unserem Konzept und dem Aufnahmeverfahren.</p>
+        </div>
+
+        <nav class="page-index" aria-label="Seitenübersicht">
+          <a href="#schulalltag">Schulalltag</a>
+          <a href="#wer-wir-sind">Wer wir sind</a>
+          <a href="#komm-zu-uns">Komm zu uns</a>
+        </nav>
+      </section>
+
+      <section class="overview" aria-label="Seitenübersicht">
+        <div class="overview-grid">
+          <a class="overview-item" href="#schulalltag">
+            <img src="../../public/images/16-_DSC7588.jpg" alt="Schulalltag" width="2048" height="1366" fetchpriority="high" />
+            <h2>Schulalltag</h2>
+            <p>Gemeinsam lernen, entdecken und den Schulalltag gestalten.</p>
+          </a>
+          <a class="overview-item" href="#wer-wir-sind">
+            <img src="../../public/images/12-_DSC7076.jpg" alt="Wer wir sind" width="2048" height="1366" fetchpriority="high" />
+            <h2>Wer wir sind</h2>
+            <p>Unsere Pädagogik, Geschichte und die Menschen, die Schule machen.</p>
+          </a>
+          <a class="overview-item" href="#komm-zu-uns">
+            <img src="../../public/images/Schuleeingang.jpeg" alt="Komm zu uns" width="2048" height="1366" fetchpriority="high" />
+            <h2>Komm zu uns</h2>
+            <p>Alles rund um Aufnahme, Quereinstieg und Schulgeld.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="page-section" id="schulalltag" aria-labelledby="schulalltag-title">
+        <div class="section-inner">
+          <div class="section-rail">
+            <h2 class="section-title" id="schulalltag-title">SCHULALLTAG</h2>
+          </div>
+
+          <div class="section-body">
+            <article class="subsection" id="qualitaeten">
+              <h3>QUALITÄTEN UNSERER PÄDAGOGISCHEN ARBEIT</h3>
+              <ul class="qualities">
+                <li>
+                  <strong>selbstständig lernen</strong>
+                  - Wir geben den Kindern Raum, eigenverantwortlich zu arbeiten und ihre Lernprozesse aktiv zu steuern.
+                </li>
+                <li>
+                  <strong>vielfältig lernen</strong>
+                  - Wir fördern unterschiedliche Lernerfahrungen, um individuelle Talente und Kompetenzen zu entwickeln.
+                </li>
+                <li>
+                  <strong>mit Freude lernen</strong>
+                  - Wir schaffen eine positive Lernumgebung, in der Kinder motiviert Neues entdecken.
+                </li>
+                <li>
+                  <strong>gemeinsam lernen</strong>
+                  - Wir fördern gemeinsames Lernen und geben Gelegenheiten, voneinander zu lernen.
+                </li>
+                <li>
+                  <strong>begleitet lernen</strong>
+                  - Wir Pädagog_innen verstehen uns als Begleiter_innen und orientieren uns an den Bedürfnissen und Interessen der Kinder.
+                </li>
+                <li>
+                  <strong>kooperativ lernen</strong>
+                  - In den jahrgangsgemischten Klassen lernen Kinder, aufeinander Rücksicht zu nehmen und Verantwortung zu übernehmen.
+                </li>
+                <li>
+                  <strong>naturnah lernen</strong>
+                  - Das unmittelbare Erleben der Natur ist fester Bestandteil unseres Schulkonzepts.
+                </li>
+              </ul>
+              <div class="prose">
+                <p>In unserem pädagogischen Alltag leben wir ganzheitliche Bildung: Entwicklung der eigenen Persönlichkeit, selbstverantwortliches Handeln, Zusammenarbeit von Schule und Elternhaus, individuelle Förderung, fundierte Wissens- und Wertevermittlung sowie angstfreies Lernen. Gleichzeitig vermitteln wir alle Inhalte des bayerischen Lehrplans.</p>
+                <p>Das Fundament unserer Arbeit ist die Pädagogik von Maria Montessori. Die Kinder lernen in einer vorbereiteten Umgebung mit speziell entwickeltem Material unter Berücksichtigung sensibler Entwicklungsphasen.</p>
+              </div>
+            </article>
+
+            <article class="subsection" id="wie-sieht-ein-schultag-bei-uns-aus">
+              <h3>WIE SIEHT EIN SCHULTAG AN DER MONTESSORISCHULE GILCHING AUS?</h3>
+              <div class="photo-story">
+                <figure>
+                  <img src="../../public/images/6-_DSC7336.jpg" alt="WIE SIEHT EIN SCHULTAG AN DER MONTESSORISCHULE GILCHING AUS?" width="2048" height="1366" loading="lazy" />
+                </figure>
+                <div class="prose">
+                  <p>Wir beginnen den Tag in jeder Klasse mit einem gemeinsamen Morgenkreis. Anschließend arbeiten die Kinder in der Freiarbeit an den Themen ihres Wochenplans.</p>
+                  <p>Je nach Stundenplan folgen Freiarbeits- und Differenzierungsphasen sowie Englisch-, Religions-, Sport-, Musik- und Kunstunterricht. An zwei Nachmittagen pro Woche arbeiten die Kinder in Freiarbeit, an zwei weiteren Nachmittagen wählen sie Projekte für einen festen Zeitraum.</p>
+                  <p>Natürlich dürfen auch die Pausen nicht zu kurz kommen: Sie werden vormittags und mittags im Garten verbracht. In der Mittagszeit sorgt das Mittagsteam für das leibliche Wohl und begleitet die Kinder beim Essen.</p>
+                  <p>Das offizielle Schulende ist um 15:30 Uhr. Darüber hinaus besteht die Möglichkeit, Kinder bis 16:15 Uhr betreuen zu lassen. Am Freitag endet der Unterricht um 12:30 Uhr.</p>
+                  <p>An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir darum, Aufgaben, die im Unterricht nicht fertiggestellt wurden, zu Hause abzuschließen.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="subsection sand-band" id="unterrichtszeiten">
+              <h3>GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN</h3>
+              <div class="hours-layout">
+                <div class="prose">
+                  <p>Wir sind eine gebundene Ganztagsschule. Die Ganztagsbetreuung ermöglicht es uns, den Kindern die Zeit zu geben, die sie für sich und ihre Arbeit brauchen. So ist eine differenzierte Förderung jedes Einzelnen möglich.</p>
+                  <p><strong>Unterrichtszeiten</strong></p>
+                  <ul class="hours-list">
+                    <li>Mo-Do: 08:00 - 15:30 Uhr (Betreuung an diesen Tagen möglich bis 16:15 Uhr)</li>
+                    <li>Fr: 08:00 - 12:30 Uhr</li>
+                  </ul>
+                </div>
+                <figure>
+                  <img src="../../public/images/25-_DSC7663_hu_dabccac7d06961eb.jpg" alt="GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN" width="2048" height="1366" loading="lazy" />
+                </figure>
+              </div>
+            </article>
+
+            <article class="subsection" id="mittagsverpflegung">
+              <div class="lunch-layout">
+                <div class="prose">
+                  <h3>MITTAGSVERPFLEGUNG</h3>
+                  <p>In unserer gebundenen Ganztagsschule essen die Kinder von Montag bis Donnerstag gemeinsam zu Mittag. In der schuleigenen Küche werden täglich gesunde, ausgewogene und auf Kinder abgestimmte Mahlzeiten zubereitet. Unser Küchenteam verwendet bevorzugt hochwertige, regional erzeugte Produkte.</p>
+                  <p>Auf spezielle Bedürfnisse (Allergien, Diabetes etc.) wird in Absprache mit den Eltern Rücksicht genommen. Einmal pro Woche gibt es in der Vormittagspause zusätzlich Obst und Rohkost aus dem Schulfruchtprogramm.</p>
+                  <p>Die Kinder werden in Entstehungs- und Verarbeitungsprozesse eingebunden: Am wöchentlichen Kinderkochtag unterstützen jeweils zwei Kinder das Küchenteam. Einmal pro Monat darf von den Klassen ein Wunschmenü zusammengestellt werden.</p>
+                  <p>
+                    <a href="/speiseplan">Hier finden Sie unseren aktuellen Speiseplan</a>
+                  </p>
+                </div>
+                <figure>
+                  <img class="placeholder-image" src="../../public/images/image-placeholder.png" alt="Foto-Platzhalter Mittagsverpflegung" width="1096" height="480" loading="lazy" />
+                </figure>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section sand-band" id="wer-wir-sind" aria-labelledby="wer-wir-sind-title">
+        <div class="section-inner">
+          <div class="section-rail">
+            <h2 class="section-title" id="wer-wir-sind-title">WER WIR SIND</h2>
+          </div>
+
+          <div class="section-body">
+            <article class="subsection" id="wofuer-wir-stehen">
+              <h3>WOFÜR WIR STEHEN</h3>
+              <blockquote class="quote-text">
+                „Ich halte es für möglich, eine neue Gesellschaft vorauszusehen, in der der Mensch fähiger sein wird, weil man Vertrauen in ihn setzte, als er ein Kind war.“
+                <cite>Maria Montessori</cite>
+              </blockquote>
+              <div class="identity-layout">
+                <figure>
+                  <img class="identity-photo" src="../../public/images/12-_DSC7076.jpg" alt="Wer wir sind" width="2048" height="1366" loading="lazy" />
+                </figure>
+                <div class="prose">
+                  <p>Dieses Zitat bringt unsere pädagogische Haltung treffend zum Ausdruck. Wir stellen das Vertrauen in die Fähigkeiten und Entwicklungsmöglichkeiten jedes Kindes in den Mittelpunkt.</p>
+                  <p>Wir glauben daran, dass Kinder durch Selbstbestimmung und Eigenverantwortung zu kompetenten und selbstbewussten Menschen heranwachsen, die Verantwortung für Gegenwart und Zukunft übernehmen können.</p>
+                  <p>Seit 2004 bereichert unsere Schule als gebundene Ganztagesgrundschule mit dem Schwerpunkt Naturerfahrung das Bildungsangebot für Kinder aus Gilching und Umgebung. Seit dem Schuljahr 2017/18 bietet unser neu gebautes Schulhaus eine anregende, vorbereitete Lernumgebung für vier jahrgangsgemischte Klassen (1-4).</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="subsection" id="paedagogik">
+              <h3>MARIA MONTESSORI UND DIE MONTESSORI-PÄDAGOGIK</h3>
+              <div class="prose">
+                <p>
+                  Für einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir Sie auf die sehr informative Seite des
+                  <a href="https://www.montessoribayern.de/landesverband/paedagogik">Montessorilandesverbands</a>
+                  verweisen.
+                </p>
+              </div>
+            </article>
+
+            <article class="subsection" id="schulgeschichte">
+              <h3>DIE GESCHICHTE UNSERER SCHULE</h3>
+              <div class="history-layout">
+                <div class="history-copy">
+                  <p>Im Jahr 2004 hatten die großen Anstrengungen einer engagierten Elterninitiative Erfolg: Die Montessorischule Gilching startete mit ihrer ersten Klasse - damals noch in den Räumlichkeiten einer ehemaligen Bankfiliale.</p>
+                  <p>Nur ein Jahr später stellte die Gemeinde Gilching uns das alte Schulhaus Argelsried zur Verfügung, und wir konnten auf zwei Klassen erweitern. Die Nachfrage wuchs stetig, sodass auch dieses Schulhaus zu klein wurde.</p>
+                  <p>Nach einer nicht umsetzbaren Umbauplanung entstand ein neues Schulhaus, abgestimmt auf unsere Bedürfnisse. Seit 2017 sind wir in den heutigen Räumlichkeiten mit großem Garten.</p>
+                  <blockquote class="placeholder-note">Fotos und Einblicke in unsere Oase werden hier ergänzt.</blockquote>
+                </div>
+                <figure>
+                  <img src="../../public/images/baum1.jpg" alt="Schulhaus unter einem Baum" width="2048" height="1366" loading="lazy" />
+                </figure>
+              </div>
+            </article>
+
+            <article class="subsection" id="fuenf-saeulen">
+              <h3>DIE FÜNF SÄULEN UNSERER SCHULE</h3>
+              <div class="pillars-layout">
+                <figure>
+                  <img src="../../public/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png" alt="DIE FÜNF SÄULEN UNSERER SCHULE" width="1286" height="590" loading="lazy" />
+                </figure>
+                <div class="prose five-pillars-copy">
+                  <p>
+                    Unsere Schule lebt von aktiver Mitbestimmung und wird von
+                    <strong>fünf Säulen</strong>
+                    getragen:
+                  </p>
+                  <ul class="pillars-list">
+                    <li>Schüler*innen</li>
+                    <li>Eltern</li>
+                    <li>Pädagogisches Team</li>
+                    <li>Vorstand/Förderverein</li>
+                    <li>Verwaltung und Schulorganisation</li>
+                  </ul>
+                  <blockquote class="placeholder-note">Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.</blockquote>
+                </div>
+                <figure>
+                  <img src="../../public/images/Freiarbeit_1.jpeg" alt="DIE FÜNF SÄULEN UNSERER SCHULE" width="2048" height="1366" loading="lazy" />
+                </figure>
+              </div>
+            </article>
+
+            <article class="subsection" id="das-sind-wir">
+              <h3>DAS SIND WIR</h3>
+              <div class="people-grid">
+                <section class="people-item" id="schulleitung-und-team">
+                  <h4>SCHULLEITUNG UND TEAM</h4>
+                </section>
+
+                <section class="people-item" id="verwaltung">
+                  <h4>DIE VERWALTUNG</h4>
+                  <ul class="people-list">
+                    <li>Schulleitung</li>
+                    <li>Pädagogisches Team</li>
+                    <li>Verwaltung</li>
+                    <li>Team fürs Mittagessen</li>
+                  </ul>
+                  <div class="people-copy">
+                    <p>Weiterführende Informationen zu Team und Verwaltung werden auf dieser Seite ergänzt.</p>
+                  </div>
+                </section>
+
+                <section class="people-item" id="schuelerinnen">
+                  <h4>UNSERE SCHÜLERINNEN</h4>
+                  <blockquote>
+                    „Wenn Kinder sich in der Zukunft bewähren sollen, so müssen wir ihnen Mut machen, ihnen helfen, dass sie Charakterstärke, Verantwortungsbereitschaft und praktische Fähigkeiten erwerben können.“
+                    <cite>Maria Montessori</cite>
+                  </blockquote>
+                  <div class="people-copy">
+                    <p>Seit März 2011 sind die Partizipationsmöglichkeiten unserer Schüler*innen in der Schul- und Geschäftsordnung festgehalten. Klassenrat (wöchentlich) und Schülerversammlungen (alle sechs Wochen) werden von den Kindern eigenverantwortlich moderiert und gestaltet.</p>
+                    <p>Aus jeder Klasse werden zwei Schülersprecher*innen gewählt. Durch die etablierten Mitbestimmungsformen erleben Kinder früh demokratische Verantwortung. Das übergeordnete Ziel ist die Erziehung zur Demokratiefähigkeit.</p>
+                  </div>
+                  <figure>
+                    <img src="../../public/images/image-placeholder.png" alt="Foto-Platzhalter Schüler*innen" width="1096" height="480" loading="lazy" />
+                  </figure>
+                </section>
+
+                <section class="people-item" id="vorstand">
+                  <h4>UNSER VORSTAND</h4>
+                  <div class="people-copy">
+                    <p>Unsere Schule wurde 2004 dank einer Elterninitiative als gemeinnütziger Verein gegründet. Das Vorstandsteam des Fördervereins unterstützt die Schule bis heute als eine der fünf tragenden Säulen.</p>
+                    <p>Die Vorstandsmitglieder werden im Zwei-Jahres-Rhythmus im Rahmen der Mitgliederversammlung gewählt. Das Protokoll kann im Schulbüro zu den Bürozeiten eingesehen werden.</p>
+                  </div>
+                </section>
+
+                <section class="people-item" id="eltern">
+                  <h4>DIE ELTERN</h4>
+                  <div class="people-copy">
+                    <p>Die Montessorischule Gilching wurde vor über 20 Jahren durch eine Elterninitiative ins Leben gerufen. Dieses Engagement prägt das Verständnis von Elternarbeit bis heute. Jede Familie ist verpflichtet, im Schuljahr 40 Stunden Arbeitszeit in die Gemeinschaft einzubringen.</p>
+                    <p>Möglichkeiten sind unter anderem:</p>
+                  </div>
+                  <ul class="people-list">
+                    <li>Mitwirkung als Elternvertretung und in Arbeitsgruppen</li>
+                    <li>Unterstützung bei Schulprojekten, Festen und Aktionen</li>
+                    <li>Durchführung eines eigenen Nachmittagsprojekts</li>
+                    <li>Unterstützung bei Basteltagen und Projektwochen</li>
+                  </ul>
+                  <figure>
+                    <img src="../../public/images/image-placeholder.png" alt="Foto-Platzhalter Elternengagement" width="1096" height="480" loading="lazy" />
+                  </figure>
+                </section>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section admissions-section" id="komm-zu-uns" aria-labelledby="komm-zu-uns-title">
+        <div class="section-inner">
+          <div class="section-rail">
+            <h2 class="section-title" id="komm-zu-uns-title">KOMM ZU UNS</h2>
+          </div>
+
+          <div class="section-body">
+            <article class="subsection" id="aufnahme-erste-klasse">
+              <div class="admissions-photo">
+                <img src="../../public/images/Schuleeingang.jpeg" alt="AUFNAHME IN UNSERE 1. KLASSE" width="2048" height="1366" loading="lazy" />
+              </div>
+              <div class="admissions-copy">
+                <h3>AUFNAHME IN UNSERE 1. KLASSE</h3>
+                <p>Am Tag der offenen Tür öffnen wir unsere Pforten und geben Ihnen die Möglichkeit, unser pädagogisches Team und das Schulhaus kennenzulernen.</p>
+                <p>Der nächste Schritt ist das verpflichtende Elternseminar, in dem die Grundlagen der Montessori-Pädagogik vermittelt werden. Es bildet die Basis für das Aufnahmeverfahren. Am Infoabend erhalten Sie alle wichtigen Informationen zu Schule, Werten und Ablauf.</p>
+                <p>Wenn Sie überzeugt sind, senden Sie bitte die vollständigen Bewerbungsunterlagen fristgerecht an uns. Kurz darauf laden wir Ihr Kind zu einem Kennenlernvormittag ein und führen anschließend ein Elterngespräch. In der Aufnahmekonferenz wird entschieden, welche Kinder einen Platz erhalten.</p>
+
+                <div class="admissions-documents">
+                  <div>
+                    <h4>Unterlagen Schulanfänger*innen</h4>
+                    <ul>
+                      <li>
+                        <a href="#">Anmeldeunterlagen Schulanfänger*innen (PDF)</a>
+                        <em>(Platzhalter)</em>
+                      </li>
+                      <li>
+                        <a href="#">Kostenübersicht Schulanfänger*innen (PDF)</a>
+                        <em>(Platzhalter)</em>
+                      </li>
+                      <li>
+                        <a href="#">Einverständniserklärung (PDF)</a>
+                        <em>(Platzhalter)</em>
+                      </li>
+                      <li>
+                        <a href="#">Datenschutzerklärung Aufnahmeverfahren (PDF)</a>
+                        <em>(Platzhalter)</em>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p>Aktuelle Termine Schuljahr 2025/26:</p>
+                    <ul>
+                      <li>PDF mit Terminen (Link folgt)</li>
+                      <li>Plakat zum Aufnahmeverfahren (Link folgt)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="admissions-subsection" id="quereinstieg">
+              <h3>QUEREINSTIEG</h3>
+              <div class="admissions-copy">
+                <p>Leider haben wir nur vereinzelt Kapazitäten für Quereinsteiger*innen. Sie können uns jederzeit - auch während des laufenden Schuljahres - unverbindlich eine Bewerbung für einen gegebenenfalls freiwerdenden Platz zukommen lassen. Sollte sich eine Möglichkeit ergeben, setzen wir uns mit Ihnen in Verbindung.</p>
+                <h4>Unterlagen Quereinstieg</h4>
+                <ul>
+                  <li>
+                    <a href="#">Aufnahmeantrag Quereinstieg (PDF)</a>
+                    <em>(Platzhalter)</em>
+                  </li>
+                  <li>
+                    <a href="#">Entwicklungsbericht (PDF)</a>
+                    <em>(Platzhalter)</em>
+                  </li>
+                  <li>
+                    <a href="#">Checkliste Quereinstieg (PDF)</a>
+                    <em>(Platzhalter)</em>
+                  </li>
+                  <li>
+                    <a href="#">Kostenübersicht Quereinstieg (PDF)</a>
+                    <em>(Platzhalter)</em>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="admissions-subsection" id="aufnahme-ins-team">
+              <h3>AUFNAHME INS TEAM</h3>
+              <div class="admissions-copy">
+                <p>
+                  Wir freuen uns über Initiativbewerbungen an
+                  <a href="mailto:schulleitung@montessorischule-gilching.de">schulleitung@montessorischule-gilching.de</a>
+                  .
+                </p>
+                <p>Wir sind außerdem Referendariats-Schule.</p>
+              </div>
+            </article>
+
+            <article class="fees" id="schulgeld">
+              <div class="fees-inner">
+                <h3>SCHULGELD</h3>
+                <div class="fees-copy">
+                  <p>Der Träger unserer Grundschule ist der Montessori Förderverein Gilching e.V. Staatlich anerkannte Montessorischulen in Bayern erhalten nur einen geringen Förderbetrag. Deshalb sind wir auf Schulgeldzahlungen angewiesen.</p>
+                  <p>Ab dem Schuljahr 2026/27 beträgt das Schulgeld unserer Schule monatlich XXX. Das schließt die Betreuung bis 15.30 Uhr (Mo-Do) mit ein.</p>
+                  <p>Damit Kinder unabhängig vom Einkommen ihrer Eltern unsere Schule besuchen können, kann das Schulgeld reduziert werden. Detaillierte Informationen erhalten Sie auf Anfrage.</p>
+                  <p>Das monatliche Schulgeld und die Essenspauschale werden ausschließlich per SEPA-Lastschriftmandat eingezogen. Die notwendigen Formulare erhalten Sie zusammen mit dem Schulvertrag. Die Essenspauschale ist nicht im Schulgeld enthalten.</p>
+                  <p>Für das Zustandekommen eines Schulvertrags verpflichten sich die Eltern, nach erfolgter Zusage eines Schulplatzes ein zinsloses Darlehen in Höhe von EUR 2.000 pro Kind zu gewähren. Das Darlehen wird zurückerstattet, wenn das Kind planmäßig die fünfte Jahrgangsstufe erreicht hat. Verlässt das Kind die Schule vorzeitig, wird das Darlehen zeitnah zurückgezahlt.</p>
+                  <p>
+                    Alle relevanten Kosten im Rahmen des Aufnahmeverfahrens bzw. des Schulalltags entnehmen Sie bitte der
+                    <a href="#">aktuellen Kostenübersicht</a>
+                    .
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-links" aria-label="Fußzeile">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutzerklärung</a>
+      <a href="#">Kontakt</a>
+      <a href="#">Presse</a>
+      <a href="#">Login</a>
+      <a href="#">instagram</a>
+    </footer>
+
+    <script>
+      (() => {
+        if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+
+        document.documentElement.classList.add("js");
+
+        const selector = [".page-section .section-rail", ".page-section .subsection > h3", ".page-section .subsection > .quote-text", ".page-section .subsection .qualities", ".page-section .subsection .prose", ".page-section .subsection figure", ".page-section .people-item", ".page-section .admissions-photo", ".page-section .admissions-subsection > h3", ".page-section .admissions-copy", ".page-section .fees h3", ".page-section .fees-copy"].join(", ");
+        const targets = [...new Set(document.querySelectorAll(selector))].filter((element) => {
+          const peopleItem = element.closest(".people-item");
+          return !peopleItem || peopleItem === element;
+        });
+
+        targets.forEach((element) => {
+          element.dataset.reveal = "";
+        });
+
+        targets.forEach((element) => {
+          const group = element.closest(".people-item, .subsection, .page-section");
+          const siblings = targets.filter((sibling) => group?.contains(sibling));
+          element.style.setProperty("--reveal-delay", `${Math.min(siblings.indexOf(element), 2) * 80}ms`);
+        });
+
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach((element) => element.classList.add("is-in"));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("is-in");
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
+        );
+
+        targets.forEach((element) => observer.observe(element));
+      })();
+    </script>
+  </body>
+</html>

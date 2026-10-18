@@ -15,6 +15,23 @@ test.describe("CMS admin", () => {
     await expect(page.getByText(/Sveltia CMS/)).toBeVisible();
   });
 
+  test("school section CMS reuses area-link images and omits per-section image controls", async ({ request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+    const schoolStart = config.indexOf('file: "content/de/schule/_index.md"');
+    const nextPage = config.indexOf('file: "content/de/elternengagement/_index.md"', schoolStart);
+
+    expect(schoolStart).toBeGreaterThanOrEqual(0);
+    expect(nextPage).toBeGreaterThan(schoolStart);
+
+    const schoolConfig = config.slice(schoolStart, nextPage);
+    expect(schoolConfig).toContain('label: "Bild für den Bereichslink"');
+    expect(schoolConfig).toContain('name: "show_banner"');
+    expect(schoolConfig).toContain('label: "Bild zusätzlich als breites Abschnittsbild anzeigen"');
+    expect(schoolConfig).not.toContain('name: "image_position"');
+    expect(schoolConfig.match(/name: "image"/g) ?? []).toHaveLength(2);
+  });
+
   test("optimizes uploaded images before storing them", async ({ request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();

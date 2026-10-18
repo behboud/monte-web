@@ -1,0 +1,9 @@
+{{ with .Content }}
+  {{ $renderedContent := . | markdownify }}
+  {{ $blockContent := findRE `(?i)<(address|article|aside|blockquote|details|dialog|div|dl|fieldset|figcaption|figure|footer|form|h[1-6]|header|hr|iframe|img|main|menu|nav|ol|p|picture|pre|script|section|table|ul|video)([[:space:]/>])` $renderedContent 1 }}
+  {{ if $blockContent }}
+    {{ $renderedContent }}
+  {{ else }}
+    <p>{{ $renderedContent }}</p>
+  {{ end }}
+{{ end }}

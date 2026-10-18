@@ -253,7 +253,7 @@
         }
       });
       const id = active.getAttribute("id") || "";
-      const label = headingIndex.get(id) || active.textContent?.trim() || tocTitle;
+      const label = headingIndex.get(id) || active.getAttribute("data-section-label") || active.textContent?.trim() || tocTitle;
       current.textContent = `${tocTitle} > ${label}`;
     };
 

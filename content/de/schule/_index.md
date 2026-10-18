@@ -17,23 +17,27 @@ section_cards:
       description: Gemeinsam lernen, entdecken und den Schulalltag gestalten.
       image: /images/16-_DSC7588.jpg
       href: "#schulalltag"
+      show_banner: false
     - title: Wer wir sind
       description: Unsere Pädagogik, Geschichte und die Menschen, die Schule machen.
       image: /images/12-_DSC7076.jpg
       href: "#wer-wir-sind"
+      show_banner: true
     - title: Komm zu uns
       description: Alles rund um Aufnahme, Quereinstieg und Schulgeld.
       image: /images/Schuleeingang.jpeg
       href: "#komm-zu-uns"
+      show_banner: true
+content_layout: editorial
 toc:
   title: Seitenübersicht
   sections:
     - label: Schulalltag
-      title: SCHULALLTAG
+      title: Schulalltag
       id: schulalltag
       children:
         - label: Qualitäten
-          title: QUALITÄTEN UNSERER PÄDAGOGISCHEN ARBEIT
+          title: Qualitäten unserer pädagogischen Arbeit
           id: qualitaeten
           content: |-
             - **selbstständig lernen** - Wir geben den Kindern Raum, eigenverantwortlich zu arbeiten und ihre Lernprozesse aktiv zu steuern.
@@ -48,9 +52,8 @@ toc:
 
             Das Fundament unserer Arbeit ist die Pädagogik von Maria Montessori. Die Kinder lernen in einer vorbereiteten Umgebung mit speziell entwickeltem Material unter Berücksichtigung sensibler Entwicklungsphasen.
         - label: Wie sieht ein Schultag bei uns aus?
-          title: WIE SIEHT EIN SCHULTAG AN DER MONTESSORISCHULE GILCHING AUS?
+          title: Wie sieht ein Schultag an der Montessorischule Gilching aus?
           id: wie-sieht-ein-schultag-bei-uns-aus
-          image: /images/6-_DSC7336.jpg
           content: |-
             Wir beginnen den Tag in jeder Klasse mit einem gemeinsamen Morgenkreis. Anschließend arbeiten die Kinder in der Freiarbeit an den Themen ihres Wochenplans.
 
@@ -62,9 +65,8 @@ toc:
 
             An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir darum, Aufgaben, die im Unterricht nicht fertiggestellt wurden, zu Hause abzuschließen.
         - label: Unterrichtszeiten
-          title: GEBUNDENE GANZTAGSSCHULE – UNSERE UNTERRICHTSZEITEN
+          title: Gebundene Ganztagsschule – unsere Unterrichtszeiten
           id: unterrichtszeiten
-          image: /images/12-_DSC7076.jpg
           content: |-
             Wir sind eine gebundene Ganztagsschule. Die Ganztagsbetreuung ermöglicht es uns, den Kindern die Zeit zu geben, die sie für sich und ihre Arbeit brauchen. So ist eine differenzierte Förderung jedes Einzelnen möglich.
 
@@ -73,7 +75,7 @@ toc:
             - Mo-Do: 08:00 - 15:30 Uhr (Betreuung an diesen Tagen möglich bis 16:15 Uhr)
             - Fr: 08:00 - 12:30 Uhr
         - label: Mittagsverpflegung
-          title: MITTAGSVERPFLEGUNG
+          title: Mittagsverpflegung
           id: mittagsverpflegung
           content: |-
             In unserer gebundenen Ganztagsschule essen die Kinder von Montag bis Donnerstag gemeinsam zu Mittag. In der schuleigenen Küche werden täglich gesunde, ausgewogene und auf Kinder abgestimmte Mahlzeiten zubereitet. Unser Küchenteam verwendet bevorzugt hochwertige, regional erzeugte Produkte.
@@ -86,11 +88,11 @@ toc:
 
             [Hier finden Sie unseren aktuellen Speiseplan](/speiseplan)
     - label: Wer wir sind
-      title: WER WIR SIND
+      title: Wer wir sind
       id: wer-wir-sind
       children:
         - label: Wofür wir stehen
-          title: WOFÜR WIR STEHEN
+          title: Wofür wir stehen
           id: wofuer-wir-stehen
           content: |-
             > „Ich halte es für möglich, eine neue Gesellschaft vorauszusehen,
@@ -103,11 +105,11 @@ toc:
 
             Seit 2004 bereichert unsere Schule als gebundene Ganztagesgrundschule mit dem Schwerpunkt Naturerfahrung das Bildungsangebot für Kinder aus Gilching und Umgebung. Seit dem Schuljahr 2017/18 bietet unser neu gebautes Schulhaus eine anregende, vorbereitete Lernumgebung für vier jahrgangsgemischte Klassen (1-4).
         - label: Pädagogik
-          title: MARIA MONTESSORI UND DIE MONTESSORI-PÄDAGOGIK
+          title: Maria Montessori und die Montessori-Pädagogik
           id: paedagogik
           content: Für einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir Sie auf die sehr informative Seite des [Montessorilandesverbands](https://www.montessoribayern.de/landesverband/paedagogik) verweisen.
         - label: Geschichte der Schule
-          title: DIE GESCHICHTE UNSERER SCHULE
+          title: Die Geschichte unserer Schule
           id: schulgeschichte
           content: |-
             Im Jahr 2004 hatten die großen Anstrengungen einer engagierten Elterninitiative Erfolg: Die Montessorischule Gilching startete mit ihrer ersten Klasse - damals noch in den Räumlichkeiten einer ehemaligen Bankfiliale.
@@ -118,9 +120,8 @@ toc:
 
             > Fotos und Einblicke in unsere Oase werden hier ergänzt.
         - label: 5 Säulen
-          title: DIE FÜNF SÄULEN UNSERER SCHULE
+          title: Die fünf Säulen unserer Schule
           id: fuenf-saeulen
-          image: /images/Freiarbeit_1.jpeg
           content: |-
             ![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
 
@@ -134,15 +135,15 @@ toc:
 
             > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
         - label: Das sind wir
-          title: DAS SIND WIR
+          title: Das sind wir
           id: das-sind-wir
           children:
             - label: Schulleitung und Team
-              title: SCHULLEITUNG UND TEAM
+              title: Schulleitung und Team
               id: schulleitung-und-team
               content: ""
             - label: Verwaltung
-              title: DIE VERWALTUNG
+              title: Die Verwaltung
               id: verwaltung
               content: |-
                 - Schulleitung
@@ -152,7 +153,7 @@ toc:
 
                 Weiterführende Informationen zu Team und Verwaltung werden auf dieser Seite ergänzt.
             - label: SchülerInnen
-              title: UNSERE SCHÜLERINNEN
+              title: Unsere Schülerinnen
               id: schuelerinnen
               content: |-
                 > „Wenn Kinder sich in der Zukunft bewähren sollen, so müssen wir ihnen Mut machen, ihnen helfen, dass sie Charakterstärke, Verantwortungsbereitschaft und praktische Fähigkeiten erwerben können.“
@@ -164,14 +165,14 @@ toc:
 
                 ![Foto-Platzhalter Schüler\*innen](/images/image-placeholder.png)
             - label: Vorstand
-              title: UNSER VORSTAND
+              title: Unser Vorstand
               id: vorstand
               content: |-
                 Unsere Schule wurde 2004 dank einer Elterninitiative als gemeinnütziger Verein gegründet. Das Vorstandsteam des Fördervereins unterstützt die Schule bis heute als eine der fünf tragenden Säulen.
 
                 Die Vorstandsmitglieder werden im Zwei-Jahres-Rhythmus im Rahmen der Mitgliederversammlung gewählt. Das Protokoll kann im Schulbüro zu den Bürozeiten eingesehen werden.
             - label: Eltern
-              title: DIE ELTERN
+              title: Die Eltern
               id: eltern
               content: |-
                 Die Montessorischule Gilching wurde vor über 20 Jahren durch eine Elterninitiative ins Leben gerufen. Dieses Engagement prägt das Verständnis von Elternarbeit bis heute. Jede Familie ist verpflichtet, im Schuljahr 40 Stunden Arbeitszeit in die Gemeinschaft einzubringen.
@@ -185,11 +186,11 @@ toc:
 
                 ![Foto-Platzhalter Elternengagement](/images/image-placeholder.png)
     - label: Komm zu uns
-      title: KOMM ZU UNS
+      title: Komm zu uns
       id: komm-zu-uns
       children:
         - label: Aufnahme erste Klasse
-          title: AUFNAHME IN UNSERE 1. KLASSE
+          title: Aufnahme in unsere 1. Klasse
           id: aufnahme-erste-klasse
           content: |-
             Am Tag der offenen Tür öffnen wir unsere Pforten und geben Ihnen die Möglichkeit, unser pädagogisches Team und das Schulhaus kennenzulernen.
@@ -210,7 +211,7 @@ toc:
             - PDF mit Terminen (Link folgt)
             - Plakat zum Aufnahmeverfahren (Link folgt)
         - label: Quereinstieg
-          title: QUEREINSTIEG
+          title: Quereinstieg
           id: quereinstieg
           content: |-
             Leider haben wir nur vereinzelt Kapazitäten für Quereinsteiger\*innen. Sie können uns jederzeit - auch während des laufenden Schuljahres - unverbindlich eine Bewerbung für einen gegebenenfalls freiwerdenden Platz zukommen lassen. Sollte sich eine Möglichkeit ergeben, setzen wir uns mit Ihnen in Verbindung.
@@ -222,14 +223,14 @@ toc:
             - [Checkliste Quereinstieg (PDF)](#) _(Platzhalter)_
             - [Kostenübersicht Quereinstieg (PDF)](#) _(Platzhalter)_
         - label: Aufnahme ins Team
-          title: AUFNAHME INS TEAM
+          title: Aufnahme ins Team
           id: aufnahme-ins-team
           content: |-
             Wir freuen uns über Initiativbewerbungen an `schulleitung@montessorischule-gilching.de`.
 
             Wir sind außerdem Referendariats-Schule.
         - label: Schulgeld
-          title: SCHULGELD
+          title: Schulgeld
           id: schulgeld
           content: |-
             Der Träger unserer Grundschule ist der Montessori Förderverein Gilching e.V. Staatlich anerkannte Montessorischulen in Bayern erhalten nur einen geringen Förderbetrag. Deshalb sind wir auf Schulgeldzahlungen angewiesen.

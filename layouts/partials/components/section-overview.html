@@ -1,4 +1,5 @@
 {{ $ctx := .Context }}
+{{ $isEditorialLayout := eq $ctx.Params.content_layout "editorial" }}
 {{ partial "components/page-intro" (dict "Context" $ctx "Title" .Title "SliderImages" .SliderImages) }}
 
 {{ $sectionCards := $ctx.Params.section_cards }}
@@ -75,10 +76,10 @@
     {{ end }}
 
 
-    <article class="card card-body schule-content">
+    <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}card card-body schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
       {{ if $hasTocContent }}
         {{ range $tocEntries }}
-          {{ partial "components/section-content" (dict "Entry" . "Level" 0) }}
+          {{ partial "components/section-content" (dict "Entry" . "Level" 0 "Editorial" $isEditorialLayout "SectionCards" $sectionCards.items) }}
         {{ end }}
       {{ else }}
         {{ $ctx.Content }}
@@ -87,7 +88,7 @@
   </section>
 {{ else }}
   <section class="container ml-3 mb-12">
-    <article class="card card-body schule-content">
+    <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}card card-body schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
       {{ $ctx.Content }}
     </article>
   </section>

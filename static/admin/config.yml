@@ -329,6 +329,7 @@ collections:
         name: "schule"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Inhaltslayout", name: "content_layout", widget: "select", required: false, default: "editorial", options: [{ label: "Standard", value: "standard" }, { label: "Redaktionell", value: "editorial" }], comment: "Ändert nur die Anordnung der vorhandenen Inhalte, nicht den Text." }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
           - label: "Slider"
@@ -357,7 +358,8 @@ collections:
                 fields:
                   - { label: "Titel", name: "title", widget: "string" }
                   - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild", name: "image", widget: "image" }
+                  - { label: "Bild für den Bereichslink", name: "image", widget: "image", comment: "Dieses Bild erscheint im Bereichslink." }
+                  - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
                   - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
           - label: "Seitenübersicht (ein TOC)"
             name: "toc"
@@ -373,7 +375,6 @@ collections:
                 fields:
                   - { label: "Label", name: "label", widget: "string" }
                   - { label: "Überschrift", name: "title", widget: "string", required: false }
-                  - { label: "Bild", name: "image", widget: "image", required: false }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }
                   - label: "Unterpunkte"
                     name: "children"
@@ -382,7 +383,6 @@ collections:
                     fields:
                       - { label: "Label", name: "label", widget: "string" }
                       - { label: "Überschrift", name: "title", widget: "string", required: false }
-                      - { label: "Bild", name: "image", widget: "image", required: false }
                       - { label: "Inhalt", name: "content", widget: "markdown", required: false }
                       - label: "Unterpunkte"
                         name: "children"
@@ -391,7 +391,6 @@ collections:
                         fields:
                           - { label: "Label", name: "label", widget: "string" }
                           - { label: "Überschrift", name: "title", widget: "string", required: false }
-                          - { label: "Bild", name: "image", widget: "image", required: false }
                           - { label: "Inhalt", name: "content", widget: "markdown", required: false }
       - file: "content/de/elternengagement/_index.md"
         label: "Elternengagement"

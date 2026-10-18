@@ -1,8 +1,12 @@
 {{ $imagePath := .Image }}
 {{ $alt := .Alt }}
+{{ $class := "section-image mb-5 overflow-hidden rounded-lg" }}
+{{ with .Class }}
+  {{ $class = . }}
+{{ end }}
 {{ with $imagePath }}
   {{ with resources.Get . }}
-    <figure class="section-image mb-5 overflow-hidden rounded-lg">
+    <figure class="{{ $class }}">
       <img class="block h-auto w-full" src="{{ .RelPermalink }}" alt="{{ $alt }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" />
     </figure>
   {{ end }}
