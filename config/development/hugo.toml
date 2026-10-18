@@ -1,0 +1,6 @@
+# Development only: Hugo's Node permission model rejects unrelated local
+# symlinks under the project root before PostCSS can run. Disable that model
+# here; Tailwind is limited to the explicit source list in tailwind.config.js.
+# Production retains the Node permission model from hugo.toml.
+[security.node.permissions]
+  disable = true
