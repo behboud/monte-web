@@ -136,6 +136,25 @@
     @apply text-8xl font-calligraphy font-normal text-monte;
   }
 
+  .home-banner-heading {
+    @apply flex items-center justify-center;
+    gap: 0.2em;
+    font-size: clamp(2.5rem, 12vw, 6rem);
+  }
+
+  .home-banner-logo {
+    block-size: 1em;
+    flex: none;
+    inline-size: auto;
+    object-fit: contain;
+  }
+
+  .home-banner-title {
+    @apply font-calligraphy font-normal leading-none text-monte;
+    font-size: inherit;
+    margin-block: 0;
+  }
+
   .schule-layout {
     scroll-margin-top: 5rem;
   }

@@ -61,29 +61,22 @@ test.describe("style regressions", () => {
     await expect(navigation.locator("a.fa-utensils").locator("..")).toHaveClass(/ml-auto/);
   });
 
-  test("navigation keeps the anniversary logo aligned at the far right", async ({ page }) => {
+  test("navigation no longer carries the anniversary logo", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
     const navigation = page.locator("#page > .pl-3 > .container").first();
-    const logo = navigation.locator('img[alt="20 Jahre Montessori Schule Gilching"]');
-    const login = navigation.locator("a.fa-user-lock");
-    await expect(logo).toBeVisible();
-    await expect(logo).toHaveAttribute("src", /logo_20_jahre_140mm_400dpi/);
-
-    const navigationBox = await navigation.boundingBox();
-    const logoBox = await logo.boundingBox();
-    const loginBox = await login.boundingBox();
-    expect(navigationBox?.height).toBeLessThan(100);
-    expect(Math.abs((logoBox?.height ?? 0) - (navigationBox?.height ?? 0) * 0.95)).toBeLessThanOrEqual(1);
-    expect(Math.abs((logoBox?.y ?? 0) - ((navigationBox?.y ?? 0) + ((navigationBox?.height ?? 0) - (logoBox?.height ?? 0)) / 2))).toBeLessThanOrEqual(1);
-    expect((logoBox?.x ?? 0) + (logoBox?.width ?? 0)).toBeGreaterThan((loginBox?.x ?? 0) + (loginBox?.width ?? 0));
+    await expect(navigation.locator('img[alt="20 Jahre Montessori Schule Gilching"]')).toHaveCount(0);
   });
 
-  test("homepage banner uses one self-hosted Playfair Display heading", async ({ page }) => {
+  test("homepage pairs its title with a responsive anniversary logo", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
-    const title = page.locator(".font-calligraphy");
+    const title = page.getByRole("heading", { name: "Willkommen", exact: true });
+    const logo = page.locator(".home-banner-logo");
     await expect(title).toBeVisible();
+    await expect(logo).toBeVisible();
+    await expect(logo).toHaveAttribute("alt", "20 Jahre Montessori Schule Gilching");
+    await expect(logo).toHaveAttribute("src", /logo_20_jahre_140mm_400dpi/);
     await expect(page.getByText("Willkommen", { exact: true })).toHaveCount(1);
     await expect(page.locator('link[href*="fonts.googleapis.com"], link[href*="fonts.gstatic.com"]')).toHaveCount(0);
 
@@ -92,6 +85,43 @@ test.describe("style regressions", () => {
 
     const fontResponse = await page.request.get(new URL("/fonts/PlayfairDisplay-Regular.woff2", page.url()).href);
     expect(fontResponse.status()).toBe(200);
+
+    const sizes: number[] = [];
+    for (const width of [320, 390, 1366]) {
+      await page.setViewportSize({ width, height: 900 });
+      const measurements = await page.evaluate(() => {
+        const title = document.querySelector(".home-banner-title");
+        const logo = document.querySelector(".home-banner-logo");
+        const heading = document.querySelector(".home-banner-heading");
+        if (!title || !logo || !heading) throw new Error("Homepage title and logo should render");
+
+        const titleBox = title.getBoundingClientRect();
+        const logoBox = logo.getBoundingClientRect();
+        const headingBox = heading.getBoundingClientRect();
+        return {
+          viewportWidth: window.innerWidth,
+          titleFontSize: Number.parseFloat(getComputedStyle(title).fontSize),
+          titleLeft: titleBox.left,
+          titleCenter: titleBox.top + titleBox.height / 2,
+          titleRight: titleBox.right,
+          logoCenter: logoBox.top + logoBox.height / 2,
+          logoHeight: logoBox.height,
+          logoRight: logoBox.right,
+          headingRight: headingBox.right,
+        };
+      });
+
+      expect(Math.abs(measurements.logoHeight - measurements.titleFontSize)).toBeLessThanOrEqual(1);
+      expect(Math.abs(measurements.logoCenter - measurements.titleCenter)).toBeLessThanOrEqual(1);
+      expect(measurements.logoRight).toBeLessThanOrEqual(measurements.titleLeft + 1);
+      expect(measurements.titleRight).toBeLessThanOrEqual(measurements.headingRight + 1);
+      expect(measurements.titleRight).toBeLessThanOrEqual(measurements.viewportWidth);
+      expect(measurements.headingRight).toBeLessThanOrEqual(width + 1);
+      sizes.push(measurements.titleFontSize);
+    }
+
+    expect(sizes[0]).toBeLessThan(sizes[1]);
+    expect(sizes[1]).toBeLessThan(sizes[2]);
   });
 
   test("homepage shows the slider before the news stories without pagination dots", async ({ page }) => {

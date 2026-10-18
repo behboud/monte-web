@@ -1,6 +1,3 @@
-{{ $anniversaryLogo := resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
-
-
 <div class="sticky-navigation sticky top-0 z-50 pl-3 pr-3" data-sticky-navigation>
   <div class="container bg-body text-monte">
     <!-- top navbar -->
@@ -58,11 +55,6 @@
           </li>
         {{ end }}
       </div>
-      <li class="mx-3 flex h-full shrink-0 items-center">
-        <a class="flex h-full items-center" href="{{ site.Home.RelPermalink }}" aria-label="20 Jahre Montessori Schule Gilching">
-          <img class="block h-[95%] w-auto object-contain" src="{{ $anniversaryLogo.RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ $anniversaryLogo.Width }}" height="{{ $anniversaryLogo.Height }}" />
-        </a>
-      </li>
     </ul>
   </div>
 </div>

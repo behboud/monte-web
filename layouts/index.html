@@ -1,11 +1,20 @@
 {{ define "main" }}
+  {{ $anniversaryLogo := resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
+
   <!-- Banner -->
   {{ with .Params.banner }}
     <div class="ml-3">
       <div class="container pt-8">
         <div class="justify-center text-center">
-          <div class="text-8xl font-calligraphy text-monte">
-            {{ .title }}
+          <div class="home-banner-heading">
+            <img
+              class="home-banner-logo"
+              src="{{ $anniversaryLogo.RelPermalink }}"
+              alt="20 Jahre Montessori Schule Gilching"
+              width="{{ $anniversaryLogo.Width }}"
+              height="{{ $anniversaryLogo.Height }}"
+            />
+            <h1 class="home-banner-title">{{ .title }}</h1>
           </div>
           {{ if .content }}
             <p class="mb-2">
