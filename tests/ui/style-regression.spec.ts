@@ -319,11 +319,12 @@ test.describe("style regressions", () => {
     await expect(page.locator("[data-mobile-toc]")).toHaveCount(0);
   });
 
-  test("footer uses the fence image instead of the old logo", async ({ page }) => {
+  test("footer places its links where the copyright was and omits the copyright", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
     const footer = page.locator("footer");
     await expect(footer).toHaveCSS("background-color", "rgb(255, 255, 255)");
+    await expect(footer).not.toContainText(/© Montessori Schule Gilching/);
 
     const footerSections = footer.locator(":scope > .container > .items-center > div");
     await expect(footerSections).toHaveCount(1);
@@ -335,9 +336,11 @@ test.describe("style regressions", () => {
     const footerImage = footerImageSection.locator("img");
     await expect(footerImage).toHaveAttribute("src", /zaun/);
     await expect(footerImage).toHaveAttribute("alt", "Bunter Zaun der Montessori Schule Gilching");
-    const firstFooterLink = footerImageSection.locator("div.absolute.top-0 li").first();
+    const footerLinks = footerImageSection.locator("div.absolute.bottom-0");
+    const firstFooterLink = footerLinks.locator("li").first();
     await expect(firstFooterLink).toContainText("Impressum");
-    await expect(footerImageSection.locator("div.absolute.bottom-0 p")).toHaveText(/© Montessori Schule Gilching/);
+    await expect(footerImageSection.locator("div.absolute.top-0")).toHaveCount(0);
+    await expect(footerLinks.locator("p")).toHaveCount(0);
 
     const firstLinkBox = await firstFooterLink.boundingBox();
     const facebookBox = await facebookLink.locator("..").boundingBox();
@@ -349,14 +352,11 @@ test.describe("style regressions", () => {
 
     if ((page.viewportSize()?.width ?? 0) < 1280) {
       const imageBox = await footerImage.boundingBox();
-      const linksBox = await footerImageSection.locator("div.absolute.top-0").boundingBox();
-      const copyrightBox = await footerImageSection.locator("div.absolute.bottom-0").boundingBox();
+      const linksBox = await footerLinks.boundingBox();
 
       expect(imageBox).not.toBeNull();
       expect(linksBox).not.toBeNull();
-      expect(copyrightBox).not.toBeNull();
-      expect((linksBox?.y ?? 0) + (linksBox?.height ?? 0)).toBeLessThanOrEqual(imageBox?.y ?? 0);
-      expect(copyrightBox?.y).toBeGreaterThanOrEqual((imageBox?.y ?? 0) + (imageBox?.height ?? 0));
+      expect(linksBox?.y).toBeGreaterThanOrEqual((imageBox?.y ?? 0) + (imageBox?.height ?? 0));
     }
   });
 
