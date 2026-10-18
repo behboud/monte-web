@@ -171,19 +171,21 @@ test.describe("style regressions", () => {
     expect(sizes[2]).toBe(80);
   });
 
-  test("homepage shows the slider before the news stories without pagination dots", async ({ page }) => {
+  test("homepage shows the slider before news cards without a redundant heading or pagination dots", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
     const slider = page.locator(".hero-slider").first();
-    const newsHeading = page.getByRole("heading", { name: "AKTUELLES", exact: true });
+    const newsGrid = page.locator("main .flex.flex-row.flex-wrap").first();
     await expect(slider).toBeVisible();
-    await expect(newsHeading).toBeVisible();
+    await expect(newsGrid).toBeVisible();
+    await expect(newsGrid.locator("h3.card-title").first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: "AKTUELLES", exact: true })).toHaveCount(0);
     await expect(page.locator(".hero-slider-pagination")).toHaveCount(0);
     await expect(page.locator(".swiper-pagination-bullet")).toHaveCount(0);
 
     const sliderBox = await slider.boundingBox();
-    const newsHeadingBox = await newsHeading.boundingBox();
-    expect(sliderBox?.y).toBeLessThan(newsHeadingBox?.y ?? Number.POSITIVE_INFINITY);
+    const newsGridBox = await newsGrid.boundingBox();
+    expect(sliderBox?.y).toBeLessThan(newsGridBox?.y ?? Number.POSITIVE_INFINITY);
   });
 
   test("homepage matches the title-to-slider spacing used on section pages", async ({ page }) => {
@@ -209,6 +211,32 @@ test.describe("style regressions", () => {
 
     const homeGap = homeSliderBox.y - (homeTitleBox.y + homeTitleBox.height);
     const sectionGap = sectionSliderBox.y - (sectionTitleBox.y + sectionTitleBox.height);
+    expect(Math.abs(homeGap - sectionGap)).toBeLessThanOrEqual(1);
+  });
+
+  test("homepage slider-to-content spacing matches section pages", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const homeSlider = page.locator(".hero-slider").first();
+    const newsGrid = page.locator("main .flex.flex-row.flex-wrap").first();
+    const homeSliderBox = await homeSlider.boundingBox();
+    const newsGridBox = await newsGrid.boundingBox();
+    expect(homeSliderBox).not.toBeNull();
+    expect(newsGridBox).not.toBeNull();
+    if (!homeSliderBox || !newsGridBox) throw new Error("Homepage slider and news grid should have layout boxes.");
+
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const sectionSlider = page.locator(".schule-slider").first();
+    const sectionCards = page.locator(".section-cards").first();
+    const sectionSliderBox = await sectionSlider.boundingBox();
+    const sectionCardsBox = await sectionCards.boundingBox();
+    expect(sectionSliderBox).not.toBeNull();
+    expect(sectionCardsBox).not.toBeNull();
+    if (!sectionSliderBox || !sectionCardsBox) throw new Error("Section slider and following content should have layout boxes.");
+
+    const homeGap = newsGridBox.y - (homeSliderBox.y + homeSliderBox.height);
+    const sectionGap = sectionCardsBox.y - (sectionSliderBox.y + sectionSliderBox.height);
     expect(Math.abs(homeGap - sectionGap)).toBeLessThanOrEqual(1);
   });
 
