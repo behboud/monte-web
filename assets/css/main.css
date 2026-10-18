@@ -65,7 +65,7 @@
   p {
     @apply leading-normal;
   }
-  main :where(p, ul, ol, blockquote) {
+  main :where(p, ul, ol, blockquote):not(:has(img, picture, video, iframe)) {
     max-inline-size: var(--reading-measure);
     margin-inline: auto;
   }

@@ -226,6 +226,28 @@ test.describe("style regressions", () => {
     expect(mobileMeasurement.documentWidth).toBeLessThanOrEqual(390);
   });
 
+  test("inline Markdown section text is constrained to the reading measure", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const paragraph = page.locator(".schule-content p").filter({ hasText: "Für einen kompakten Überblick zu Maria Montessori" });
+    await expect(paragraph).toHaveCount(1);
+
+    const measurement = await paragraph.evaluate((element) => {
+      const main = document.querySelector("main");
+      if (!main) throw new Error("Page main should exist.");
+
+      return {
+        maxInlineSize: getComputedStyle(element).maxInlineSize,
+        paragraphWidth: element.getBoundingClientRect().width,
+        mainWidth: main.getBoundingClientRect().width,
+      };
+    });
+
+    expect(measurement.maxInlineSize).not.toBe("none");
+    expect(measurement.paragraphWidth).toBeLessThan(measurement.mainWidth * 0.6);
+  });
+
   test("homepage shows the slider before news cards without a redundant heading or pagination dots", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
