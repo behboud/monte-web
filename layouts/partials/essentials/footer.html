@@ -11,9 +11,9 @@
         <div class="footer-links px-2 text-center text-monte xl:px-4 xl:text-sm">
           {{ $contactPage := site.GetPage "/pages/kontakt" }}
           {{ $socialLinks := cond (and $contactPage $contactPage.Params.social_links) $contactPage.Params.social_links (slice) }}
-          <ul class="flex flex-wrap items-center justify-center">
+          <ul class="flex flex-wrap items-center justify-center gap-x-1.5 md:gap-x-0">
             {{ range site.Menus.footer }}
-              <li class="mx-0.5 inline-block md:mx-2 xl:m-3">
+              <li class="mx-0 inline-block md:mx-2 xl:m-3">
                 <a
                   {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
                   href="{{ if findRE `^#` .URL }}

@@ -350,25 +350,52 @@ test.describe("style regressions", () => {
     expect(firstLinkBox?.y).toBeLessThan((facebookBox?.y ?? 0) + (facebookBox?.height ?? 0));
     await expect(footer).toHaveCSS("padding-bottom", "32px");
 
-    for (const width of [320, 390, 768, 1279, 1280, 1366]) {
+    for (const width of [320, 390, 639, 640, 767, 768, 1279, 1280, 1366]) {
       await page.setViewportSize({ width, height: 900 });
 
-      const linkCenterRatios = await footerImageSection.evaluate((section) => {
+      const footerLayout = await footerImageSection.evaluate((section) => {
         const image = section.querySelector("img");
         const links = section.querySelector(".footer-links");
         if (!image || !links) throw new Error("Footer image or links are missing");
 
         const imageBox = image.getBoundingClientRect();
-        return [...links.querySelectorAll("li")].map((link) => {
+        const linksBox = links.getBoundingClientRect();
+        const linkItems = [...links.querySelectorAll("li")];
+        const firstLink = linkItems[0];
+        const lastLink = linkItems[linkItems.length - 1];
+        if (!firstLink || !lastLink) throw new Error("Footer links are missing");
+
+        const linkCenterRatios = linkItems.map((link) => {
           const linkBox = link.getBoundingClientRect();
           return (linkBox.top + linkBox.height / 2 - imageBox.top) / imageBox.height;
         });
+        const style = getComputedStyle(links);
+        const paddingLeft = Number.parseFloat(style.paddingLeft);
+        const paddingRight = Number.parseFloat(style.paddingRight);
+        const contentLeft = linksBox.left + paddingLeft;
+        const contentWidth = linksBox.width - paddingLeft - paddingRight;
+        const firstLinkBox = firstLink.getBoundingClientRect();
+        const lastLinkBox = lastLink.getBoundingClientRect();
+        const horizontalGaps = linkItems.slice(1).map((link, index) => {
+          return link.getBoundingClientRect().left - linkItems[index].getBoundingClientRect().right;
+        });
+        const horizontalCenter = (firstLinkBox.left + lastLinkBox.right) / 2 - contentLeft;
+
+        return { linkCenterRatios, horizontalGaps, horizontalCenterRatio: horizontalCenter / contentWidth };
       });
 
-      expect(linkCenterRatios).toHaveLength(6);
-      for (const ratio of linkCenterRatios) {
+      expect(footerLayout.linkCenterRatios).toHaveLength(6);
+      for (const ratio of footerLayout.linkCenterRatios) {
         expect(ratio).toBeGreaterThanOrEqual(0.85);
         expect(ratio).toBeLessThanOrEqual(1.01);
+      }
+      if (width < 768) {
+        expect(footerLayout.horizontalGaps).toHaveLength(5);
+        for (const gap of footerLayout.horizontalGaps) {
+          expect(gap).toBeGreaterThanOrEqual(5.5);
+          expect(gap).toBeLessThanOrEqual(6.5);
+        }
+        expect(footerLayout.horizontalCenterRatio).toBeCloseTo(0.5, 2);
       }
     }
   });
