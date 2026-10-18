@@ -336,7 +336,7 @@ test.describe("style regressions", () => {
     const footerImage = footerImageSection.locator("img");
     await expect(footerImage).toHaveAttribute("src", /zaun/);
     await expect(footerImage).toHaveAttribute("alt", "Bunter Zaun der Montessori Schule Gilching");
-    const footerLinks = footerImageSection.locator("div.absolute.bottom-0");
+    const footerLinks = footerImageSection.locator(".footer-links");
     const firstFooterLink = footerLinks.locator("li").first();
     await expect(firstFooterLink).toContainText("Impressum");
     await expect(footerImageSection.locator("div.absolute.top-0")).toHaveCount(0);
@@ -350,13 +350,26 @@ test.describe("style regressions", () => {
     expect(firstLinkBox?.y).toBeLessThan((facebookBox?.y ?? 0) + (facebookBox?.height ?? 0));
     await expect(footer).toHaveCSS("padding-bottom", "32px");
 
-    if ((page.viewportSize()?.width ?? 0) < 1280) {
-      const imageBox = await footerImage.boundingBox();
-      const linksBox = await footerLinks.boundingBox();
+    for (const width of [320, 390, 768, 1279, 1280, 1366]) {
+      await page.setViewportSize({ width, height: 900 });
 
-      expect(imageBox).not.toBeNull();
-      expect(linksBox).not.toBeNull();
-      expect(linksBox?.y).toBeGreaterThanOrEqual((imageBox?.y ?? 0) + (imageBox?.height ?? 0));
+      const linkCenterRatios = await footerImageSection.evaluate((section) => {
+        const image = section.querySelector("img");
+        const links = section.querySelector(".footer-links");
+        if (!image || !links) throw new Error("Footer image or links are missing");
+
+        const imageBox = image.getBoundingClientRect();
+        return [...links.querySelectorAll("li")].map((link) => {
+          const linkBox = link.getBoundingClientRect();
+          return (linkBox.top + linkBox.height / 2 - imageBox.top) / imageBox.height;
+        });
+      });
+
+      expect(linkCenterRatios).toHaveLength(6);
+      for (const ratio of linkCenterRatios) {
+        expect(ratio).toBeGreaterThanOrEqual(0.85);
+        expect(ratio).toBeLessThanOrEqual(1.01);
+      }
     }
   });
 
