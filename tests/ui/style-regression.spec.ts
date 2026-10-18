@@ -149,6 +149,26 @@ test.describe("style regressions", () => {
 
     expect(sizes[0]).toBeLessThan(sizes[1]);
     expect(sizes[1]).toBeLessThan(sizes[2]);
+    expect(sizes[2]).toBe(80);
+  });
+
+  test("page titles use a reduced responsive size", async ({ page }) => {
+    await page.goto("/elternengagement/", { waitUntil: "networkidle" });
+
+    const title = page.locator(".page-title-calligraphy");
+    await expect(title).toBeVisible();
+    const sizes: number[] = [];
+
+    for (const width of [320, 390, 1366]) {
+      await page.setViewportSize({ width, height: 900 });
+      const fontSize = await title.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+      sizes.push(fontSize);
+    }
+
+    expect(sizes[0]).toBe(32);
+    expect(sizes[0]).toBeLessThan(sizes[1]);
+    expect(sizes[1]).toBeLessThan(sizes[2]);
+    expect(sizes[2]).toBe(80);
   });
 
   test("homepage shows the slider before the news stories without pagination dots", async ({ page }) => {

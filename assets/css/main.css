@@ -132,14 +132,18 @@
     @apply text-7xl font-bold leading-none md:text-9xl;
   }
 
+  .page-title-calligraphy,
+  .home-banner-heading {
+    font-size: clamp(2rem, 9vw, 5rem);
+  }
+
   .page-title-calligraphy {
-    @apply text-8xl font-calligraphy font-normal text-monte;
+    @apply font-calligraphy font-normal text-monte;
   }
 
   .home-banner-heading {
     @apply flex items-center justify-center;
     gap: 0.2em;
-    font-size: clamp(2.5rem, 12vw, 6rem);
   }
 
   .home-banner-logo {
