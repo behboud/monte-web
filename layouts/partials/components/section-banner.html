@@ -2,7 +2,7 @@
 {{ $sectionID := .SectionID }}
 {{ with .Image }}
   {{ with resources.Get . }}
-    <figure class="section-banner relative -ml-[50vw] mb-10 w-screen" data-section-banner="{{ $sectionID }}">
+    <figure class="section-banner relative -ml-[50vw] w-screen" data-section-banner="{{ $sectionID }}">
       <img class="section-banner-image block h-[220px] w-full object-cover object-center sm:h-[280px] md:h-[360px] lg:h-[420px]" src="{{ .RelPermalink }}" alt="{{ $alt }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" />
     </figure>
   {{ end }}

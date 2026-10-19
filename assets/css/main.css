@@ -191,6 +191,11 @@
     scroll-margin-top: 6rem;
   }
 
+  .schule-content h4[data-section-heading] {
+    margin-block: 1.25rem 1rem;
+    scroll-margin-top: 6rem;
+  }
+
   .schule-content :where(h2, h3, h4) {
     max-inline-size: var(--reading-measure);
     margin-inline: auto;
@@ -204,10 +209,12 @@
 
   .section-banner {
     inset-inline-start: calc(50% - 0.75rem);
+    margin-block: 2.5rem;
   }
 
   .reading-prose .section-banner {
     max-inline-size: none;
+    margin-block: 2.5rem;
   }
 
   .reading-prose {
@@ -281,6 +288,10 @@
     max-inline-size: 100%;
     block-size: auto;
     margin-block: 0;
+  }
+
+  .reading-prose :where(img:not(.section-banner-image)) {
+    margin-block: 1.5em;
   }
 
   .reading-prose iframe {

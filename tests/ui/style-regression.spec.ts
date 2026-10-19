@@ -464,6 +464,35 @@ test.describe("style regressions", () => {
     }
   });
 
+  test("section headings have room before sibling headings and following text", async ({ page }) => {
+    for (const width of [1366, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/schule/", { waitUntil: "networkidle" });
+
+      const spacing = await page.evaluate(() => {
+        const teamHeading = document.getElementById("schulleitung-und-team");
+        const administrationHeading = document.getElementById("verwaltung");
+        const administrationContent = administrationHeading?.nextElementSibling;
+        const pupilsHeading = document.getElementById("schuelerinnen");
+        const pupilsContent = pupilsHeading?.nextElementSibling;
+        if (!teamHeading || !administrationHeading || !administrationContent || !pupilsHeading || !pupilsContent) {
+          throw new Error("The expected subsection headings and prose should exist.");
+        }
+
+        const gap = (first: Element, next: Element) => next.getBoundingClientRect().top - first.getBoundingClientRect().bottom;
+        return {
+          betweenHeadings: gap(teamHeading, administrationHeading),
+          beforeAdministrationText: gap(administrationHeading, administrationContent),
+          beforePupilsText: gap(pupilsHeading, pupilsContent),
+        };
+      });
+
+      expect(spacing.betweenHeadings).toBeGreaterThanOrEqual(20);
+      expect(spacing.beforeAdministrationText).toBeGreaterThanOrEqual(16);
+      expect(spacing.beforePupilsText).toBeGreaterThanOrEqual(16);
+    }
+  });
+
   test("area-link images can be shown as full-width, centered section banners", async ({ page }) => {
     await page.goto("/schule/", { waitUntil: "networkidle" });
     await expect(page.locator(".section-banner")).toHaveCount(2);
@@ -493,13 +522,16 @@ test.describe("style regressions", () => {
           const banner = document.querySelector(`[data-section-banner="${sectionID}"]`);
           const image = banner?.querySelector("img");
           const heading = document.getElementById(sectionID);
-          if (!banner || !image || !heading) throw new Error("The banner or its section heading is missing.");
+          const previousItem = banner?.previousElementSibling;
+          if (!banner || !image || !heading || !previousItem) throw new Error("The banner or its surrounding content is missing.");
           return {
             viewportWidth: document.documentElement.clientWidth,
             bannerWidth: banner.getBoundingClientRect().width,
             bannerHeight: banner.getBoundingClientRect().height,
             imageWidth: image.getBoundingClientRect().width,
             imageHeight: image.getBoundingClientRect().height,
+            gapBefore: banner.getBoundingClientRect().top - previousItem.getBoundingClientRect().bottom,
+            gapAfter: heading.getBoundingClientRect().top - banner.getBoundingClientRect().bottom,
             bannerTop: banner.getBoundingClientRect().top,
             headingTop: heading.getBoundingClientRect().top,
           };
@@ -509,6 +541,8 @@ test.describe("style regressions", () => {
         expect(bannerLayout.imageWidth).toBe(bannerLayout.viewportWidth);
         expect(bannerLayout.imageHeight).toBe(sliderBox.height);
         expect(bannerLayout.bannerHeight).toBe(sliderBox.height);
+        expect(bannerLayout.gapBefore).toBeGreaterThanOrEqual(39);
+        expect(Math.abs(bannerLayout.gapBefore - bannerLayout.gapAfter)).toBeLessThanOrEqual(1);
         expect(bannerLayout.bannerTop).toBeLessThan(bannerLayout.headingTop);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
@@ -543,6 +577,31 @@ test.describe("style regressions", () => {
         expect(image.imageRight).toBeLessThanOrEqual(image.textRight + 1);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    }
+  });
+
+  test("prose images leave a full line of space around adjacent content", async ({ page }) => {
+    for (const width of [1366, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/schule/", { waitUntil: "networkidle" });
+
+      const spacing = await page.locator('.reading-prose img[alt="Foto-Platzhalter Mittagsverpflegung"]').evaluate((image) => {
+        const paragraph = image.closest("p");
+        const previousItem = paragraph?.previousElementSibling;
+        const nextItem = paragraph?.nextElementSibling;
+        if (!paragraph || !previousItem || !nextItem) throw new Error("The content image should have prose before and after it.");
+
+        const imageBox = image.getBoundingClientRect();
+        const fontSize = Number.parseFloat(getComputedStyle(paragraph).fontSize);
+        return {
+          fontSize,
+          before: imageBox.top - previousItem.getBoundingClientRect().bottom,
+          after: nextItem.getBoundingClientRect().top - imageBox.bottom,
+        };
+      });
+
+      expect(spacing.before).toBeGreaterThanOrEqual(spacing.fontSize * 1.4);
+      expect(spacing.after).toBeGreaterThanOrEqual(spacing.fontSize * 1.4);
     }
   });
 
