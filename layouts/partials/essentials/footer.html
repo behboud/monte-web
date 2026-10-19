@@ -1,4 +1,5 @@
 {{ $footerImage := resources.Get "images/zaun.png" }}
+{{ $currentPage := . }}
 
 
 <footer class="bg-body pl-3 pr-3 pb-8">
@@ -9,28 +10,23 @@
           <img class="img w-full" src="{{ $footerImage.RelPermalink }}" alt="Bunter Zaun der Montessori Schule Gilching" width="{{ $footerImage.Width }}" height="{{ $footerImage.Height }}" />
         </a>
         <div class="footer-links px-0 text-center text-monte md:px-2 xl:px-4 xl:text-sm">
-          {{ $contactPage := site.GetPage "/pages/kontakt" }}
-          {{ $socialLinks := cond (and $contactPage $contactPage.Params.social_links) $contactPage.Params.social_links (slice) }}
+          {{ $menuItems := partial "components/menu-items.html" (dict "MenuID" "footer" "Page" $currentPage) }}
           <ul class="flex flex-wrap items-center justify-center gap-x-1.5 md:gap-x-0">
-            {{ range site.Menus.footer }}
-              <li class="mx-0 inline-block md:mx-2 xl:m-3">
+            {{ range $menuItems }}
+              <li class="mx-0 {{ if .icon }}inline-flex items-center leading-none md:text-base xl:text-xl{{ else }}inline-block{{ end }} md:mx-2 xl:mx-3">
                 <a
-                  {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
-                  href="{{ if findRE `^#` .URL }}
-                    {{ if not $.IsHome }}
-                      {{ site.Home.RelPermalink }}
-                    {{ end }}{{ .URL }}
+                  {{ if .icon }}aria-label="{{ .name }}"{{ end }}
+                  {{ if .open_in_new_tab }}
+                    target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"
+                  {{ else if .external }}
+                    target="_self" rel="noopener"
+                  {{ end }}
+                  href="{{ .href }}">
+                  {{ if .icon }}
+                    <i class="{{ .icon }}"></i>
                   {{ else }}
-                    {{ .URL | relLangURL }}
-                  {{ end }}">
-                  {{ .Name }}
-                </a>
-              </li>
-            {{ end }}
-            {{ range $socialLinks }}
-              <li class="mx-0 inline-flex items-center leading-none md:mx-2 md:text-base xl:mx-3 xl:text-xl">
-                <a target="_blank" aria-label="{{ .name }}" rel="nofollow noopener" href="{{ .link | safeURL }}">
-                  <i class="{{ .icon }}"></i>
+                    {{ .name }}
+                  {{ end }}
                 </a>
               </li>
             {{ end }}

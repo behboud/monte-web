@@ -8,39 +8,15 @@
         </li>
       </div>
       <div class="flex min-w-0 flex-1 flex-row">
-        {{ $currentPage := . }}
-        {{ range site.Menus.top }}
-          {{ $menuURL := .URL | absLangURL }}
-          {{ $pageURL:= $currentPage.Permalink | absLangURL }}
-          {{ $active := eq $menuURL $pageURL }}
+        {{ $menuItems := partial "components/menu-items.html" (dict "MenuID" "top" "Page" .) }}
+        {{ range $menuItems }}
           {{ $itemClass := "m-3 pt-1 hidden md:block" }}
           <li class="{{ $itemClass }}">
-            {{ if .Params.icon }}
-              <a
-                class="{{ .Params.icon }} btn btn-text font-bold transition-colors duration-150 hover:text-primary"
-                aria-label="{{ .Name }}"
-                {{ if findRE `^http` .URL }}
-                  target="_self" rel="noopener"
-                {{ end }}
-                href="{{- if findRE `^#` .URL -}}
-                  {{- if not $.IsHome -}}
-                    {{- site.Home.RelPermalink -}}
-                  {{- end }}{{- .URL -}}
-                {{- else -}}
-                  {{- .URL | relLangURL -}}
-                {{- end -}}"></a>
+            {{ if .icon }}
+              <a class="{{ .icon }} btn btn-text font-bold transition-colors duration-150 hover:text-primary" aria-label="{{ .name }}" {{ if .open_in_new_tab }}target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"{{ else if .external }}target="_self" rel="noopener"{{ end }} href="{{ .href }}"></a>
             {{ end }}
-            <a
-              class="btn btn-text font-bold hover:underline underline-offset-4 {{ if .Params.icon }}hidden{{ end }}"
-              {{ if findRE `^http` .URL }}target="_self" rel="noopener"{{ end }}
-              href="{{- if findRE `^#` .URL -}}
-                {{- if not $.IsHome -}}
-                  {{- site.Home.RelPermalink -}}
-                {{- end }}{{- .URL -}}
-              {{- else -}}
-                {{- .URL | relLangURL -}}
-              {{- end -}}">
-              {{ .Name }}
+            <a class="btn btn-text font-bold hover:underline underline-offset-4 {{ if .icon }}hidden{{ end }}" {{ if .open_in_new_tab }}target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"{{ else if .external }}target="_self" rel="noopener"{{ end }} href="{{ .href }}">
+              {{ .name }}
             </a>
           </li>
         {{ end }}

@@ -2,6 +2,9 @@
 title: Unsere Schule
 description: Alles Wichtige zu unserer Schule, unserem Konzept und dem Aufnahmeverfahren.
 draft: false
+menus: [top]
+linkTitle: Schule
+weight: 2
 slider:
   enable: true
   images:

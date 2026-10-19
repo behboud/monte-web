@@ -1,0 +1,56 @@
+{{- $menuID := .MenuID -}}
+{{- $currentPage := .Page -}}
+{{- $entries := slice -}}
+
+{{- range index site.Menus $menuID -}}
+  {{- $icon := .Params.icon -}}
+  {{- with .Page -}}
+    {{- if not $icon -}}
+      {{- $icon = .Params.menu_icon -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $entries = $entries | append (dict
+    "name" .Name
+    "href" .URL
+    "icon" $icon
+    "weight" .Weight
+    "open_in_new_tab" false
+    "nofollow" false
+    "external" (findRE `^https?://` .URL)
+    )
+  -}}
+{{- end -}}
+
+{{- range site.RegularPages -}}
+  {{- with .Params.navigation_links -}}
+    {{- range . -}}
+      {{- if eq .menu $menuID -}}
+        {{- $href := partial "components/menu-url.html" (dict "Target" .target "Page" $currentPage) -}}
+        {{- $weight := 100 -}}
+        {{- if isset . "weight" -}}
+          {{- $weight = .weight -}}
+        {{- end -}}
+        {{- $openInNewTab := false -}}
+        {{- if isset . "open_in_new_tab" -}}
+          {{- $openInNewTab = .open_in_new_tab -}}
+        {{- end -}}
+        {{- $nofollow := false -}}
+        {{- if isset . "nofollow" -}}
+          {{- $nofollow = .nofollow -}}
+        {{- end -}}
+        {{- $entries = $entries | append (dict
+          "name" .name
+          "href" $href
+          "icon" .icon
+          "weight" $weight
+          "open_in_new_tab" $openInNewTab
+          "nofollow" $nofollow
+          "external" (findRE `^https?://` .target)
+          )
+        -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return (sort $entries "weight" "asc") -}}

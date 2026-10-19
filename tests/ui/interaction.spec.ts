@@ -16,6 +16,9 @@ test.describe("core interactions", () => {
 
     const menuPanel = page.locator(".mm-menu");
     await expect(menuPanel).toHaveCount(1);
+    await expect(menuPanel.getByRole("link", { name: "Schule", exact: true })).toHaveAttribute("href", /\/schule\/$/);
+    await expect(menuPanel.getByRole("link", { name: "Speiseplan", exact: true })).toHaveAttribute("href", /\/speiseplan\/$/);
+    await expect(menuPanel.getByRole("link", { name: "Eltern-Login", exact: true })).toHaveAttribute("href", "https://www.montessorischule-gilching.de/login");
   });
 
   test("mobile top navigation shows only the burger menu", async ({ page, isMobile }) => {
@@ -30,6 +33,20 @@ test.describe("core interactions", () => {
     await expect(visibleLinks.first()).toHaveAttribute("href", "#mymenu");
     await expect(navigation.locator("a.fa-utensils")).toBeHidden();
     await expect(navigation.locator("a.fa-user-lock")).toBeHidden();
+  });
+
+  test("page and custom links render together in the footer", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const footer = page.locator("footer .footer-links");
+    await expect(footer.getByRole("link", { name: "Impressum", exact: true })).toHaveAttribute("href", /\/impressum\/$/);
+    await expect(footer.getByRole("link", { name: "Kontakt", exact: true })).toHaveAttribute("href", /\/kontakt\/$/);
+    await expect(footer.getByRole("link", { name: "Login", exact: true })).toHaveAttribute("href", "https://www.montessorischule-gilching.de/login");
+    const instagramLink = footer.locator('a[aria-label="Instagram"]');
+    await expect(instagramLink).toHaveAttribute("href", "https://www.facebook.com/");
+    await expect(instagramLink).toHaveAttribute("target", "_blank");
+    await expect(instagramLink).toHaveAttribute("rel", "nofollow noopener");
+    await expect(instagramLink.locator("i")).toHaveClass(/fa-instagram/);
   });
 
   test("aktuelles card CTA is visible and navigable", async ({ page }) => {

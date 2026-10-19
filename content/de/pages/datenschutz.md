@@ -1,6 +1,9 @@
 ---
 title: "Datenschutz"
 draft: false
+menus: [footer]
+linkTitle: Datenschutz
+weight: 2
 toc:
   enable: true
   title: "Seitenübersicht"

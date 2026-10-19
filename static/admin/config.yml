@@ -70,6 +70,17 @@ collections:
         name: "index"
         file: "content/de/_index.md"
         fields:
+          - label: "Navigation"
+            name: "menus"
+            widget: "select"
+            multiple: true
+            required: false
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
           - label: "Banner"
             name: "banner"
             widget: "object"
@@ -87,105 +98,65 @@ collections:
                 default: []
                 hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen. Bei mehreren Bildern die Prüfung je Bild dokumentieren."
           - { label: "Inhalt", name: "body", widget: "markdown", required: false }
-  - name: "pages"
-    label: "Einzelseiten"
+  - name: "footer"
+    label: "Footer"
+    label_singular: "Footer-Seite"
+    folder: "content/de/pages"
+    create: true
+    slug: "{{slug}}"
     editor:
       preview: false
-    files:
-      - file: "content/de/pages/impressum.md"
-        label: "Impressum"
-        name: "impressum"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+      - label: "Navigation"
+        name: "menus"
+        widget: "select"
+        multiple: true
+        required: false
+        default: [footer]
+        options:
+          - { label: "Kopfzeile", value: "top" }
+          - { label: "Footer", value: "footer" }
+      - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false, default: 100 }
+      - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
+      - { label: "Beschreibung", name: "description", widget: "string", required: false }
+      - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+      - label: "Bereichslinks"
+        name: "section_cards"
+        widget: "object"
+        required: false
         fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Bereichslinks"
-            name: "section_cards"
-            widget: "object"
+          - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
+          - label: "Elemente"
+            name: "items"
+            widget: "list"
+            min: 1
+            max: 5
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Elemente"
-                name: "items"
-                widget: "list"
-                min: 1
-                max: 5
-                required: false
-                fields:
-                  - { label: "Titel", name: "title", widget: "string" }
-                  - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild", name: "image", widget: "image" }
-                  - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
-                  - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
-          - label: "Inhalt"
-            name: "toc"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
-      - file: "content/de/pages/datenschutz.md"
-        label: "Datenschutz"
-        name: "datenschutz"
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Kurzbeschreibung", name: "description", widget: "text" }
+              - { label: "Bild", name: "image", widget: "image" }
+              - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
+              - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
+      - label: "Seitenübersicht"
+        name: "toc"
+        widget: "object"
+        required: false
         fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Bereichslinks"
-            name: "section_cards"
-            widget: "object"
+          - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
+          - { label: "Titel", name: "title", widget: "string", required: false }
+          - label: "Bereiche"
+            name: "sections"
+            widget: "list"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Elemente"
-                name: "items"
-                widget: "list"
-                min: 1
-                max: 5
-                required: false
-                fields:
-                  - { label: "Titel", name: "title", widget: "string" }
-                  - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild", name: "image", widget: "image" }
-                  - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
-                  - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
-          - label: "Inhalt"
-            name: "toc"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
-      - file: "content/de/pages/karriere.md"
-        label: "Karriere"
-        name: "karriere"
-        fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Bereichslinks"
-            name: "section_cards"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Elemente"
-                name: "items"
-                widget: "list"
-                min: 1
-                max: 5
-                required: false
-                fields:
-                  - { label: "Titel", name: "title", widget: "string" }
-                  - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild", name: "image", widget: "image" }
-                  - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
-                  - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
-          - label: "Inhalt"
-            name: "toc"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Bereiche"
-                name: "sections"
+              - { label: "Menüpunkt", name: "label", widget: "string", required: false }
+              - { label: "Überschrift", name: "title", widget: "string", required: true }
+              - { label: "Inhalt", name: "content", widget: "markdown", required: false }
+              - label: "Unterpunkte"
+                name: "children"
                 widget: "list"
                 required: false
                 fields:
@@ -198,38 +169,25 @@ collections:
                     fields:
                       - { label: "Überschrift", name: "title", widget: "string", required: true }
                       - { label: "Inhalt", name: "content", widget: "markdown", required: false }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
-      - file: "content/de/pages/presse.md"
-        label: "Presse"
-        name: "presse"
+      - label: "Zusätzliche Navigationslinks"
+        name: "navigation_links"
+        widget: "list"
+        required: false
+        hint: "Auf der Kontaktseite können hier externe Links wie Eltern-Login und Social Media gepflegt werden. Das Symbol ist optional."
         fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Bereichslinks"
-            name: "section_cards"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Elemente"
-                name: "items"
-                widget: "list"
-                min: 1
-                max: 5
-                required: false
-                fields:
-                  - { label: "Titel", name: "title", widget: "string" }
-                  - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild", name: "image", widget: "image" }
-                  - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
-                  - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
-          - label: "Inhalt"
-            name: "toc"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-          - { label: "Inhalt", name: "body", widget: "markdown" }
+          - label: "Zielmenü"
+            name: "menu"
+            widget: "select"
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Linktext", name: "name", widget: "string" }
+          - { label: "Ziel (Seitenpfad oder URL)", name: "target", widget: "string", hint: "Interne Ziele z. B. /schule; externe Ziele mit https://." }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Symbol (optional, Font Awesome)", name: "icon", widget: "string", required: false }
+          - { label: "In neuem Tab öffnen", name: "open_in_new_tab", widget: "boolean", required: false, default: false }
+          - { label: "nofollow", name: "nofollow", widget: "boolean", required: false, default: false }
+      - { label: "Inhalt", name: "body", widget: "markdown", required: false }
   - name: "speiseplan"
     label: "Speiseplan"
     editor:
@@ -240,6 +198,17 @@ collections:
         name: "speiseplan"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
+          - label: "Navigation"
+            name: "menus"
+            widget: "select"
+            multiple: true
+            required: false
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
           - label: "Slider"
             name: "slider"
@@ -276,66 +245,8 @@ collections:
                 required: false
                 field: { label: "Hinweis", name: "note", widget: "string" }
           - { label: "Mittagsverpflegung (Text)", name: "body", widget: "markdown" }
-  - name: "kontakt_settings"
-    label: "Kontakt & Social"
-    editor:
-      preview: false
-    files:
-      - file: "content/de/pages/kontakt.md"
-        label: "Kontakt"
-        name: "kontakt"
-        fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Beschreibung", name: "description", widget: "string", required: false }
-          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Bereichslinks"
-            name: "section_cards"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Elemente"
-                name: "items"
-                widget: "list"
-                min: 1
-                max: 5
-                required: false
-                fields:
-                  - { label: "Titel", name: "title", widget: "string" }
-                  - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild", name: "image", widget: "image" }
-                  - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
-                  - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
-          - label: "Inhalt"
-            name: "toc"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Bereiche"
-                name: "sections"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Überschrift", name: "title", widget: "string", required: true }
-                  - { label: "Inhalt", name: "content", widget: "markdown", required: false }
-                  - label: "Unterpunkte"
-                    name: "children"
-                    widget: "list"
-                    required: false
-                    fields:
-                      - { label: "Überschrift", name: "title", widget: "string", required: true }
-                      - { label: "Inhalt", name: "content", widget: "markdown", required: false }
-          - label: "Social Links"
-            name: "social_links"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Name", name: "name", widget: "string" }
-              - { label: "Icon (Font Awesome)", name: "icon", widget: "string" }
-              - { label: "Link", name: "link", widget: "string" }
-  - name: "sections"
-    label: "Bereiche"
+  - name: "top_menu"
+    label: "Top-Menü"
     editor:
       preview: false
     files:
@@ -346,6 +257,17 @@ collections:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Navigation"
+            name: "menus"
+            widget: "select"
+            multiple: true
+            required: false
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
           - label: "Slider"
             name: "slider"
             widget: "object"
@@ -409,6 +331,17 @@ collections:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Navigation"
+            name: "menus"
+            widget: "select"
+            multiple: true
+            required: false
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
           - label: "Slider"
             name: "slider"
             widget: "object"
@@ -458,6 +391,17 @@ collections:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Beschreibung", name: "description", widget: "string", required: false }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Navigation"
+            name: "menus"
+            widget: "select"
+            multiple: true
+            required: false
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
           - label: "Slider"
             name: "slider"
             widget: "object"
@@ -544,6 +488,17 @@ collections:
         fields:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
+          - label: "Navigation"
+            name: "menus"
+            widget: "select"
+            multiple: true
+            required: false
+            options:
+              - { label: "Kopfzeile", value: "top" }
+              - { label: "Footer", value: "footer" }
+          - { label: "Menütext", name: "linkTitle", widget: "string", required: false }
+          - { label: "Menüreihenfolge", name: "weight", widget: "number", value_type: "int", required: false }
+          - { label: "Menüsymbol (Font Awesome)", name: "menu_icon", widget: "string", required: false }
           - label: "Slider"
             name: "slider"
             widget: "object"

@@ -2,10 +2,26 @@
 title: "Kontakt"
 description: "Kontakt, Sprechzeiten und wichtige Ansprechpartner der Montessorischule Gilching."
 draft: false
-social_links:
-  - name: instagram
+menus: [footer]
+linkTitle: Kontakt
+weight: 3
+navigation_links:
+  - menu: top
+    name: Eltern-Login
+    target: https://www.montessorischule-gilching.de/login
+    weight: 7
+    icon: fa fa-user-lock
+  - menu: footer
+    name: Login
+    target: https://www.montessorischule-gilching.de/login
+    weight: 5
+  - menu: footer
+    name: Instagram
+    target: https://www.facebook.com/
+    weight: 6
     icon: fab fa-instagram
-    link: https://www.facebook.com/
+    open_in_new_tab: true
+    nofollow: true
 toc:
   enable: true
   title: "Kontakt auf einen Blick"

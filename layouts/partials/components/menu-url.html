@@ -1,0 +1,17 @@
+{{- $target := .Target -}}
+{{- if hasPrefix $target "#" -}}
+  {{- if not .Page.IsHome -}}
+    {{- printf "%s%s" site.Home.RelPermalink $target -}}
+  {{- else -}}
+    {{- $target -}}
+  {{- end -}}
+{{- else if or (hasPrefix $target "http://") (hasPrefix $target "https://") (hasPrefix $target "mailto:") (hasPrefix $target "tel:") -}}
+  {{- $target -}}
+{{- else -}}
+  {{- with site.GetPage $target -}}
+    {{- .RelPermalink -}}
+  {{- else -}}
+    {{- $relativeTarget := replaceRE `^/` "" $target -}}
+    {{- $relativeTarget | relLangURL -}}
+  {{- end -}}
+{{- end -}}

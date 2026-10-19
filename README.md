@@ -109,51 +109,40 @@ monte-web/
 | Schul-Information          | `content/de/schule/`    |
 | Spenden und Förderprojekte | `content/de/spenden/`   |
 | Verein                     | `content/de/verein/`    |
-| Statische Seiten           | `content/de/pages/`     |
+| Footer-Seiten & Kontakt    | `content/de/pages/`     |
 | Startseite                 | `content/de/_index.md`  |
 
 Die frühere Adresse `/foerderer/` bleibt als Weiterleitung auf `/spenden/` erhalten. Förderprojekte, vergangene Unterstützungen und der zentrale Spendenaufruf sind auf der Spendenseite zusammengeführt.
 
 ### Navigation ändern
 
-**Datei**: `hugo.toml` unter `languages.de.menus`
+Es gibt keine separate Menükollektion. Seiten melden sich über Hugo-Frontmatter selbst in einem Menü an; die Felder **Navigation**, **Menütext**, **Menüreihenfolge** und **Menüsymbol** sind in den passenden CMS-Einträgen verfügbar.
 
-Menüpunkte werden hier definiert mit:
-
-- `name`: Anzeigename
-- `pageRef`: Interne Seite (z.B. `/speiseplan`)
-- `url`: Externe Links
-- `weight`: Reihenfolge
-- `params.icon`: Font Awesome Icon (z.B. `fa fa-utensils`)
-
-Beispiel für neuen Menüpunkt:
-
-```toml
-[[languages.de.menus.top]]
-name = "SPEISEPLAN"
-pageRef = "/pages/speiseplan"
-pageRef = "/speiseplan"
-weight = 4
-[languages.de.menus.top.params]
-icon = "fa fa-utensils"
+```yaml
+menus: [top] # oder [footer]
+linkTitle: Speiseplan
+weight: 6
+menu_icon: fa fa-utensils # optional
 ```
 
-Icons: https://fontawesome.com/search (mit `fa-` Präfix)
+Neue Seiten lassen sich in **Footer** anlegen; standardmäßig sind sie dem Footer zugeordnet. Die Zuordnung lässt sich im Eintrag ändern oder zusätzlich auf **Kopfzeile** setzen. Die CMS-Collection **Top-Menü** enthält die vorhandenen Bereichsseiten. Sie ist derzeit eine feste Liste von CMS-Dateien; eine neue Bereichsseite muss daher zuerst dort ergänzt werden. Startseite und Speiseplan liegen in eigenen Collections, sind aber ebenfalls für die Kopfzeile markiert. Kopfzeile und Burger-Menü verwenden dieselben Einträge.
+
+Externe Links, die keine eigenen Seiten sind — etwa **Eltern-Login** und Social Media — liegen als `navigation_links` beim Kontakt-Eintrag in **Footer**. Jeder Eintrag wählt **Kopfzeile** oder **Footer**; Linktext und Ziel sind erforderlich, ein Font-Awesome-Symbol ist optional. Für interne Ziele einen Seitenpfad wie `/schule` verwenden, für externe Ziele die vollständige URL, z. B. `https://example.org`.
 
 ### Konfiguration ändern
 
-| Einstellung                 | Datei                                                                           |
+| Einstellung                 | Datei / Ort                                                                     |
 | --------------------------- | ------------------------------------------------------------------------------- |
 | Site-Titel, BaseURL         | `hugo.toml`                                                                     |
 | Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                                                  |
-| Menüs                       | `hugo.toml` (`languages.de.menus`)                                              |
+| Seitenmenüs                 | Frontmatter der Seiten; externe Links in `content/de/pages/kontakt.md`          |
 | Parameter                   | `hugo.toml` (`params`)                                                          |
 | Sprachen                    | `hugo.toml` (`languages`)                                                       |
 | Lokaler Entwicklungs-Server | npm-Script `npm run dev` (vollständige Neurenderings, HTTP-Caching deaktiviert) |
 
 ### Hugo-Konfigurationspolicy
 
-- Primäre Konfigurationsquelle ist `hugo.toml`.
+- Hugo-Konfiguration und Site-Parameter werden in `hugo.toml` gepflegt; Menüzugehörigkeit und Reihenfolge stehen bei der jeweiligen Seite im Frontmatter.
 - Lokale Entwicklungs-Overrides werden direkt über den Startbefehl gesetzt (`--environment development --baseURL ...`).
 - Nach Konfigurationsänderungen immer validieren mit:
 
@@ -162,17 +151,19 @@ hugo --gc --minify
 npx playwright test tests/ui/style-regression.spec.ts --project=desktop-chromium --project=mobile-chromium
 ```
 
-### Social Media Links
+### Zusätzliche Navigationslinks
 
-**Ort**: `content/de/pages/kontakt.md` im Frontmatter unter `social_links`.
-
-Beispiel:
+**Ort**: `content/de/pages/kontakt.md` im Frontmatter unter `navigation_links`.
 
 ```yaml
-social_links:
-  - name: facebook
-    icon: fab fa-facebook
-    link: https://www.facebook.com/
+navigation_links:
+  - menu: footer
+    name: Instagram
+    target: https://www.instagram.com/example/
+    weight: 6
+    icon: fab fa-instagram
+    open_in_new_tab: true
+    nofollow: true
 ```
 
 ## UI-Komponenten und Bibliotheken

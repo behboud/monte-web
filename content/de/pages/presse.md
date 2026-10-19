@@ -1,6 +1,9 @@
 ---
 title: "Presse"
 draft: false
+menus: [footer]
+linkTitle: Presse
+weight: 4
 toc:
   title: "Seitenübersicht"
   sections:

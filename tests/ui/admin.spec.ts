@@ -19,6 +19,30 @@ test.describe("CMS admin", () => {
     await expect(page.getByText(/Sveltia CMS/)).toBeVisible();
   });
 
+  test("page navigation uses front matter and custom links live with the contact page", async ({ request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+
+    expect(config).not.toMatch(/^  - name: "menus"$/m);
+    expect(config).not.toContain('file: "data/menus.yaml"');
+    expect(config).toContain('  - name: "top_menu"\n    label: "Top-Menü"');
+
+    const footerStart = config.indexOf('  - name: "footer"');
+    const speiseplanStart = config.indexOf('  - name: "speiseplan"', footerStart);
+    expect(footerStart).toBeGreaterThanOrEqual(0);
+    expect(speiseplanStart).toBeGreaterThan(footerStart);
+
+    const footerConfig = config.slice(footerStart, speiseplanStart);
+    expect(footerConfig).toContain('label: "Footer"');
+    expect(footerConfig).toContain('folder: "content/de/pages"');
+    expect(footerConfig).toContain("create: true");
+    expect(footerConfig).toContain("default: [footer]");
+    expect(footerConfig).toContain('name: "menus"');
+    expect(footerConfig).toContain('name: "navigation_links"');
+    expect(footerConfig).toContain('name: "menu"');
+    expect(footerConfig).toContain('name: "menu_icon"');
+  });
+
   test("Bildreihe round-trips items and its configurable row limit", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
@@ -123,18 +147,18 @@ test.describe("CMS admin", () => {
 
     const areaLinkSchemas = config.match(/name: "section_cards"/g) ?? [];
     const bannerSwitches = config.match(/name: "show_banner"/g) ?? [];
-    expect(areaLinkSchemas).toHaveLength(8);
+    expect(areaLinkSchemas).toHaveLength(4);
     expect(bannerSwitches).toHaveLength(areaLinkSchemas.length);
 
     const tocSchemas = [...config.matchAll(/- label: "Inhalt"\s+name: "toc"[\s\S]*?(?=\n {10}- (?:label|\{)|\n {6}- file:|$)/g)].map(([schema]) => schema);
-    expect(tocSchemas).toHaveLength(8);
+    expect(tocSchemas).toHaveLength(3);
     for (const tocSchema of tocSchemas) {
       expect(tocSchema).toContain('label: "Seitenübersicht anzeigen"');
       expect(tocSchema).not.toContain('name: "image"');
       expect(tocSchema).not.toContain('name: "label"');
       expect(tocSchema).not.toContain('default: "Seitenübersicht"');
     }
-    expect(tocSchemas.filter((tocSchema) => tocSchema.includes('name: "sections"'))).toHaveLength(5);
+    expect(tocSchemas.filter((tocSchema) => tocSchema.includes('name: "sections"'))).toHaveLength(3);
     expect(config).not.toContain('label: "Seitenübersicht (ein TOC)"');
   });
 

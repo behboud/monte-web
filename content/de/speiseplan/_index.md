@@ -1,6 +1,10 @@
 ---
 title: "Speiseplan"
 draft: false
+menus: [top]
+linkTitle: Speiseplan
+weight: 6
+menu_icon: fa fa-utensils
 slider:
   enable: true
   images:

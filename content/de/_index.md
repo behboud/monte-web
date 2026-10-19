@@ -1,4 +1,7 @@
 ---
+menus: [top]
+linkTitle: Aktuelles
+weight: 1
 banner:
   title: Willkommen
   image: /images/stuhl-im-haus.jpeg

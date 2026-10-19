@@ -1,6 +1,9 @@
 ---
 title: Verein
 draft: false
+menus: [top]
+linkTitle: Verein
+weight: 5
 slider:
   enable: true
   images:

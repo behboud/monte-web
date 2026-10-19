@@ -1,6 +1,9 @@
 ---
 title: "Impressum"
 draft: false
+menus: [footer]
+linkTitle: Impressum
+weight: 1
 toc:
   enable: true
   title: "Seitenübersicht"
