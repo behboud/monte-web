@@ -37,7 +37,7 @@
 
 @layer base {
   :root {
-    --reading-measure: min(60ch, 40rem);
+    --reading-measure: min(65ch, 42.5rem);
   }
 
   h1,
@@ -202,22 +202,86 @@
     margin-inline: auto;
   }
 
+  .reading-prose {
+    inline-size: 100%;
+    max-inline-size: var(--reading-measure);
+    min-inline-size: 0;
+    margin-inline: auto;
+    font-size: 1.125rem;
+    line-height: 1.45;
+  }
+
+  .reading-prose :where(p, li, blockquote) {
+    line-height: inherit;
+  }
+
+  .reading-prose > * {
+    margin-block: 0;
+  }
+
+  .reading-prose > * + * {
+    margin-block-start: 1em;
+  }
+
+  .reading-prose > :where(h2, h3, h4) {
+    max-inline-size: var(--reading-measure);
+    margin-inline: 0;
+    margin-block-start: 1.5em;
+  }
+
+  .reading-prose > :where(h2, h3, h4) + * {
+    margin-block-start: 0.5em;
+  }
+
+  .reading-prose :where(p, ul, ol, blockquote, figure, table, pre) {
+    max-inline-size: 100%;
+  }
+
+  .reading-prose :where(ul, ol) {
+    padding-inline-start: 1.35em;
+    list-style-position: outside;
+  }
+
+  .reading-prose ul {
+    list-style-type: disc;
+  }
+
+  .reading-prose ul ul {
+    list-style-type: circle;
+  }
+
+  .reading-prose ol {
+    list-style-type: decimal;
+  }
+
+  .reading-prose :where(ul, ol) > li + li {
+    margin-block-start: 0.45em;
+  }
+
+  .reading-prose :where(img, picture, video) {
+    display: block;
+    inline-size: min(100%, var(--reading-measure));
+    block-size: auto;
+    margin-block: 0;
+  }
+
+  .reading-prose iframe {
+    display: block;
+    max-inline-size: 100%;
+    margin-inline: auto;
+  }
+
   .schule-content blockquote {
     border-left: 3px solid rgba(34, 36, 119, 0.25);
     @apply my-5 px-4 py-2 italic text-monte;
   }
 
-  .schule-content ul {
-    @apply my-3 space-y-2;
+  .schule-content .reading-prose > blockquote {
+    margin-block: 0;
   }
 
   .schule-content a[href^="mailto:"] {
     @apply font-semibold text-monte underline decoration-monte/35 underline-offset-4 hover:text-primary;
-  }
-
-  .schule-content h2 + p,
-  .schule-content h2 + ul {
-    @apply mt-1;
   }
 
   .schule-content-editorial {
@@ -313,22 +377,6 @@
     margin-block: 0 0.75rem;
     font-size: clamp(1.1rem, 1.35vw, 1.3rem);
     line-height: 1.35;
-  }
-
-  .schule-editorial-markdown {
-    min-inline-size: 0;
-  }
-
-  .schule-content-editorial .schule-editorial-markdown > :where(p, ul, ol, blockquote) {
-    max-inline-size: var(--reading-measure);
-    margin-inline: 0;
-  }
-
-  .schule-editorial-markdown img {
-    display: block;
-    inline-size: min(100%, var(--reading-measure));
-    block-size: auto;
-    margin-block: 1rem;
   }
 
   @media (max-width: 54rem) {

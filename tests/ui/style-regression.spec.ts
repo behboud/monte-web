@@ -171,11 +171,13 @@ test.describe("style regressions", () => {
     expect(sizes[2]).toBe(80);
   });
 
-  test("long-form copy keeps a consistent reading measure across page types", async ({ page }) => {
+  test("editorial prose keeps a consistent measure and rhythm across page types", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
 
     const examples = [
       { route: "/schule/", selector: ".schule-content p" },
+      { route: "/elternengagement/", selector: ".reading-prose p" },
+      { route: "/aktuelles/", selector: ".reading-prose" },
       { route: "/aktuelles/post-4/", selector: ".article-reading-column p" },
       { route: "/spenden/", selector: ".spenden-card-content" },
     ];
@@ -196,12 +198,18 @@ test.describe("style regressions", () => {
           textLength: (textBlock.textContent ?? "").trim().length,
           width: rectangle.width,
           maxInlineSize: style.maxInlineSize,
+          fontFamily: style.fontFamily,
+          fontSize: Number.parseFloat(style.fontSize),
+          lineHeight: Number.parseFloat(style.lineHeight),
           mainWidth: main.getBoundingClientRect().width,
         };
       });
 
       expect(measurement.textLength).toBeGreaterThan(120);
       expect(measurement.maxInlineSize).not.toBe("none");
+      expect(measurement.fontFamily).toContain("Overpass");
+      expect(measurement.fontSize).toBe(18);
+      expect(measurement.lineHeight).toBeCloseTo(26.1, 1);
       expect(measurement.width).toBeLessThan(measurement.mainWidth * 0.6);
     }
 
@@ -246,6 +254,43 @@ test.describe("style regressions", () => {
 
     expect(measurement.maxInlineSize).not.toBe("none");
     expect(measurement.paragraphWidth).toBeLessThan(measurement.mainWidth * 0.6);
+  });
+
+  test("school editorial prose keeps its typeface with a more open reading rhythm", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const rhythm = await page.locator(".schule-content-editorial").evaluate((content) => {
+      const markdown = [...content.querySelectorAll(".schule-editorial-markdown")].find((block) => [...block.querySelectorAll(":scope > p")].some((paragraph) => paragraph.nextElementSibling?.tagName === "P"));
+      if (!markdown) throw new Error("A Markdown block with consecutive paragraphs should exist.");
+
+      const paragraph = [...markdown.querySelectorAll(":scope > p")].find((candidate) => candidate.nextElementSibling?.tagName === "P");
+      if (!paragraph || !paragraph.nextElementSibling) throw new Error("Consecutive paragraphs should exist.");
+
+      const list = content.querySelector(".schule-editorial-markdown ul");
+      if (!list) throw new Error("An editorial list should exist.");
+
+      const paragraphStyle = getComputedStyle(paragraph);
+      const listStyle = getComputedStyle(list);
+      return {
+        fontFamily: paragraphStyle.fontFamily,
+        fontSize: Number.parseFloat(paragraphStyle.fontSize),
+        lineHeight: Number.parseFloat(paragraphStyle.lineHeight),
+        paragraphGap: Number.parseFloat(getComputedStyle(paragraph.nextElementSibling).marginBlockStart),
+        measure: paragraph.getBoundingClientRect().width,
+        listStyle: listStyle.listStyleType,
+        listIndent: Number.parseFloat(listStyle.paddingInlineStart),
+      };
+    });
+
+    expect(rhythm.fontFamily).toContain("Overpass");
+    expect(rhythm.fontSize).toBe(18);
+    expect(rhythm.lineHeight).toBeCloseTo(26.1, 1);
+    expect(rhythm.paragraphGap).toBe(18);
+    expect(rhythm.measure).toBeGreaterThan(600);
+    expect(rhythm.measure).toBeLessThanOrEqual(682);
+    expect(rhythm.listStyle).toBe("disc");
+    expect(rhythm.listIndent).toBeGreaterThan(0);
   });
 
   test("homepage shows the slider before news cards without a redundant heading or pagination dots", async ({ page }) => {

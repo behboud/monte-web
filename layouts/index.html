@@ -17,9 +17,11 @@
             <h1 class="home-banner-title">{{ .title }}</h1>
           </div>
           {{ if .content }}
-            <p class="mb-2">
-              {{ .content | markdownify }}
-            </p>
+            <div class="reading-prose">
+              <p class="mb-2">
+                {{ .content | markdownify }}
+              </p>
+            </div>
           {{ end }}
         </div>
       </div>
@@ -38,6 +40,10 @@
   <div class="ml-3">
     {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
     {{ partial "components/aktuelles-grid.html" (dict "Pages" $pages.ByDate.Reverse "Limit" 4) }}
-    {{ .Content | markdownify }}
+    {{ with .Content }}
+      <div class="reading-prose">
+        {{ . | markdownify }}
+      </div>
+    {{ end }}
   </div>
 {{ end }}

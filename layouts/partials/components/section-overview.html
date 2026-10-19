@@ -82,14 +82,18 @@
           {{ partial "components/section-content" (dict "Entry" . "Level" 0 "Editorial" $isEditorialLayout "SectionCards" $sectionCards.items) }}
         {{ end }}
       {{ else }}
-        {{ $ctx.Content }}
+        <div class="reading-prose">
+          {{ $ctx.Content }}
+        </div>
       {{ end }}
     </article>
   </section>
 {{ else }}
   <section class="container ml-3 mb-12">
     <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}card card-body schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
-      {{ $ctx.Content }}
+      <div class="reading-prose">
+        {{ $ctx.Content }}
+      </div>
     </article>
   </section>
 {{ end }}
