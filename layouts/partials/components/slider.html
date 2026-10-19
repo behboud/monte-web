@@ -22,8 +22,8 @@
     <!-- start of checking asset-image -->
     {{ if $images }}
       <!-- start of image range -->
-      {{ range $images }}
-        {{ $image := resources.Get . }}
+      {{ range $index, $imagePath := $images }}
+        {{ $image := resources.Get $imagePath }}
         {{ $imageExt := path.Ext $image }}
         {{ if or (eq $imageExt `.jpg`) (eq $imageExt `.jpeg`) (eq $imageExt `.png`) (eq $imageExt `.webp`) (eq $imageExt
           `.svg`) (eq $imageExt `.gif`) (eq $imageExt `.ico`)
@@ -33,12 +33,24 @@
             "Webp"
             $webp "Image" $image "Option" $option "Zoomable" $zoomable)
           }}
-          {{ $imageHeight:= $scratch.Get "image-height" }}
-          {{ $imageWidth:= $scratch.Get "image-width" }}
+          {{ $imageHeight := $scratch.Get "image-height" }}
+          {{ $imageWidth := $scratch.Get "image-width" }}
+          {{ $slideLoading := $loading }}
+          {{ if gt $index 0 }}{{ $slideLoading = "lazy" }}{{ end }}
 
 
           <div class="{{ $classImage }}">
-            <img class="h-full w-full object-cover" loading="{{ $loading }}" src="{{ $scratch.Get `image` }}" onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" />
+            <img
+              class="h-full w-full object-cover"
+              src="{{ $scratch.Get `image` }}"
+              alt=""
+              aria-hidden="true"
+              width="{{ $imageWidth }}"
+              height="{{ $imageHeight }}"
+              loading="{{ $slideLoading }}"
+              decoding="async"
+              {{ if and (eq $index 0) (eq $loading "eager") }}fetchpriority="high"{{ end }}
+              onerror="this.onerror='null';this.src='{{ $scratch.Get `imageFallback` }}'" />
           </div>
         {{ end }}
       {{ end }}

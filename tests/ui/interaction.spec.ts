@@ -43,48 +43,31 @@ test.describe("core interactions", () => {
     await expect(page.locator("article, main").first()).toBeVisible();
   });
 
-  test("spenden page offers a highlighted project popup", async ({ page }) => {
+  test("spenden page combines current projects, past support, and one clear donation action", async ({ page }) => {
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
-    const popup = page.locator("[data-donation-popup]");
-    await expect(popup).toHaveAttribute("data-open", "true");
-    await expect(popup.locator("[data-donation-highlight-option]")).toHaveCount(2);
+    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
+    const donationAction = page.locator(".donation-hero-cta");
+    await expect(donationAction).toHaveCount(1);
+    await expect(donationAction).toBeVisible();
+    await expect(donationAction).toHaveText("Spende besprechen");
+    await expect(donationAction).toHaveAttribute("href", /^mailto:Verwaltung@montessorischule-gilching\.de\?/);
 
-    const selectedProject = popup.locator("[data-donation-highlight-option]:not([hidden])");
-    await expect(selectedProject).toHaveCount(1);
-    await expect(selectedProject.locator("h2")).toBeVisible();
-    await expect(selectedProject.locator(".donation-popup-action")).toHaveText(/Jetzt fördern/);
-    await expect(selectedProject.locator(".donation-popup-action")).toHaveAttribute("href", "/kontakt/");
+    await expect(page.locator(".donation-project")).toHaveCount(3);
+    await expect(page.locator(".past-donation-card")).toHaveCount(12);
+    await expect(page.locator("main [data-donation-popup]")).toHaveCount(0);
+    await expect(page.locator("main a")).toHaveCount(1);
 
-    const closeButton = popup.locator("[data-donation-popup-close]");
-    const closeBox = await closeButton.boundingBox();
-    expect(closeBox).not.toBeNull();
-    if (!closeBox) throw new Error("The donation popup close button has no layout box.");
-    await page.mouse.click(closeBox.x + closeBox.width / 2, closeBox.y + closeBox.height / 2);
-    await expect(popup).toHaveAttribute("hidden", "");
+    const sections = await page.locator("main > section").evaluateAll((elements) => elements.map((element) => element.classList[0]));
+    expect(sections[0]).toBe("container");
+    expect(sections.slice(1)).toEqual(["donation-hero", "donation-projects", "past-donations"]);
   });
 
-  test("spenden page renders its configurable top buttons", async ({ page }) => {
-    await page.goto("/spenden/", { waitUntil: "networkidle" });
+  test("former foerderer route redirects to the combined donation page", async ({ page }) => {
+    await page.goto("/foerderer/", { waitUntil: "networkidle" });
 
-    const popup = page.locator("[data-donation-popup]");
-    const closeButton = popup.locator("[data-donation-popup-close]");
-    const closeBox = await closeButton.boundingBox();
-    expect(closeBox).not.toBeNull();
-    if (!closeBox) throw new Error("The donation popup close button has no layout box.");
-    await page.mouse.click(closeBox.x + closeBox.width / 2, closeBox.y + closeBox.height / 2);
-    await expect(popup).toHaveAttribute("hidden", "");
-
-    const buttons = page.locator(".spenden-cta-bar a");
-    await expect(buttons).toHaveCount(2);
-    await expect(buttons.nth(0)).toHaveText("Jetzt online spenden");
-    await expect(buttons.nth(1)).toHaveText("Als Förderer mitmachen");
-    await expect(buttons.nth(0)).toHaveAttribute("href", "/kontakt");
-    await expect(buttons.nth(1)).toHaveAttribute("href", "/foerderer/");
-    await expect(page.locator(".spenden-cta-bar")).not.toContainText("Sachspende anbieten");
-    await buttons.nth(0).click();
-    await expect(page).toHaveURL(/\/kontakt\/?$/);
-    await expect(page.locator("main").first()).toBeVisible();
+    await expect(page).toHaveURL(/\/spenden\/?$/);
+    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
   });
 
   test("back to top button appears after scrolling and returns to the top", async ({ page }) => {

@@ -1,0 +1,31 @@
+{{ $page := . }}
+{{ with .Params.spenden }}
+  <section class="past-donations" aria-labelledby="past-donations-title">
+    <div class="past-donations-inner">
+      <header class="past-donations-heading" data-page-outline-content>
+        <h2 id="past-donations-title">{{ $page.Params.vergangene_heading | default "Bisherige Unterstützung" }}</h2>
+      </header>
+
+      <div class="past-donation-grid" data-page-outline-content>
+        {{ range $index, $donation := . }}
+          {{ $donationID := printf "past-donation-%d" (add $index 1) }}
+          <article class="past-donation-card" aria-labelledby="{{ $donationID }}">
+            {{ with $donation.image }}
+              {{ with resources.Get . }}
+                {{ $imageWidth := cond (lt .Width 320) .Width 320 }}
+                {{ $image := .Resize (printf "%dx webp" $imageWidth) }}
+                <div class="past-donation-media" aria-hidden="true">
+                  <img src="{{ $image.RelPermalink }}" alt="" width="{{ $image.Width }}" height="{{ $image.Height }}" loading="lazy" decoding="async" />
+                </div>
+              {{ end }}
+            {{ end }}
+            <div class="past-donation-copy">
+              <h3 id="{{ $donationID }}">{{ $donation.title | markdownify }}</h3>
+              <div class="past-donation-content reading-prose">{{ $page.RenderString (dict "display" "block") ($donation.content | default "") }}</div>
+            </div>
+          </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+{{ end }}

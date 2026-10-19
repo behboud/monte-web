@@ -179,7 +179,7 @@ test.describe("style regressions", () => {
       { route: "/elternengagement/", selector: ".reading-prose p" },
       { route: "/aktuelles/", selector: ".reading-prose" },
       { route: "/aktuelles/post-4/", selector: ".article-reading-column p" },
-      { route: "/spenden/", selector: ".spenden-card-content" },
+      { route: "/spenden/", selector: ".past-donation-content" },
     ];
 
     for (const { route, selector } of examples) {
@@ -415,12 +415,12 @@ test.describe("style regressions", () => {
   });
 
   test("top-level pages share the title, slider, and content order without breadcrumbs", async ({ page }) => {
-    for (const route of ["/schule/", "/elternengagement/", "/spenden/", "/foerderer/", "/verein/", "/speiseplan/"]) {
+    for (const route of ["/schule/", "/elternengagement/", "/verein/", "/speiseplan/"]) {
       await page.goto(route, { waitUntil: "networkidle" });
 
       const title = page.locator("h1.page-title-calligraphy");
       const slider = page.locator(".schule-slider").first();
-      const content = page.locator(".schule-content, .spenden-cta-bar, .spenden-grid, .speiseplan-week").first();
+      const content = page.locator(".schule-content, .speiseplan-week").first();
       await expect(title).toBeVisible();
       await expect(slider).toBeVisible();
       await expect(page.locator(".breadcrumb")).toHaveCount(0);
@@ -1063,50 +1063,160 @@ test.describe("style regressions", () => {
     }
   });
 
-  test("foerderer cards provide configurable promotion links", async ({ page }) => {
-    await page.goto("/foerderer/", { waitUntil: "networkidle" });
-
-    const cards = page.locator(".spenden-card");
-    const links = page.locator(".spenden-card-link");
-    await expect(cards).toHaveCount(3);
-    await expect(links).toHaveCount(3);
-    await expect(page.locator(".spenden-cta-bar")).toHaveCount(0);
-
-    for (const card of await cards.all()) {
-      const link = card.locator(".spenden-card-link");
-      await expect(link).toHaveText(/Jetzt fördern/);
-      await expect(link).toHaveAttribute("href", "/kontakt/");
-    }
-  });
-
-  test("spenden entries render as consistent two-column cards", async ({ page }) => {
+  test("spenden page uses compact project cards and keeps past supporters text-first", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
-    const grid = page.locator(".spenden-grid");
-    const cards = page.locator(".spenden-card");
-    const media = page.locator(".spenden-card-image");
-    await expect(grid).toBeVisible();
-    await expect(cards).toHaveCount(12);
-    await expect(cards.first().locator("h2")).toBeVisible();
-    await expect(cards.first().locator(".spenden-card-content")).toBeVisible();
+    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
+    await expect(page.locator(".donation-hero h1")).toHaveCount(0);
+    await expect(page.locator(".donation-project")).toHaveCount(3);
+    await expect(page.locator(".past-donation-card")).toHaveCount(12);
+    await expect(page.locator(".donation-hero-cta")).toHaveCount(1);
+    await expect(page.locator("main a")).toHaveCount(1);
+    const leadHeroImage = page.locator('.donation-hero-slider img[src*="Schuleeingang"]').first();
+    const nextHeroImage = page.locator('.donation-hero-slider img[src*="Zaun_3"]').first();
+    await expect(leadHeroImage).toBeVisible();
+    await expect(leadHeroImage).toHaveAttribute("loading", "eager");
+    await expect(leadHeroImage).toHaveAttribute("fetchpriority", "high");
+    await expect(nextHeroImage).toHaveAttribute("loading", "lazy");
 
-    const columns = await grid.evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" ").length);
-    expect(columns).toBe((page.viewportSize()?.width ?? 0) >= 640 ? 2 : 1);
+    const overlayStyles = await page.locator(".donation-hero-copy").evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return { background: styles.backgroundColor, zIndex: styles.zIndex };
+    });
+    expect(overlayStyles.background).toBe("oklch(0.32008 0.13793 274.324)");
+    expect(Number(overlayStyles.zIndex)).toBeGreaterThan(1);
 
-    const boxes = await media.evaluateAll((elements) =>
-      elements.map((el) => {
-        const rect = el.getBoundingClientRect();
+    await expect(page.locator(".donation-section-heading p")).toHaveCount(0);
+    await expect(page.locator(".past-donations-heading p")).toHaveCount(0);
+    const pastSectionBackground = await page.locator(".past-donations").evaluate((section) => getComputedStyle(section).backgroundColor);
+    expect(pastSectionBackground).toBe("rgba(0, 0, 0, 0)");
+
+    const sectionOrder = await page.locator("main > section").evaluateAll((elements) => elements.map((element) => element.classList[0]));
+    expect(sectionOrder[0]).toBe("container");
+    expect(sectionOrder.slice(1)).toEqual(["donation-hero", "donation-projects", "past-donations"]);
+
+    const headingLayout = await page.locator(".donation-section-heading h2, .past-donations-heading h2").evaluateAll((headings) =>
+      headings.map((heading) => {
+        const styles = getComputedStyle(heading);
         return {
-          width: Math.round(rect.width),
-          height: Math.round(rect.height),
+          whiteSpace: styles.whiteSpace,
+          fontSize: Number.parseFloat(styles.fontSize),
+          height: heading.getBoundingClientRect().height,
+          lineHeight: Number.parseFloat(styles.lineHeight),
         };
       }),
     );
+    expect(headingLayout).toHaveLength(2);
+    for (const heading of headingLayout) {
+      expect(heading.whiteSpace).toBe("nowrap");
+      expect(heading.fontSize).toBeLessThanOrEqual(30);
+      expect(heading.height).toBeLessThanOrEqual(heading.lineHeight + 1);
+    }
 
-    const first = boxes[0];
-    for (const box of boxes) {
-      expect(Math.abs(box.width - first.width)).toBeLessThanOrEqual(2);
-      expect(Math.abs(box.height - first.height)).toBeLessThanOrEqual(2);
+    const projectLayout = await page.locator(".donation-project-list").evaluate((grid) => {
+      const cards = [...grid.querySelectorAll(".donation-project")];
+      const firstCard = cards[0];
+      const secondCard = cards[1];
+      const lastCard = cards.at(-1);
+      const media = firstCard?.querySelector(".donation-project-media");
+      const title = firstCard?.querySelector(".donation-project-copy h3");
+      const content = firstCard?.querySelector(".donation-project-content");
+      if (!firstCard || !secondCard || !lastCard || !media || !title || !content) throw new Error("Project cards are incomplete");
+
+      const firstBox = firstCard.getBoundingClientRect();
+      const secondBox = secondCard.getBoundingClientRect();
+      const lastBox = lastCard.getBoundingClientRect();
+      return {
+        columns: getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).length,
+        gridWidth: grid.getBoundingClientRect().width,
+        cardsShareFirstRow: Math.abs(firstBox.top - secondBox.top) < 1,
+        lastCardSharesFirstRow: Math.abs(firstBox.top - lastBox.top) < 1,
+        cardWidth: firstBox.width,
+        mediaHeight: media.getBoundingClientRect().height,
+        mediaAspectRatio: getComputedStyle(media).aspectRatio,
+        cardBorderStyle: getComputedStyle(firstCard).borderTopStyle,
+        cardBorderRadius: getComputedStyle(firstCard).borderTopLeftRadius,
+        cardShadow: getComputedStyle(firstCard).boxShadow,
+        titleSize: Number.parseFloat(getComputedStyle(title).fontSize),
+        contentSize: Number.parseFloat(getComputedStyle(content).fontSize),
+      };
+    });
+
+    expect(projectLayout.columns).toBe(3);
+    expect(projectLayout.cardsShareFirstRow).toBe(true);
+    expect(projectLayout.lastCardSharesFirstRow).toBe(true);
+    expect(projectLayout.cardWidth).toBeLessThan(400);
+    expect(projectLayout.mediaHeight).toBeLessThan(300);
+    expect(projectLayout.mediaAspectRatio).toBe("4 / 3");
+    expect(projectLayout.cardBorderStyle).toBe("solid");
+    expect(projectLayout.cardBorderRadius).toBe("12px");
+    expect(projectLayout.cardShadow).not.toBe("none");
+    expect(projectLayout.titleSize).toBe(20);
+    expect(projectLayout.contentSize).toBe(16);
+
+    const desktopLayout = await page
+      .locator(".past-donation-card")
+      .first()
+      .evaluate((card) => {
+        const media = card.querySelector(".past-donation-media");
+        const copy = card.querySelector(".past-donation-copy");
+        const image = media?.querySelector("img");
+        return {
+          gridWidth: card.parentElement?.getBoundingClientRect().width ?? 0,
+          mediaWidth: media?.getBoundingClientRect().width ?? 0,
+          copyWidth: copy?.getBoundingClientRect().width ?? 0,
+          objectFit: image ? getComputedStyle(image).objectFit : "",
+        };
+      });
+
+    expect(desktopLayout.gridWidth).toBeGreaterThan(projectLayout.gridWidth + 50);
+    expect(desktopLayout.mediaWidth).toBeLessThanOrEqual(112);
+    expect(desktopLayout.copyWidth).toBeGreaterThan(desktopLayout.mediaWidth * 2.5);
+    expect(desktopLayout.objectFit).toBe("contain");
+
+    await page.setViewportSize({ width: 1100, height: 900 });
+    const midWidthCopyAlignment = await page
+      .locator(".past-donation-card")
+      .first()
+      .evaluate((card) => {
+        const title = card.querySelector(".past-donation-copy h3");
+        const content = card.querySelector(".past-donation-content");
+        if (!title || !content) throw new Error("Past-donation text is incomplete");
+        return Math.abs(title.getBoundingClientRect().left - content.getBoundingClientRect().left);
+      });
+    expect(midWidthCopyAlignment).toBeLessThanOrEqual(1);
+
+    for (const width of [1366, 1100, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+      expect(scrollWidth).toBeLessThanOrEqual(width);
+      if (width === 390) {
+        const columns = await page.locator(".donation-project-list").evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).length);
+        expect(columns).toBe(1);
+
+        const donorCardLayout = await page
+          .locator(".past-donation-card")
+          .first()
+          .evaluate((card) => {
+            const media = card.querySelector(".past-donation-media");
+            const copy = card.querySelector(".past-donation-copy");
+            if (!media || !copy) throw new Error("Past-donation card is incomplete");
+            const mediaBox = media.getBoundingClientRect();
+            const copyBox = copy.getBoundingClientRect();
+            return {
+              columns: getComputedStyle(card).gridTemplateColumns.trim().split(/\s+/).length,
+              mediaWidth: mediaBox.width,
+              mediaBottom: mediaBox.bottom,
+              copyWidth: copyBox.width,
+              copyTop: copyBox.top,
+            };
+          });
+        expect(donorCardLayout.columns).toBe(1);
+        expect(donorCardLayout.mediaWidth).toBeLessThanOrEqual(64);
+        expect(donorCardLayout.copyWidth).toBeGreaterThan(donorCardLayout.mediaWidth * 3);
+        expect(donorCardLayout.copyTop).toBeGreaterThanOrEqual(donorCardLayout.mediaBottom);
+      }
     }
   });
 });

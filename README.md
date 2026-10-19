@@ -33,12 +33,12 @@ npm install
 Entwicklungsserver starten:
 
 ```bash
-hugo server --environment development --baseURL http://localhost:1313/
+npm run dev
 ```
 
-Der Server läuft unter http://localhost:1313 mit Live-Reload bei Dateiänderungen.
+Der Server läuft unter http://localhost:1313 mit Live-Reload bei Dateiänderungen. Das Dev-Script erzwingt vollständige Hugo-Neurenderings und deaktiviert HTTP-Caching, damit geänderte Templates und Styles nicht aus einem veralteten lokalen Preview kommen.
 
-Hinweis: Für die lokale Entwicklung reicht der obige `hugo server`-Befehl; der separate Tailwind-Watch ist nicht erforderlich.
+Hinweis: Für die lokale Entwicklung reicht `npm run dev`; ein separater Tailwind-Watch ist nicht erforderlich.
 
 ## Deployment
 
@@ -70,7 +70,7 @@ monte-web/
 │       ├── aktuelles/      # News-Bereich
 │       ├── pages/          # Statische Seiten
 │       ├── schule/         # Schul-Bereich
-│       ├── spenden/        # Spenden-Bereich
+│       ├── spenden/        # Spenden und Förderprojekte
 │       └── verein/         # Verein-Bereich
 ├── layouts/                # Hugo-Templates
 │   ├── _default/           # Standard-Templates (baseof, list, single)
@@ -79,6 +79,7 @@ monte-web/
 │   └── partials/           # Wiederverwendbare Komponenten
 ├── static/                 # Statische Dateien
 │   ├── admin/              # Sveltia CMS
+│   ├── foerderer/          # Weiterleitung zur gemeinsamen Spendenseite
 │   └── fonts/              # Benutzerdefinierte Schriften
 ├── hugo.toml               # Hugo-Hauptkonfiguration
 ├── tailwind.config.js      # Tailwind-Konfiguration
@@ -102,14 +103,16 @@ monte-web/
 
 ### Content ändern
 
-| Content           | Datei/Ordner            |
-| ----------------- | ----------------------- |
-| News/Artikel      | `content/de/aktuelles/` |
-| Schul-Information | `content/de/schule/`    |
-| Spenden           | `content/de/spenden/`   |
-| Verein            | `content/de/verein/`    |
-| Statische Seiten  | `content/de/pages/`     |
-| Startseite        | `content/de/_index.md`  |
+| Content                    | Datei/Ordner            |
+| -------------------------- | ----------------------- |
+| News/Artikel               | `content/de/aktuelles/` |
+| Schul-Information          | `content/de/schule/`    |
+| Spenden und Förderprojekte | `content/de/spenden/`   |
+| Verein                     | `content/de/verein/`    |
+| Statische Seiten           | `content/de/pages/`     |
+| Startseite                 | `content/de/_index.md`  |
+
+Die frühere Adresse `/foerderer/` bleibt als Weiterleitung auf `/spenden/` erhalten. Förderprojekte, vergangene Unterstützungen und der zentrale Spendenaufruf sind auf der Spendenseite zusammengeführt.
 
 ### Navigation ändern
 
@@ -139,14 +142,14 @@ Icons: https://fontawesome.com/search (mit `fa-` Präfix)
 
 ### Konfiguration ändern
 
-| Einstellung                 | Datei                                                                                                  |
-| --------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Site-Titel, BaseURL         | `hugo.toml`                                                                                            |
-| Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                                                                         |
-| Menüs                       | `hugo.toml` (`languages.de.menus`)                                                                     |
-| Parameter                   | `hugo.toml` (`params`)                                                                                 |
-| Sprachen                    | `hugo.toml` (`languages`)                                                                              |
-| Lokaler Entwicklungs-Server | npm-Script `npm run dev` bzw. `hugo server --environment development --baseURL http://localhost:1313/` |
+| Einstellung                 | Datei                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| Site-Titel, BaseURL         | `hugo.toml`                                                                     |
+| Plugins (CSS/JS)            | `hugo.toml` (`params.plugins`)                                                  |
+| Menüs                       | `hugo.toml` (`languages.de.menus`)                                              |
+| Parameter                   | `hugo.toml` (`params`)                                                          |
+| Sprachen                    | `hugo.toml` (`languages`)                                                       |
+| Lokaler Entwicklungs-Server | npm-Script `npm run dev` (vollständige Neurenderings, HTTP-Caching deaktiviert) |
 
 ### Hugo-Konfigurationspolicy
 
@@ -222,7 +225,7 @@ Bilder, die über das CMS hochgeladen werden, werden vor dem Speichern im Browse
 - **aktuelles**: News-Artikel (create: true)
 - **pages**: Statische Seiten (create: true)
 - **schule**: Schul-Informationen (read-only)
-- **spenden**: Spenden-Informationen und obere Buttons
+- **spenden**: Förderprojekte, frühere Unterstützungen und der zentrale Spenden-CTA
 - **verein**: Verein-Informationen (read-only)
 
 ### Datenschutz und öffentliche Ressourcen

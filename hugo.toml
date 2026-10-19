@@ -254,7 +254,7 @@ defaultContentLanguage = "de"
       weight = 1
 
     [[languages.de.menus.footer]]
-      name = "Datenschutzerklärung"
+      name = "Datenschutz"
       pageRef = "/pages/datenschutz"
       weight = 2
 

@@ -183,6 +183,11 @@ test.describe("CMS admin", () => {
     expect(config).toContain("Interne Prüfinformation");
     expect(config).toContain('type: "date"');
     expect(config).toContain("Bitte vor der Veröffentlichung");
+    expect(config).toContain('label: "Spenden & Förderprojekte"');
+    expect(config).toContain('name: "spenden_cta"');
+    expect(config).toContain('name: "projekte"');
+    expect(config).toContain("Logos bleiben bewusst klein");
+    expect(config).not.toContain('name: "foerderer"');
 
     await page.goto("/spenden/", { waitUntil: "networkidle" });
     await expect(page.getByText("Privater Spender", { exact: true })).toBeVisible();

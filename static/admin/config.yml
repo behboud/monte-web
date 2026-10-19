@@ -452,7 +452,7 @@ collections:
                   - { label: "Überschrift", name: "title", widget: "string", required: true }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }
       - file: "content/de/spenden/_index.md"
-        label: "Spenden"
+        label: "Spenden & Förderprojekte"
         name: "spenden"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
@@ -469,28 +469,50 @@ collections:
                 widget: "list"
                 required: false
                 field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
-          - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
-          - label: "Obere Buttons"
-            name: "top_buttons"
+          - { label: "Einleitung im Slider", name: "hero_intro", widget: "text", required: false }
+          - label: "Einziger Spenden-Button"
+            name: "spenden_cta"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Buttontext", name: "label", widget: "string", default: "Spende besprechen" }
+              - { label: "Ziel", name: "url", widget: "string", hint: "Standardmäßig öffnet sich eine E-Mail an das Fundraising-Team." }
+          - { label: "Überschrift der aktuellen Projekte", name: "projekte_heading", widget: "string", required: false, default: "Aktuelle Projekte" }
+          - label: "Aktuelle Förderprojekte"
+            name: "projekte"
             widget: "list"
             required: false
             fields:
-              - { label: "Text", name: "label", widget: "string" }
-              - { label: "Link", name: "url", widget: "string" }
-              - label: "Darstellung"
-                name: "style"
-                widget: "select"
-                default: "secondary"
-                options:
-                  - { label: "Primär", value: "primary" }
-                  - { label: "Sekundär", value: "secondary" }
-          - label: "Förderer/Spendenliste"
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
+              - { label: "Alternativtext", name: "image_alt", widget: "string", required: false }
+              - { label: "Text", name: "content", widget: "markdown" }
+              - label: "Prüfung der Veröffentlichung"
+                name: "publication_review"
+                widget: "object"
+                required: false
+                hint: "Interne Prüfinformation zu Projekt, Organisation, Bild und Veröffentlichung. Dieser Status blendet das Projekt nicht aus und ersetzt keine rechtliche Freigabe."
+                fields:
+                  - label: "Status"
+                    name: "status"
+                    widget: "select"
+                    required: false
+                    default: "not_reviewed"
+                    options:
+                      - { label: "Nicht geprüft", value: "not_reviewed" }
+                      - { label: "Geprüft", value: "reviewed" }
+                      - { label: "Rückfrage nötig", value: "needs_review" }
+                  - { label: "Nachweis/Referenz", name: "reference", widget: "string", required: false }
+                  - { label: "Prüfdatum", name: "reviewed_at", widget: "datetime", type: "date", required: false }
+                  - { label: "Wiedervorlage", name: "review_until", widget: "datetime", type: "date", required: false }
+          - { label: "Überschrift vergangene Unterstützung", name: "vergangene_heading", widget: "string", required: false, default: "Bisherige Unterstützung" }
+          - label: "Frühere Spenden und Unterstützungen"
             name: "spenden"
             widget: "list"
             required: false
             fields:
               - { label: "Name", name: "title", widget: "string" }
-              - { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
+              - { label: "Bild oder Logo (wird kompakt angezeigt)", name: "image", widget: "image", required: false, hint: "Optional. Logos bleiben bewusst klein, damit der Text im Vordergrund steht. Bitte Bildrechte und Veröffentlichungserlaubnis prüfen." }
               - { label: "Text", name: "content", widget: "markdown" }
               - label: "Prüfung der Veröffentlichung"
                 name: "publication_review"
@@ -510,53 +532,12 @@ collections:
                   - { label: "Nachweis/Referenz", name: "reference", widget: "string", required: false }
                   - { label: "Prüfdatum", name: "reviewed_at", widget: "datetime", type: "date", required: false }
                   - { label: "Wiedervorlage", name: "review_until", widget: "datetime", type: "date", required: false }
-      - file: "content/de/foerderer/_index.md"
-        label: "Förderprojekte"
-        name: "foerderer"
-        fields:
-          - { label: "Titel", name: "title", widget: "string" }
-          - { label: "Beschreibung", name: "description", widget: "string", required: false }
-          - { label: "Entwurf", name: "draft", widget: "boolean", required: false, default: false }
-          - label: "Slider"
-            name: "slider"
+          - label: "Seitenübersicht"
+            name: "toc"
             widget: "object"
             required: false
             fields:
-              - { label: "Aktivieren", name: "enable", widget: "boolean", required: false, default: false }
-              - label: "Bilder"
-                name: "images"
-                widget: "list"
-                required: false
-                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
-          - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
-          - label: "Förderprojekte"
-            name: "projekte"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
-              - { label: "Im Förder-Popup hervorheben", name: "highlight", widget: "boolean", required: false, default: false }
-              - { label: "Text", name: "content", widget: "markdown" }
-              - { label: "Förderlink", name: "url", widget: "string" }
-              - label: "Prüfung der Veröffentlichung"
-                name: "publication_review"
-                widget: "object"
-                required: false
-                hint: "Interne Prüfinformation für Projekt, Organisation, Logo und Link. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
-                fields:
-                  - label: "Status"
-                    name: "status"
-                    widget: "select"
-                    required: false
-                    default: "not_reviewed"
-                    options:
-                      - { label: "Nicht geprüft", value: "not_reviewed" }
-                      - { label: "Geprüft", value: "reviewed" }
-                      - { label: "Rückfrage nötig", value: "needs_review" }
-                  - { label: "Nachweis/Referenz", name: "reference", widget: "string", required: false }
-                  - { label: "Prüfdatum", name: "reviewed_at", widget: "datetime", type: "date", required: false }
-                  - { label: "Wiedervorlage", name: "review_until", widget: "datetime", type: "date", required: false }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
       - file: "content/de/verein/_index.md"
         label: "Verein"
         name: "verein"

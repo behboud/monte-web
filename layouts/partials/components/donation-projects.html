@@ -1,0 +1,29 @@
+{{ $page := . }}
+{{ with .Params.projekte }}
+  <section class="donation-projects" aria-labelledby="donation-projects-title">
+    <header class="donation-section-heading" data-page-outline-content>
+      <h2 id="donation-projects-title">{{ $page.Params.projekte_heading | default "Aktuelle Projekte" }}</h2>
+    </header>
+
+    <div class="donation-project-list" data-page-outline-content>
+      {{ range $index, $project := . }}
+        {{ $projectID := printf "donation-project-%d" (add $index 1) }}
+        <article class="donation-project card" aria-labelledby="{{ $projectID }}">
+          {{ with $project.image }}
+            {{ with resources.Get . }}
+              {{ $imageWidth := cond (lt .Width 1100) .Width 1100 }}
+              {{ $image := .Resize (printf "%dx webp" $imageWidth) }}
+              <figure class="donation-project-media">
+                <img src="{{ $image.RelPermalink }}" alt="{{ $project.image_alt | default $project.title }}" width="{{ $image.Width }}" height="{{ $image.Height }}" loading="lazy" decoding="async" />
+              </figure>
+            {{ end }}
+          {{ end }}
+          <div class="donation-project-copy">
+            <h3 id="{{ $projectID }}">{{ $project.title | markdownify }}</h3>
+            <div class="donation-project-content reading-prose">{{ $page.RenderString (dict "display" "block") ($project.content | default "") }}</div>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

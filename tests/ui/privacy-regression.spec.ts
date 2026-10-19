@@ -41,18 +41,13 @@ test.describe("privacy regressions", () => {
     await context.close();
   });
 
-  test("donation dismissal uses session storage and stays scoped to the browser session", async ({ page }) => {
+  test("donation page does not interrupt with a popup or store a dismissal", async ({ page }) => {
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
-    const popup = page.locator("[data-donation-popup]");
-    await expect(popup).toHaveAttribute("aria-hidden", "false");
-    await popup.locator("[data-donation-popup-close]").click();
-    await expect.poll(() => page.evaluate(() => sessionStorage.getItem("monte-donation-highlight-dismissed"))).toBe("true");
-    await expect.poll(() => popup.getAttribute("hidden")).toBe("");
+    await expect(page.locator("[data-donation-popup]")).toHaveCount(0);
+    await expect(page.locator(".donation-hero-cta")).toBeVisible();
+    expect(await page.evaluate(() => sessionStorage.getItem("monte-donation-highlight-dismissed"))).toBeNull();
+    expect(await page.evaluate(() => localStorage.getItem("monte-donation-highlight-dismissed"))).toBeNull();
     expect(await page.evaluate(() => document.cookie)).toBe("");
-
-    await page.reload({ waitUntil: "networkidle" });
-    await expect(popup).toHaveAttribute("hidden", "");
-    await expect.poll(() => page.evaluate(() => sessionStorage.getItem("monte-donation-highlight-dismissed"))).toBe("true");
   });
 });

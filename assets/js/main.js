@@ -96,31 +96,27 @@
     window.addEventListener("scroll", updateStickyNavigation, { passive: true });
   }
 
-  const heroSliderElement = document.querySelector(".hero-slider");
-  if (heroSliderElement && typeof Swiper !== "undefined") {
-    new Swiper(heroSliderElement, {
-      effect: "fade",
-      loop: true,
-      speed: 800,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-    });
-  }
+  const initializeSlider = (sliderElement) => {
+    if (!sliderElement || typeof Swiper === "undefined") {
+      return;
+    }
 
-  const schuleSliderElement = document.querySelector(".schule-slider");
-  if (schuleSliderElement && typeof Swiper !== "undefined") {
-    new Swiper(schuleSliderElement, {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    new Swiper(sliderElement, {
       effect: "fade",
-      loop: true,
-      speed: 800,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
+      loop: !reduceMotion,
+      speed: reduceMotion ? 0 : 800,
+      autoplay: reduceMotion
+        ? false
+        : {
+            delay: 5000,
+            disableOnInteraction: false,
+          },
     });
-  }
+  };
+
+  initializeSlider(document.querySelector(".hero-slider"));
+  initializeSlider(document.querySelector(".schule-slider"));
 
   const backToTop = document.querySelector("[data-back-to-top]");
   if (backToTop) {
@@ -138,67 +134,6 @@
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     });
-  }
-
-  const donationPopup = document.querySelector("[data-donation-popup]");
-  if (donationPopup) {
-    const donationOptions = [...donationPopup.querySelectorAll("[data-donation-highlight-option]")];
-    const donationPopupStorageKey = "monte-donation-highlight-dismissed";
-    let wasDismissed = false;
-
-    try {
-      wasDismissed = window.sessionStorage.getItem(donationPopupStorageKey) === "true";
-    } catch {
-      wasDismissed = false;
-    }
-
-    if (donationOptions.length && !wasDismissed) {
-      const selectedOption = donationOptions[Math.floor(Math.random() * donationOptions.length)];
-      const dialog = donationPopup.querySelector('[role="dialog"]');
-      const selectedTitle = selectedOption.querySelector("h2[id]");
-      const closeButton = donationPopup.querySelector("[data-donation-popup-close]");
-      const dismissButton = donationPopup.querySelector("[data-donation-popup-dismiss]");
-
-      donationOptions.forEach((option) => {
-        option.hidden = option !== selectedOption;
-      });
-      if (dialog && selectedTitle) {
-        dialog.setAttribute("aria-labelledby", selectedTitle.id);
-      }
-
-      donationPopup.removeAttribute("hidden");
-      donationPopup.setAttribute("aria-hidden", "true");
-
-      const closeDonationPopup = () => {
-        donationPopup.setAttribute("data-open", "false");
-        donationPopup.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("donation-popup-open");
-        try {
-          window.sessionStorage.setItem(donationPopupStorageKey, "true");
-        } catch {
-          // The popup remains dismissible when session storage is unavailable.
-        }
-        document.removeEventListener("keydown", handleKeydown);
-        window.setTimeout(() => donationPopup.setAttribute("hidden", ""), 220);
-      };
-
-      const handleKeydown = (event) => {
-        if (event.key === "Escape") {
-          closeDonationPopup();
-        }
-      };
-
-      closeButton?.addEventListener("click", closeDonationPopup);
-      dismissButton?.addEventListener("click", closeDonationPopup);
-      document.addEventListener("keydown", handleKeydown);
-
-      window.requestAnimationFrame(() => {
-        donationPopup.setAttribute("data-open", "true");
-        donationPopup.setAttribute("aria-hidden", "false");
-        document.body.classList.add("donation-popup-open");
-        closeButton?.focus({ preventScroll: true });
-      });
-    }
   }
 
   const mobileToc = document.querySelector("[data-mobile-toc]");
@@ -485,6 +420,16 @@
       if (pending.length) {
         revealGroups.push(pending);
       }
+    });
+
+    document.querySelectorAll(".donation-project").forEach((project) => {
+      const projectParts = [project.querySelector(".donation-project-media"), project.querySelector(".donation-project-copy h3"), project.querySelector(".donation-project-content")].filter(Boolean);
+      if (projectParts.length) revealGroups.push(projectParts);
+    });
+
+    document.querySelectorAll(".past-donation-card").forEach((card) => {
+      const donationParts = [card.querySelector(".past-donation-copy h3"), card.querySelector(".past-donation-content"), card.querySelector(".past-donation-media")].filter(Boolean);
+      if (donationParts.length) revealGroups.push(donationParts);
     });
 
     const revealTargets = [...new Set(revealGroups.flat())];

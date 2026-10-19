@@ -1,0 +1,27 @@
+{{ $sliderImages := .Params.slider.images }}
+{{ $heroIntro := .Params.hero_intro | default "Ihre Spende stärkt Lernräume und das gemeinsame Lernen an unserer Schule." }}
+{{ $cta := .Params.spenden_cta | default dict }}
+{{ $ctaLabel := $cta.label | default "Spende besprechen" }}
+{{ $ctaURL := $cta.url | default "mailto:Verwaltung@montessorischule-gilching.de?subject=Spendenanfrage%20Montessorischule%20Gilching&body=Guten%20Tag%2C%0A%0Aich%20m%C3%B6chte%20die%20Montessorischule%20Gilching%20unterst%C3%BCtzen.%20Bitte%20nehmen%20Sie%20Kontakt%20mit%20mir%20auf.%0A%0AViele%20Gr%C3%BC%C3%9Fe" }}
+{{ $ctaHref := $ctaURL }}
+{{ if not (or (hasPrefix $ctaURL "http://") (hasPrefix $ctaURL "https://") (hasPrefix $ctaURL "mailto:")) }}
+  {{ $ctaHref = partial "components/link-url.html" $ctaURL }}
+{{ end }}
+
+
+<section class="donation-hero" aria-label="Spendenaufruf">
+  <div class="donation-hero-media" aria-hidden="true">
+    {{ partial "components/slider.html" (dict
+      "Images" $sliderImages
+      "ContainerClass" "donation-hero-slider schule-slider swiper"
+      "Class" "swiper-wrapper"
+      "ClassImage" "swiper-slide"
+      "Loading" "eager"
+      "Zoomable" false)
+    }}
+  </div>
+  <div class="donation-hero-copy">
+    <p>{{ $heroIntro }}</p>
+    <a class="donation-hero-cta" href="{{ $ctaHref }}">{{ $ctaLabel }}</a>
+  </div>
+</section>
