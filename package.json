@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "behboud kalantary",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "hugo server --environment development --baseURL http://localhost:1313/ --disableFastRender --noHTTPCache",
     "build": "hugo --gc --minify",
@@ -16,7 +19,7 @@
     "autoprefixer": "^10.6.1",
     "http-server": "^14.1.1",
     "postcss": "^8.5.28",
-    "postcss-cli": "^11.0.1",
+    "postcss-cli": "^12.0.0",
     "postcss-import": "^17.0.0",
     "prettier": "^3.9.8",
     "prettier-plugin-go-template": "0.0.15",
