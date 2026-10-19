@@ -83,9 +83,6 @@
     );
   });
 
-  const htmlElement = document.documentElement;
-  htmlElement.classList.remove("dark");
-
   const stickyNavigation = document.querySelector("[data-sticky-navigation]");
   if (stickyNavigation) {
     const updateStickyNavigation = () => {

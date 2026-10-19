@@ -1,12 +1,5 @@
 <!doctype html>
-<html
-  itemscope
-  class="{{- if not site.Params.theme_switcher -}}
-    {{- site.Params.theme_default -}}
-  {{- end -}}
-  "
-  lang="{{ site.Language.Locale | default `de-DE` }}"
-  itemtype="http://schema.org/WebPage">
+<html itemscope lang="{{ site.Language.Locale | default `de-DE` }}" itemtype="http://schema.org/WebPage">
   <head>
     <!-- head (don't cache it) -->
     {{ partial "essentials/head.html" . }}
@@ -19,11 +12,7 @@
 
   <body class="bg-body container mx-auto">
     <div id="page">
-      <!-- cache partial only in production -->
-      {{ if hugo.IsProduction }}
-        {{ partialCached "preloader.html" . }}
-      {{ else }}
-        {{ partial "preloader.html" . }}
+      {{ if not hugo.IsProduction }}
         <!-- tailwind size indicator -->
         {{ partial "components/tw-size-indicator.html" . }}
       {{ end }}

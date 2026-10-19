@@ -1,15 +1,8 @@
 @import "tailwindcss" source(none);
 @config "./tailwind.config.js";
 
-@import "search.css";
 @import "social-share.css";
-@import "gallery-slider.css";
 @import "images.css";
-@import "toc.css";
-@import "tab.css";
-@import "accordion.css";
-@import "modal.css";
-@import "notice.css";
 
 @font-face {
   font-family: "Overpass";

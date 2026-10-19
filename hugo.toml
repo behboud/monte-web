@@ -1,16 +1,9 @@
 ######################## default configuration ####################
 baseURL = "/"
-ignoreFiles = ["\\.envit/.*"]
 title = "Montessori Schule Gilching (München West)"
 timeZone = "Europe/Berlin"
 summaryLength = 10
-hasCJKLanguage = false
 defaultContentLanguage = "de"
-
-########################### Services #############################
-[services]
-  [services.disqus]
-    shortname = "themefisher-template"
 
 ########################## Permalinks ############################
 [permalinks.page]
@@ -18,12 +11,6 @@ defaultContentLanguage = "de"
 
 [permalinks.section]
   elternengagement = "/elternengagement/"
-
-########################## Pagination ############################
-[pagination]
-  disableAliases = false
-  pagerSize = 10
-  path = "page"
 
 ############################# Build ##############################
 [build]
@@ -52,55 +39,10 @@ defaultContentLanguage = "de"
     target = "assets/notwatching/hugo_stats.json"
 
   [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/search"
-
-  [[module.imports]]
     path = "github.com/gethugothemes/hugo-modules/images"
 
   [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/videos"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/gzip-caching"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/accordion"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/table-of-contents"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/tab"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/modal"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/gallery-slider"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/components/preloader"
-
-  [[module.imports]]
     path = "github.com/gethugothemes/hugo-modules/components/social-share"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/components/cookie-consent"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/components/announcement"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/components/custom-script"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/components/render-link"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/shortcodes/button"
-
-  [[module.imports]]
-    path = "github.com/gethugothemes/hugo-modules/shortcodes/notice"
 
   [[module.imports]]
     path = "github.com/gethugothemes/hugo-modules/seo-tools/basic-seo"
@@ -117,18 +59,12 @@ defaultContentLanguage = "de"
     name = "date"
     weight = 10
 
-############################# Outputs ############################
-[outputs]
-  home = ["HTML", "RSS", "SearchIndex"]
-
 ############################# Imaging ############################
 [imaging]
   resampleFilter = "Lanczos"
   [imaging.jpeg]
     quality = 80
   [imaging.webp]
-    quality = 80
-  [imaging.avif]
     quality = 80
 
 ########################### Security ##############################
@@ -145,33 +81,11 @@ defaultContentLanguage = "de"
     dir = ":resourceDir/_gen"
     maxAge = "720h"
 
-############################ Markup ##############################
-[markup]
-  [markup.goldmark.renderer]
-    unsafe = true
-  [markup.highlight]
-    style = "monokai"
-    lineNumbersInTable = false
-  [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 5
-    ordered = true
-
-########################### Output Format ##########################
-[outputFormats]
-  [outputFormats.SearchIndex]
-    mediaType = "application/json"
-    baseName = "searchindex"
-    isPlainText = true
-    notAlternative = true
-
 ########################### Languages ##############################
 [languages]
   [languages.de]
-    label = "Deutsch"
     locale = "de-DE"
     contentDir = "content/de"
-    weight = 1
 
 ############################# Menus ################################
 # Pages declare their menus in front matter; additional links are stored with the contact page.
@@ -179,78 +93,15 @@ defaultContentLanguage = "de"
 ############################# Params ###############################
 [params]
   favicon = "images/favicon-96x96.png"
-  logo = "images/logo-montessorischulegilching.gif"
-  logo_width = "88px"
-  logo_height = "118px"
-  logo_webp = true
-  logo_text = "Montessori Schule Gilching"
-  navbar_fixed = true
-  theme_switcher = false
-  theme_default = "light"
-  mainSections = ["aktuelles"]
-  contact_form_action = "#"
-  custom_script = ""
-  copyright = "© Montessori Schule Gilching (Münchner Westen)"
-
-  [params.preloader]
-    enable = false
-    preloader = ""
-
-  [params.navigation_button]
-    enable = false
-    label = "Kontakt"
-    link = "contact"
-
-  [params.search]
-    enable = false
-    primary_color = "#121212"
-    include_sections = ["aktuelles"]
-    show_image = true
-    show_description = true
-    show_tags = true
-    show_categories = true
-
-  [params.announcement]
-    enable = false
-    expire_days = 7
-    content = "You must replace the **baseURL** in **hugo.toml** file when deploying, you can manage this announcement from the **params.toml** file."
 
   [params.metadata]
     keywords = ["Montessori", "Grundschule", "Schule", "Gilching", "München", "Westen"]
     description = "Montessori Schule Gilching (München Westen)"
     author = "Monrtessori Schule Gilching"
 
-  [params.site_verification]
-    google = ""
-    bing = ""
-    baidu = ""
-    facebook = ""
-    mastodon = ""
-
-  [params.cookies]
-    enable = false
-    expire_days = 60
-    content = "This site uses cookies. By continuing to use this website, you agree to their use."
-    button = "I Accept"
-
-  [params.mermaid]
-    js_url = "https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs"
-
-  [params.widgets]
-    sidebar = ["categories", "tags"]
-
-  [params.subscription]
-    enable = false
-    mailchimp_form_action = "https://gmail.us4.list-manage.com/subscribe/post?u=463ee871f45d2d93748e77cad&amp;id=a0a2c6d074"
-    mailchimp_form_name = "b_463ee871f45d2d93748e77cad_a0a2c6d074"
-
 ############################# Plugins ##############################
   [[params.plugins.css]]
     link = "plugins/swiper/swiper-bundle.css"
-    lazy = true
-
-  [[params.plugins.css]]
-    link = "plugins/glightbox/glightbox.css"
     lazy = true
 
   [[params.plugins.css]]
@@ -270,37 +121,5 @@ defaultContentLanguage = "de"
     lazy = false
 
   [[params.plugins.js]]
-    link = "js/search.js"
-    lazy = false
-
-  [[params.plugins.js]]
     link = "plugins/swiper/swiper-bundle.js"
     lazy = false
-
-  [[params.plugins.js]]
-    link = "plugins/cookie.js"
-    lazy = false
-
-  [[params.plugins.js]]
-    link = "plugins/glightbox/glightbox.js"
-    lazy = true
-
-  [[params.plugins.js]]
-    link = "js/gallery-slider.js"
-    lazy = true
-
-  [[params.plugins.js]]
-    link = "js/accordion.js"
-    lazy = true
-
-  [[params.plugins.js]]
-    link = "js/tab.js"
-    lazy = true
-
-  [[params.plugins.js]]
-    link = "js/modal.js"
-    lazy = true
-
-  [[params.plugins.js]]
-    link = "plugins/youtube-lite.js"
-    lazy = true
