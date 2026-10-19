@@ -1,4 +1,5 @@
 {{ $items := .Items }}
+{{ $page := .Page }}
 {{ $sectionLabel := .SectionLabel | default "Unsere Förderprojekte" }}
 {{ with $items }}
   <section class="container ml-3 mb-12" aria-label="{{ $sectionLabel }}">
@@ -10,7 +11,7 @@
           </div>
           <div class="spenden-card-body">
             <h2 class="spenden-card-title">{{ .title | markdownify }}</h2>
-            <div class="spenden-card-content reading-measure reading-prose">{{ .content | markdownify }}</div>
+            <div class="spenden-card-content reading-measure reading-prose">{{ $page.RenderString (dict "display" "block") (.content | default "") }}</div>
             {{ if .url }}
               {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
               <a

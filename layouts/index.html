@@ -1,19 +1,14 @@
 {{ define "main" }}
   {{ $anniversaryLogo := resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
 
+
   <!-- Banner -->
   {{ with .Params.banner }}
     <div class="ml-3 mb-12">
       <div class="container pt-8">
         <div class="justify-center text-center">
           <div class="home-banner-heading">
-            <img
-              class="home-banner-logo"
-              src="{{ $anniversaryLogo.RelPermalink }}"
-              alt="20 Jahre Montessori Schule Gilching"
-              width="{{ $anniversaryLogo.Width }}"
-              height="{{ $anniversaryLogo.Height }}"
-            />
+            <img class="home-banner-logo" src="{{ $anniversaryLogo.RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ $anniversaryLogo.Width }}" height="{{ $anniversaryLogo.Height }}" />
             <h1 class="home-banner-title">{{ .title }}</h1>
           </div>
           {{ if .content }}
@@ -42,7 +37,7 @@
     {{ partial "components/aktuelles-grid.html" (dict "Pages" $pages.ByDate.Reverse "Limit" 4) }}
     {{ with .Content }}
       <div class="reading-prose">
-        {{ . | markdownify }}
+        {{ . }}
       </div>
     {{ end }}
   </div>

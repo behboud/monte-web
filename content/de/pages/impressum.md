@@ -2,6 +2,7 @@
 title: "Impressum"
 draft: false
 toc:
+  enable: true
   title: "Seitenübersicht"
   sections:
     - label: "Impressum"

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.227.2/schema/sveltia-cms.json
 
 backend:
   name: github
@@ -26,9 +26,13 @@ media_libraries:
       svg:
         optimize: true
 display_url: "https://behboud.github.io/monte-web/"
-logo_url: /monte-web/admin/cms-logo.png
-locale: "de"
+logo:
+  src: /monte-web/admin/cms-logo.png
+  show_in_header: true
 app_title: "Montessorri Schule Gilching CMS"
+field_defaults:
+  richtext:
+    editor_components: [code-block, image, circle-items]
 collections:
   - name: "site_settings"
     label: "Site Settings"
@@ -49,12 +53,11 @@ collections:
       preview: false
     fields:
       - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Stimmungsbild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+      - { label: "Stimmungsbild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
       - name: "tags"
         widget: "select"
         label: "Tags"
         multiple: true
-        create: true
         options: ["Mitglieder", "Termin", "Projekt", "Verein"]
       - { label: "Inhalt", name: "body", widget: "markdown" }
       - { label: "Datum", name: "date", widget: "hidden", default: "{{now}}" }
@@ -81,9 +84,8 @@ collections:
                 name: "images"
                 widget: image
                 multiple: true
-                allow_add: true
                 default: []
-                comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen. Bei mehreren Bildern die Prüfung je Bild dokumentieren."
+                hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen. Bei mehreren Bildern die Prüfung je Bild dokumentieren."
           - { label: "Inhalt", name: "body", widget: "markdown", required: false }
   - name: "pages"
     label: "Einzelseiten"
@@ -119,15 +121,7 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
-              - label: "Bereiche"
-                name: "sections"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
       - file: "content/de/pages/datenschutz.md"
         label: "Datenschutz"
@@ -158,15 +152,7 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
-              - label: "Bereiche"
-                name: "sections"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
       - file: "content/de/pages/karriere.md"
         label: "Karriere"
@@ -197,23 +183,20 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
               - label: "Bereiche"
                 name: "sections"
                 widget: "list"
                 required: false
                 fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Überschrift", name: "title", widget: "string", required: true }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }
                   - label: "Unterpunkte"
                     name: "children"
                     widget: "list"
                     required: false
                     fields:
-                      - { label: "Label", name: "label", widget: "string" }
-                      - { label: "Überschrift", name: "title", widget: "string", required: false }
+                      - { label: "Überschrift", name: "title", widget: "string", required: true }
                       - { label: "Inhalt", name: "content", widget: "markdown", required: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
       - file: "content/de/pages/presse.md"
@@ -245,15 +228,7 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
-              - label: "Bereiche"
-                name: "sections"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
           - { label: "Inhalt", name: "body", widget: "markdown" }
   - name: "speiseplan"
     label: "Speiseplan"
@@ -276,7 +251,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Wochenplan"
             name: "meal_plan"
             widget: "object"
@@ -336,23 +311,20 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
               - label: "Bereiche"
                 name: "sections"
                 widget: "list"
                 required: false
                 fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Überschrift", name: "title", widget: "string", required: true }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }
                   - label: "Unterpunkte"
                     name: "children"
                     widget: "list"
                     required: false
                     fields:
-                      - { label: "Label", name: "label", widget: "string" }
-                      - { label: "Überschrift", name: "title", widget: "string", required: false }
+                      - { label: "Überschrift", name: "title", widget: "string", required: true }
                       - { label: "Inhalt", name: "content", widget: "markdown", required: false }
           - label: "Social Links"
             name: "social_links"
@@ -384,7 +356,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Bereichslinks"
             name: "section_cards"
             widget: "object"
@@ -400,7 +372,7 @@ collections:
                 fields:
                   - { label: "Titel", name: "title", widget: "string" }
                   - { label: "Kurzbeschreibung", name: "description", widget: "text" }
-                  - { label: "Bild für den Bereichslink", name: "image", widget: "image", comment: "Dieses Bild erscheint im Bereichslink." }
+                  - { label: "Bild für den Bereichslink", name: "image", widget: "image", hint: "Dieses Bild erscheint im Bereichslink." }
                   - { label: "Bild zusätzlich als breites Abschnittsbild anzeigen", name: "show_banner", widget: "boolean", required: false, default: true }
                   - { label: "Zielabschnitt (z. B. #schulalltag)", name: "href", widget: "string" }
           - label: "Inhalt"
@@ -408,31 +380,27 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
               - label: "Bereiche"
                 name: "sections"
                 widget: "list"
                 required: false
                 fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Überschrift", name: "title", widget: "string", required: true }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }
                   - label: "Unterpunkte"
                     name: "children"
                     widget: "list"
                     required: false
                     fields:
-                      - { label: "Label", name: "label", widget: "string" }
-                      - { label: "Überschrift", name: "title", widget: "string", required: false }
+                      - { label: "Überschrift", name: "title", widget: "string", required: true }
                       - { label: "Inhalt", name: "content", widget: "markdown", required: false }
                       - label: "Unterpunkte"
                         name: "children"
                         widget: "list"
                         required: false
                         fields:
-                          - { label: "Label", name: "label", widget: "string" }
-                          - { label: "Überschrift", name: "title", widget: "string", required: false }
+                          - { label: "Überschrift", name: "title", widget: "string", required: true }
                           - { label: "Inhalt", name: "content", widget: "markdown", required: false }
       - file: "content/de/elternengagement/_index.md"
         label: "Elternengagement"
@@ -451,7 +419,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Bereichslinks"
             name: "section_cards"
             widget: "object"
@@ -475,15 +443,13 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
               - label: "Bereiche"
                 name: "sections"
                 widget: "list"
                 required: false
                 fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Überschrift", name: "title", widget: "string", required: true }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }
       - file: "content/de/spenden/_index.md"
         label: "Spenden"
@@ -502,7 +468,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
           - label: "Obere Buttons"
             name: "top_buttons"
@@ -524,13 +490,13 @@ collections:
             required: false
             fields:
               - { label: "Name", name: "title", widget: "string" }
-              - { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
+              - { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
               - { label: "Text", name: "content", widget: "markdown" }
               - label: "Prüfung der Veröffentlichung"
                 name: "publication_review"
                 widget: "object"
                 required: false
-                comment: "Interne Prüfinformation. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
+                hint: "Interne Prüfinformation. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
                 fields:
                   - label: "Status"
                     name: "status"
@@ -561,7 +527,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - { label: "Überschrift", name: "uberschrift", widget: "string", required: false }
           - label: "Förderprojekte"
             name: "projekte"
@@ -569,7 +535,7 @@ collections:
             required: false
             fields:
               - { label: "Titel", name: "title", widget: "string" }
-              - { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
+              - { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
               - { label: "Im Förder-Popup hervorheben", name: "highlight", widget: "boolean", required: false, default: false }
               - { label: "Text", name: "content", widget: "markdown" }
               - { label: "Förderlink", name: "url", widget: "string" }
@@ -577,7 +543,7 @@ collections:
                 name: "publication_review"
                 widget: "object"
                 required: false
-                comment: "Interne Prüfinformation für Projekt, Organisation, Logo und Link. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
+                hint: "Interne Prüfinformation für Projekt, Organisation, Logo und Link. Dieser Status blendet den Eintrag nicht aus und ersetzt keine rechtliche Freigabe."
                 fields:
                   - label: "Status"
                     name: "status"
@@ -607,7 +573,7 @@ collections:
                 name: "images"
                 widget: "list"
                 required: false
-                field: { label: "Bild", name: "image", widget: "image", comment: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
+                field: { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung die Bildrechte und die Einwilligung der erkennbaren Personen prüfen." }
           - label: "Bereichslinks"
             name: "section_cards"
             widget: "object"
@@ -631,13 +597,11 @@ collections:
             widget: "object"
             required: false
             fields:
-              - { label: "Anzeigen", name: "enable", widget: "boolean", required: false, default: false }
-              - { label: "Titel", name: "title", widget: "string", required: false, default: "Seitenübersicht" }
+              - { label: "Seitenübersicht anzeigen", name: "enable", widget: "boolean", required: false, default: false }
               - label: "Bereiche"
                 name: "sections"
                 widget: "list"
                 required: false
                 fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "Überschrift", name: "title", widget: "string", required: false }
+                  - { label: "Überschrift", name: "title", widget: "string", required: true }
                   - { label: "Inhalt", name: "content", widget: "markdown", required: false }

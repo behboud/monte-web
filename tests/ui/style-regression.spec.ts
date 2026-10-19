@@ -556,7 +556,7 @@ test.describe("style regressions", () => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/schule/", { waitUntil: "networkidle" });
 
-      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image)").evaluateAll((images) =>
+      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image):not(.circle-items-image)").evaluateAll((images) =>
         images.map((image) => {
           const textBlock = image.closest("p, ul, ol, blockquote") ?? image.closest(".reading-prose");
           const imageBox = image.getBoundingClientRect();
@@ -632,17 +632,148 @@ test.describe("style regressions", () => {
     }
   });
 
-  test("legacy section TOC widgets stay disabled", async ({ page }) => {
+  test("Bildreihe items respect their column limit and stay responsive without list markers", async ({ page }) => {
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
+    const layout = await page.evaluate(() => {
+      const prose = document.createElement("div");
+      prose.className = "reading-prose";
+      const circleItems = document.createElement("div");
+      circleItems.className = "circle-items";
+      const grid = document.createElement("ul");
+      grid.className = "circle-items-grid";
+      grid.dataset.columns = "3";
+
+      for (let index = 0; index < 8; index += 1) {
+        const item = document.createElement("li");
+        item.className = "circle-items-item";
+        const figure = document.createElement("figure");
+        figure.className = "circle-items-figure";
+        const frame = document.createElement("div");
+        frame.className = "circle-items-image-frame";
+        const caption = document.createElement("figcaption");
+        caption.className = "circle-items-caption";
+        const title = document.createElement("p");
+        title.className = "circle-items-title";
+        title.textContent = `Teammitglied ${index + 1}`;
+        caption.append(title);
+        figure.append(frame, caption);
+        item.append(figure);
+        grid.append(item);
+      }
+
+      circleItems.append(grid);
+      prose.append(circleItems);
+      document.querySelector("main")?.append(prose);
+      const getRowCounts = () => {
+        const rowCounts = new Map<number, number>();
+        [...grid.children].forEach((item) => {
+          const row = Math.round(item.getBoundingClientRect().top);
+          rowCounts.set(row, (rowCounts.get(row) ?? 0) + 1);
+        });
+        return [...rowCounts.values()];
+      };
+      const configuredColumns = [1, 2, 3, 4].map((maxColumns) => {
+        grid.dataset.columns = String(maxColumns);
+        return Math.max(...getRowCounts());
+      });
+      grid.dataset.columns = "3";
+
+      const frame = grid.querySelector(".circle-items-image-frame");
+      if (!frame) throw new Error("The circle item image frame should exist.");
+      const frameRect = frame.getBoundingClientRect();
+      const gridRect = grid.getBoundingClientRect();
+      const containerRect = circleItems.getBoundingClientRect();
+      const firstRowTop = grid.children[0]?.getBoundingClientRect().top;
+      const lastRowTop = grid.children[grid.children.length - 1]?.getBoundingClientRect().top;
+      const rowCenters = (top: number | undefined) =>
+        [...grid.children]
+          .filter((item) => Math.abs(item.getBoundingClientRect().top - (top ?? 0)) < 1)
+          .map((item) => {
+            const rect = item.getBoundingClientRect();
+            return rect.left + rect.width / 2;
+          });
+      const firstRowCenters = rowCenters(firstRowTop);
+      const lastRowCenters = rowCenters(lastRowTop);
+      const rowCounts = getRowCounts();
+      const gridStyle = getComputedStyle(grid);
+
+      return {
+        columns: Math.max(...rowCounts),
+        configuredColumns,
+        gridWidth: gridRect.width,
+        containerWidth: containerRect.width,
+        firstRowSpread: firstRowCenters[firstRowCenters.length - 1] - firstRowCenters[0],
+        lastRowCenter: (lastRowCenters.reduce((sum, center) => sum + center, 0) / lastRowCenters.length - gridRect.left) / gridRect.width,
+        listStyle: gridStyle.listStyleType,
+        inlinePadding: gridStyle.paddingInlineStart,
+        frameRadius: getComputedStyle(frame).borderRadius,
+        frameIsSquare: Math.abs(frameRect.width - frameRect.height) < 1,
+        rowCount: rowCounts.length,
+        itemCount: grid.children.length,
+        linkCount: grid.querySelectorAll("a").length,
+      };
+    });
+
+    const isNarrow = (page.viewportSize()?.width ?? 0) < 640;
+    expect(layout.columns).toBe(isNarrow ? 2 : 3);
+    expect(layout.configuredColumns).toEqual(isNarrow ? [1, 2, 2, 3] : [1, 2, 3, 4]);
+    expect(Math.abs(layout.gridWidth - layout.containerWidth)).toBeLessThan(1);
+    expect(layout.firstRowSpread / layout.gridWidth).toBeGreaterThan(0.45);
+    expect(layout.lastRowCenter).toBeCloseTo(0.5, 1);
+    expect(layout.listStyle).toBe("none");
+    expect(layout.inlinePadding).toBe("0px");
+    expect(layout.frameRadius).toBe("50%");
+    expect(layout.frameIsSquare).toBe(true);
+    expect(layout.rowCount).toBe(isNarrow ? 4 : 3);
+    expect(layout.itemCount).toBe(8);
+    expect(layout.linkCount).toBe(0);
+  });
+
+  test("requested staff sections render eight placeholder portraits", async ({ page }) => {
+    const sections = [
+      { route: "/schule/", id: "schulleitung-und-team", titlePrefix: "Name ergänzen" },
+      { route: "/schule/", id: "verwaltung", titlePrefix: "Name ergänzen" },
+      { route: "/schule/", id: "vorstand", titlePrefix: "Vorstandsmitglied" },
+      { route: "/verein/", id: "vorstand", titlePrefix: "Vorstandsmitglied" },
+    ];
+
+    for (const section of sections) {
+      await page.goto(section.route, { waitUntil: "networkidle" });
+
+      const content = page.locator(`#${section.id} + .reading-prose`);
+      await expect(content.locator(".circle-items-item")).toHaveCount(8);
+      await expect(content.locator('img[src*="image-placeholder.png"]')).toHaveCount(8);
+      await expect(content.locator('img[alt="Platzhalterbild"]')).toHaveCount(8);
+      await expect(content.locator(".circle-items-title")).toHaveCount(8);
+      await expect(content.locator(".circle-items-title").first()).toHaveText(`${section.titlePrefix} 1`);
+      await expect(content.locator(".circle-items-title").last()).toHaveText(`${section.titlePrefix} 8`);
+      const grid = content.locator(".circle-items-grid");
+      await expect(grid).toHaveAttribute("data-columns", "3");
+      const maxItemsPerRow = await grid.evaluate((element) => {
+        const rowCounts = new Map<number, number>();
+        [...element.children].forEach((item) => {
+          const row = Math.round(item.getBoundingClientRect().top);
+          rowCounts.set(row, (rowCounts.get(row) ?? 0) + 1);
+        });
+        return Math.max(...rowCounts.values());
+      });
+      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? 2 : 3);
+    }
+  });
+
+  test("enabled CMS outline uses the thin rail without legacy section TOCs", async ({ page }) => {
+    await page.goto("/elternengagement/", { waitUntil: "networkidle" });
+
+    await expect(page.locator("[data-page-outline]")).toHaveCount(1);
     await expect(page.locator(".schule-toc")).toHaveCount(0);
     await expect(page.locator("[data-mobile-toc]")).toHaveCount(0);
   });
 
-  test("desktop content outline starts after the slider and tracks the active heading", async ({ page }) => {
-    test.skip((page.viewportSize()?.width ?? 0) < 1280, "the desktop outline is omitted below wide desktop sizes");
+  test("enabled CMS outline starts after the slider and tracks the active heading", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 1100, "the desktop outline is omitted below 1100px");
 
-    await page.goto("/schule/", { waitUntil: "networkidle" });
+    await page.goto("/elternengagement/", { waitUntil: "networkidle" });
 
     const outline = page.locator("[data-page-outline]");
     const outlineLinks = outline.locator("[data-page-outline-link]");
@@ -668,19 +799,20 @@ test.describe("style regressions", () => {
     await expect(outline).toBeVisible();
     await expect(outlineLinks.first()).toHaveAttribute("aria-current", "location");
     await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
-    await expect(outline.locator("[data-page-outline-title]")).toHaveText("Unsere Schule");
+    await expect(outline.locator("[data-page-outline-title]")).toHaveText("Elternengagement");
     await expect(outlineLinks).toHaveCount(await contentHeadings.count());
-    await expect(outlineLinks.filter({ hasText: "Das sind wir" })).toHaveCount(1);
-    await expect(outlineLinks.filter({ hasText: "Die Verwaltung" })).toHaveCount(0);
+    await expect(outlineLinks.filter({ hasText: /^Möglichkeiten$/ })).toHaveCount(1);
+    await expect(outlineLinks.filter({ hasText: /^Weiterführende Seiten$/ })).toHaveCount(1);
     await expect(outlineLinks.first()).toHaveCSS("color", "rgba(0, 0, 0, 0)");
     const collapsedMarkerColor = await outlineLinks.first().evaluate((link) => getComputedStyle(link, "::before").backgroundColor);
     expect(collapsedMarkerColor).not.toBe("rgba(0, 0, 0, 0)");
 
     await page.mouse.move(16, 120);
-    const sectionLink = outlineLinks.filter({ hasText: "Wer wir sind" });
+    const sectionLink = outlineLinks.filter({ hasText: /^Möglichkeiten$/ });
     await expect(sectionLink).not.toHaveCSS("color", "rgba(0, 0, 0, 0)");
+    const sectionHref = await sectionLink.getAttribute("href");
     await sectionLink.click();
-    await expect(page).toHaveURL(/#wer-wir-sind$/);
+    await expect.poll(() => new URL(page.url()).hash).toBe(sectionHref);
     await expect.poll(() => sectionLink.getAttribute("aria-current")).toBe("location");
 
     await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
@@ -694,16 +826,95 @@ test.describe("style regressions", () => {
   });
 
   test("desktop content outline reads Markdown headings and omits deeper heading levels", async ({ page }) => {
-    test.skip((page.viewportSize()?.width ?? 0) < 1280, "the desktop outline is omitted below wide desktop sizes");
+    test.skip((page.viewportSize()?.width ?? 0) < 1100, "the desktop outline is omitted below 1100px");
 
     await page.goto("/datenschutz/", { waitUntil: "networkidle" });
 
     const outline = page.locator("[data-page-outline]");
     const outlineLinks = outline.locator("[data-page-outline-link]");
     await expect(outline).toBeVisible();
+    await expect(outline.locator("[data-page-outline-title]")).toHaveText("Datenschutz");
     await expect(outlineLinks.filter({ hasText: "1. Datenschutz auf einen Blick" })).toHaveCount(1);
+    await expect(outlineLinks.filter({ hasText: /^2\. Hosting$/ })).toHaveCount(1);
+    await expect(outlineLinks.filter({ hasText: /^Hosting$/ })).toHaveCount(0);
     await expect(outline.getByRole("link", { name: "Allgemeine Hinweise", exact: true })).toHaveCount(0);
     await expect(outlineLinks).toHaveCount(await page.locator("[data-page-outline-content] :is(h2, h3)").count());
+  });
+
+  test("the CMS outline toggle hides the thin rail when disabled", async ({ page }) => {
+    await page.goto("/verein/", { waitUntil: "networkidle" });
+
+    await expect(page.locator("[data-page-outline]")).toHaveCount(0);
+    await expect(page.locator(".schule-toc")).toHaveCount(0);
+    await expect(page.locator("[data-mobile-toc]")).toHaveCount(0);
+  });
+
+  test("long outline headings stay constrained and outside the content column", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 1100, "the desktop outline is omitted below 1100px");
+
+    const longHeading = "Verbraucherstreitbeilegung/Universalschlichtungsstelle";
+    const outline = page.locator("[data-page-outline]");
+    const longHeadingLink = outline.locator("[data-page-outline-link]").filter({ hasText: longHeading });
+
+    for (const width of [1366, 1280, 1100]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/impressum/", { waitUntil: "networkidle" });
+      await expect(outline).toBeVisible();
+      await expect(longHeadingLink).toHaveText(longHeading);
+      await expect(outline.locator("[data-page-outline-link]").filter({ hasText: /^Streitbeilegung$/ })).toHaveCount(0);
+
+      const geometry = await page.evaluate((headingText) => {
+        const link = [...document.querySelectorAll("[data-page-outline-link]")].find((element) => element.textContent?.trim() === headingText);
+        const heading = [...document.querySelectorAll("[data-page-outline-content] h2")].find((element) => element.textContent?.trim() === headingText);
+        if (!link || !heading) throw new Error("The outline link or matching heading is missing");
+
+        const linkRect = link.getBoundingClientRect();
+        const headingRect = heading.getBoundingClientRect();
+        return { labelWidth: linkRect.width, labelRight: linkRect.right, contentLeft: headingRect.left };
+      }, longHeading);
+
+      expect(geometry.labelWidth).toBeLessThanOrEqual(192);
+      expect(geometry.labelRight).toBeLessThan(geometry.contentLeft);
+    }
+
+    await page.setViewportSize({ width: 1099, height: 900 });
+    await page.goto("/impressum/", { waitUntil: "networkidle" });
+    await expect(outline).toBeHidden();
+  });
+
+  test("the outline rail clears school area links at 1100px", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 1100, "the desktop outline is omitted below 1100px");
+
+    await page.setViewportSize({ width: 1100, height: 900 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const outline = page.locator("[data-page-outline]");
+    const cardGrid = page.locator(".section-cards-grid");
+    await expect(cardGrid).toHaveClass(/section-cards-grid--outlined/);
+    await page.evaluate(() => {
+      const slider = document.querySelector(".schule-slider");
+      const boundary = slider?.closest("section") || slider?.parentElement || slider;
+      const stickyHeight = document.querySelector("[data-sticky-navigation]")?.getBoundingClientRect().height || 0;
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(0, (boundary?.getBoundingClientRect().bottom || 0) + window.scrollY - stickyHeight + 1);
+    });
+    await expect(outline).toBeVisible();
+
+    const geometry = await page.evaluate(() => {
+      const aside = document.querySelector("[data-page-outline]");
+      const image = document.querySelector(".section-card-image");
+      const link = [...document.querySelectorAll("[data-page-outline-link]")].find((element) => element.textContent?.includes("Wie sieht ein Schultag"));
+      if (!aside || !image || !link) throw new Error("The outline, section-card image, or school-day link is missing");
+
+      return {
+        railRight: aside.getBoundingClientRect().right,
+        labelRight: link.getBoundingClientRect().right,
+        imageLeft: image.getBoundingClientRect().left,
+      };
+    });
+
+    expect(geometry.railRight).toBeLessThanOrEqual(geometry.imageLeft);
+    expect(geometry.labelRight).toBeLessThan(geometry.imageLeft);
   });
 
   test("content outline is omitted for short pages and on mobile", async ({ page }) => {
@@ -713,8 +924,7 @@ test.describe("style regressions", () => {
 
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/presse/", { waitUntil: "networkidle" });
-    await expect(page.locator("[data-page-outline]")).toHaveAttribute("hidden", "");
-    await expect(page.locator("[data-page-outline]")).toBeHidden();
+    await expect(page.locator("[data-page-outline]")).toHaveCount(0);
   });
 
   test("long-form content reveals in reading order as it enters the viewport", async ({ page }) => {

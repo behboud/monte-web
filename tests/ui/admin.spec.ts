@@ -1,18 +1,108 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("CMS admin", () => {
-  test("loads the pinned Sveltia CMS and its configuration", async ({ page, request }) => {
+  test("loads the pinned Sveltia CMS in the German browser locale", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     await expect(configResponse).toBeOK();
-    expect(await configResponse.text()).toMatch(/collections:/);
+    const config = await configResponse.text();
+    expect(config).toMatch(/collections:/);
+    expect(config).toContain("$schema=https://unpkg.com/@sveltia/cms@0.227.2/schema/sveltia-cms.json");
 
     await page.goto("/admin/", { waitUntil: "domcontentloaded" });
 
     const cmsScript = page.locator('script[src*="@sveltia/cms@"]');
+    const editorComponentsScript = page.locator('script[src="./editor-components.js"]');
     await expect(cmsScript).toHaveCount(1);
-    await expect(cmsScript).toHaveAttribute("src", "https://unpkg.com/@sveltia/cms@0.217.0/dist/sveltia-cms.js");
-    await expect(page.getByRole("button", { name: /GitHub/ })).toBeVisible({ timeout: 15_000 });
+    await expect(cmsScript).toHaveAttribute("src", "https://unpkg.com/@sveltia/cms@0.227.2/dist/sveltia-cms.js");
+    await expect(editorComponentsScript).toHaveCount(1);
+    await expect(page.getByRole("button", { name: /Mit .*GitHub.* anmelden/i })).toBeVisible({ timeout: 15_000 });
     await expect(page.getByText(/Sveltia CMS/)).toBeVisible();
+  });
+
+  test("Bildreihe round-trips items and its configurable row limit", async ({ page, request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+    expect(config).toContain("editor_components: [code-block, image, circle-items]");
+    expect(config).not.toMatch(/^\s*comment:/m);
+
+    const componentResponse = await request.get("/admin/editor-components.js");
+    await expect(componentResponse).toBeOK();
+
+    await page.goto("/");
+    await page.evaluate(() => {
+      Reflect.set(window, "CMS", {
+        registerEditorComponent(component: unknown) {
+          Reflect.set(window, "__registeredCircleItems", component);
+        },
+      });
+    });
+    await page.addScriptTag({ url: "/admin/editor-components.js" });
+
+    const result = await page.evaluate(() => {
+      type CircleItem = { image: string; title: string; subtitle: string; alt: string };
+      type CircleComponent = {
+        id: string;
+        fields: Array<{ name: string; max?: number; default?: string; options?: string[] }>;
+        pattern: RegExp;
+        toBlock: (data: { items: CircleItem[]; columns?: string | number }) => string;
+        fromBlock: (match: RegExpMatchArray | null) => { items: CircleItem[]; columns: string };
+        toPreview: (data: { items: CircleItem[]; columns?: string | number }, getAsset: (path: string) => { url: string }) => HTMLElement;
+      };
+      const component = Reflect.get(window, "__registeredCircleItems") as CircleComponent;
+      const items: CircleItem[] = [
+        { image: "/images/team-1.webp", title: 'Mädchen & Jungen "Montessori"', subtitle: "Lernbegleitung", alt: "Teammitglied 1" },
+        { image: "/images/team-2.webp", title: "Teammitglied 2", subtitle: "Pädagogik", alt: "Teammitglied 2" },
+        { image: "/images/team-3.webp", title: "Teammitglied 3", subtitle: "Pädagogik", alt: "Teammitglied 3" },
+        { image: "/images/team-4.webp", title: "Teammitglied 4", subtitle: "Pädagogik", alt: "Teammitglied 4" },
+        { image: "/images/team-5.webp", title: "Teammitglied 5", subtitle: "Pädagogik", alt: "Teammitglied 5" },
+        { image: "/images/team-6.webp", title: "Teammitglied 6", subtitle: "Pädagogik", alt: "Teammitglied 6" },
+        { image: "/images/team-7.webp", title: "Teammitglied 7", subtitle: "Pädagogik", alt: "Teammitglied 7" },
+        { image: "/images/team-8.webp", title: "Teammitglied 8", subtitle: "Pädagogik", alt: "Teammitglied 8" },
+        { image: "/images/team-9.webp", title: "Nicht übernehmen", subtitle: "Zu viel", alt: "Teammitglied 9" },
+      ];
+      const block = component.toBlock({ items });
+      const parsed = component.fromBlock(block.match(component.pattern));
+      const legacy = component.fromBlock(block.replace(/ columns="3"/, "").match(component.pattern));
+      const custom = component.fromBlock(component.toBlock({ items, columns: "4" }).match(component.pattern));
+      const columnField = component.fields.find((field) => field.name === "columns");
+      const preview = component.toPreview({ items: parsed.items, columns: parsed.columns }, (url) => ({ url }));
+
+      return {
+        id: component.id,
+        max: component.fields.find((field) => field.name === "items")?.max,
+        columnsDefault: columnField?.default,
+        columnsOptions: columnField?.options,
+        defaultColumns: parsed.columns,
+        legacyColumns: legacy.columns,
+        customColumns: custom.columns,
+        previewInlineSize: preview.style.inlineSize,
+        previewDistributesRows: preview.style.justifyContent === "space-evenly",
+        previewUsesFlexWrap: preview.style.flexWrap === "wrap",
+        count: parsed.items.length,
+        firstTitle: parsed.items[0]?.title,
+        lastTitle: parsed.items[parsed.items.length - 1]?.title,
+        previewImages: preview.querySelectorAll("img").length,
+        previewHasScript: Boolean(preview.querySelector("script")),
+      };
+    });
+
+    expect(result).toEqual({
+      id: "circle-items",
+      max: 8,
+      columnsDefault: "3",
+      columnsOptions: ["1", "2", "3", "4"],
+      defaultColumns: "3",
+      legacyColumns: "3",
+      customColumns: "4",
+      previewInlineSize: "100%",
+      previewDistributesRows: true,
+      previewUsesFlexWrap: true,
+      count: 8,
+      firstTitle: 'Mädchen & Jungen "Montessori"',
+      lastTitle: "Teammitglied 8",
+      previewImages: 8,
+      previewHasScript: false,
+    });
   });
 
   test("section pages offer optional area-link banners without per-heading images", async ({ request }) => {
@@ -39,8 +129,12 @@ test.describe("CMS admin", () => {
     const tocSchemas = [...config.matchAll(/- label: "Inhalt"\s+name: "toc"[\s\S]*?(?=\n {10}- (?:label|\{)|\n {6}- file:|$)/g)].map(([schema]) => schema);
     expect(tocSchemas).toHaveLength(8);
     for (const tocSchema of tocSchemas) {
+      expect(tocSchema).toContain('label: "Seitenübersicht anzeigen"');
       expect(tocSchema).not.toContain('name: "image"');
+      expect(tocSchema).not.toContain('name: "label"');
+      expect(tocSchema).not.toContain('default: "Seitenübersicht"');
     }
+    expect(tocSchemas.filter((tocSchema) => tocSchema.includes('name: "sections"'))).toHaveLength(5);
     expect(config).not.toContain('label: "Seitenübersicht (ein TOC)"');
   });
 
@@ -55,7 +149,7 @@ test.describe("CMS admin", () => {
   test("CMS logo uses an opaque anniversary logo", async ({ request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
-    const logoUrl = config.match(/^logo_url:\s*([^\n]+)$/m)?.[1]?.trim();
+    const logoUrl = config.match(/^logo:\s*\n\s+src:\s*([^\n]+)$/m)?.[1]?.trim();
 
     expect(logoUrl).toBe("/monte-web/admin/cms-logo.png");
 

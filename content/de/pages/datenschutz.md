@@ -2,6 +2,7 @@
 title: "Datenschutz"
 draft: false
 toc:
+  enable: true
   title: "Seitenübersicht"
   sections:
     - label: "Datenschutz auf einen Blick"

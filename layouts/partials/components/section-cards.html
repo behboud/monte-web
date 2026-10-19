@@ -1,7 +1,11 @@
 {{ $items := .Items }}
+{{ $gridClass := "section-cards-grid" }}
+{{ if .OutlineEnabled }}
+  {{ $gridClass = printf "%s section-cards-grid--outlined" $gridClass }}
+{{ end }}
 {{ with $items }}
   <section class="section-cards mb-12" aria-label="Bereiche dieser Seite">
-    <div class="section-cards-grid">
+    <div class="{{ $gridClass }}">
       {{ range . }}
         {{ $title := .title | default .label }}
         {{ $href := .href }}

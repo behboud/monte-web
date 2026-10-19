@@ -1,7 +1,19 @@
-<aside class="page-outline" data-page-outline hidden>
-  <nav class="page-outline-nav" aria-label="Seitenübersicht">
-    <a class="page-outline-title" data-page-outline-title></a>
-    <ol class="page-outline-list" data-page-outline-list></ol>
-  </nav>
-  <span class="page-outline-progress" data-page-outline-progress aria-hidden="true"></span>
-</aside>
+{{ $showOutline := true }}
+{{ if isset .Params "toc" }}
+  {{ $showOutline = false }}
+  {{ with .Params.toc }}
+    {{ if isset . "enable" }}
+      {{ $showOutline = .enable }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if $showOutline }}
+  <aside class="page-outline" data-page-outline hidden>
+    <nav class="page-outline-nav" aria-label="Seitenübersicht">
+      <a class="page-outline-title" data-page-outline-title></a>
+      <ol class="page-outline-list" data-page-outline-list></ol>
+    </nav>
+    <span class="page-outline-progress" data-page-outline-progress aria-hidden="true"></span>
+  </aside>
+{{ end }}

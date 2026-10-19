@@ -170,14 +170,14 @@
     display: none;
   }
 
-  @media (min-width: 80rem) {
+  @media (min-width: 68.75rem) {
     .page-outline:not([hidden]) {
       position: fixed;
       inset-block: 4.5rem 1.5rem;
       inset-inline-start: 0;
       z-index: 30;
       display: block;
-      inline-size: 17.5rem;
+      inline-size: 12rem;
       isolation: isolate;
     }
 
@@ -202,12 +202,12 @@
     .page-outline-link {
       position: relative;
       display: block;
-      max-inline-size: 100%;
+      inline-size: min(24ch, 100%);
       padding-inline: 1.75rem 0.5rem;
       color: transparent;
       font-size: 0.75rem;
       line-height: 1.3;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
       opacity: 1;
       pointer-events: none;
       text-decoration: none;
@@ -335,7 +335,7 @@
     }
   }
 
-  @media (min-width: 80rem) and (hover: hover) and (pointer: fine) {
+  @media (min-width: 68.75rem) and (hover: hover) and (pointer: fine) {
     .page-outline:hover .page-outline-title,
     .page-outline:hover .page-outline-link {
       color: color-mix(in oklch, var(--page-outline-brand) 78%, white);
@@ -354,13 +354,13 @@
     }
   }
 
-  @media (min-width: 80rem) and (pointer: coarse) {
+  @media (min-width: 68.75rem) and (pointer: coarse) {
     .page-outline {
       display: none;
     }
   }
 
-  @media (min-width: 80rem) and (prefers-reduced-motion: no-preference) {
+  @media (min-width: 68.75rem) and (prefers-reduced-motion: no-preference) {
     .page-outline-title,
     .page-outline-link {
       transition:
@@ -797,6 +797,12 @@
     @apply mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-3;
   }
 
+  @media (min-width: 68.75rem) and (pointer: fine) {
+    .section-cards-grid--outlined {
+      padding-inline: 18ch;
+    }
+  }
+
   .section-card {
     @apply flex flex-col items-center text-center no-underline;
   }
@@ -811,6 +817,99 @@
 
   .section-card-description {
     @apply m-0 max-w-sm text-base leading-relaxed text-slate-600;
+  }
+
+  .circle-items {
+    container-type: inline-size;
+  }
+
+  .circle-items-grid {
+    --circle-items-item-basis: max(9rem, 33.333cqi);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: clamp(1rem, 3vw, 1.75rem);
+    inline-size: 100%;
+    margin-block: 0;
+    margin-inline: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .circle-items-grid[data-columns="1"] {
+    --circle-items-item-basis: 100cqi;
+  }
+
+  .circle-items-grid[data-columns="2"] {
+    --circle-items-item-basis: max(10rem, 50cqi);
+  }
+
+  .circle-items-grid[data-columns="4"] {
+    --circle-items-item-basis: max(8rem, 25cqi);
+  }
+
+  .reading-prose ul.circle-items-grid {
+    padding: 0;
+    list-style: none;
+  }
+
+  .reading-prose .circle-items-grid > li + li {
+    margin-block-start: 0;
+  }
+
+  .circle-items-item {
+    flex: 0 0 var(--circle-items-item-basis);
+    min-inline-size: 0;
+  }
+
+  .circle-items-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    inline-size: 100%;
+    max-inline-size: 10rem;
+    margin-block: 0;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .circle-items-image-frame {
+    flex: none;
+    inline-size: min(100%, 9rem);
+    aspect-ratio: 1;
+    overflow: clip;
+    border-radius: 50%;
+    @apply bg-slate-100;
+  }
+
+  .circle-items-image {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: none;
+    block-size: 100%;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  .circle-items-caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.125rem;
+    inline-size: 100%;
+    margin-block-start: 1rem;
+  }
+
+  .circle-items-title {
+    overflow-wrap: break-word;
+    margin: 0;
+    @apply font-semibold leading-snug text-monte;
+  }
+
+  .circle-items-subtitle {
+    overflow-wrap: break-word;
+    margin: 0;
+    @apply text-base leading-relaxed text-slate-600;
   }
 
   .back-to-top {

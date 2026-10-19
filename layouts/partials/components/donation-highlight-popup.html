@@ -1,4 +1,5 @@
 {{ $projects := .Projects }}
+{{ $page := .Page }}
 {{ if $projects }}
   <div class="donation-popup" data-donation-popup hidden>
     <div class="donation-popup-backdrop" data-donation-popup-dismiss></div>
@@ -16,7 +17,7 @@
           <div class="donation-popup-option-content">
             <p class="donation-popup-kicker">Ein Projekt unterstützen</p>
             <h2 id="{{ $titleID }}">{{ .title | markdownify }}</h2>
-            <div class="donation-popup-description reading-measure reading-prose">{{ .content | markdownify }}</div>
+            <div class="donation-popup-description reading-measure reading-prose">{{ $page.RenderString (dict "display" "block") (.content | default "") }}</div>
             {{ if .url }}
               {{ $isExternal := or (hasPrefix .url "http://") (hasPrefix .url "https://") (hasPrefix .url "mailto:") }}
               <a

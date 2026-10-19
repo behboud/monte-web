@@ -9,6 +9,7 @@ slider:
     - /images/Schuleeingang.jpeg
     - /images/Schuleeingang.jpeg
 toc:
+  enable: true
   title: "Seitenübersicht"
   sections:
     - label: "Elternengagement"

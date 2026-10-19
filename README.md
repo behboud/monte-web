@@ -209,11 +209,13 @@ Swiper-Bibliothek für Carousels. Homepage-Slideshow in `layouts/index.html`.
 
 **CMS-Konfiguration**: `static/admin/config.yml`
 
-Sveltia CMS ist in `static/admin/index.html` bewusst auf Version `0.217.0` festgelegt. So können Änderungen an der CMS-Validierung nicht ungeprüft live gehen. Bei einem Upgrade die Version dort ändern, die Release Notes prüfen und die CMS-Konfiguration testen.
+Sveltia CMS ist in `static/admin/index.html` bewusst auf Version `0.227.2` festgelegt; das JSON-Schema in `static/admin/config.yml` ist auf dieselbe Version gepinnt. So können Änderungen an der CMS-Validierung nicht ungeprüft live gehen. Bei einem Upgrade die Versionen dort ändern, die Release Notes prüfen und die CMS-Konfiguration testen.
 
 ### Content-Editor
 
-News-Beiträge und Seiten können über das CMS bearbeitet werden. Änderungen werden als Git-Commits gespeichert.
+News-Beiträge und Seiten können über das CMS bearbeitet werden. Änderungen werden als Git-Commits gespeichert. In Markdown-Feldern kann außerdem der Block **Bildreihe** eingefügt werden: bis zu acht nicht verlinkte Rundbilder mit Titel, Untertitel und optionalem Alternativtext. Die maximale Zahl der Elemente pro Reihe ist im Block einstellbar (1–4, Standard: 3). Der Editor speichert den Block als Hugo-Shortcode, sodass er auch in CMS-Markdownfeldern innerhalb von Seitenabschnitten und Spendenkarten funktioniert.
+
+Die Sveltia-Oberfläche folgt standardmäßig der Browsersprache; Deutsch wird unterstützt. Nutzer mit einer anderen Browsersprache können in den Einstellungen unter **Sprache** Deutsch wählen. Diese Auswahl wird pro Browser gespeichert; eine projektweite Spracheinstellung bietet Sveltia nicht.
 
 Bilder, die über das CMS hochgeladen werden, werden vor dem Speichern im Browser automatisch als WebP mit maximal 2048 × 2048 Pixeln und Qualität 82 verarbeitet. Kleinere Bilder werden nicht vergrößert; SVG-Dateien werden optimiert. Die Originaldatei wird dabei nicht in das öffentliche Repository übernommen. Hochauflösende Originale sollten separat und intern archiviert werden.
 

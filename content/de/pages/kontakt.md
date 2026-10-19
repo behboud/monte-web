@@ -7,6 +7,7 @@ social_links:
     icon: fab fa-instagram
     link: https://www.facebook.com/
 toc:
+  enable: true
   title: "Kontakt auf einen Blick"
   sections:
     - label: "Anschrift"

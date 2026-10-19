@@ -1,0 +1,55 @@
+{{- $columns := printf "%v" (.Get "columns" | default "3") -}}
+{{- if not (in (slice "1" "2" "3" "4") $columns) -}}
+  {{- warnf "Invalid columns option in circle-items shortcode on %s: %s; using 3" $.Page.RelPermalink $columns -}}
+  {{- $columns = "3" -}}
+{{- end -}}
+{{- $items := slice -}}
+{{- $encoded := .Get "data" | default "" -}}
+{{- if $encoded -}}
+  {{- with try (transform.Unmarshal (dict "format" "json") (base64Decode $encoded)) -}}
+    {{- if .Err -}}
+      {{- warnf "Unable to parse circle-items shortcode on %s: %s" $.Page.RelPermalink .Err -}}
+    {{- else -}}
+      {{- $items = .Value -}}
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- warnf "Missing data parameter in circle-items shortcode on %s" .Page.RelPermalink -}}
+{{- end -}}
+{{- if not (reflect.IsSlice $items) -}}
+  {{- warnf "Circle-items shortcode on %s must contain a JSON array" .Page.RelPermalink -}}
+  {{- $items = slice -}}
+{{- end -}}
+{{- with $items -}}
+  <div class="circle-items">
+    <ul class="circle-items-grid" data-columns="{{ $columns }}">
+      {{- range first 8 . -}}
+        {{- $item := . -}}
+        {{- $title := $item.title | default "" -}}
+        {{- $alt := $item.alt | default $title -}}
+        <li class="circle-items-item">
+          <figure class="circle-items-figure">
+            {{- with $item.image -}}
+              {{- $imagePath := . -}}
+              <div class="circle-items-image-frame">
+                {{- with resources.Get $imagePath -}}
+                  <img class="circle-items-image" src="{{ .RelPermalink }}" alt="{{ $alt }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" decoding="async" />
+                {{- else -}}
+                  <img class="circle-items-image" src="{{ $imagePath | relURL }}" alt="{{ $alt }}" loading="lazy" decoding="async" />
+                {{- end -}}
+              </div>
+            {{- end -}}
+            <figcaption class="circle-items-caption">
+              {{- with $title }}
+                <p class="circle-items-title">{{ . }}</p>
+              {{- end }}
+              {{- with $item.subtitle }}
+                <p class="circle-items-subtitle">{{ . }}</p>
+              {{- end }}
+            </figcaption>
+          </figure>
+        </li>
+      {{- end -}}
+    </ul>
+  </div>
+{{- end -}}

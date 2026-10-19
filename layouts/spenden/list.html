@@ -14,7 +14,7 @@
     </section>
   {{ end }}
 
-  {{ partial "components/donation-cards" (dict "Items" .Params.spenden "SectionLabel" "Unsere Unterstützerinnen und Unterstützer") }}
+  {{ partial "components/donation-cards" (dict "Items" .Params.spenden "Page" . "SectionLabel" "Unsere Unterstützerinnen und Unterstützer") }}
 
   {{ $projectPage := site.GetPage "/foerderer/" }}
   {{ $highlightedProjects := slice }}
@@ -25,5 +25,5 @@
       {{ end }}
     {{ end }}
   {{ end }}
-  {{ partial "components/donation-highlight-popup" (dict "Projects" $highlightedProjects) }}
+  {{ partial "components/donation-highlight-popup" (dict "Projects" $highlightedProjects "Page" $projectPage) }}
 {{ end }}
