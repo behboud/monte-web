@@ -283,6 +283,23 @@ test.describe("style regressions", () => {
     expect(measurement.paragraphWidth).toBeLessThan(measurement.mainWidth * 0.6);
   });
 
+  test("editorial text links use Monte blue and underline on hover", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const link = page.locator(".reading-prose a").filter({ hasText: "Montessorilandesverbands" });
+    await expect(link).toHaveCount(1);
+
+    const linkColor = await link.evaluate((element) => getComputedStyle(element).color);
+    const navigationColor = await page.locator('.navbar-nav a[href="/schule/"]').evaluate((element) => getComputedStyle(element).color);
+    expect(linkColor).toBe(navigationColor);
+    await expect(link).toHaveCSS("text-decoration-line", "none");
+
+    await link.hover();
+    await expect(link).toHaveCSS("text-decoration-line", "underline");
+    await expect(link).toHaveCSS("text-underline-offset", "4px");
+  });
+
   test("school editorial prose keeps its typeface with a more open reading rhythm", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/schule/", { waitUntil: "networkidle" });

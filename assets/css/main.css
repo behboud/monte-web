@@ -211,6 +211,15 @@
     line-height: 1.45;
   }
 
+  .reading-prose a {
+    @apply text-monte no-underline transition-colors duration-150;
+  }
+
+  .reading-prose a:hover,
+  .reading-prose a:focus-visible {
+    @apply underline underline-offset-4;
+  }
+
   .reading-prose :where(p, li, blockquote) {
     line-height: inherit;
   }
