@@ -1082,9 +1082,23 @@ test.describe("style regressions", () => {
 
     const overlayStyles = await page.locator(".donation-hero-copy").evaluate((element) => {
       const styles = getComputedStyle(element);
-      return { background: styles.backgroundColor, zIndex: styles.zIndex };
+      const cta = element.querySelector(".donation-hero-cta");
+      if (!cta) throw new Error("Donation CTA is missing");
+      const ctaStyles = getComputedStyle(cta);
+      return {
+        background: styles.backgroundColor,
+        backdropFilter: styles.backdropFilter,
+        borderRadius: styles.borderTopLeftRadius,
+        ctaBackground: ctaStyles.backgroundColor,
+        ctaColor: ctaStyles.color,
+        zIndex: styles.zIndex,
+      };
     });
-    expect(overlayStyles.background).toBe("oklch(0.32008 0.13793 274.324)");
+    expect(overlayStyles.background).not.toBe("oklch(0.32008 0.13793 274.324)");
+    expect(overlayStyles.backdropFilter).toContain("blur");
+    expect(overlayStyles.borderRadius).toBe("12px");
+    expect(overlayStyles.ctaBackground).not.toBe("oklch(0.99 0 none)");
+    expect(overlayStyles.ctaColor).toBe("oklch(0.32008 0.13793 274.324)");
     expect(Number(overlayStyles.zIndex)).toBeGreaterThan(1);
 
     await expect(page.locator(".donation-section-heading p")).toHaveCount(0);
