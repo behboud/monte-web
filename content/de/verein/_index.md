@@ -14,7 +14,6 @@ toc:
   sections:
     - label: Verein
       title: Verein
-      image: ''
       content: |-
         Unser Trägerverein ist die Montessori Fördergemeinschaft Gilching e.V.
 
@@ -29,6 +28,5 @@ toc:
         Weitere Informationen folgen in Kürze auf dieser Seite.
     - label: Vorstand
       title: Vorstand
-      image: /images/bauwagen.jpg
       content: Lore ipsum
 ---

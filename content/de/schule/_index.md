@@ -28,7 +28,6 @@ section_cards:
       image: /images/Schuleeingang.jpeg
       href: "#komm-zu-uns"
       show_banner: true
-content_layout: editorial
 toc:
   title: Seitenübersicht
   sections:

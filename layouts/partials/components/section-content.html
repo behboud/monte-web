@@ -1,36 +1,51 @@
 {{ $entry := .Entry }}
 {{ $level := .Level }}
-{{ if .Editorial }}
-  {{ partial "components/section-content-editorial" (dict "Entry" $entry "Level" $level "SectionCards" .SectionCards) }}
-{{ else }}
-  {{ $sectionTitle := $entry.title | default $entry.label }}
-  {{ $sectionID := $entry.id }}
-  {{ if not $sectionID }}
-    {{ $sectionID = $sectionTitle | anchorize }}
-  {{ end }}
+{{ $sectionCards := .SectionCards }}
+{{ $sectionTitle := $entry.title | default $entry.label }}
+{{ $sectionID := $entry.id }}
+{{ if not $sectionID }}
+  {{ $sectionID = $sectionTitle | anchorize }}
+{{ end }}
 
-  {{ partial "components/section-image" (dict "Image" $entry.image "Alt" $sectionTitle) }}
-  {{ if eq $level 0 }}
-    <h2 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h2>
-  {{ else if eq $level 1 }}
-    <h3 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h3>
-  {{ else }}
-    <h4 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h4>
-  {{ end }}
-  {{ with $entry.content }}
-    <div class="reading-prose">
-      {{ $renderedContent := . | markdownify }}
-      {{ $blockContent := findRE `(?i)<(address|article|aside|blockquote|details|dialog|div|dl|fieldset|figcaption|figure|footer|form|h[1-6]|header|hr|iframe|img|main|menu|nav|ol|p|picture|pre|script|section|table|ul|video)([[:space:]/>])` $renderedContent 1 }}
-      {{ if $blockContent }}
-        {{ $renderedContent }}
-      {{ else }}
-        <p>{{ $renderedContent }}</p>
-      {{ end }}
-    </div>
-  {{ end }}
-  {{ with $entry.children }}
-    {{ range . }}
-      {{ partial "components/section-content" (dict "Entry" . "Level" (add $level 1)) }}
+{{ $bannerImage := "" }}
+{{ range $sectionCards }}
+  {{ $cardTitle := .title | default .label }}
+  {{ $cardHref := .href }}
+  {{ if not $cardHref }}
+    {{ with .id }}
+      {{ $cardHref = printf "#%s" (strings.TrimPrefix "#" .) }}
+    {{ else }}
+      {{ $cardHref = printf "#%s" ($cardTitle | anchorize) }}
     {{ end }}
+  {{ end }}
+  {{ if and (eq (strings.TrimPrefix "#" $cardHref) $sectionID) .image (ne .show_banner false) }}
+    {{ $bannerImage = .image }}
+  {{ end }}
+{{ end }}
+{{ partial "components/section-banner" (dict "Image" $bannerImage "Alt" $sectionTitle "SectionID" $sectionID) }}
+
+{{ if eq $level 0 }}
+  <h2 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h2>
+{{ else if eq $level 1 }}
+  <h3 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h3>
+{{ else }}
+  <h4 id="{{ $sectionID }}" data-section-heading>{{ $sectionTitle }}</h4>
+{{ end }}
+
+{{ with $entry.content }}
+  <div class="reading-prose">
+    {{ $renderedContent := . | markdownify }}
+    {{ $blockContent := findRE `(?i)<(address|article|aside|blockquote|details|dialog|div|dl|fieldset|figcaption|figure|footer|form|h[1-6]|header|hr|iframe|img|main|menu|nav|ol|p|picture|pre|script|section|table|ul|video)([[:space:]/>])` $renderedContent 1 }}
+    {{ if $blockContent }}
+      {{ $renderedContent }}
+    {{ else }}
+      <p>{{ $renderedContent }}</p>
+    {{ end }}
+  </div>
+{{ end }}
+
+{{ with $entry.children }}
+  {{ range . }}
+    {{ partial "components/section-content" (dict "Entry" . "Level" (add $level 1) "SectionCards" $sectionCards) }}
   {{ end }}
 {{ end }}

@@ -171,7 +171,7 @@ test.describe("style regressions", () => {
     expect(sizes[2]).toBe(80);
   });
 
-  test("editorial prose keeps a consistent measure and rhythm across page types", async ({ page }) => {
+  test("prose keeps a consistent measure and rhythm across page types", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
 
     const examples = [
@@ -283,7 +283,7 @@ test.describe("style regressions", () => {
     expect(measurement.paragraphWidth).toBeLessThan(measurement.mainWidth * 0.6);
   });
 
-  test("editorial text links use Monte blue and underline on hover", async ({ page }) => {
+  test("prose links use Monte blue and underline on hover", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
@@ -300,19 +300,19 @@ test.describe("style regressions", () => {
     await expect(link).toHaveCSS("text-underline-offset", "4px");
   });
 
-  test("school editorial prose keeps its typeface with a more open reading rhythm", async ({ page }) => {
+  test("school prose uses the same reading rhythm as other pages", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
-    const rhythm = await page.locator(".schule-content-editorial").evaluate((content) => {
-      const markdown = [...content.querySelectorAll(".schule-editorial-markdown")].find((block) => [...block.querySelectorAll(":scope > p")].some((paragraph) => paragraph.nextElementSibling?.tagName === "P"));
-      if (!markdown) throw new Error("A Markdown block with consecutive paragraphs should exist.");
+    const rhythm = await page.locator(".schule-content").evaluate((content) => {
+      const proseBlock = [...content.querySelectorAll(".reading-prose")].find((block) => [...block.querySelectorAll(":scope > p")].some((paragraph) => paragraph.nextElementSibling?.tagName === "P"));
+      if (!proseBlock) throw new Error("A prose block with consecutive paragraphs should exist.");
 
-      const paragraph = [...markdown.querySelectorAll(":scope > p")].find((candidate) => candidate.nextElementSibling?.tagName === "P");
+      const paragraph = [...proseBlock.querySelectorAll(":scope > p")].find((candidate) => candidate.nextElementSibling?.tagName === "P");
       if (!paragraph || !paragraph.nextElementSibling) throw new Error("Consecutive paragraphs should exist.");
 
-      const list = content.querySelector(".schule-editorial-markdown ul");
-      if (!list) throw new Error("An editorial list should exist.");
+      const list = content.querySelector(".reading-prose ul");
+      if (!list) throw new Error("A content list should exist.");
 
       const paragraphStyle = getComputedStyle(paragraph);
       const listStyle = getComputedStyle(list);
@@ -434,118 +434,116 @@ test.describe("style regressions", () => {
     }
   });
 
-  test("schule renders only selected area-link images as editorial section banners", async ({ page }) => {
+  test("school uses the shared section renderer and page-wide heading style", async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
     await expect(page.locator("h1.page-title-calligraphy")).toHaveText("Unsere Schule");
     await expect(page.locator(".schule-slider")).toBeVisible();
     await expect(page.locator(".section-card")).toHaveCount(3);
-    await expect(page.locator(".schule-content-editorial[data-content-layout='editorial']")).toHaveCount(1);
+    await expect(page.locator(".schule-content")).toHaveClass("schule-content");
+    await expect(page.locator("[data-content-layout]")).toHaveCount(0);
+    await expect(page.locator("#schulalltag")).toHaveText("Schulalltag");
     await expect(page.locator("#qualitaeten")).toHaveText("Qualitäten unserer pädagogischen Arbeit");
     await expect(page.locator("#wie-sieht-ein-schultag-bei-uns-aus")).toHaveText("Wie sieht ein Schultag an der Montessorischule Gilching aus?");
 
-    const editorialTitles = await page.locator(".schule-editorial-rail h2, .schule-editorial-subsection > h3, .schule-editorial-subsection > h4").evaluateAll((headings) => headings.map((heading) => heading.textContent?.trim() ?? ""));
-    expect(editorialTitles.every((title) => title !== title.toLocaleUpperCase("de-DE"))).toBe(true);
+    const headings = await page.locator(".schule-content :is(h2, h3, h4)").evaluateAll((elements) => elements.map((element) => element.textContent?.trim() ?? ""));
+    expect(headings.every((title) => title !== title.toLocaleUpperCase("de-DE"))).toBe(true);
 
-    const longHeadingLayout = await page.locator("#wie-sieht-ein-schultag-bei-uns-aus").evaluate((heading) => {
-      const paragraph = heading.parentElement?.querySelector(".schule-editorial-subsection-content p");
-      return {
-        headingWidth: heading.getBoundingClientRect().width,
-        paragraphWidth: paragraph?.getBoundingClientRect().width ?? 0,
-      };
-    });
-    expect(longHeadingLayout.headingWidth).toBeLessThanOrEqual(longHeadingLayout.paragraphWidth + 1);
-
-    const sections = [
-      { id: "schulalltag", heading: "Schulalltag", alt: "Schulalltag", image: null },
-      { id: "wer-wir-sind", heading: "Wer wir sind", alt: "Wer wir sind", image: "12-_DSC7076" },
-      { id: "komm-zu-uns", heading: "Komm zu uns", alt: "Komm zu uns", image: "Schuleeingang" },
-    ];
-    const sliderBox = await page.locator(".schule-slider").boundingBox();
-    expect(sliderBox).not.toBeNull();
-    if (!sliderBox) throw new Error("The school slider should have a layout box.");
-
-    for (const section of sections) {
-      const group = page.locator(`.schule-editorial-group#${section.id}`);
-      await expect(group).toHaveCount(1);
-      await expect(group).toHaveAttribute("data-section-heading");
-      await expect(group).toHaveAttribute("data-section-label", section.heading);
-      await expect(group).toHaveAttribute("aria-labelledby", `${section.id}-heading`);
-      await expect(group).toHaveCSS("scroll-margin-block-start", "96px");
-      await expect(group.locator("h2")).toHaveAttribute("id", `${section.id}-heading`);
-      await expect(group.locator("h2")).toHaveText(section.heading);
-
-      const banner = group.locator(".schule-editorial-banner");
-      if (section.image) {
-        await expect(banner).toHaveCount(1);
-        const image = banner.locator("img");
-        await expect(image).toHaveAttribute("src", new RegExp(section.image));
-        await expect(image).toHaveAttribute("alt", section.alt);
-        await expect(image).toHaveAttribute("loading", "lazy");
-        await expect(image).toHaveCSS("object-fit", "cover");
-
-        const groupBox = await group.boundingBox();
-        const bannerBox = await banner.boundingBox();
-        expect(groupBox).not.toBeNull();
-        expect(bannerBox).not.toBeNull();
-        if (!groupBox || !bannerBox) throw new Error("The editorial section and banner should have layout boxes.");
-        expect(Math.abs(bannerBox.width - groupBox.width)).toBeLessThanOrEqual(1);
-        expect(Math.abs(bannerBox.height - sliderBox.height)).toBeLessThanOrEqual(1);
-        expect(bannerBox.y).toBeLessThan((await group.locator("h2").boundingBox())?.y ?? Number.NEGATIVE_INFINITY);
-      } else {
-        await expect(banner).toHaveCount(0);
-      }
-    }
-
-    await expect(page.locator(".schule-editorial-subsection .schule-editorial-media")).toHaveCount(0);
-    await expect(page.locator(".schule-editorial-media-layout")).toHaveCount(0);
-
-    const pillarImages = page.locator("#fuenf-saeulen").locator("xpath=..").locator(".schule-editorial-markdown img");
-    await expect(pillarImages).toHaveCount(2);
-    const pillarImageLayout = await pillarImages.evaluateAll((images) =>
-      images.map((image) => {
-        const textBlock = image.closest("p, ul, ol, blockquote");
+    for (const width of [1366, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      const headingLayout = await page.locator("#wie-sieht-ein-schultag-bei-uns-aus").evaluate((heading) => {
+        const prose = heading.nextElementSibling;
         return {
-          width: image.getBoundingClientRect().width,
-          textBlockWidth: textBlock?.getBoundingClientRect().width ?? 0,
-          float: getComputedStyle(image).float,
+          headingWidth: heading.getBoundingClientRect().width,
+          proseWidth: prose?.getBoundingClientRect().width ?? 0,
         };
-      }),
-    );
-    expect(pillarImageLayout.every(({ width, textBlockWidth, float }) => width > 352 && width <= textBlockWidth + 1 && float === "none")).toBe(true);
+      });
+      expect(headingLayout.headingWidth).toBeLessThanOrEqual(headingLayout.proseWidth + 1);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    }
+  });
 
-    const sectionBackgrounds = await page.locator(".schule-editorial-group").evaluateAll((sections) => sections.map((section) => getComputedStyle(section).backgroundColor));
-    expect(sectionBackgrounds.length).toBe(3);
-    expect(sectionBackgrounds.every((color) => color === "rgba(0, 0, 0, 0)")).toBe(true);
+  test("area-link images can be shown as full-width, centered section banners", async ({ page }) => {
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+    await expect(page.locator(".section-banner")).toHaveCount(2);
+    await expect(page.locator('[data-section-banner="schulalltag"]')).toHaveCount(0);
 
-    await page.setViewportSize({ width: 390, height: 844 });
-    const mobileLayout = await page.locator(".schule-content-editorial").evaluate((content) => {
-      const contentWidth = content.getBoundingClientRect().width;
-      const banners = [...content.querySelectorAll(".schule-editorial-banner")];
-      const markdownImages = [...content.querySelectorAll(".schule-editorial-markdown img")];
-      return {
-        documentWidth: document.documentElement.scrollWidth,
-        contentWidth,
-        bannerWidths: banners.map((banner) => banner.getBoundingClientRect().width),
-        bannerHeights: banners.map((banner) => banner.getBoundingClientRect().height),
-        markdownImageWidths: markdownImages.map((image) => image.getBoundingClientRect().width),
-      };
-    });
+    const expectedBanners = [
+      { id: "wer-wir-sind", image: "12-_DSC7076", alt: "Wer wir sind" },
+      { id: "komm-zu-uns", image: "Schuleeingang", alt: "Komm zu uns" },
+    ];
 
-    expect(mobileLayout.documentWidth).toBeLessThanOrEqual(390);
-    expect(mobileLayout.bannerWidths.every((width) => width <= mobileLayout.contentWidth + 1)).toBe(true);
+    for (const width of [390, 640, 768, 1024, 1366]) {
+      await page.setViewportSize({ width, height: 900 });
+      const sliderBox = await page.locator(".schule-slider").boundingBox();
+      expect(sliderBox).not.toBeNull();
+      if (!sliderBox) throw new Error("The page slider should have a layout box.");
 
-    const mobileHeadingLayout = await page.locator("#wie-sieht-ein-schultag-bei-uns-aus").evaluate((heading) => {
-      const paragraph = heading.parentElement?.querySelector(".schule-editorial-subsection-content p");
-      return {
-        headingWidth: heading.getBoundingClientRect().width,
-        paragraphWidth: paragraph?.getBoundingClientRect().width ?? 0,
-      };
-    });
-    expect(mobileHeadingLayout.headingWidth).toBeLessThanOrEqual(mobileHeadingLayout.paragraphWidth + 1);
-    expect(mobileLayout.bannerHeights.every((height) => height === 220)).toBe(true);
-    expect(mobileLayout.markdownImageWidths.every((width) => width <= mobileLayout.contentWidth + 1)).toBe(true);
+      for (const expected of expectedBanners) {
+        const banner = page.locator(`[data-section-banner="${expected.id}"]`);
+        const image = banner.locator("img");
+        await expect(banner).toHaveCount(1);
+        await expect(image).toHaveAttribute("src", new RegExp(expected.image));
+        await expect(image).toHaveAttribute("alt", expected.alt);
+        await expect(image).toHaveCSS("object-fit", "cover");
+        await expect(image).toHaveCSS("object-position", "50% 50%");
+
+        const bannerLayout = await page.evaluate((sectionID) => {
+          const banner = document.querySelector(`[data-section-banner="${sectionID}"]`);
+          const image = banner?.querySelector("img");
+          const heading = document.getElementById(sectionID);
+          if (!banner || !image || !heading) throw new Error("The banner or its section heading is missing.");
+          return {
+            viewportWidth: document.documentElement.clientWidth,
+            bannerWidth: banner.getBoundingClientRect().width,
+            bannerHeight: banner.getBoundingClientRect().height,
+            imageWidth: image.getBoundingClientRect().width,
+            imageHeight: image.getBoundingClientRect().height,
+            bannerTop: banner.getBoundingClientRect().top,
+            headingTop: heading.getBoundingClientRect().top,
+          };
+        }, expected.id);
+
+        expect(bannerLayout.bannerWidth).toBe(bannerLayout.viewportWidth);
+        expect(bannerLayout.imageWidth).toBe(bannerLayout.viewportWidth);
+        expect(bannerLayout.imageHeight).toBe(sliderBox.height);
+        expect(bannerLayout.bannerHeight).toBe(sliderBox.height);
+        expect(bannerLayout.bannerTop).toBeLessThan(bannerLayout.headingTop);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    }
+  });
+
+  test("content images stay within the text measure on desktop and mobile", async ({ page }) => {
+    for (const width of [1366, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/schule/", { waitUntil: "networkidle" });
+
+      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image)").evaluateAll((images) =>
+        images.map((image) => {
+          const textBlock = image.closest("p, ul, ol, blockquote") ?? image.closest(".reading-prose");
+          const imageBox = image.getBoundingClientRect();
+          const textBox = textBlock?.getBoundingClientRect();
+          return {
+            imageWidth: imageBox.width,
+            textWidth: textBox?.width ?? 0,
+            imageLeft: imageBox.left,
+            textLeft: textBox?.left ?? 0,
+            imageRight: imageBox.right,
+            textRight: textBox?.right ?? 0,
+          };
+        }),
+      );
+
+      expect(imageLayout.length).toBeGreaterThan(0);
+      for (const image of imageLayout) {
+        expect(Math.abs(image.imageWidth - image.textWidth)).toBeLessThanOrEqual(1);
+        expect(image.imageLeft).toBeGreaterThanOrEqual(image.textLeft - 1);
+        expect(image.imageRight).toBeLessThanOrEqual(image.textRight + 1);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    }
   });
 
   test("schule section cards link to their matching sections", async ({ page }) => {

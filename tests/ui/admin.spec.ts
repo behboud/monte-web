@@ -15,7 +15,7 @@ test.describe("CMS admin", () => {
     await expect(page.getByText(/Sveltia CMS/)).toBeVisible();
   });
 
-  test("school section CMS reuses area-link images and omits per-section image controls", async ({ request }) => {
+  test("section pages offer optional area-link banners without per-heading images", async ({ request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
     const schoolStart = config.indexOf('file: "content/de/schule/_index.md"');
@@ -27,9 +27,21 @@ test.describe("CMS admin", () => {
     const schoolConfig = config.slice(schoolStart, nextPage);
     expect(schoolConfig).toContain('label: "Bild für den Bereichslink"');
     expect(schoolConfig).toContain('name: "show_banner"');
-    expect(schoolConfig).toContain('label: "Bild zusätzlich als breites Abschnittsbild anzeigen"');
+    expect(schoolConfig).not.toContain('name: "content_layout"');
     expect(schoolConfig).not.toContain('name: "image_position"');
     expect(schoolConfig.match(/name: "image"/g) ?? []).toHaveLength(2);
+
+    const areaLinkSchemas = config.match(/name: "section_cards"/g) ?? [];
+    const bannerSwitches = config.match(/name: "show_banner"/g) ?? [];
+    expect(areaLinkSchemas).toHaveLength(8);
+    expect(bannerSwitches).toHaveLength(areaLinkSchemas.length);
+
+    const tocSchemas = [...config.matchAll(/- label: "Inhalt"\s+name: "toc"[\s\S]*?(?=\n {10}- (?:label|\{)|\n {6}- file:|$)/g)].map(([schema]) => schema);
+    expect(tocSchemas).toHaveLength(8);
+    for (const tocSchema of tocSchemas) {
+      expect(tocSchema).not.toContain('name: "image"');
+    }
+    expect(config).not.toContain('label: "Seitenübersicht (ein TOC)"');
   });
 
   test("optimizes uploaded images before storing them", async ({ request }) => {
