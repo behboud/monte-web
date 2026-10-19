@@ -76,7 +76,7 @@
     {{ end }}
 
 
-    <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}card card-body schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
+    <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
       {{ if $hasTocContent }}
         {{ range $tocEntries }}
           {{ partial "components/section-content" (dict "Entry" . "Level" 0 "Editorial" $isEditorialLayout "SectionCards" $sectionCards.items) }}
@@ -90,7 +90,7 @@
   </section>
 {{ else }}
   <section class="container ml-3 mb-12">
-    <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}card card-body schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
+    <article class="{{ if $isEditorialLayout }}schule-content schule-content-editorial{{ else }}schule-content{{ end }}" {{ if $isEditorialLayout }}data-content-layout="editorial"{{ end }}>
       <div class="reading-prose">
         {{ $ctx.Content }}
       </div>

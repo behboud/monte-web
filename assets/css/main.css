@@ -175,10 +175,10 @@
   }
 
   .schule-content {
-    border-color: rgba(34, 36, 119, 0.08);
-    background: #fff;
-    box-shadow: 0 14px 28px -26px rgba(34, 36, 119, 0.35);
-    @apply p-5 md:p-8;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    @apply p-0;
   }
 
   .schule-content h2 {
@@ -282,13 +282,6 @@
 
   .schule-content a[href^="mailto:"] {
     @apply font-semibold text-monte underline decoration-monte/35 underline-offset-4 hover:text-primary;
-  }
-
-  .schule-content-editorial {
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    @apply p-0;
   }
 
   .schule-editorial-group {

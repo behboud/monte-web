@@ -221,7 +221,7 @@ test.describe("style regressions", () => {
       if (!textBlock) throw new Error("A long text block should exist on the school page.");
 
       const content = textBlock.closest(".schule-content");
-      if (!content) throw new Error("The school content card should contain the text block.");
+      if (!content) throw new Error("The school content container should contain the text block.");
 
       return {
         textWidth: textBlock.getBoundingClientRect().width,
@@ -232,6 +232,33 @@ test.describe("style regressions", () => {
 
     expect(mobileMeasurement.textWidth).toBeLessThanOrEqual(mobileMeasurement.contentWidth);
     expect(mobileMeasurement.documentWidth).toBeLessThanOrEqual(390);
+  });
+
+  test("page prose containers are frameless across top-level pages", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+
+    for (const route of ["/schule/", "/elternengagement/", "/verein/", "/speiseplan/", "/kontakt/", "/impressum/", "/datenschutz/", "/presse/"]) {
+      await page.goto(route, { waitUntil: "networkidle" });
+
+      const content = page.locator(".schule-content").first();
+      await expect(content).toBeVisible();
+
+      const frame = await content.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return {
+          backgroundColor: style.backgroundColor,
+          borderTopWidth: style.borderTopWidth,
+          boxShadow: style.boxShadow,
+          paddingBlockStart: style.paddingBlockStart,
+        };
+      });
+
+      expect(frame.backgroundColor).toBe("rgba(0, 0, 0, 0)");
+      expect(frame.borderTopWidth).toBe("0px");
+      expect(frame.boxShadow).toBe("none");
+      expect(frame.paddingBlockStart).toBe("0px");
+      await expect(content).not.toHaveClass(/card/);
+    }
   });
 
   test("inline Markdown section text is constrained to the reading measure", async ({ page }) => {
