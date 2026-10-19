@@ -260,4 +260,257 @@
     window.addEventListener("scroll", updateCurrent, { passive: true });
     updateCurrent();
   }
+
+  const pageOutline = document.querySelector("[data-page-outline]");
+  const pageOutlineList = pageOutline?.querySelector("[data-page-outline-list]");
+  const pageOutlineTitle = pageOutline?.querySelector("[data-page-outline-title]");
+  const pageOutlineProgress = pageOutline?.querySelector("[data-page-outline-progress]");
+
+  if (pageOutline && pageOutlineList && pageOutlineProgress) {
+    const contentRoots = [...document.querySelectorAll("[data-page-outline-content]")];
+    const introSlider = document.querySelector(".schule-slider, .hero-slider");
+    const introBoundary = introSlider?.closest("section") || introSlider?.parentElement || introSlider;
+    const headingEntries = contentRoots.flatMap((root) => [...root.querySelectorAll("h2, h3")].filter((heading) => heading.textContent?.trim() && !heading.closest("[hidden]")).map((heading) => ({ heading, root })));
+
+    const makeUniqueID = (heading) => {
+      if (heading.id) {
+        return heading.id;
+      }
+
+      const baseID =
+        (heading.textContent || "")
+          .trim()
+          .toLocaleLowerCase("de-DE")
+          .replace(/ß/g, "ss")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "") || "abschnitt";
+      let id = baseID;
+      let suffix = 2;
+
+      while (document.getElementById(id) && document.getElementById(id) !== heading) {
+        id = `${baseID}-${suffix}`;
+        suffix += 1;
+      }
+
+      heading.id = id;
+      return id;
+    };
+
+    if (headingEntries.length >= 3) {
+      const pageTitle = document.querySelector("main h1");
+      if (pageTitle && pageOutlineTitle) {
+        const titleID = makeUniqueID(pageTitle);
+        pageOutlineTitle.href = `#${encodeURIComponent(titleID)}`;
+        pageOutlineTitle.textContent = pageTitle.textContent?.trim() || "";
+      } else if (pageOutlineTitle) {
+        pageOutlineTitle.hidden = true;
+      }
+
+      const linkByHeading = new Map();
+      const createLink = (heading, level) => {
+        const item = document.createElement("li");
+        item.className = `page-outline-item page-outline-item--level-${level}`;
+        const link = document.createElement("a");
+        link.className = `page-outline-link page-outline-link--level-${level}`;
+        link.href = `#${encodeURIComponent(makeUniqueID(heading))}`;
+        link.textContent = heading.textContent.trim().replace(/\s+/g, " ");
+        link.setAttribute("data-page-outline-link", "");
+        item.append(link);
+        linkByHeading.set(heading, link);
+        return item;
+      };
+
+      let currentRoot = null;
+      let currentGroup = null;
+
+      headingEntries.forEach(({ heading, root }) => {
+        if (root !== currentRoot) {
+          currentRoot = root;
+          currentGroup = null;
+        }
+
+        if (heading.tagName === "H2" || !currentGroup) {
+          currentGroup = createLink(heading, heading.tagName === "H2" ? 2 : 3);
+          pageOutlineList.append(currentGroup);
+          return;
+        }
+
+        let sublist = currentGroup.querySelector(":scope > ol");
+        if (!sublist) {
+          sublist = document.createElement("ol");
+          sublist.className = "page-outline-sublist";
+          currentGroup.append(sublist);
+        }
+        sublist.append(createLink(heading, 3));
+      });
+
+      const setCurrent = (activeHeading) => {
+        linkByHeading.forEach((link, heading) => {
+          if (heading === activeHeading) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+
+        if (pageOutlineTitle) {
+          if (!activeHeading) {
+            pageOutlineTitle.setAttribute("aria-current", "location");
+          } else {
+            pageOutlineTitle.removeAttribute("aria-current");
+          }
+        }
+      };
+
+      linkByHeading.forEach((link, heading) => {
+        link.addEventListener("click", () => setCurrent(heading));
+      });
+
+      const updatePageOutline = () => {
+        const stickyNavigation = document.querySelector("[data-sticky-navigation]");
+        const stickyHeight = stickyNavigation?.getBoundingClientRect().height || 0;
+        const marker = stickyHeight + Math.max(96, Math.round(window.innerHeight * 0.15));
+        let activeHeading = null;
+        let firstVisibleHeading = null;
+
+        for (const { heading } of headingEntries) {
+          const headingRect = heading.getBoundingClientRect();
+          if (headingRect.top <= marker) {
+            activeHeading = heading;
+          } else {
+            if (headingRect.top < window.innerHeight && headingRect.bottom > stickyHeight) {
+              firstVisibleHeading = heading;
+            }
+            break;
+          }
+        }
+        activeHeading ||= firstVisibleHeading;
+
+        const atDocumentEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+        if (atDocumentEnd) {
+          activeHeading = headingEntries.at(-1)?.heading || activeHeading;
+        }
+        setCurrent(activeHeading);
+
+        const firstRoot = contentRoots[0];
+        const lastRoot = contentRoots.at(-1);
+        if (!firstRoot || !lastRoot) {
+          return;
+        }
+
+        const firstRootRect = firstRoot.getBoundingClientRect();
+        const lastRootRect = lastRoot.getBoundingClientRect();
+        const hasPassedIntro = introBoundary ? introBoundary.getBoundingClientRect().bottom <= stickyHeight : firstRootRect.top < window.innerHeight;
+        const contentIsVisible = lastRootRect.bottom > stickyHeight;
+        pageOutline.hidden = !(hasPassedIntro && contentIsVisible);
+
+        if (pageOutline.hidden) {
+          pageOutline.style.setProperty("--page-outline-progress", "0");
+          return;
+        }
+
+        const currentLink = pageOutline.querySelector('[data-page-outline-title][aria-current="location"], [data-page-outline-link][aria-current="location"]');
+        const currentLinkRect = currentLink?.getBoundingClientRect();
+        const outlineRect = pageOutline.getBoundingClientRect();
+        const outlineHeight = pageOutline.clientHeight;
+        const currentMarker = currentLinkRect ? currentLinkRect.top + currentLinkRect.height / 2 : outlineRect.top;
+        const progress = outlineHeight > 0 ? Math.min(1, Math.max(0, (currentMarker - outlineRect.top) / outlineHeight)) : 0;
+        pageOutline.style.setProperty("--page-outline-progress", String(progress));
+      };
+
+      let updateFrame = 0;
+      const schedulePageOutlineUpdate = () => {
+        if (updateFrame) {
+          return;
+        }
+        updateFrame = window.requestAnimationFrame(() => {
+          updateFrame = 0;
+          updatePageOutline();
+        });
+      };
+
+      window.addEventListener("scroll", schedulePageOutlineUpdate, { passive: true });
+      window.addEventListener("resize", schedulePageOutlineUpdate);
+      updatePageOutline();
+      document.fonts?.ready.then(schedulePageOutlineUpdate);
+    }
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches && "IntersectionObserver" in window) {
+    const revealGroups = [];
+    const headingSelector = "h2, h3, h4";
+    const blockSelector = `${headingSelector}, p, blockquote, figure, ul, ol, table, pre, .reading-prose`;
+
+    document.querySelectorAll("[data-page-outline-content]").forEach((root) => {
+      const source = root.children.length === 1 && root.firstElementChild?.matches(".reading-prose") ? root.firstElementChild : root;
+      const blocks = [...source.children];
+      let group = [];
+      let pending = [];
+
+      const flushGroup = () => {
+        if (group.length) {
+          revealGroups.push(group);
+          group = [];
+        }
+      };
+
+      blocks.forEach((block) => {
+        if (block.matches(".section-banner")) {
+          flushGroup();
+          pending.push(block);
+          return;
+        }
+
+        if (block.matches(headingSelector)) {
+          flushGroup();
+          group = pending;
+          pending = [];
+          group.push(block);
+          return;
+        }
+
+        if (!block.matches(blockSelector)) {
+          return;
+        }
+        if (group.length) {
+          group.push(block);
+        } else {
+          pending.push(block);
+        }
+      });
+
+      flushGroup();
+      if (pending.length) {
+        revealGroups.push(pending);
+      }
+    });
+
+    const revealTargets = [...new Set(revealGroups.flat())];
+    if (revealTargets.length) {
+      revealGroups.forEach((group) => {
+        group.forEach((element, index) => {
+          element.dataset.reveal = "";
+          element.style.setProperty("--reveal-delay", `${Math.min(index, 2) * 80}ms`);
+        });
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            entry.target.classList.add("is-in");
+            observer.unobserve(entry.target);
+          });
+        },
+        { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
+      );
+
+      revealTargets.forEach((element) => observer.observe(element));
+      htmlElement.classList.add("js");
+    }
+  }
 })();

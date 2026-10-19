@@ -465,6 +465,7 @@ test.describe("style regressions", () => {
   });
 
   test("section headings have room before sibling headings and following text", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
     for (const width of [1366, 390]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/schule/", { waitUntil: "networkidle" });
@@ -494,6 +495,7 @@ test.describe("style regressions", () => {
   });
 
   test("area-link images can be shown as full-width, centered section banners", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/schule/", { waitUntil: "networkidle" });
     await expect(page.locator(".section-banner")).toHaveCount(2);
     await expect(page.locator('[data-section-banner="schulalltag"]')).toHaveCount(0);
@@ -630,11 +632,116 @@ test.describe("style regressions", () => {
     }
   });
 
-  test("section TOCs are hidden by default", async ({ page }) => {
+  test("legacy section TOC widgets stay disabled", async ({ page }) => {
     await page.goto("/schule/", { waitUntil: "networkidle" });
 
     await expect(page.locator(".schule-toc")).toHaveCount(0);
     await expect(page.locator("[data-mobile-toc]")).toHaveCount(0);
+  });
+
+  test("desktop content outline starts after the slider and tracks the active heading", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 1280, "the desktop outline is omitted below wide desktop sizes");
+
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const outline = page.locator("[data-page-outline]");
+    const outlineLinks = outline.locator("[data-page-outline-link]");
+    const contentHeadings = page.locator("[data-page-outline-content] :is(h2, h3)");
+    const progressMarkerDelta = () =>
+      outline.evaluate((element) => {
+        const currentLink = element.querySelector('[aria-current="location"]');
+        const linkRect = currentLink?.getBoundingClientRect();
+        const outlineRect = element.getBoundingClientRect();
+        const expected = linkRect && element.clientHeight > 0 ? (linkRect.top + linkRect.height / 2 - outlineRect.top) / element.clientHeight : 0;
+        const actual = Number(element.style.getPropertyValue("--page-outline-progress"));
+        return Math.abs(actual - expected);
+      });
+    await expect(page.locator(".schule-slider")).toBeVisible();
+    await expect(outline).toBeHidden();
+    await page.evaluate(() => {
+      const slider = document.querySelector(".schule-slider");
+      const boundary = slider?.closest("section") || slider?.parentElement || slider;
+      const stickyHeight = document.querySelector("[data-sticky-navigation]")?.getBoundingClientRect().height || 0;
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(0, (boundary?.getBoundingClientRect().bottom || 0) + window.scrollY - stickyHeight + 1);
+    });
+    await expect(outline).toBeVisible();
+    await expect(outlineLinks.first()).toHaveAttribute("aria-current", "location");
+    await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
+    await expect(outline.locator("[data-page-outline-title]")).toHaveText("Unsere Schule");
+    await expect(outlineLinks).toHaveCount(await contentHeadings.count());
+    await expect(outlineLinks.filter({ hasText: "Das sind wir" })).toHaveCount(1);
+    await expect(outlineLinks.filter({ hasText: "Die Verwaltung" })).toHaveCount(0);
+    await expect(outlineLinks.first()).toHaveCSS("color", "rgba(0, 0, 0, 0)");
+    const collapsedMarkerColor = await outlineLinks.first().evaluate((link) => getComputedStyle(link, "::before").backgroundColor);
+    expect(collapsedMarkerColor).not.toBe("rgba(0, 0, 0, 0)");
+
+    await page.mouse.move(16, 120);
+    const sectionLink = outlineLinks.filter({ hasText: "Wer wir sind" });
+    await expect(sectionLink).not.toHaveCSS("color", "rgba(0, 0, 0, 0)");
+    await sectionLink.click();
+    await expect(page).toHaveURL(/#wer-wir-sind$/);
+    await expect.poll(() => sectionLink.getAttribute("aria-current")).toBe("location");
+
+    await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
+
+    await page.evaluate(() => {
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    });
+    await expect(outlineLinks.last()).toHaveAttribute("aria-current", "location");
+    await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
+  });
+
+  test("desktop content outline reads Markdown headings and omits deeper heading levels", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 1280, "the desktop outline is omitted below wide desktop sizes");
+
+    await page.goto("/datenschutz/", { waitUntil: "networkidle" });
+
+    const outline = page.locator("[data-page-outline]");
+    const outlineLinks = outline.locator("[data-page-outline-link]");
+    await expect(outline).toBeVisible();
+    await expect(outlineLinks.filter({ hasText: "1. Datenschutz auf einen Blick" })).toHaveCount(1);
+    await expect(outline.getByRole("link", { name: "Allgemeine Hinweise", exact: true })).toHaveCount(0);
+    await expect(outlineLinks).toHaveCount(await page.locator("[data-page-outline-content] :is(h2, h3)").count());
+  });
+
+  test("content outline is omitted for short pages and on mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+    await expect(page.locator("[data-page-outline]")).toBeHidden();
+
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto("/presse/", { waitUntil: "networkidle" });
+    await expect(page.locator("[data-page-outline]")).toHaveAttribute("hidden", "");
+    await expect(page.locator("[data-page-outline]")).toBeHidden();
+  });
+
+  test("long-form content reveals in reading order as it enters the viewport", async ({ page }) => {
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const revealHeading = page.locator("[data-page-outline-content] > h2").filter({ hasText: "Wer wir sind" });
+    await expect(revealHeading).toHaveCount(1);
+    await expect(revealHeading).toHaveAttribute("data-reveal", "");
+    await expect(revealHeading).toHaveCSS("opacity", "0");
+
+    await page.evaluate(() => {
+      document.documentElement.style.scrollBehavior = "auto";
+    });
+    await revealHeading.scrollIntoViewIfNeeded();
+    await expect(revealHeading).toHaveClass(/is-in/);
+    await expect(revealHeading).toHaveCSS("opacity", "1");
+    await expect(revealHeading).toHaveCSS("transform", "none");
+  });
+
+  test("long-form content stays visible when reduced motion is requested", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+
+    const revealHeading = page.locator("[data-page-outline-content] > h2").filter({ hasText: "Wer wir sind" });
+    await expect(revealHeading).toBeVisible();
+    await expect(revealHeading).not.toHaveAttribute("data-reveal");
+    await expect(revealHeading).toHaveCSS("opacity", "1");
   });
 
   test("footer places its links where the copyright was and omits the copyright", async ({ page }) => {

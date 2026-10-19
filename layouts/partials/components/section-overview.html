@@ -85,7 +85,7 @@
   {{ end }}
 
 
-  <article class="schule-content">
+  <article class="schule-content" data-page-outline-content>
     {{ if $hasTocContent }}
       {{ range $tocEntries }}
         {{ partial "components/section-content" (dict "Entry" . "Level" 0 "SectionCards" $sectionCardItems) }}

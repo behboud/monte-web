@@ -32,6 +32,8 @@
       <!-- header (don't cache it) -->
       {{ partial "essentials/header.html" . }}
 
+      {{ partial "components/page-outline.html" . }}
+
 
       <main class="m-3">
         {{ block "main" . }}{{ end }}
