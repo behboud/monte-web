@@ -3,4 +3,13 @@
   {{ partial "components/donation-hero" . }}
   {{ partial "components/donation-projects" . }}
   {{ partial "components/past-donations" . }}
+
+  {{ $page := . }}
+  {{ $highlightedProjects := slice }}
+  {{ range $page.Params.projekte }}
+    {{ if and .highlight .url }}
+      {{ $highlightedProjects = $highlightedProjects | append . }}
+    {{ end }}
+  {{ end }}
+  {{ partial "components/donation-highlight-popup" (dict "Projects" $highlightedProjects "Page" $page) }}
 {{ end }}

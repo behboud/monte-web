@@ -210,6 +210,9 @@ test.describe("CMS admin", () => {
     expect(config).toContain('label: "Spenden & Förderprojekte"');
     expect(config).toContain('name: "spenden_cta"');
     expect(config).toContain('name: "projekte"');
+    expect(config).toContain('label: "Im Förderhinweis anzeigen"');
+    expect(config).toContain('name: "highlight"');
+    expect(config).toContain('label: "Ziel des Förderhinweises"');
     expect(config).toContain("Logos bleiben bewusst klein");
     expect(config).not.toContain('name: "foerderer"');
 

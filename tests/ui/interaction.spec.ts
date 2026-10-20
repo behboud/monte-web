@@ -63,6 +63,19 @@ test.describe("core interactions", () => {
   test("spenden page combines current projects, past support, and one clear donation action", async ({ page }) => {
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
+    const popup = page.locator("[data-donation-popup]");
+    await expect(popup).toHaveAttribute("open", "");
+    await expect(popup.locator("[data-donation-highlight-option]")).toHaveCount(2);
+
+    const selectedProject = popup.locator("[data-donation-highlight-option]:not([hidden])");
+    await expect(selectedProject).toHaveCount(1);
+    await expect(selectedProject.locator("h2")).toBeVisible();
+    await expect(selectedProject.locator(".donation-popup-action")).toHaveText(/Jetzt fördern/);
+    await expect(selectedProject.locator(".donation-popup-action")).toHaveAttribute("href", "/kontakt/");
+
+    await popup.locator("[data-donation-popup-close]").click();
+    await expect(popup).not.toHaveAttribute("open", "");
+
     await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
     const donationAction = page.locator(".donation-hero-cta");
     await expect(donationAction).toHaveCount(1);
@@ -72,12 +85,21 @@ test.describe("core interactions", () => {
 
     await expect(page.locator(".donation-project")).toHaveCount(3);
     await expect(page.locator(".past-donation-card")).toHaveCount(12);
-    await expect(page.locator("main [data-donation-popup]")).toHaveCount(0);
-    await expect(page.locator("main a")).toHaveCount(1);
+    await expect(page.locator("main [data-donation-popup]")).toHaveCount(1);
+    await expect(page.locator("main a:visible")).toHaveCount(1);
 
     const sections = await page.locator("main > section").evaluateAll((elements) => elements.map((element) => element.classList[0]));
     expect(sections[0]).toBe("container");
     expect(sections.slice(1)).toEqual(["donation-hero", "donation-projects", "past-donations"]);
+  });
+
+  test("spenden popup closes when its backdrop is clicked", async ({ page }) => {
+    await page.goto("/spenden/", { waitUntil: "networkidle" });
+
+    const popup = page.locator("[data-donation-popup]");
+    await expect(popup).toHaveAttribute("open", "");
+    await page.mouse.click(1, 1);
+    await expect(popup).not.toHaveAttribute("open", "");
   });
 
   test("former foerderer route redirects to the combined donation page", async ({ page }) => {

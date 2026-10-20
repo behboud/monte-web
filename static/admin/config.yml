@@ -431,6 +431,8 @@ collections:
               - { label: "Bild", name: "image", widget: "image", hint: "Bitte vor der Veröffentlichung Bildrechte und Veröffentlichungserlaubnis prüfen." }
               - { label: "Alternativtext", name: "image_alt", widget: "string", required: false }
               - { label: "Text", name: "content", widget: "markdown" }
+              - { label: "Im Förderhinweis anzeigen", name: "highlight", widget: "boolean", required: false, default: false }
+              - { label: "Ziel des Förderhinweises", name: "url", widget: "string", required: false, hint: "Wird nur benötigt, wenn das Projekt im Förderhinweis erscheint." }
               - label: "Prüfung der Veröffentlichung"
                 name: "publication_review"
                 widget: "object"

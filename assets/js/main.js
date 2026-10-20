@@ -133,6 +133,65 @@
     });
   }
 
+  const donationPopup = document.querySelector("[data-donation-popup]");
+  if (donationPopup && typeof donationPopup.showModal === "function") {
+    const donationOptions = [...donationPopup.querySelectorAll("[data-donation-highlight-option]")];
+    const donationPopupStorageKey = "monte-donation-highlight-dismissed";
+    let wasDismissed = false;
+
+    try {
+      wasDismissed = window.sessionStorage.getItem(donationPopupStorageKey) === "true";
+    } catch {
+      wasDismissed = false;
+    }
+
+    if (donationOptions.length && !wasDismissed) {
+      const selectedOption = donationOptions[Math.floor(Math.random() * donationOptions.length)];
+      const selectedTitle = selectedOption.querySelector("h2[id]");
+      const closeButton = donationPopup.querySelector("[data-donation-popup-close]");
+
+      donationOptions.forEach((option) => {
+        option.hidden = option !== selectedOption;
+      });
+      if (selectedTitle) {
+        donationPopup.setAttribute("aria-labelledby", selectedTitle.id);
+      }
+
+      donationPopup.addEventListener(
+        "close",
+        () => {
+          try {
+            window.sessionStorage.setItem(donationPopupStorageKey, "true");
+          } catch {
+            // The popup remains dismissible when session storage is unavailable.
+          }
+        },
+        { once: true },
+      );
+
+      closeButton?.addEventListener("click", () => {
+        if (donationPopup.open) {
+          donationPopup.close();
+        }
+      });
+
+      donationPopup.addEventListener("click", (event) => {
+        if (event.target !== donationPopup) {
+          return;
+        }
+
+        const bounds = donationPopup.getBoundingClientRect();
+        const clickedOutside = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+
+        if (clickedOutside && donationPopup.open) {
+          donationPopup.close();
+        }
+      });
+
+      donationPopup.showModal();
+    }
+  }
+
   const mobileToc = document.querySelector("[data-mobile-toc]");
   if (mobileToc) {
     const toggle = mobileToc.querySelector("[data-mobile-toc-toggle]");

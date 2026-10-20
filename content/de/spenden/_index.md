@@ -23,11 +23,15 @@ projekte:
   - title: Schulgarten weiterentwickeln
     image: /images/6-_DSC7336.jpg
     image_alt: Hochbeet im Schulgarten der Montessorischule Gilching
+    highlight: true
     content: Mit Ihrer Unterstützung können wir unseren Schulgarten als Lern- und Lebensraum weiterentwickeln – mit Pflanzen, Sitzgelegenheiten und Materialien für gemeinsame Projekte.
+    url: /kontakt/
   - title: Lernmaterial für die Freiarbeit
     image: /images/Freiarbeit_1.jpeg
     image_alt: Schülerin arbeitet selbstständig an ihrem Platz
+    highlight: true
     content: Gute Materialien geben Kindern Raum, selbstständig zu entdecken, zu üben und eigene Fragen zu verfolgen. Helfen Sie uns, unsere Lernumgebung lebendig zu halten.
+    url: /kontakt/
   - title: Bewegung und Spiel
     image: /images/fussballer.jpg
     image_alt: Kinder spielen Fußball auf dem Schulgelände

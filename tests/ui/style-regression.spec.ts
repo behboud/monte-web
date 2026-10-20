@@ -1067,12 +1067,15 @@ test.describe("style regressions", () => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto("/spenden/", { waitUntil: "networkidle" });
 
+    await page.locator("[data-donation-popup-close]").click();
+    await expect(page.locator("[data-donation-popup]")).not.toHaveAttribute("open", "");
+
     await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
     await expect(page.locator(".donation-hero h1")).toHaveCount(0);
     await expect(page.locator(".donation-project")).toHaveCount(3);
     await expect(page.locator(".past-donation-card")).toHaveCount(12);
     await expect(page.locator(".donation-hero-cta")).toHaveCount(1);
-    await expect(page.locator("main a")).toHaveCount(1);
+    await expect(page.locator("main a:visible")).toHaveCount(1);
     const leadHeroImage = page.locator('.donation-hero-slider img[src*="Schuleeingang"]').first();
     const nextHeroImage = page.locator('.donation-hero-slider img[src*="Zaun_3"]').first();
     await expect(leadHeroImage).toBeVisible();

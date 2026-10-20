@@ -882,6 +882,207 @@
     color: var(--donation-ink);
   }
 
+  html:has(.donation-popup:modal) {
+    overflow: hidden;
+  }
+
+  .donation-popup {
+    inline-size: min(48rem, calc(100dvw - 2rem));
+    max-inline-size: min(48rem, calc(100dvw - 2rem));
+    max-block-size: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: clip;
+    border: 0;
+    border-radius: 1rem;
+    background: var(--donation-paper);
+    color: var(--donation-ink);
+    box-shadow: 0 24px 70px color-mix(in oklch, var(--donation-blue) 26%, transparent);
+    opacity: 0;
+  }
+
+  .donation-popup[open] {
+    opacity: 1;
+  }
+
+  .donation-popup::backdrop {
+    background: color-mix(in oklch, var(--donation-blue) 52%, transparent);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+  }
+
+  .donation-popup[open]::backdrop {
+    opacity: 1;
+  }
+
+  .donation-popup-option {
+    display: grid;
+    max-block-size: calc(100dvh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .donation-popup-option-image {
+    min-block-size: 15rem;
+    overflow: clip;
+    background: color-mix(in oklch, var(--donation-ink) 6%, var(--donation-paper));
+  }
+
+  .donation-popup-option-image img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .donation-popup-option-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .donation-popup-kicker {
+    margin: 0;
+    color: color-mix(in oklch, var(--donation-blue) 70%, transparent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .donation-popup-option-content h2 {
+    max-inline-size: 20ch;
+    margin: 0;
+    color: var(--donation-blue);
+    font-size: var(--donation-section-title-size);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .donation-popup-description {
+    color: var(--donation-ink);
+    line-height: 1.5;
+  }
+
+  .donation-popup-description p {
+    max-inline-size: 58ch;
+    margin: 0;
+  }
+
+  .donation-popup-action {
+    display: inline-flex;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-block-size: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    align-self: start;
+    margin-block-start: 0.5rem;
+    padding-inline: 1.25rem;
+    border: 1px solid var(--donation-blue);
+    border-radius: 0.375rem;
+    background: var(--donation-blue);
+    color: var(--donation-paper);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .donation-popup-close {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    z-index: 1;
+    display: grid;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    place-items: center;
+    border: 1px solid color-mix(in oklch, var(--donation-blue) 15%, transparent);
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--donation-paper) 94%, transparent);
+    color: var(--donation-blue);
+    box-shadow: 0 4px 16px color-mix(in oklch, var(--donation-blue) 18%, transparent);
+    cursor: pointer;
+  }
+
+  .donation-popup-action:focus-visible,
+  .donation-popup-close:focus-visible {
+    outline: 3px solid color-mix(in oklch, var(--donation-blue) 70%, var(--donation-paper));
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .donation-popup-action:hover {
+      background: color-mix(in oklch, var(--donation-blue) 88%, black);
+      border-color: color-mix(in oklch, var(--donation-blue) 88%, black);
+      color: var(--donation-paper);
+    }
+
+    .donation-popup-close:hover {
+      background: var(--donation-blue);
+      color: var(--donation-paper);
+    }
+  }
+
+  .donation-popup-action:active {
+    transform: scale(0.98);
+  }
+
+  @media (min-width: 40rem) {
+    .donation-popup-option {
+      min-block-size: 25rem;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+
+    .donation-popup-option-image {
+      block-size: 100%;
+      min-block-size: 25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .donation-popup {
+      transform: translateY(1rem) scale(0.98);
+      transition:
+        opacity 220ms ease,
+        transform 220ms ease,
+        display 220ms allow-discrete,
+        overlay 220ms allow-discrete;
+    }
+
+    .donation-popup[open] {
+      transform: none;
+    }
+
+    .donation-popup::backdrop {
+      transition:
+        opacity 220ms ease,
+        display 220ms allow-discrete,
+        overlay 220ms allow-discrete;
+    }
+
+    .donation-popup-close,
+    .donation-popup-action {
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease,
+        transform 140ms ease;
+    }
+
+    @starting-style {
+      .donation-popup[open] {
+        opacity: 0;
+        transform: translateY(1rem) scale(0.98);
+      }
+
+      .donation-popup[open]::backdrop {
+        opacity: 0;
+      }
+    }
+  }
+
   .speiseplan-week {
     border-color: rgba(34, 36, 119, 0.12);
     background: #fffdf7;

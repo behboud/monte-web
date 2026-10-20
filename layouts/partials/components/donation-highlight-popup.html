@@ -1,0 +1,38 @@
+{{ $projects := .Projects }}
+{{ $page := .Page }}
+{{ if $projects }}
+  <dialog class="donation-popup" data-donation-popup aria-labelledby="donation-highlight-title-0">
+    <button class="donation-popup-close" type="button" data-donation-popup-close aria-label="Förderhinweis schließen">
+      <span class="fa fa-times" aria-hidden="true"></span>
+    </button>
+
+    {{ range $index, $project := $projects }}
+      {{ $titleID := printf "donation-highlight-title-%d" $index }}
+      <div class="donation-popup-option" data-donation-highlight-option hidden>
+        <div class="donation-popup-option-image">
+          {{ partial "image" (dict "Src" $project.image "Alt" ($project.image_alt | default $project.title) "Class" "h-full w-full object-cover") }}
+        </div>
+        <div class="donation-popup-option-content">
+          <p class="donation-popup-kicker">Ein Projekt unterstützen</p>
+          <h2 id="{{ $titleID }}">{{ $project.title | markdownify }}</h2>
+          <div class="donation-popup-description">{{ $page.RenderString (dict "display" "block") ($project.content | default "") }}</div>
+          {{ with $project.url }}
+            {{ $isExternal := or (hasPrefix . "http://") (hasPrefix . "https://") (hasPrefix . "mailto:") }}
+            <a
+              class="donation-popup-action"
+              aria-label="Jetzt fördern: {{ $project.title }}"
+              {{ if $isExternal }}target="_self" rel="noopener"{{ end }}
+              href="{{ if $isExternal }}
+                {{ . }}
+              {{ else }}
+                {{ partial "components/link-url.html" . }}
+              {{ end }}">
+              Jetzt fördern
+              <span class="fa fa-arrow-right" aria-hidden="true"></span>
+            </a>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  </dialog>
+{{ end }}
