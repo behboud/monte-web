@@ -2,9 +2,11 @@
 title: Unsere Schule
 description: Alles Wichtige zu unserer Schule, unserem Konzept und dem Aufnahmeverfahren.
 draft: false
-menus: [top]
+menus:
+  - top
 linkTitle: Schule
 weight: 2
+menu_icon: ''
 slider:
   enable: true
   images:
@@ -16,31 +18,28 @@ slider:
 section_cards:
   enable: true
   items:
-    - title: Schulalltag
+    - title: SCHULALLTAG
       description: Gemeinsam lernen, entdecken und den Schulalltag gestalten.
       image: /images/16-_DSC7588.jpg
       show_banner: false
-      href: "#schulalltag"
-    - title: Wer wir sind
+      href: '#schulalltag'
+    - title: WER WIR SIND
       description: Unsere Pädagogik, Geschichte und die Menschen, die Schule machen.
       image: /images/12-_DSC7076.jpg
       show_banner: true
-      href: "#wer-wir-sind"
-    - title: Komm zu uns
+      href: '#wer-wir-sind'
+    - title: KOMM ZU UNS
       description: Alles rund um Aufnahme, Quereinstieg und Schulgeld.
       image: /images/Schuleeingang.jpeg
       show_banner: true
-      href: "#komm-zu-uns"
+      href: '#komm-zu-uns'
 toc:
   enable: true
-  title: Seitenübersicht
   sections:
-    - label: Schulalltag
-      title: Schulalltag
-      content: ""
+    - title: SCHULALLTAG
+      content: ''
       children:
-        - label: Qualitäten
-          title: Qualitäten unserer pädagogischen Arbeit
+        - title: Qualitäten unserer pädagogischen Arbeit
           content: |-
             - **selbstständig lernen** - Wir geben den Kindern Raum, eigenverantwortlich zu arbeiten und ihre Lernprozesse aktiv zu steuern.
             - **vielfältig lernen** - Wir fördern unterschiedliche Lernerfahrungen, um individuelle Talente und Kompetenzen zu entwickeln.
@@ -55,8 +54,8 @@ toc:
             Das Fundament unserer Arbeit ist die Pädagogik von Maria Montessori. Die Kinder lernen in einer vorbereiteten Umgebung mit speziell entwickeltem Material unter Berücksichtigung sensibler Entwicklungsphasen.
           children: []
           id: qualitaeten
-        - label: Wie sieht ein Schultag bei uns aus?
-          title: Wie sieht ein Schultag an der Montessorischule Gilching aus?
+          label: Qualitäten
+        - title: Wie sieht ein Schultag an der Montessorischule Gilching aus?
           content: |-
             Wir beginnen den Tag in jeder Klasse mit einem gemeinsamen Morgenkreis. Anschließend arbeiten die Kinder in der Freiarbeit an den Themen ihres Wochenplans.
 
@@ -69,8 +68,8 @@ toc:
             An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir darum, Aufgaben, die im Unterricht nicht fertiggestellt wurden, zu Hause abzuschließen.
           children: []
           id: wie-sieht-ein-schultag-bei-uns-aus
-        - label: Unterrichtszeiten
-          title: Gebundene Ganztagsschule – unsere Unterrichtszeiten
+          label: Wie sieht ein Schultag bei uns aus?
+        - title: Gebundene Ganztagsschule – unsere Unterrichtszeiten
           content: |-
             Wir sind eine gebundene Ganztagsschule. Die Ganztagsbetreuung ermöglicht es uns, den Kindern die Zeit zu geben, die sie für sich und ihre Arbeit brauchen. So ist eine differenzierte Förderung jedes Einzelnen möglich.
 
@@ -80,8 +79,8 @@ toc:
             - Fr: 08:00 - 12:30 Uhr
           children: []
           id: unterrichtszeiten
-        - label: Mittagsverpflegung
-          title: Mittagsverpflegung
+          label: Unterrichtszeiten
+        - title: Mittagsverpflegung
           content: |-
             In unserer gebundenen Ganztagsschule essen die Kinder von Montag bis Donnerstag gemeinsam zu Mittag. In der schuleigenen Küche werden täglich gesunde, ausgewogene und auf Kinder abgestimmte Mahlzeiten zubereitet. Unser Küchenteam verwendet bevorzugt hochwertige, regional erzeugte Produkte.
 
@@ -89,18 +88,18 @@ toc:
 
             Die Kinder werden in Entstehungs- und Verarbeitungsprozesse eingebunden: Am wöchentlichen Kinderkochtag unterstützen jeweils zwei Kinder das Küchenteam. Einmal pro Monat darf von den Klassen ein Wunschmenü zusammengestellt werden.
 
-            ![Foto-Platzhalter Mittagsverpflegung](/images/image-placeholder.png)
+            ![Foto-Platzhalter Mittagsverpflegung](/images/_DSC0998.webp)
 
             [Hier finden Sie unseren aktuellen Speiseplan](/speiseplan)
           children: []
           id: mittagsverpflegung
+          label: Mittagsverpflegung
       id: schulalltag
-    - label: Wer wir sind
-      title: Wer wir sind
-      content: ""
+      label: Schulalltag
+    - title: Wer wir sind
+      content: ''
       children:
-        - label: Wofür wir stehen
-          title: Wofür wir stehen
+        - title: Wofür wir stehen
           content: |-
             > „Ich halte es für möglich, eine neue Gesellschaft vorauszusehen,
             > in der der Mensch fähiger sein wird, weil man Vertrauen in ihn setzte,
@@ -113,13 +112,13 @@ toc:
             Seit 2004 bereichert unsere Schule als gebundene Ganztagesgrundschule mit dem Schwerpunkt Naturerfahrung das Bildungsangebot für Kinder aus Gilching und Umgebung. Seit dem Schuljahr 2017/18 bietet unser neu gebautes Schulhaus eine anregende, vorbereitete Lernumgebung für vier jahrgangsgemischte Klassen (1-4).
           children: []
           id: wofuer-wir-stehen
-        - label: Pädagogik
-          title: Maria Montessori und die Montessori-Pädagogik
+          label: Wofür wir stehen
+        - title: Maria Montessori und die Montessori-Pädagogik
           content: Für einen kompakten Überblick zu Maria Montessori und der Montessori-Pädagogik möchten wir Sie auf die sehr informative Seite des [Montessorilandesverbands](https://www.montessoribayern.de/landesverband/paedagogik) verweisen.
           children: []
           id: paedagogik
-        - label: Geschichte der Schule
-          title: Die Geschichte unserer Schule
+          label: Pädagogik
+        - title: Die Geschichte unserer Schule
           content: |-
             Im Jahr 2004 hatten die großen Anstrengungen einer engagierten Elterninitiative Erfolg: Die Montessorischule Gilching startete mit ihrer ersten Klasse - damals noch in den Räumlichkeiten einer ehemaligen Bankfiliale.
 
@@ -130,8 +129,8 @@ toc:
             > Fotos und Einblicke in unsere Oase werden hier ergänzt.
           children: []
           id: schulgeschichte
-        - label: 5 Säulen
-          title: Die fünf Säulen unserer Schule
+          label: Geschichte der Schule
+        - title: Die fünf Säulen unserer Schule
           content: |-
             ![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
 
@@ -146,19 +145,18 @@ toc:
             > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
           children: []
           id: fuenf-saeulen
-        - label: Das sind wir
-          title: Das sind wir
-          content: ""
+          label: 5 Säulen
+        - title: Das sind wir
+          content: ''
           children:
-            - label: Schulleitung und Team
-              title: Schulleitung und Team
+            - title: Schulleitung und Team
               content: |-
                 Die Namen und Funktionen des Teams werden ergänzt.
 
                 {{< circle-items data="W3siaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiTmFtZSBlcmfDpG56ZW4gMSIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJOYW1lIGVyZ8OkbnplbiAyIiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifSx7ImltYWdlIjoiL2ltYWdlcy9pbWFnZS1wbGFjZWhvbGRlci5wbmciLCJ0aXRsZSI6Ik5hbWUgZXJnw6RuemVuIDMiLCJzdWJ0aXRsZSI6IkZ1bmt0aW9uIGVyZ8OkbnplbiIsImFsdCI6IlBsYXR6aGFsdGVyYmlsZCJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiTmFtZSBlcmfDpG56ZW4gNCIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJOYW1lIGVyZ8OkbnplbiA1Iiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifSx7ImltYWdlIjoiL2ltYWdlcy9pbWFnZS1wbGFjZWhvbGRlci5wbmciLCJ0aXRsZSI6Ik5hbWUgZXJnw6RuemVuIDYiLCJzdWJ0aXRsZSI6IkZ1bmt0aW9uIGVyZ8OkbnplbiIsImFsdCI6IlBsYXR6aGFsdGVyYmlsZCJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiTmFtZSBlcmfDpG56ZW4gNyIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJOYW1lIGVyZ8OkbnplbiA4Iiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifV0=" >}}
               id: schulleitung-und-team
-            - label: Verwaltung
-              title: Die Verwaltung
+              label: Schulleitung und Team
+            - title: Die Verwaltung
               content: |-
                 - Schulleitung
                 - Pädagogisches Team
@@ -169,8 +167,8 @@ toc:
 
                 {{< circle-items data="W3siaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiTmFtZSBlcmfDpG56ZW4gMSIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJOYW1lIGVyZ8OkbnplbiAyIiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifSx7ImltYWdlIjoiL2ltYWdlcy9pbWFnZS1wbGFjZWhvbGRlci5wbmciLCJ0aXRsZSI6Ik5hbWUgZXJnw6RuemVuIDMiLCJzdWJ0aXRsZSI6IkZ1bmt0aW9uIGVyZ8OkbnplbiIsImFsdCI6IlBsYXR6aGFsdGVyYmlsZCJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiTmFtZSBlcmfDpG56ZW4gNCIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJOYW1lIGVyZ8OkbnplbiA1Iiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifSx7ImltYWdlIjoiL2ltYWdlcy9pbWFnZS1wbGFjZWhvbGRlci5wbmciLCJ0aXRsZSI6Ik5hbWUgZXJnw6RuemVuIDYiLCJzdWJ0aXRsZSI6IkZ1bmt0aW9uIGVyZ8OkbnplbiIsImFsdCI6IlBsYXR6aGFsdGVyYmlsZCJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiTmFtZSBlcmfDpG56ZW4gNyIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJOYW1lIGVyZ8OkbnplbiA4Iiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifV0=" >}}
               id: verwaltung
-            - label: SchülerInnen
-              title: Unsere Schülerinnen
+              label: Verwaltung
+            - title: Unsere Schülerinnen
               content: |-
                 > „Wenn Kinder sich in der Zukunft bewähren sollen, so müssen wir ihnen Mut machen, ihnen helfen, dass sie Charakterstärke, Verantwortungsbereitschaft und praktische Fähigkeiten erwerben können.“
                 > Maria Montessori
@@ -181,8 +179,8 @@ toc:
 
                 ![Foto-Platzhalter Schüler\*innen](/images/image-placeholder.png)
               id: schuelerinnen
-            - label: Vorstand
-              title: Unser Vorstand
+              label: SchülerInnen
+            - title: Unser Vorstand
               content: |-
                 Unsere Schule wurde 2004 dank einer Elterninitiative als gemeinnütziger Verein gegründet. Das Vorstandsteam des Fördervereins unterstützt die Schule bis heute als eine der fünf tragenden Säulen.
 
@@ -190,8 +188,8 @@ toc:
 
                 {{< circle-items data="W3siaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiVm9yc3RhbmRzbWl0Z2xpZWQgMSIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJWb3JzdGFuZHNtaXRnbGllZCAyIiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifSx7ImltYWdlIjoiL2ltYWdlcy9pbWFnZS1wbGFjZWhvbGRlci5wbmciLCJ0aXRsZSI6IlZvcnN0YW5kc21pdGdsaWVkIDMiLCJzdWJ0aXRsZSI6IkZ1bmt0aW9uIGVyZ8OkbnplbiIsImFsdCI6IlBsYXR6aGFsdGVyYmlsZCJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiVm9yc3RhbmRzbWl0Z2xpZWQgNCIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJWb3JzdGFuZHNtaXRnbGllZCA1Iiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifSx7ImltYWdlIjoiL2ltYWdlcy9pbWFnZS1wbGFjZWhvbGRlci5wbmciLCJ0aXRsZSI6IlZvcnN0YW5kc21pdGdsaWVkIDYiLCJzdWJ0aXRsZSI6IkZ1bmt0aW9uIGVyZ8OkbnplbiIsImFsdCI6IlBsYXR6aGFsdGVyYmlsZCJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL2ltYWdlLXBsYWNlaG9sZGVyLnBuZyIsInRpdGxlIjoiVm9yc3RhbmRzbWl0Z2xpZWQgNyIsInN1YnRpdGxlIjoiRnVua3Rpb24gZXJnw6RuemVuIiwiYWx0IjoiUGxhdHpoYWx0ZXJiaWxkIn0seyJpbWFnZSI6Ii9pbWFnZXMvaW1hZ2UtcGxhY2Vob2xkZXIucG5nIiwidGl0bGUiOiJWb3JzdGFuZHNtaXRnbGllZCA4Iiwic3VidGl0bGUiOiJGdW5rdGlvbiBlcmfDpG56ZW4iLCJhbHQiOiJQbGF0emhhbHRlcmJpbGQifV0=" >}}
               id: vorstand
-            - label: Eltern
-              title: Die Eltern
+              label: Vorstand
+            - title: Die Eltern
               content: |-
                 Die Montessorischule Gilching wurde vor über 20 Jahren durch eine Elterninitiative ins Leben gerufen. Dieses Engagement prägt das Verständnis von Elternarbeit bis heute. Jede Familie ist verpflichtet, im Schuljahr 40 Stunden Arbeitszeit in die Gemeinschaft einzubringen.
 
@@ -204,14 +202,15 @@ toc:
 
                 ![Foto-Platzhalter Elternengagement](/images/image-placeholder.png)
               id: eltern
+              label: Eltern
           id: das-sind-wir
+          label: Das sind wir
       id: wer-wir-sind
-    - label: Komm zu uns
-      title: Komm zu uns
-      content: ""
+      label: Wer wir sind
+    - title: Komm zu uns
+      content: ''
       children:
-        - label: Aufnahme erste Klasse
-          title: Aufnahme in unsere 1. Klasse
+        - title: Aufnahme in unsere 1. Klasse
           content: |-
             Am Tag der offenen Tür öffnen wir unsere Pforten und geben Ihnen die Möglichkeit, unser pädagogisches Team und das Schulhaus kennenzulernen.
 
@@ -232,8 +231,8 @@ toc:
             - Plakat zum Aufnahmeverfahren (Link folgt)
           children: []
           id: aufnahme-erste-klasse
-        - label: Quereinstieg
-          title: Quereinstieg
+          label: Aufnahme erste Klasse
+        - title: Quereinstieg
           content: |-
             Leider haben wir nur vereinzelt Kapazitäten für Quereinsteiger\*innen. Sie können uns jederzeit - auch während des laufenden Schuljahres - unverbindlich eine Bewerbung für einen gegebenenfalls freiwerdenden Platz zukommen lassen. Sollte sich eine Möglichkeit ergeben, setzen wir uns mit Ihnen in Verbindung.
 
@@ -245,16 +244,16 @@ toc:
             - [Kostenübersicht Quereinstieg (PDF)](#) _(Platzhalter)_
           children: []
           id: quereinstieg
-        - label: Aufnahme ins Team
-          title: Aufnahme ins Team
+          label: Quereinstieg
+        - title: Aufnahme ins Team
           content: |-
             Wir freuen uns über Initiativbewerbungen an `schulleitung@montessorischule-gilching.de`.
 
             Wir sind außerdem Referendariats-Schule.
           children: []
           id: aufnahme-ins-team
-        - label: Schulgeld
-          title: Schulgeld
+          label: Aufnahme ins Team
+        - title: Schulgeld
           content: |-
             Der Träger unserer Grundschule ist der Montessori Förderverein Gilching e.V. Staatlich anerkannte Montessorischulen in Bayern erhalten nur einen geringen Förderbetrag. Deshalb sind wir auf Schulgeldzahlungen angewiesen.
 
@@ -269,5 +268,8 @@ toc:
             Alle relevanten Kosten im Rahmen des Aufnahmeverfahrens bzw. des Schulalltags entnehmen Sie bitte der [aktuellen Kostenübersicht](aktuellen Kostenübersicht).
           children: []
           id: schulgeld
+          label: Schulgeld
       id: komm-zu-uns
+      label: Komm zu uns
+  title: Seitenübersicht
 ---
