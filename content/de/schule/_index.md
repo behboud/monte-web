@@ -90,7 +90,7 @@ toc:
 
             Die Kinder werden in Entstehungs- und Verarbeitungsprozesse eingebunden: Am wöchentlichen Kinderkochtag unterstützen jeweils zwei Kinder das Küchenteam. Einmal pro Monat darf von den Klassen ein Wunschmenü zusammengestellt werden.
 
-            ![Foto-Platzhalter Mittagsverpflegung](/images/_DSC0998.webp)
+            ![Foto-Platzhalter Mittagsverpflegung](/images/_DSC0643.webp)
 
             [Hier finden Sie unseren aktuellen Speiseplan](/speiseplan)
           children: []
