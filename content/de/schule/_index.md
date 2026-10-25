@@ -23,17 +23,17 @@ section_cards:
   items:
     - title: SCHULALLTAG
       description: Gemeinsam lernen, entdecken und den Schulalltag gestalten.
-      image: /images/16-_DSC7588.jpg
+      image: /images/_DSC1127.webp
       show_banner: false
       href: '#schulalltag'
     - title: WER WIR SIND
       description: Unsere Pädagogik, Geschichte und die Menschen, die Schule machen.
-      image: /images/12-_DSC7076.jpg
+      image: /images/_DSC1119.webp
       show_banner: true
       href: '#wer-wir-sind'
     - title: KOMM ZU UNS
       description: Alles rund um Aufnahme, Quereinstieg und Schulgeld.
-      image: /images/Schuleeingang.jpeg
+      image: /images/stuhl-im-haus.jpeg
       show_banner: true
       href: '#komm-zu-uns'
 toc:
