@@ -16,7 +16,6 @@ slider:
     - /images/4-_DSC7574.webp
     - /images/Mon-1440.webp
     - /images/Mon-0768.webp
-    - /images/Mon-1440.webp
     - /images/Mon-0520.webp
 section_cards:
   enable: true
