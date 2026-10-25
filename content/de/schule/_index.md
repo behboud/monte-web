@@ -141,8 +141,6 @@ toc:
             - Pädagogisches Team
             - Vorstand/Förderverein
             - Verwaltung und Schulorganisation
-
-            > Das grafische Säulenmodell wird hier ergänzt, sobald die finale Grafik vorliegt.![](/images/Bildschirmfoto%202026-03-18%20um%2015.44.42.png)
           children: []
           id: fuenf-saeulen
           label: 5 Säulen
