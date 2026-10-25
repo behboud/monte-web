@@ -11,8 +11,8 @@ slider:
   enable: true
   images:
     - /images/Schuleeingang.jpeg
-    - /images/7-_DSC7580.jpg
-    - /images/3-_DSC7569.jpg
+    - /images/Zaun_3.jpeg
+    - /images/Mon-0520.webp
     - /images/81-_DSC7519.jpg
     - /images/Mon-0768.jpg
 section_cards:
