@@ -127,8 +127,6 @@ toc:
             Nur ein Jahr später stellte die Gemeinde Gilching uns das alte Schulhaus Argelsried zur Verfügung, und wir konnten auf zwei Klassen erweitern. Die Nachfrage wuchs stetig, sodass auch dieses Schulhaus zu klein wurde.
 
             Nach einer nicht umsetzbaren Umbauplanung entstand ein neues Schulhaus, abgestimmt auf unsere Bedürfnisse. Seit 2017 sind wir in den heutigen Räumlichkeiten mit großem Garten.
-
-            > Fotos und Einblicke in unsere Oase werden hier ergänzt.
           children: []
           id: schulgeschichte
           label: Geschichte der Schule
@@ -179,7 +177,7 @@ toc:
 
                 Aus jeder Klasse werden zwei Schülersprecher\*innen gewählt. Durch die etablierten Mitbestimmungsformen erleben Kinder früh demokratische Verantwortung. Das übergeordnete Ziel ist die Erziehung zur Demokratiefähigkeit.
 
-                ![Foto-Platzhalter Schüler\*innen](/images/image-placeholder.png)
+                ![Foto-Platzhalter Schüler\*innen](/images/_DSC1084.webp)
               id: schuelerinnen
               label: SchülerInnen
             - title: Unser Vorstand
