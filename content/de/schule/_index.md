@@ -38,7 +38,7 @@ section_cards:
 toc:
   enable: true
   sections:
-    - title: SCHULALLTAG
+    - title: Schulalltag
       content: ''
       children:
         - title: Qualitäten unserer pädagogischen Arbeit
@@ -59,6 +59,8 @@ toc:
           label: Qualitäten
         - title: Wie sieht ein Schultag an der Montessorischule Gilching aus?
           content: |-
+            {{< image-carousel data="W3siaW1hZ2UiOiIvaW1hZ2VzL0ZyZWlhcmJlaXRfMS5qcGVnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyAxIn0seyJpbWFnZSI6Ii9pbWFnZXMvX0RTQzEwODQud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgU2NodWx0YWcgMiJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL19EU0MxMTE5LndlYnAiLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIFNjaHVsdGFnIDMifSx7ImltYWdlIjoiL2ltYWdlcy9fRFNDMTEyNy53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA0In0seyJpbWFnZSI6Ii9pbWFnZXMvNC1fRFNDNzU3NC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA1In0seyJpbWFnZSI6Ii9pbWFnZXMvNy1fRFNDNzU4MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA2In0seyJpbWFnZSI6Ii9pbWFnZXMvMTItX0RTQzcwNzYuanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA3In0seyJpbWFnZSI6Ii9pbWFnZXMvMTYtX0RTQzc1ODguanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA4In0seyJpbWFnZSI6Ii9pbWFnZXMvMjUtX0RTQzc2NjMuanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA5In0seyJpbWFnZSI6Ii9pbWFnZXMvNi1fRFNDNzMzNi5qcGciLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIFNjaHVsdGFnIDEwIn0seyJpbWFnZSI6Ii9pbWFnZXMvTW9uLTA3Njgud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgU2NodWx0YWcgMTEifSx7ImltYWdlIjoiL2ltYWdlcy9Nb24tMTQ0MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyAxMiJ9XQ==" >}}
+
             Wir beginnen den Tag in jeder Klasse mit einem gemeinsamen Morgenkreis. Anschließend arbeiten die Kinder in der Freiarbeit an den Themen ihres Wochenplans.
 
             Je nach Stundenplan folgen Freiarbeits- und Differenzierungsphasen sowie Englisch-, Religions-, Sport-, Musik- und Kunstunterricht. An zwei Nachmittagen pro Woche arbeiten die Kinder in Freiarbeit, an zwei weiteren Nachmittagen wählen sie Projekte für einen festen Zeitraum.
@@ -90,7 +92,7 @@ toc:
 
             Die Kinder werden in Entstehungs- und Verarbeitungsprozesse eingebunden: Am wöchentlichen Kinderkochtag unterstützen jeweils zwei Kinder das Küchenteam. Einmal pro Monat darf von den Klassen ein Wunschmenü zusammengestellt werden.
 
-            ![Foto-Mittagsverpflegung](/images/_DSC0643.webp)
+            {{< image-carousel data="W3siaW1hZ2UiOiIvaW1hZ2VzL19EU0MwNjQzLndlYnAiLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIE1pdHRhZ3N2ZXJwZmxlZ3VuZyAxIn0seyJpbWFnZSI6Ii9pbWFnZXMvX0RTQzA3MzQud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgTWl0dGFnc3ZlcnBmbGVndW5nIDIifSx7ImltYWdlIjoiL2ltYWdlcy9fRFNDMDc3Mi53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBNaXR0YWdzdmVycGZsZWd1bmcgMyJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL19EU0MwOTk4LndlYnAiLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIE1pdHRhZ3N2ZXJwZmxlZ3VuZyA0In0seyJpbWFnZSI6Ii9pbWFnZXMvX0RTQzEwMjQud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgTWl0dGFnc3ZlcnBmbGVndW5nIDUifSx7ImltYWdlIjoiL2ltYWdlcy9fRFNDMTA3MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBNaXR0YWdzdmVycGZsZWd1bmcgNiJ9XQ==" >}}
 
             [Hier finden Sie unseren aktuellen Speiseplan](/speiseplan)
           children: []

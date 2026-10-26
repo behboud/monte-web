@@ -46,7 +46,7 @@ test.describe("CMS admin", () => {
   test("Bildreihe round-trips items and its configurable row limit", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
-    expect(config).toContain("editor_components: [code-block, image, circle-items]");
+    expect(config).toContain("editor_components: [code-block, image, circle-items, image-carousel]");
     expect(config).not.toMatch(/^\s*comment:/m);
 
     const componentResponse = await request.get("/admin/editor-components.js");

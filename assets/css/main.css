@@ -124,16 +124,31 @@
     @apply font-calligraphy font-normal text-monte;
   }
 
-  .home-banner-heading {
-    @apply flex items-center justify-center;
+  .home-banner-heading,
+  .page-title-row {
+    display: grid;
+    grid-template-columns: 1.1em minmax(0, 1fr) 1.1em;
+    align-items: center;
     gap: 0.2em;
   }
 
-  .home-banner-logo {
+  .page-title-row {
+    font-size: clamp(2rem, 9vw, 5rem);
+  }
+
+  .title-logo {
+    grid-column: 1;
+    justify-self: start;
     block-size: 1em;
-    flex: none;
     inline-size: auto;
     object-fit: contain;
+  }
+
+  .home-banner-title,
+  .page-title-row .page-title-calligraphy {
+    grid-column: 2;
+    hyphens: auto;
+    overflow-wrap: break-word;
   }
 
   .home-banner-title {
@@ -582,10 +597,10 @@
     --donation-project-card-padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
     --donation-project-card-gap: 0.75rem;
     --donation-media-size: clamp(4.25rem, 2rem + 4vw, 7rem);
-    --donation-copy-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+    --donation-copy-size: 1.125rem;
     --donation-section-title-size: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);
     --donation-project-card-title-size: 1.25rem;
-    --donation-card-title-size: clamp(1.125rem, 1rem + 0.3vw, 1.375rem);
+    --donation-card-title-size: 1.25rem;
     --donation-blue: oklch(0.32008 0.13793 274.324);
     --donation-ink: oklch(0.1822 0 none);
     --donation-paper: oklch(0.99 0 none);
@@ -793,7 +808,7 @@
 
   .donation-project-content {
     color: var(--donation-ink);
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.5;
   }
 
@@ -877,7 +892,7 @@
   }
 
   .past-donation-content {
-    max-inline-size: none;
+    max-inline-size: 58ch;
     margin-inline: 0;
     color: var(--donation-ink);
   }
@@ -1259,6 +1274,55 @@
     overflow-wrap: break-word;
     margin: 0;
     @apply text-base leading-relaxed text-slate-600;
+  }
+
+  .image-carousel {
+    position: relative;
+    inline-size: 100%;
+  }
+
+  .reading-prose .image-carousel {
+    margin-block: 1.5em;
+  }
+
+  .image-carousel-slide {
+    aspect-ratio: 3 / 2;
+    overflow: clip;
+    @apply bg-slate-100;
+  }
+
+  .image-carousel-image {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: none;
+    block-size: 100%;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  .image-carousel-button {
+    position: absolute;
+    inset-block-start: 50%;
+    z-index: 2;
+    translate: 0 -50%;
+    @apply flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-monte/20 bg-white/90 text-monte shadow-lg transition-opacity duration-200;
+  }
+
+  .image-carousel-prev {
+    inset-inline-start: 0.75rem;
+  }
+
+  .image-carousel-next {
+    inset-inline-end: 0.75rem;
+  }
+
+  .image-carousel-button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .image-carousel-button.swiper-button-lock {
+    display: none;
   }
 
   .back-to-top {

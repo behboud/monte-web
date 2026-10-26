@@ -501,8 +501,8 @@ test.describe("style regressions", () => {
     await expect(page.locator('[data-section-banner="schulalltag"]')).toHaveCount(0);
 
     const expectedBanners = [
-      { id: "wer-wir-sind", image: "12-_DSC7076", alt: "Wer wir sind" },
-      { id: "komm-zu-uns", image: "Schuleeingang", alt: "Komm zu uns" },
+      { id: "wer-wir-sind", image: "_DSC1119", alt: "Wer wir sind" },
+      { id: "komm-zu-uns", image: "stuhl-im-haus", alt: "Komm zu uns" },
     ];
 
     for (const width of [390, 640, 768, 1024, 1366]) {
@@ -556,7 +556,7 @@ test.describe("style regressions", () => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/schule/", { waitUntil: "networkidle" });
 
-      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image):not(.circle-items-image)").evaluateAll((images) =>
+      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image):not(.circle-items-image):not(.image-carousel-image)").evaluateAll((images) =>
         images.map((image) => {
           const textBlock = image.closest("p, ul, ol, blockquote") ?? image.closest(".reading-prose");
           const imageBox = image.getBoundingClientRect();
@@ -587,14 +587,13 @@ test.describe("style regressions", () => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/schule/", { waitUntil: "networkidle" });
 
-      const spacing = await page.locator('.reading-prose img[alt="Foto-Platzhalter Mittagsverpflegung"]').evaluate((image) => {
-        const paragraph = image.closest("p");
-        const previousItem = paragraph?.previousElementSibling;
-        const nextItem = paragraph?.nextElementSibling;
-        if (!paragraph || !previousItem || !nextItem) throw new Error("The content image should have prose before and after it.");
+      const spacing = await page.locator("#mittagsverpflegung + .reading-prose .image-carousel").evaluate((image) => {
+        const previousItem = image.previousElementSibling;
+        const nextItem = image.nextElementSibling;
+        if (!previousItem || !nextItem) throw new Error("The content image should have prose before and after it.");
 
         const imageBox = image.getBoundingClientRect();
-        const fontSize = Number.parseFloat(getComputedStyle(paragraph).fontSize);
+        const fontSize = Number.parseFloat(getComputedStyle(previousItem).fontSize);
         return {
           fontSize,
           before: imageBox.top - previousItem.getBoundingClientRect().bottom,
@@ -615,9 +614,9 @@ test.describe("style regressions", () => {
 
     const cards = page.locator(".section-card");
     const expectedCards = [
-      { title: "Schulalltag", href: "#schulalltag", image: "16-_DSC7588" },
-      { title: "Wer wir sind", href: "#wer-wir-sind", image: "12-_DSC7076" },
-      { title: "Komm zu uns", href: "#komm-zu-uns", image: "Schuleeingang" },
+      { title: "SCHULALLTAG", href: "#schulalltag", image: "_DSC1127" },
+      { title: "WER WIR SIND", href: "#wer-wir-sind", image: "_DSC1119" },
+      { title: "KOMM ZU UNS", href: "#komm-zu-uns", image: "stuhl-im-haus" },
     ];
 
     await expect(cards).toHaveCount(expectedCards.length);
@@ -965,7 +964,7 @@ test.describe("style regressions", () => {
     await expect(footerSections).toHaveCount(1);
 
     const footerImageSection = footerSections.nth(0);
-    const instagramLink = footerImageSection.locator('a[aria-label="instagram"]');
+    const instagramLink = footerImageSection.locator('a[aria-label="Instagram"]');
     await expect(instagramLink).toBeVisible();
     await expect(instagramLink).toHaveAttribute("href", "https://www.facebook.com/");
     await expect(instagramLink.locator("i")).toHaveClass(/fa-instagram/);
@@ -1170,7 +1169,7 @@ test.describe("style regressions", () => {
     expect(projectLayout.cardBorderRadius).toBe("12px");
     expect(projectLayout.cardShadow).not.toBe("none");
     expect(projectLayout.titleSize).toBe(20);
-    expect(projectLayout.contentSize).toBe(16);
+    expect(projectLayout.contentSize).toBe(18);
 
     const desktopLayout = await page
       .locator(".past-donation-card")
@@ -1209,6 +1208,10 @@ test.describe("style regressions", () => {
       const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
       expect(scrollWidth).toBeLessThanOrEqual(width);
       if (width === 390) {
+        const firstDonorCard = page.locator(".past-donation-card").first();
+        await firstDonorCard.scrollIntoViewIfNeeded();
+        await expect(firstDonorCard.locator(".past-donation-media")).toHaveCSS("transform", "none");
+
         const columns = await page.locator(".donation-project-list").evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).length);
         expect(columns).toBe(1);
 
