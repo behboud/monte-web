@@ -26,11 +26,10 @@ projekte:
       Beim Online-Einkauf unsere Schule unterstützen? Das geht, indem Sie den Bildungsspender nutzen. Ohne Registrierung, ohne Mehrkosten, in einem von über 30.000 Partnershops und Dienstleistern. Von den Umsätzen bekannter Online-Shops erhält unsere Schule anteilig eine Spende. Bei regelmäßiger Nutzung erlöst ein Privathaushalt rund 100-150€, Gewerbetreibende mehrere tausend Euro pro Jahr.
 
       SO FUNKTIONIERT’S
-
-      1. QR Code scannen oder [Link hier klicken](https://www.bildungsspender.de/montessorischule-gilching)
-      2. Sie gelangen zu den Websites vieler gängiger Onlineshops.
-      3. Nun können Sie wie gewohnt einkaufen.
-      4. Einen Teil des Umsatzes erhält die Montessorischule.
+      -> QR Code scannen oder [Link hier klicken](https://www.bildungsspender.de/montessorischule-gilching)
+      -> Sie gelangen zu den Websites vieler gängiger Onlineshops.
+      -> Nun können Sie wie gewohnt einkaufen.
+      -> Einen Teil des Umsatzes erhält die Montessorischule.
     highlight: true
     url: https://www.bildungsspender.de/montessorischule-gilching
     publication_review: null
