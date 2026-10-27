@@ -128,11 +128,11 @@ test.describe("style regressions", () => {
         return {
           viewportWidth: window.innerWidth,
           titleFontSize: Number.parseFloat(getComputedStyle(title).fontSize),
-          titleLeft: titleBox.left,
           titleCenter: titleBox.top + titleBox.height / 2,
           titleRight: titleBox.right,
           logoCenter: logoBox.top + logoBox.height / 2,
           logoHeight: logoBox.height,
+          logoLeft: logoBox.left,
           logoRight: logoBox.right,
           headingRight: headingBox.right,
         };
@@ -140,7 +140,8 @@ test.describe("style regressions", () => {
 
       expect(Math.abs(measurements.logoHeight - measurements.titleFontSize)).toBeLessThanOrEqual(1);
       expect(Math.abs(measurements.logoCenter - measurements.titleCenter)).toBeLessThanOrEqual(1);
-      expect(measurements.logoRight).toBeLessThanOrEqual(measurements.titleLeft + 1);
+      expect(measurements.logoLeft).toBeGreaterThanOrEqual(measurements.titleRight - 1);
+      expect(measurements.logoRight).toBeLessThanOrEqual(measurements.headingRight + 1);
       expect(measurements.titleRight).toBeLessThanOrEqual(measurements.headingRight + 1);
       expect(measurements.titleRight).toBeLessThanOrEqual(measurements.viewportWidth);
       expect(measurements.headingRight).toBeLessThanOrEqual(width + 1);
@@ -729,26 +730,22 @@ test.describe("style regressions", () => {
     expect(layout.linkCount).toBe(0);
   });
 
-  test("requested staff sections render eight placeholder portraits", async ({ page }) => {
+  test("requested staff sections render the requested number of portraits", async ({ page }) => {
     const sections = [
-      { route: "/schule/", id: "schulleitung-und-team", titlePrefix: "Name ergänzen" },
-      { route: "/schule/", id: "verwaltung", titlePrefix: "Name ergänzen" },
-      { route: "/schule/", id: "vorstand", titlePrefix: "Vorstandsmitglied" },
-      { route: "/verein/", id: "vorstand", titlePrefix: "Vorstandsmitglied" },
+      { route: "/schule/", id: "schulleitung-und-team", count: 16, columns: 3, mobileColumns: 2 },
+      { route: "/schule/", id: "verwaltung", count: 3, columns: 3, mobileColumns: 2 },
+      { route: "/schule/", id: "haus-und-kueche", count: 4, columns: 4, mobileColumns: 3 },
+      { route: "/verein/", id: "vorstand", count: 8, columns: 3, mobileColumns: 2 },
     ];
 
     for (const section of sections) {
       await page.goto(section.route, { waitUntil: "networkidle" });
 
       const content = page.locator(`#${section.id} + .reading-prose`);
-      await expect(content.locator(".circle-items-item")).toHaveCount(8);
-      await expect(content.locator('img[src*="image-placeholder.png"]')).toHaveCount(8);
-      await expect(content.locator('img[alt="Platzhalterbild"]')).toHaveCount(8);
-      await expect(content.locator(".circle-items-title")).toHaveCount(8);
-      await expect(content.locator(".circle-items-title").first()).toHaveText(`${section.titlePrefix} 1`);
-      await expect(content.locator(".circle-items-title").last()).toHaveText(`${section.titlePrefix} 8`);
+      await expect(content.locator(".circle-items-item")).toHaveCount(section.count);
+      await expect(content.locator(".circle-items-title")).toHaveCount(section.count);
       const grid = content.locator(".circle-items-grid");
-      await expect(grid).toHaveAttribute("data-columns", "3");
+      await expect(grid).toHaveAttribute("data-columns", String(section.columns));
       const maxItemsPerRow = await grid.evaluate((element) => {
         const rowCounts = new Map<number, number>();
         [...element.children].forEach((item) => {
@@ -757,8 +754,13 @@ test.describe("style regressions", () => {
         });
         return Math.max(...rowCounts.values());
       });
-      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? 2 : 3);
+      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? section.mobileColumns : section.columns);
     }
+  });
+
+  test("school board section has no portraits; they live on the Verein page", async ({ page }) => {
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+    await expect(page.locator("#vorstand + .reading-prose .circle-items")).toHaveCount(0);
   });
 
   test("enabled CMS outline uses the thin rail without legacy section TOCs", async ({ page }) => {
@@ -1053,6 +1055,34 @@ test.describe("style regressions", () => {
 
     expect(buttonStyles.backgroundColor).not.toBe("rgb(34, 36, 119)");
     expect(buttonStyles.color).not.toBe("rgb(255, 255, 255)");
+  });
+
+  test("aktuelles and spenden header images are no taller than the schule slider", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+    const schuleHeight = (await page.locator(".schule-slider").first().boundingBox())?.height ?? 0;
+    expect(schuleHeight).toBeGreaterThan(0);
+
+    await page.goto("/spenden/", { waitUntil: "networkidle" });
+    const spendenHeight = (await page.locator(".donation-hero").boundingBox())?.height ?? 0;
+    expect(Math.abs(spendenHeight - schuleHeight)).toBeLessThanOrEqual(1);
+
+    await page.goto("/aktuelles/post-4/", { waitUntil: "networkidle" });
+    const articleHeight = (await page.locator("article img").first().boundingBox())?.height ?? 0;
+    expect(articleHeight).toBeGreaterThan(0);
+    expect(articleHeight).toBeLessThanOrEqual(schuleHeight + 1);
+  });
+
+  test("every page shows the logo to the right of its title", async ({ page }) => {
+    for (const route of ["/", "/schule/", "/verein/", "/spenden/", "/aktuelles/", "/aktuelles/post-4/", "/speiseplan/", "/kontakt/"]) {
+      await page.goto(route, { waitUntil: "networkidle" });
+      const logo = page.locator(".title-logo").first();
+      const title = page.locator(".home-banner-title, .page-title-row .page-title-calligraphy").first();
+      await expect(logo).toBeVisible();
+      const logoBox = await logo.boundingBox();
+      const titleBox = await title.boundingBox();
+      expect(logoBox?.x ?? 0).toBeGreaterThanOrEqual((titleBox?.x ?? 0) + (titleBox?.width ?? 0) - 1);
+    }
   });
 
   test("breadcrumbs are absent from archives and taxonomy pages", async ({ page }) => {

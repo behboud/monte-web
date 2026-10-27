@@ -1,5 +1,5 @@
 (() => {
-  const maxItems = 8;
+  const maxItems = 24;
   const maxCarouselItems = 24;
 
   const textValue = (value) => (typeof value === "string" ? value : "");

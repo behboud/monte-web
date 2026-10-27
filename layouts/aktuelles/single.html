@@ -1,16 +1,14 @@
 {{ define "main" }}
+  {{ partial "components/page-title" (dict "Context" . "Title" .Title) }}
   <div class="pt-7 flex">
     <article class="basis-3/4">
       {{ $image:= .Params.image }}
       {{ if $image }}
         <div class="mb-10">
-          {{ partial "image" (dict "Src" $image "Context" .Page "Alt" .Title "Class" "w-full rounded") }}
+          {{ partial "image" (dict "Src" $image "Context" .Page "Alt" .Title "Class" "w-full rounded object-cover h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]") }}
         </div>
       {{ end }}
       <div class="article-reading-column reading-measure">
-        <h1>
-          {{ .Title }}
-        </h1>
         <ul class="mb-4">
           <li class="mr-4 inline-block">
             <i class="fa-regular fa-calendar mr-2"></i>

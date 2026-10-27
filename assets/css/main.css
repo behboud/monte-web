@@ -137,8 +137,9 @@
   }
 
   .title-logo {
-    grid-column: 1;
-    justify-self: start;
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
     block-size: 1em;
     inline-size: auto;
     object-fit: contain;
@@ -146,6 +147,7 @@
 
   .home-banner-title,
   .page-title-row .page-title-calligraphy {
+    grid-row: 1;
     grid-column: 2;
     hyphens: auto;
     overflow-wrap: break-word;
@@ -584,7 +586,8 @@
   :root {
     --donation-section-space: clamp(4rem, 3rem + 5vw, 8rem);
     --donation-side-space: clamp(1rem, 0.25rem + 4vw, 4.5rem);
-    --donation-hero-height: clamp(27rem, 21rem + 24.5vw, 43rem);
+    /* Same heights as the Schule slider (h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]). */
+    --donation-hero-height: 220px;
     --donation-hero-padding: clamp(1.25rem, 0.5rem + 2.8vw, 2.75rem);
     --donation-hero-gap: clamp(1rem, 0.65rem + 1.6vw, 1.5rem);
     --donation-hero-offset: clamp(1rem, 0.25rem + 3vw, 2.75rem);
@@ -604,6 +607,24 @@
     --donation-blue: oklch(0.32008 0.13793 274.324);
     --donation-ink: oklch(0.1822 0 none);
     --donation-paper: oklch(0.99 0 none);
+  }
+
+  @media (min-width: 40rem) {
+    :root {
+      --donation-hero-height: 280px;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    :root {
+      --donation-hero-height: 360px;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    :root {
+      --donation-hero-height: 420px;
+    }
   }
 
   .donation-hero {
