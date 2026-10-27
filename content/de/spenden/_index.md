@@ -1,5 +1,5 @@
 ---
-title: So können Sie unsere Schule unterstützen
+title: Die Schule unterstützen
 description: Unterstützen Sie konkrete Projekte der Montessori Schule Gilching und erfahren Sie, was frühere Spenden bereits ermöglicht haben.
 draft: false
 menus:
