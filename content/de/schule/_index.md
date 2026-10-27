@@ -59,8 +59,6 @@ toc:
           label: Qualitäten
         - title: Wie sieht ein Schultag an der Montessorischule Gilching aus?
           content: |-
-            {{< image-carousel data="W3siaW1hZ2UiOiIvaW1hZ2VzL0ZyZWlhcmJlaXRfMS5qcGVnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyAxIn0seyJpbWFnZSI6Ii9pbWFnZXMvX0RTQzEwODQud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgU2NodWx0YWcgMiJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL19EU0MxMTE5LndlYnAiLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIFNjaHVsdGFnIDMifSx7ImltYWdlIjoiL2ltYWdlcy9fRFNDMTEyNy53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA0In0seyJpbWFnZSI6Ii9pbWFnZXMvNC1fRFNDNzU3NC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA1In0seyJpbWFnZSI6Ii9pbWFnZXMvNy1fRFNDNzU4MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA2In0seyJpbWFnZSI6Ii9pbWFnZXMvMTItX0RTQzcwNzYuanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA3In0seyJpbWFnZSI6Ii9pbWFnZXMvMTYtX0RTQzc1ODguanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA4In0seyJpbWFnZSI6Ii9pbWFnZXMvMjUtX0RTQzc2NjMuanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA5In0seyJpbWFnZSI6Ii9pbWFnZXMvNi1fRFNDNzMzNi5qcGciLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIFNjaHVsdGFnIDEwIn0seyJpbWFnZSI6Ii9pbWFnZXMvTW9uLTA3Njgud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgU2NodWx0YWcgMTEifSx7ImltYWdlIjoiL2ltYWdlcy9Nb24tMTQ0MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyAxMiJ9XQ==" >}}
-
             Wir beginnen den Tag in jeder Klasse mit einem gemeinsamen Morgenkreis. Anschließend arbeiten die Kinder in der Freiarbeit an den Themen ihres Wochenplans.
 
             Je nach Stundenplan folgen Freiarbeits- und Differenzierungsphasen sowie Englisch-, Religions-, Sport-, Musik- und Kunstunterricht. An zwei Nachmittagen pro Woche arbeiten die Kinder in Freiarbeit, an zwei weiteren Nachmittagen wählen sie Projekte für einen festen Zeitraum.
@@ -70,6 +68,8 @@ toc:
             Das offizielle Schulende ist um 15:30 Uhr. Darüber hinaus besteht die Möglichkeit, Kinder bis 16:15 Uhr betreuen zu lassen. Am Freitag endet der Unterricht um 12:30 Uhr.
 
             An unserer Schule gibt es üblicherweise keine Hausaufgaben. Manchmal bitten wir darum, Aufgaben, die im Unterricht nicht fertiggestellt wurden, zu Hause abzuschließen.
+
+            {{< image-carousel data="W3siaW1hZ2UiOiIvaW1hZ2VzL0ZyZWlhcmJlaXRfMS5qcGVnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyAxIn0seyJpbWFnZSI6Ii9pbWFnZXMvX0RTQzEwODQud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgU2NodWx0YWcgMiJ9LHsiaW1hZ2UiOiIvaW1hZ2VzL19EU0MxMTE5LndlYnAiLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIFNjaHVsdGFnIDMifSx7ImltYWdlIjoiL2ltYWdlcy9fRFNDMTEyNy53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA0In0seyJpbWFnZSI6Ii9pbWFnZXMvNC1fRFNDNzU3NC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA1In0seyJpbWFnZSI6Ii9pbWFnZXMvNy1fRFNDNzU4MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA2In0seyJpbWFnZSI6Ii9pbWFnZXMvMTItX0RTQzcwNzYuanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA3In0seyJpbWFnZSI6Ii9pbWFnZXMvMTYtX0RTQzc1ODguanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA4In0seyJpbWFnZSI6Ii9pbWFnZXMvMjUtX0RTQzc2NjMuanBnIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyA5In0seyJpbWFnZSI6Ii9pbWFnZXMvNi1fRFNDNzMzNi5qcGciLCJhbHQiOiJGb3RvLVBsYXR6aGFsdGVyIFNjaHVsdGFnIDEwIn0seyJpbWFnZSI6Ii9pbWFnZXMvTW9uLTA3Njgud2VicCIsImFsdCI6IkZvdG8tUGxhdHpoYWx0ZXIgU2NodWx0YWcgMTEifSx7ImltYWdlIjoiL2ltYWdlcy9Nb24tMTQ0MC53ZWJwIiwiYWx0IjoiRm90by1QbGF0emhhbHRlciBTY2h1bHRhZyAxMiJ9XQ==" >}}
           children: []
           id: wie-sieht-ein-schultag-bei-uns-aus
           label: Wie sieht ein Schultag bei uns aus?
