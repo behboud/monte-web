@@ -1,23 +1,14 @@
 ---
-title: Mitgliederversammlung CMS 2025
-publishdate: 2025-03-24T09:58:00.000Z
+title: Mitgliederversammlung 2026
 image: /images/image-placeholder.png
-author: Behboud
 tags:
   - Mitglieder
   - Termin
 date: 2025-03-24T11:53:00.000Z
+author: Behboud
+publishdate: 2025-03-24T09:58:00.000Z
 ---
-# Hi
 
-Lorem ipsum
+Wir freuen uns sehr Ihnen heute unsere neue Homepage vorstellen zu dürfen. Noch ist vieles nicht fertig und noch fehlerhaft, aber einen ersten Eindruck können wir vielleicht trotzdem vermitteln. 
 
-* a
-* b
-* c
-
-1. 1
-2. 2
-3. 3
-
-> hallo
+Das Homepage-Team der Monte Gilching
