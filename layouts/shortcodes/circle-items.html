@@ -23,7 +23,7 @@
 {{- with $items -}}
   <div class="circle-items">
     <ul class="circle-items-grid" data-columns="{{ $columns }}">
-      {{- range first 8 . -}}
+      {{- range first 24 . -}}
         {{- $item := . -}}
         {{- $title := $item.title | default "" -}}
         {{- $alt := $item.alt | default $title -}}

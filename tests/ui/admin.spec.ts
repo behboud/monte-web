@@ -46,7 +46,7 @@ test.describe("CMS admin", () => {
   test("Bildreihe round-trips items and its configurable row limit", async ({ page, request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();
-    expect(config).toContain("editor_components: [code-block, image, circle-items]");
+    expect(config).toContain("editor_components: [code-block, image, circle-items, image-carousel]");
     expect(config).not.toMatch(/^\s*comment:/m);
 
     const componentResponse = await request.get("/admin/editor-components.js");
@@ -75,14 +75,13 @@ test.describe("CMS admin", () => {
       const component = Reflect.get(window, "__registeredCircleItems") as CircleComponent;
       const items: CircleItem[] = [
         { image: "/images/team-1.webp", title: 'Mädchen & Jungen "Montessori"', subtitle: "Lernbegleitung", alt: "Teammitglied 1" },
-        { image: "/images/team-2.webp", title: "Teammitglied 2", subtitle: "Pädagogik", alt: "Teammitglied 2" },
-        { image: "/images/team-3.webp", title: "Teammitglied 3", subtitle: "Pädagogik", alt: "Teammitglied 3" },
-        { image: "/images/team-4.webp", title: "Teammitglied 4", subtitle: "Pädagogik", alt: "Teammitglied 4" },
-        { image: "/images/team-5.webp", title: "Teammitglied 5", subtitle: "Pädagogik", alt: "Teammitglied 5" },
-        { image: "/images/team-6.webp", title: "Teammitglied 6", subtitle: "Pädagogik", alt: "Teammitglied 6" },
-        { image: "/images/team-7.webp", title: "Teammitglied 7", subtitle: "Pädagogik", alt: "Teammitglied 7" },
-        { image: "/images/team-8.webp", title: "Teammitglied 8", subtitle: "Pädagogik", alt: "Teammitglied 8" },
-        { image: "/images/team-9.webp", title: "Nicht übernehmen", subtitle: "Zu viel", alt: "Teammitglied 9" },
+        ...Array.from({ length: 23 }, (_, index) => ({
+          image: `/images/team-${index + 2}.webp`,
+          title: `Teammitglied ${index + 2}`,
+          subtitle: "Pädagogik",
+          alt: `Teammitglied ${index + 2}`,
+        })),
+        { image: "/images/team-25.webp", title: "Nicht übernehmen", subtitle: "Zu viel", alt: "Teammitglied 25" },
       ];
       const block = component.toBlock({ items });
       const parsed = component.fromBlock(block.match(component.pattern));
@@ -112,7 +111,7 @@ test.describe("CMS admin", () => {
 
     expect(result).toEqual({
       id: "circle-items",
-      max: 8,
+      max: 24,
       columnsDefault: "3",
       columnsOptions: ["1", "2", "3", "4"],
       defaultColumns: "3",
@@ -121,10 +120,10 @@ test.describe("CMS admin", () => {
       previewInlineSize: "100%",
       previewDistributesRows: true,
       previewUsesFlexWrap: true,
-      count: 8,
+      count: 24,
       firstTitle: 'Mädchen & Jungen "Montessori"',
-      lastTitle: "Teammitglied 8",
-      previewImages: 8,
+      lastTitle: "Teammitglied 24",
+      previewImages: 24,
       previewHasScript: false,
     });
   });

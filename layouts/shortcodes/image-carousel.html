@@ -1,0 +1,45 @@
+{{- $items := slice -}}
+{{- $encoded := .Get "data" | default "" -}}
+{{- if $encoded -}}
+  {{- with try (transform.Unmarshal (dict "format" "json") (base64Decode $encoded)) -}}
+    {{- if .Err -}}
+      {{- warnf "Unable to parse image-carousel shortcode on %s: %s" $.Page.RelPermalink .Err -}}
+    {{- else -}}
+      {{- $items = .Value -}}
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- warnf "Missing data parameter in image-carousel shortcode on %s" .Page.RelPermalink -}}
+{{- end -}}
+{{- if not (reflect.IsSlice $items) -}}
+  {{- warnf "Image-carousel shortcode on %s must contain a JSON array" .Page.RelPermalink -}}
+  {{- $items = slice -}}
+{{- end -}}
+{{- with $items -}}
+  <div class="image-carousel" data-image-carousel>
+    <div class="image-carousel-slider swiper">
+      <div class="swiper-wrapper">
+        {{- range first 24 . -}}
+          {{- $item := . -}}
+          {{- with $item.image -}}
+            {{- $imagePath := . -}}
+            {{- $alt := $item.alt | default "" -}}
+            <div class="image-carousel-slide swiper-slide">
+              {{- with resources.Get $imagePath -}}
+                <img class="image-carousel-image" src="{{ .RelPermalink }}" alt="{{ $alt }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" decoding="async" />
+              {{- else -}}
+                <img class="image-carousel-image" src="{{ $imagePath | relURL }}" alt="{{ $alt }}" loading="lazy" decoding="async" />
+              {{- end -}}
+            </div>
+          {{- end -}}
+        {{- end -}}
+      </div>
+    </div>
+    <button type="button" class="image-carousel-button image-carousel-prev" aria-label="Vorheriges Bild">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+    </button>
+    <button type="button" class="image-carousel-button image-carousel-next" aria-label="Nächstes Bild">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+    </button>
+  </div>
+{{- end -}}

@@ -8,7 +8,7 @@
       <div class="container pt-8">
         <div class="justify-center text-center">
           <div class="home-banner-heading">
-            <img class="home-banner-logo" src="{{ $anniversaryLogo.RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ $anniversaryLogo.Width }}" height="{{ $anniversaryLogo.Height }}" />
+            <img class="home-banner-logo title-logo" src="{{ $anniversaryLogo.RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ $anniversaryLogo.Width }}" height="{{ $anniversaryLogo.Height }}" />
             <h1 class="home-banner-title">{{ .title }}</h1>
           </div>
           {{ if .content }}
@@ -27,7 +27,7 @@
   <!-- Slider -->
   {{ with .Params.slider }}
     <div class="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen py-4 mb-10">
-      {{ partial "components/slider.html" (dict "Images" .images "ContainerClass" "hero-slider swiper h-[240px] sm:h-[320px] md:h-[440px] lg:h-[600px]" "Class" "swiper-wrapper" "ClassImage" "swiper-slide") }}
+      {{ partial "components/slider.html" (dict "Images" .images "ContainerClass" "hero-slider swiper h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px]" "Class" "swiper-wrapper" "ClassImage" "swiper-slide") }}
     </div>
   {{ end }}
   <!-- /Slider -->

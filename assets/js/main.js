@@ -115,6 +115,25 @@
   initializeSlider(document.querySelector(".hero-slider"));
   initializeSlider(document.querySelector(".schule-slider"));
 
+  document.querySelectorAll("[data-image-carousel]").forEach((carousel) => {
+    if (typeof Swiper === "undefined") {
+      return;
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    new Swiper(carousel.querySelector(".image-carousel-slider"), {
+      speed: reduceMotion ? 0 : 400,
+      navigation: {
+        prevEl: carousel.querySelector(".image-carousel-prev"),
+        nextEl: carousel.querySelector(".image-carousel-next"),
+      },
+      a11y: {
+        prevSlideMessage: "Vorheriges Bild",
+        nextSlideMessage: "Nächstes Bild",
+      },
+    });
+  });
+
   const backToTop = document.querySelector("[data-back-to-top]");
   if (backToTop) {
     const updateBackToTop = () => {
@@ -511,7 +530,7 @@
       );
 
       revealTargets.forEach((element) => observer.observe(element));
-      htmlElement.classList.add("js");
+      document.documentElement.classList.add("js");
     }
   }
 })();

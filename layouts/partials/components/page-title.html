@@ -3,5 +3,10 @@
 
 
 <section class="container ml-3 mt-10 mb-12 text-center">
-  <h1 class="page-title-calligraphy">{{ $title }}</h1>
+  <div class="page-title-row">
+    {{ with resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
+      <img class="title-logo" src="{{ .RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ .Width }}" height="{{ .Height }}" />
+    {{ end }}
+    <h1 class="page-title-calligraphy">{{ $title }}</h1>
+  </div>
 </section>

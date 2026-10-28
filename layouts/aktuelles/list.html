@@ -1,4 +1,5 @@
 {{ define "main" }}
+  {{ partial "components/page-title" (dict "Context" . "Title" .Title) }}
   {{ $pages := where site.RegularPages "Type" "in" "aktuelles" }}
   {{ partial "components/aktuelles-grid.html" (dict "Pages" $pages.ByDate.Reverse) }}
 {{ end }}

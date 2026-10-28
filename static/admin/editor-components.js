@@ -1,5 +1,6 @@
 (() => {
-  const maxItems = 8;
+  const maxItems = 24;
+  const maxCarouselItems = 24;
 
   const textValue = (value) => (typeof value === "string" ? value : "");
 
@@ -8,6 +9,12 @@
       image: textValue(item?.image),
       title: textValue(item?.title),
       subtitle: textValue(item?.subtitle),
+      alt: textValue(item?.alt),
+    }));
+
+  const normalizeCarouselItems = (items) =>
+    (Array.isArray(items) ? items : []).slice(0, maxCarouselItems).map((item) => ({
+      image: textValue(item?.image),
       alt: textValue(item?.alt),
     }));
 
@@ -23,8 +30,8 @@
     return Number.isInteger(columns) && columns >= 1 && columns <= 4 ? String(columns) : defaultColumns;
   };
 
-  const encodeItems = (items) => {
-    const bytes = new TextEncoder().encode(JSON.stringify(normalizeItems(items)));
+  const encodeItems = (items, normalize = normalizeItems) => {
+    const bytes = new TextEncoder().encode(JSON.stringify(normalize(items)));
     let binary = "";
 
     for (let offset = 0; offset < bytes.length; offset += 0x8000) {
@@ -34,12 +41,12 @@
     return btoa(binary);
   };
 
-  const decodeItems = (encoded) => {
+  const decodeItems = (encoded, normalize = normalizeItems) => {
     if (typeof encoded !== "string" || !encoded) return [];
 
     try {
       const bytes = Uint8Array.from(atob(encoded), (character) => character.charCodeAt(0));
-      return normalizeItems(JSON.parse(new TextDecoder().decode(bytes)));
+      return normalize(JSON.parse(new TextDecoder().decode(bytes)));
     } catch {
       return [];
     }
@@ -114,6 +121,70 @@
 
     return preview;
   };
+
+  const createCarouselPreview = ({ items = [] } = {}, getAsset) => {
+    const preview = document.createElement("div");
+    preview.className = "image-carousel-preview";
+    preview.style.display = "flex";
+    preview.style.gap = "0.5rem";
+    preview.style.inlineSize = "100%";
+    preview.style.overflowX = "auto";
+
+    normalizeCarouselItems(items).forEach((item) => {
+      if (!item.image) return;
+
+      const image = document.createElement("img");
+      const asset = getAsset?.(item.image);
+      image.src = asset?.url ?? item.image;
+      image.alt = item.alt;
+      image.style.flex = "0 0 12rem";
+      image.style.aspectRatio = "3 / 2";
+      image.style.objectFit = "cover";
+      preview.append(image);
+    });
+
+    return preview;
+  };
+
+  // Registered before circle-items so the Bildreihe stays the last registered component.
+  CMS.registerEditorComponent({
+    id: "image-carousel",
+    label: "Bildkarussell",
+    icon: "view_carousel",
+    mode: "dialog",
+    summary: "Bildkarussell",
+    fields: [
+      {
+        name: "items",
+        label: "Bilder",
+        widget: "list",
+        label_singular: "Bild",
+        required: true,
+        min: 1,
+        max: maxCarouselItems,
+        fields: [
+          {
+            name: "image",
+            label: "Bild",
+            widget: "image",
+            required: true,
+            hint: "Bitte vor der Veröffentlichung Bildrechte und die Einwilligung erkennbarer Personen prüfen.",
+          },
+          {
+            name: "alt",
+            label: "Alternativtext",
+            widget: "string",
+            required: false,
+            hint: "Leer lassen, wenn das Bild rein dekorativ ist.",
+          },
+        ],
+      },
+    ],
+    pattern: /^\{\{<\s*image-carousel\s+data="(?<data>[A-Za-z0-9+\/=]*)"\s*>\}\}$/m,
+    fromBlock: (match) => ({ items: decodeItems(match?.groups?.data, normalizeCarouselItems) }),
+    toBlock: ({ items = [] } = {}) => `{{< image-carousel data="${encodeItems(items, normalizeCarouselItems)}" >}}`,
+    toPreview: createCarouselPreview,
+  });
 
   CMS.registerEditorComponent({
     id: "circle-items",

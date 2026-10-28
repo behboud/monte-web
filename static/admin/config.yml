@@ -32,7 +32,7 @@ logo:
 app_title: "Montessorri Schule Gilching CMS"
 field_defaults:
   richtext:
-    editor_components: [code-block, image, circle-items]
+    editor_components: [code-block, image, circle-items, image-carousel]
 collections:
   - name: "site_settings"
     label: "Site Settings"

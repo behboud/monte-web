@@ -128,11 +128,11 @@ test.describe("style regressions", () => {
         return {
           viewportWidth: window.innerWidth,
           titleFontSize: Number.parseFloat(getComputedStyle(title).fontSize),
-          titleLeft: titleBox.left,
           titleCenter: titleBox.top + titleBox.height / 2,
           titleRight: titleBox.right,
           logoCenter: logoBox.top + logoBox.height / 2,
           logoHeight: logoBox.height,
+          logoLeft: logoBox.left,
           logoRight: logoBox.right,
           headingRight: headingBox.right,
         };
@@ -140,7 +140,8 @@ test.describe("style regressions", () => {
 
       expect(Math.abs(measurements.logoHeight - measurements.titleFontSize)).toBeLessThanOrEqual(1);
       expect(Math.abs(measurements.logoCenter - measurements.titleCenter)).toBeLessThanOrEqual(1);
-      expect(measurements.logoRight).toBeLessThanOrEqual(measurements.titleLeft + 1);
+      expect(measurements.logoLeft).toBeGreaterThanOrEqual(measurements.titleRight - 1);
+      expect(measurements.logoRight).toBeLessThanOrEqual(measurements.headingRight + 1);
       expect(measurements.titleRight).toBeLessThanOrEqual(measurements.headingRight + 1);
       expect(measurements.titleRight).toBeLessThanOrEqual(measurements.viewportWidth);
       expect(measurements.headingRight).toBeLessThanOrEqual(width + 1);
@@ -501,8 +502,8 @@ test.describe("style regressions", () => {
     await expect(page.locator('[data-section-banner="schulalltag"]')).toHaveCount(0);
 
     const expectedBanners = [
-      { id: "wer-wir-sind", image: "12-_DSC7076", alt: "Wer wir sind" },
-      { id: "komm-zu-uns", image: "Schuleeingang", alt: "Komm zu uns" },
+      { id: "wer-wir-sind", image: "_DSC1119", alt: "Wer wir sind" },
+      { id: "komm-zu-uns", image: "stuhl-im-haus", alt: "Komm zu uns" },
     ];
 
     for (const width of [390, 640, 768, 1024, 1366]) {
@@ -556,7 +557,7 @@ test.describe("style regressions", () => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/schule/", { waitUntil: "networkidle" });
 
-      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image):not(.circle-items-image)").evaluateAll((images) =>
+      const imageLayout = await page.locator(".schule-content .reading-prose img:not(.section-banner-image):not(.circle-items-image):not(.image-carousel-image)").evaluateAll((images) =>
         images.map((image) => {
           const textBlock = image.closest("p, ul, ol, blockquote") ?? image.closest(".reading-prose");
           const imageBox = image.getBoundingClientRect();
@@ -587,14 +588,13 @@ test.describe("style regressions", () => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/schule/", { waitUntil: "networkidle" });
 
-      const spacing = await page.locator('.reading-prose img[alt="Foto-Platzhalter Mittagsverpflegung"]').evaluate((image) => {
-        const paragraph = image.closest("p");
-        const previousItem = paragraph?.previousElementSibling;
-        const nextItem = paragraph?.nextElementSibling;
-        if (!paragraph || !previousItem || !nextItem) throw new Error("The content image should have prose before and after it.");
+      const spacing = await page.locator("#mittagsverpflegung + .reading-prose .image-carousel").evaluate((image) => {
+        const previousItem = image.previousElementSibling;
+        const nextItem = image.nextElementSibling;
+        if (!previousItem || !nextItem) throw new Error("The content image should have prose before and after it.");
 
         const imageBox = image.getBoundingClientRect();
-        const fontSize = Number.parseFloat(getComputedStyle(paragraph).fontSize);
+        const fontSize = Number.parseFloat(getComputedStyle(previousItem).fontSize);
         return {
           fontSize,
           before: imageBox.top - previousItem.getBoundingClientRect().bottom,
@@ -615,9 +615,9 @@ test.describe("style regressions", () => {
 
     const cards = page.locator(".section-card");
     const expectedCards = [
-      { title: "Schulalltag", href: "#schulalltag", image: "16-_DSC7588" },
-      { title: "Wer wir sind", href: "#wer-wir-sind", image: "12-_DSC7076" },
-      { title: "Komm zu uns", href: "#komm-zu-uns", image: "Schuleeingang" },
+      { title: "SCHULALLTAG", href: "#schulalltag", image: "_DSC1127" },
+      { title: "WER WIR SIND", href: "#wer-wir-sind", image: "_DSC1119" },
+      { title: "KOMM ZU UNS", href: "#komm-zu-uns", image: "stuhl-im-haus" },
     ];
 
     await expect(cards).toHaveCount(expectedCards.length);
@@ -730,26 +730,22 @@ test.describe("style regressions", () => {
     expect(layout.linkCount).toBe(0);
   });
 
-  test("requested staff sections render eight placeholder portraits", async ({ page }) => {
+  test("requested staff sections render the requested number of portraits", async ({ page }) => {
     const sections = [
-      { route: "/schule/", id: "schulleitung-und-team", titlePrefix: "Name ergänzen" },
-      { route: "/schule/", id: "verwaltung", titlePrefix: "Name ergänzen" },
-      { route: "/schule/", id: "vorstand", titlePrefix: "Vorstandsmitglied" },
-      { route: "/verein/", id: "vorstand", titlePrefix: "Vorstandsmitglied" },
+      { route: "/schule/", id: "schulleitung-und-team", count: 16, columns: 3, mobileColumns: 2 },
+      { route: "/schule/", id: "verwaltung", count: 3, columns: 3, mobileColumns: 2 },
+      { route: "/schule/", id: "haus-und-kueche", count: 4, columns: 4, mobileColumns: 3 },
+      { route: "/verein/", id: "vorstand", count: 8, columns: 3, mobileColumns: 2 },
     ];
 
     for (const section of sections) {
       await page.goto(section.route, { waitUntil: "networkidle" });
 
       const content = page.locator(`#${section.id} + .reading-prose`);
-      await expect(content.locator(".circle-items-item")).toHaveCount(8);
-      await expect(content.locator('img[src*="image-placeholder.png"]')).toHaveCount(8);
-      await expect(content.locator('img[alt="Platzhalterbild"]')).toHaveCount(8);
-      await expect(content.locator(".circle-items-title")).toHaveCount(8);
-      await expect(content.locator(".circle-items-title").first()).toHaveText(`${section.titlePrefix} 1`);
-      await expect(content.locator(".circle-items-title").last()).toHaveText(`${section.titlePrefix} 8`);
+      await expect(content.locator(".circle-items-item")).toHaveCount(section.count);
+      await expect(content.locator(".circle-items-title")).toHaveCount(section.count);
       const grid = content.locator(".circle-items-grid");
-      await expect(grid).toHaveAttribute("data-columns", "3");
+      await expect(grid).toHaveAttribute("data-columns", String(section.columns));
       const maxItemsPerRow = await grid.evaluate((element) => {
         const rowCounts = new Map<number, number>();
         [...element.children].forEach((item) => {
@@ -758,8 +754,13 @@ test.describe("style regressions", () => {
         });
         return Math.max(...rowCounts.values());
       });
-      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? 2 : 3);
+      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? section.mobileColumns : section.columns);
     }
+  });
+
+  test("school board section has no portraits; they live on the Verein page", async ({ page }) => {
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+    await expect(page.locator("#vorstand + .reading-prose .circle-items")).toHaveCount(0);
   });
 
   test("enabled CMS outline uses the thin rail without legacy section TOCs", async ({ page }) => {
@@ -965,7 +966,7 @@ test.describe("style regressions", () => {
     await expect(footerSections).toHaveCount(1);
 
     const footerImageSection = footerSections.nth(0);
-    const instagramLink = footerImageSection.locator('a[aria-label="instagram"]');
+    const instagramLink = footerImageSection.locator('a[aria-label="Instagram"]');
     await expect(instagramLink).toBeVisible();
     await expect(instagramLink).toHaveAttribute("href", "https://www.facebook.com/");
     await expect(instagramLink.locator("i")).toHaveClass(/fa-instagram/);
@@ -1054,6 +1055,34 @@ test.describe("style regressions", () => {
 
     expect(buttonStyles.backgroundColor).not.toBe("rgb(34, 36, 119)");
     expect(buttonStyles.color).not.toBe("rgb(255, 255, 255)");
+  });
+
+  test("aktuelles and spenden header images are no taller than the schule slider", async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+    await page.goto("/schule/", { waitUntil: "networkidle" });
+    const schuleHeight = (await page.locator(".schule-slider").first().boundingBox())?.height ?? 0;
+    expect(schuleHeight).toBeGreaterThan(0);
+
+    await page.goto("/spenden/", { waitUntil: "networkidle" });
+    const spendenHeight = (await page.locator(".donation-hero").boundingBox())?.height ?? 0;
+    expect(Math.abs(spendenHeight - schuleHeight)).toBeLessThanOrEqual(1);
+
+    await page.goto("/aktuelles/post-4/", { waitUntil: "networkidle" });
+    const articleHeight = (await page.locator("article img").first().boundingBox())?.height ?? 0;
+    expect(articleHeight).toBeGreaterThan(0);
+    expect(articleHeight).toBeLessThanOrEqual(schuleHeight + 1);
+  });
+
+  test("every page shows the logo to the right of its title", async ({ page }) => {
+    for (const route of ["/", "/schule/", "/verein/", "/spenden/", "/aktuelles/", "/aktuelles/post-4/", "/speiseplan/", "/kontakt/"]) {
+      await page.goto(route, { waitUntil: "networkidle" });
+      const logo = page.locator(".title-logo").first();
+      const title = page.locator(".home-banner-title, .page-title-row .page-title-calligraphy").first();
+      await expect(logo).toBeVisible();
+      const logoBox = await logo.boundingBox();
+      const titleBox = await title.boundingBox();
+      expect(logoBox?.x ?? 0).toBeGreaterThanOrEqual((titleBox?.x ?? 0) + (titleBox?.width ?? 0) - 1);
+    }
   });
 
   test("breadcrumbs are absent from archives and taxonomy pages", async ({ page }) => {
@@ -1170,7 +1199,7 @@ test.describe("style regressions", () => {
     expect(projectLayout.cardBorderRadius).toBe("12px");
     expect(projectLayout.cardShadow).not.toBe("none");
     expect(projectLayout.titleSize).toBe(20);
-    expect(projectLayout.contentSize).toBe(16);
+    expect(projectLayout.contentSize).toBe(18);
 
     const desktopLayout = await page
       .locator(".past-donation-card")
@@ -1209,6 +1238,10 @@ test.describe("style regressions", () => {
       const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
       expect(scrollWidth).toBeLessThanOrEqual(width);
       if (width === 390) {
+        const firstDonorCard = page.locator(".past-donation-card").first();
+        await firstDonorCard.scrollIntoViewIfNeeded();
+        await expect(firstDonorCard.locator(".past-donation-media")).toHaveCSS("transform", "none");
+
         const columns = await page.locator(".donation-project-list").evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).length);
         expect(columns).toBe(1);
 
