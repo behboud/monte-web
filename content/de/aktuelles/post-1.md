@@ -1,5 +1,5 @@
 ---
-title: Elternsprechabend
+title: "Eltern­sprech­abend"
 image: /images/image-placeholder.png
 tags:
   - Mitglieder

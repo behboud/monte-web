@@ -12,8 +12,8 @@ export default {
         bgLight: "#fcfaf7",
       },
       fontFamily: {
-        calligraphy: ["Playfair Display", "serif"],
-        sans: ["Overpass", "sans-serif"],
+        calligraphy: ["Playfair Display", "Playfair Display Fallback", "serif"],
+        sans: ["Overpass", "Overpass Fallback", "sans-serif"],
       },
     },
   },

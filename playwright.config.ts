@@ -35,6 +35,19 @@ export default defineConfig({
         ...devices["Pixel 7"],
       },
     },
+    {
+      name: "desktop-webkit",
+      use: {
+        ...devices["Desktop Safari"],
+        viewport: { width: 1366, height: 900 },
+      },
+    },
+    {
+      name: "mobile-webkit",
+      use: {
+        ...devices["iPhone 15"],
+      },
+    },
   ],
   webServer: {
     command: "npx http-server public -p 4173 -c-1 --silent",

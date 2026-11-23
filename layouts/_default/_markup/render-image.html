@@ -1,0 +1,19 @@
+{{- /* Markdown images get their intrinsic size so the layout (and anchor targets) do not shift while they load. */ -}}
+{{- $destination := .Destination -}}
+{{- $parsed := urls.Parse $destination -}}
+{{- $image := "" -}}
+{{- if not $parsed.IsAbs -}}
+  {{- $image = resources.Get (strings.TrimPrefix "/" $parsed.Path) -}}
+{{- end -}}
+{{- $src := $destination -}}
+{{- with $image -}}
+  {{- $src = .RelPermalink -}}
+{{- else -}}
+  {{- if strings.HasPrefix $destination "/" -}}
+    {{- $src = replaceRE `^/` `` $destination | relURL -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .Text | plainify }}"
+  {{- with .Title }} title="{{ . }}"{{ end -}}
+  {{- with $image }}{{ if ne .MediaType.SubType "svg" }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}{{ end }} loading="lazy" decoding="async" />
+{{- /* This comment removes trailing newlines. */ -}}

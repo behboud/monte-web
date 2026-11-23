@@ -1,12 +1,16 @@
-<ul class="text-center">
-  {{ range site.Taxonomies.tags.ByCount }}
-    <li class="m-3 inline-block">
-      <a href="{{ .Page.Permalink }}" class="bg-light text-text-dark block rounded px-4 py-2 text-xl">
-        {{ .Page.Title }}
-        <span class="bg-body ml-2 rounded px-2">
-          {{ .Count }}
-        </span>
-      </a>
-    </li>
-  {{ end }}
-</ul>
+{{ with .Data.Terms.ByCount }}
+  <ul class="text-center">
+    {{ range . }}
+      <li class="m-3 inline-block">
+        <a href="{{ .Page.Permalink }}" class="bg-light text-text-dark block rounded px-4 py-2 text-xl">
+          {{ .Page.Title }}
+          <span class="bg-body ml-2 rounded px-2">
+            {{ .Count }}
+          </span>
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+{{ else }}
+  <p class="text-center">Noch keine Einträge vorhanden.</p>
+{{ end }}

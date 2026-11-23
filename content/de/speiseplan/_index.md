@@ -19,7 +19,7 @@ meal_plan:
       dessert: "Obst der Saison"
       drink: "Milch und Wasser"
     - date: "2026-03-03"
-      main: "Minestrone (Gemüse Suppe) mit Resi"
+      main: "Minestrone (Gemüse Suppe) mit Reis"
       side: "Salatmix"
       dessert: "Erdbeerekuchen"
       drink: "Wasser"

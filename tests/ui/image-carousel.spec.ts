@@ -8,8 +8,8 @@ test.describe("Bildkarussell", () => {
     const mittag = page.locator('h3#mittagsverpflegung + .reading-prose .image-carousel');
     await expect(schultag).toHaveCount(1);
     await expect(mittag).toHaveCount(1);
-    await expect(schultag.locator(".swiper-slide")).toHaveCount(12);
-    await expect(mittag.locator(".swiper-slide")).toHaveCount(6);
+    await expect(schultag.locator(".swiper-slide")).toHaveCount(13);
+    await expect(mittag.locator(".swiper-slide")).toHaveCount(7);
     await expect(page.locator('.reading-prose img[alt="Foto-Platzhalter Mittagsverpflegung"]')).toHaveCount(0);
 
     for (const carousel of [schultag, mittag]) {

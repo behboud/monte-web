@@ -33,3 +33,12 @@
 
 <!-- link lazy style -->
 <link defer async rel="stylesheet" href="{{ $stylesLazy.RelPermalink }}" integrity="{{ $stylesLazy.Data.Integrity }}" media="print" onload="this.media='all'; this.onload=null;" />
+<noscript>
+  <link rel="stylesheet" href="{{ $stylesLazy.RelPermalink }}" integrity="{{ $stylesLazy.Data.Integrity }}" />
+  {{/* Without JavaScript the off-canvas menu cannot open, so mobile shows the plain navigation links instead. */}}
+  <style>
+    .navbar-nav, .navbar-nav > div { height: auto; flex-wrap: wrap; }
+    .navbar-nav li.hidden { display: block; }
+    .navbar-nav > div:has(a[href="#mymenu"]) { display: none; }
+  </style>
+</noscript>
