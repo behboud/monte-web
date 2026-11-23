@@ -1,7 +1,7 @@
 {{ define "main" }}
   {{ partial "components/page-title" (dict "Context" . "Title" .Title) }}
-  <div class="pt-7 flex">
-    <article class="basis-3/4">
+  <div class="pt-7 flex flex-col lg:flex-row">
+    <article class="min-w-0 basis-3/4">
       {{ $image:= .Params.image }}
       {{ if $image }}
         <div class="mb-10">
@@ -12,13 +12,13 @@
         <ul class="mb-4">
           <li class="mr-4 inline-block">
             <i class="fa-regular fa-calendar mr-2"></i>
-            {{ .Params.date | dateFormat "Monday, 2 January 2006" }}
+            {{ .Params.date | dateFormat "Monday, 2. January 2006" }}
           </li>
           {{ $tags:= .Params.tags }}
           {{ if $tags }}
             <li class="mr-4 inline-block">
               {{ range $i,$p:= $tags }}
-                <a class="btn btn-text mr-2" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
+                <a class="btn btn-text mr-3" href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}/" class="ms-1">
                   <i class="fa fa-tag mr-1"></i>
                   {{ . | humanize }}{{ if ne $i (sub (len $tags) 1) }}
                   {{ end }}
@@ -43,7 +43,7 @@
     <!-- Related posts -->
     {{ $related := .Site.RegularPages.Related . | first 6 }}
     {{ with $related }}
-      <div class="ml-3 basis-1/4">
+      <div class="mt-10 min-w-0 basis-1/4 lg:mt-0 lg:ml-3">
         <h4 class="mb-2">{{ T "related_posts" | default "Weitere Beiträge" }}:</h4>
         {{ range sort . "Date" "desc" }}
           <div class="heading-divider">
@@ -55,7 +55,7 @@
             <ul class="mb-4">
               <li class="mr-4 inline-block">
                 <i class="fa-regular fa-calendar mr-2"></i>
-                {{ .Params.date | dateFormat "Monday, 2 January 2006" }}
+                {{ .Params.date | dateFormat "Monday, 2. January 2006" }}
               </li>
             </ul>
           </div>

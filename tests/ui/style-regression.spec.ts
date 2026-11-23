@@ -294,7 +294,7 @@ test.describe("style regressions", () => {
     const linkColor = await link.evaluate((element) => getComputedStyle(element).color);
     const navigationColor = await page.locator('.navbar-nav a[href="/schule/"]').evaluate((element) => getComputedStyle(element).color);
     expect(linkColor).toBe(navigationColor);
-    await expect(link).toHaveCSS("text-decoration-line", "none");
+    await expect(link).toHaveCSS("text-decoration-line", "underline");
 
     await link.hover();
     await expect(link).toHaveCSS("text-decoration-line", "underline");
@@ -615,7 +615,7 @@ test.describe("style regressions", () => {
 
     const cards = page.locator(".section-card");
     const expectedCards = [
-      { title: "SCHULALLTAG", href: "#schulalltag", image: "_DSC1127" },
+      { title: "SCHULALLTAG", href: "#schulalltag", image: "_DSC0858" },
       { title: "WER WIR SIND", href: "#wer-wir-sind", image: "_DSC1119" },
       { title: "KOMM ZU UNS", href: "#komm-zu-uns", image: "stuhl-im-haus" },
     ];
@@ -716,8 +716,10 @@ test.describe("style regressions", () => {
     });
 
     const isNarrow = (page.viewportSize()?.width ?? 0) < 640;
+    const minFourColumnItemWidth = 128;
+    const narrowFourColumnCount = layout.containerWidth >= 3 * minFourColumnItemWidth ? 3 : 2;
     expect(layout.columns).toBe(isNarrow ? 2 : 3);
-    expect(layout.configuredColumns).toEqual(isNarrow ? [1, 2, 2, 3] : [1, 2, 3, 4]);
+    expect(layout.configuredColumns).toEqual(isNarrow ? [1, 2, 2, narrowFourColumnCount] : [1, 2, 3, 4]);
     expect(Math.abs(layout.gridWidth - layout.containerWidth)).toBeLessThan(1);
     expect(layout.firstRowSpread / layout.gridWidth).toBeGreaterThan(0.45);
     expect(layout.lastRowCenter).toBeCloseTo(0.5, 1);
@@ -746,15 +748,17 @@ test.describe("style regressions", () => {
       await expect(content.locator(".circle-items-title")).toHaveCount(section.count);
       const grid = content.locator(".circle-items-grid");
       await expect(grid).toHaveAttribute("data-columns", String(section.columns));
-      const maxItemsPerRow = await grid.evaluate((element) => {
+      const { maxItemsPerRow, gridWidth } = await grid.evaluate((element) => {
         const rowCounts = new Map<number, number>();
         [...element.children].forEach((item) => {
           const row = Math.round(item.getBoundingClientRect().top);
           rowCounts.set(row, (rowCounts.get(row) ?? 0) + 1);
         });
-        return Math.max(...rowCounts.values());
+        return { maxItemsPerRow: Math.max(...rowCounts.values()), gridWidth: element.getBoundingClientRect().width };
       });
-      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? section.mobileColumns : section.columns);
+      const minFourColumnItemWidth = 128;
+      const mobileColumns = section.columns === 4 && gridWidth < 3 * minFourColumnItemWidth ? 2 : section.mobileColumns;
+      expect(maxItemsPerRow).toBe((page.viewportSize()?.width ?? 0) < 640 ? mobileColumns : section.columns);
     }
   });
 
@@ -818,10 +822,7 @@ test.describe("style regressions", () => {
 
     await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
 
-    await page.evaluate(() => {
-      document.documentElement.style.scrollBehavior = "auto";
-      window.scrollTo(0, document.documentElement.scrollHeight);
-    });
+    await page.mouse.wheel(0, await page.evaluate(() => document.documentElement.scrollHeight));
     await expect(outlineLinks.last()).toHaveAttribute("aria-current", "location");
     await expect.poll(progressMarkerDelta).toBeLessThan(0.005);
   });
@@ -1099,12 +1100,12 @@ test.describe("style regressions", () => {
     await page.locator("[data-donation-popup-close]").click();
     await expect(page.locator("[data-donation-popup]")).not.toHaveAttribute("open", "");
 
-    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
+    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("Die Schule unterstützen");
     await expect(page.locator(".donation-hero h1")).toHaveCount(0);
     await expect(page.locator(".donation-project")).toHaveCount(3);
-    await expect(page.locator(".past-donation-card")).toHaveCount(12);
+    await expect(page.locator(".past-donation-card")).toHaveCount(27);
     await expect(page.locator(".donation-hero-cta")).toHaveCount(1);
-    await expect(page.locator("main a:visible")).toHaveCount(1);
+    await expect(page.locator("main a:visible")).toHaveCount(2);
     const leadHeroImage = page.locator('.donation-hero-slider img[src*="Schuleeingang"]').first();
     const nextHeroImage = page.locator('.donation-hero-slider img[src*="Zaun_3"]').first();
     await expect(leadHeroImage).toBeVisible();
@@ -1130,7 +1131,12 @@ test.describe("style regressions", () => {
     expect(overlayStyles.backdropFilter).toContain("blur");
     expect(overlayStyles.borderRadius).toBe("12px");
     expect(overlayStyles.ctaBackground).not.toBe("oklch(0.99 0 none)");
-    expect(overlayStyles.ctaColor).toBe("oklch(0.32008 0.13793 274.324)");
+    const ctaColor = overlayStyles.ctaColor.match(/^oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)$/);
+    expect(ctaColor).not.toBeNull();
+    const [lightness, chroma, hue] = ctaColor!.slice(1).map(Number);
+    expect(lightness).toBeCloseTo(0.32008, 4);
+    expect(chroma).toBeCloseTo(0.13793, 4);
+    expect(hue).toBeCloseTo(274.324, 2);
     expect(Number(overlayStyles.zIndex)).toBeGreaterThan(1);
 
     await expect(page.locator(".donation-section-heading p")).toHaveCount(0);

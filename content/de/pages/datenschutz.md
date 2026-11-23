@@ -97,7 +97,7 @@ Frühlingstraße 16a
 82205 Gilching
 
 Telefon: 08105/773548  
-E-Mail: 08105/773576
+Telefax: 08105/773576
 
 Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.
 

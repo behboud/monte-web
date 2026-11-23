@@ -102,7 +102,7 @@ defaultContentLanguage = "de"
 ############################# Plugins ##############################
   [[params.plugins.css]]
     link = "plugins/swiper/swiper-bundle.css"
-    lazy = true
+    lazy = false
 
   [[params.plugins.css]]
     link = "plugins/font-awesome/v6/brands.css"
@@ -110,11 +110,11 @@ defaultContentLanguage = "de"
 
   [[params.plugins.css]]
     link = "plugins/font-awesome/v6/solid.css"
-    lazy = true
+    lazy = false
 
   [[params.plugins.css]]
     link = "plugins/font-awesome/v6/icons.css"
-    lazy = true
+    lazy = false
 
   [[params.plugins.css]]
     link = "plugins/mmenu/mmenu.css"

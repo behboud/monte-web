@@ -1,7 +1,6 @@
 {{ define "main" }}
+  {{ partial "components/page-title" (dict "Context" . "Title" .Title) }}
   <div class="container">
-    {{ if eq .Permalink (`tags/` | absLangURL) }}
-      {{ partial "components/tags-terms-list.html" . }}
-    {{ end }}
+    {{ partial "components/tags-terms-list.html" . }}
   </div>
 {{ end }}

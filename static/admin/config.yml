@@ -29,7 +29,7 @@ display_url: "https://behboud.github.io/monte-web/"
 logo:
   src: /monte-web/admin/cms-logo.png
   show_in_header: true
-app_title: "Montessorri Schule Gilching CMS"
+app_title: "Montessori Schule Gilching CMS"
 field_defaults:
   richtext:
     editor_components: [code-block, image, circle-items, image-carousel]

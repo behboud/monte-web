@@ -2,7 +2,7 @@
   {{ partial "components/page-intro" (dict "Context" .) }}
 
 
-  <section class="container ml-3 mb-10">
+  <section class="container px-3 mb-10">
     <div class="speiseplan-week card card-body">
       {{ $weekdayLabelMap := dict "Monday" "Montag" "Tuesday" "Dienstag" "Wednesday" "Mittwoch" "Thursday" "Donnerstag" "Friday" "Freitag" "Saturday" "Samstag" "Sunday" "Sonntag" }}
       {{ $days := .Params.meal_plan.days }}
@@ -26,9 +26,9 @@
           {{ $firstObj := time.AsTime $firstDate }}
           {{ $lastObj := time.AsTime $lastDate }}
           {{ if eq (time.Format "01.2006" $firstObj) (time.Format "01.2006" $lastObj) }}
-            {{ $weekLabel = printf "Woche vom %s-%s" (time.Format "02.01." $firstObj) (time.Format "02.01.06" $lastObj) }}
+            {{ $weekLabel = printf "Woche vom %s–%s" (time.Format "02.01." $firstObj) (time.Format "02.01.06" $lastObj) }}
           {{ else }}
-            {{ $weekLabel = printf "Woche vom %s-%s" (time.Format "02.01.06" $firstObj) (time.Format "02.01.06" $lastObj) }}
+            {{ $weekLabel = printf "Woche vom %s–%s" (time.Format "02.01.06" $firstObj) (time.Format "02.01.06" $lastObj) }}
           {{ end }}
         {{ end }}
       {{ end }}
@@ -99,7 +99,7 @@
     </div>
   </section>
 
-  <section class="container ml-3 mb-12">
+  <section class="container px-3 mb-12">
     <article class="schule-content" data-page-outline-content>
       <div class="reading-prose">
         {{ .Content }}

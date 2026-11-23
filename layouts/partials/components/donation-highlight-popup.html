@@ -10,7 +10,7 @@
       {{ $titleID := printf "donation-highlight-title-%d" $index }}
       <div class="donation-popup-option" data-donation-highlight-option hidden>
         <div class="donation-popup-option-image">
-          {{ partial "image" (dict "Src" $project.image "Alt" ($project.image_alt | default $project.title) "Class" "h-full w-full object-cover") }}
+          {{ partial "image" (dict "Src" $project.image "Alt" ($project.image_alt | default $project.title) "Class" "h-full w-full object-contain") }}
         </div>
         <div class="donation-popup-option-content">
           <p class="donation-popup-kicker">Ein Projekt unterstützen</p>

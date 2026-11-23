@@ -1,10 +1,9 @@
 {{ define "main" }}
-  <section class="flex flex-col justify-center items-center text-center pt-7">
-    <span class="hero-3xl">404</span>
-    <h1 class="mb-4">Die gesuchte Seite konnte nicht gefunden werden</h1>
-
-    <p>Die Seite, die Sie suchen, wurde möglicherweise entfernt, hat einen anderen Namen oder ist vorübergehend nicht verfügbar.</p>
-
-    <a href="{{ site.BaseURL | relLangURL }}" class="btn btn-text mt-6">Zurück zur Startseite</a>
+  {{ partial "components/page-title" (dict "Context" . "Title" "Seite nicht gefunden") }}
+  <section class="container px-3 mb-12 text-center">
+    <div class="reading-prose">
+      <p>Die Seite, die Sie suchen, wurde möglicherweise entfernt, hat einen anderen Namen oder ist vorübergehend nicht verfügbar.</p>
+      <p><a href="{{ site.BaseURL | relLangURL }}" class="btn btn-default mt-6">Zurück zur Startseite</a></p>
+    </div>
   </section>
 {{ end }}

@@ -1,5 +1,6 @@
 {{ define "main" }}
+  {{ partial "components/page-title" (dict "Context" . "Title" .Title) }}
   <section class="container">
-    {{ partial "components/aktuelles-grid.html" (dict "Pages" .Data.Pages "ItemClass" "mb-14") }}
+    {{ partial "components/aktuelles-grid.html" (dict "Pages" .Data.Pages) }}
   </section>
 {{ end }}

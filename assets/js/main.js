@@ -49,8 +49,43 @@
   // ----------------------------------------
   document.addEventListener("DOMContentLoaded", () => {
     const mailtoLinks = document.querySelectorAll('a[href^="mailto:"]');
+    // The social-share module ships English labels for its Fediverse field.
+    document.querySelectorAll(".fediverse-input").forEach((input) => {
+      input.placeholder = "Instanz-URL eingeben";
+      input.setAttribute("aria-label", "Fediverse-Instanz-URL");
+    });
+    document.querySelectorAll(".fediverse-check-button").forEach((button) => {
+      button.textContent = "Teilen";
+    });
+
     mailtoLinks.forEach((link) => {
-      link.innerHTML = '<i class="fa fa-envelope"></i>&nbsp;' + link.innerHTML;
+      if (link.closest(".share-icons")) {
+        return;
+      }
+      const icon = document.createElement("i");
+      icon.className = "fa fa-envelope mailto-icon";
+      icon.setAttribute("aria-hidden", "true");
+      // Buttons keep the icon inside; inline links get it in front so the underline starts at the address.
+      if (link.matches(".donation-hero-cta, .donation-popup-action, .btn")) {
+        link.prepend(icon);
+      } else {
+        link.before(icon);
+        // Allow long addresses to wrap after "@" instead of in the middle of the domain.
+        [...link.childNodes].forEach((node) => {
+          if (node.nodeType !== Node.TEXT_NODE || !node.textContent.includes("@")) {
+            return;
+          }
+          const parts = node.textContent.split("@");
+          const fragment = document.createDocumentFragment();
+          parts.forEach((part, index) => {
+            if (index > 0) {
+              fragment.append("@", document.createElement("wbr"));
+            }
+            fragment.append(part);
+          });
+          node.replaceWith(fragment);
+        });
+      }
     });
     // query the ul under navigation
     const ulUnderNav = document.querySelector("#mymenu");
@@ -59,7 +94,7 @@
     }
     // remove hidden class from ul under navigation
     ulUnderNav.classList.remove("hidden");
-    new Mmenu(
+    const mobileMenu = new Mmenu(
       "#mymenu",
       {
         navbar: {
@@ -81,6 +116,14 @@
         },
       },
     );
+
+    // Close the off-canvas menu when rotating/resizing into the desktop navigation, where its toggle is hidden.
+    const desktopNavigation = window.matchMedia("(min-width: 48rem)");
+    desktopNavigation.addEventListener("change", (event) => {
+      if (event.matches) {
+        mobileMenu.API.close();
+      }
+    });
   });
 
   const stickyNavigation = document.querySelector("[data-sticky-navigation]");
@@ -143,8 +186,26 @@
       backToTop.tabIndex = isVisible ? 0 : -1;
     };
 
+    // Lift the button above footer links it would otherwise cover at the end of the page.
+    const footerLinks = [...document.querySelectorAll(".footer-links a")];
+    const updateBackToTopLift = () => {
+      const left = backToTop.offsetLeft;
+      const right = left + backToTop.offsetWidth;
+      const top = backToTop.offsetTop;
+      const bottom = top + backToTop.offsetHeight;
+      const lift = footerLinks.reduce((max, link) => {
+        const rect = link.getBoundingClientRect();
+        const overlaps = rect.left < right && rect.right > left && rect.top < bottom && rect.bottom > top;
+        return overlaps ? Math.max(max, bottom - rect.top + 8) : max;
+      }, 0);
+      backToTop.style.setProperty("--back-to-top-lift", `${Math.max(0, lift)}px`);
+    };
+
     updateBackToTop();
+    updateBackToTopLift();
     window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", updateBackToTopLift, { passive: true });
+    window.addEventListener("resize", updateBackToTopLift);
 
     backToTop.addEventListener("click", () => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -205,6 +266,22 @@
         if (clickedOutside && donationPopup.open) {
           donationPopup.close();
         }
+      });
+
+      // Keep keyboard focus inside the modal. Safari skips links when tabbing by default and would
+      // otherwise move focus to <body> and then to the dialog element itself.
+      donationPopup.addEventListener("keydown", (event) => {
+        if (event.key !== "Tab") {
+          return;
+        }
+        const focusable = [...donationPopup.querySelectorAll("a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex='-1'])")].filter((element) => element.getClientRects().length > 0);
+        if (!focusable.length) {
+          return;
+        }
+        const currentIndex = focusable.indexOf(document.activeElement);
+        const nextIndex = event.shiftKey ? (currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1) : (currentIndex + 1) % focusable.length;
+        event.preventDefault();
+        focusable[nextIndex].focus();
       });
 
       donationPopup.showModal();
@@ -374,8 +451,12 @@
         }
       };
 
+      let pinnedHeading = null;
       linkByHeading.forEach((link, heading) => {
-        link.addEventListener("click", () => setCurrent(heading));
+        link.addEventListener("click", () => {
+          pinnedHeading = heading;
+          setCurrent(heading);
+        });
       });
 
       const updatePageOutline = () => {
@@ -402,7 +483,7 @@
         if (atDocumentEnd) {
           activeHeading = headingEntries.at(-1)?.heading || activeHeading;
         }
-        setCurrent(activeHeading);
+        setCurrent(pinnedHeading || activeHeading);
 
         const firstRoot = contentRoots[0];
         const lastRoot = contentRoots.at(-1);
@@ -414,7 +495,12 @@
         const lastRootRect = lastRoot.getBoundingClientRect();
         const hasPassedIntro = introBoundary ? introBoundary.getBoundingClientRect().bottom <= stickyHeight : firstRootRect.top < window.innerHeight;
         const contentIsVisible = lastRootRect.bottom > stickyHeight;
-        pageOutline.hidden = !(hasPassedIntro && contentIsVisible);
+        // End the fixed rail above the footer once it scrolls into view; hide it when too little room is left.
+        const footerTop = document.querySelector("body footer")?.getBoundingClientRect().top ?? Infinity;
+        const railBottomGap = Math.max(24, window.innerHeight - footerTop + 16);
+        pageOutline.style.insetBlockEnd = `${railBottomGap}px`;
+        const railHasRoom = window.innerHeight - railBottomGap - stickyHeight > 120;
+        pageOutline.hidden = !(hasPassedIntro && contentIsVisible && railHasRoom);
 
         if (pageOutline.hidden) {
           pageOutline.style.setProperty("--page-outline-progress", "0");
@@ -441,8 +527,17 @@
         });
       };
 
+      const releasePinnedHeading = () => {
+        if (!pinnedHeading) {
+          return;
+        }
+        pinnedHeading = null;
+        schedulePageOutlineUpdate();
+      };
+
       window.addEventListener("scroll", schedulePageOutlineUpdate, { passive: true });
       window.addEventListener("resize", schedulePageOutlineUpdate);
+      ["wheel", "touchstart", "keydown"].forEach((type) => window.addEventListener(type, releasePinnedHeading, { passive: true }));
       updatePageOutline();
       document.fonts?.ready.then(schedulePageOutlineUpdate);
     }
@@ -528,6 +623,21 @@
         },
         { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
       );
+
+      // When the script arrives after the first paint (slow connections), content that is already visible
+      // must not vanish and fade in again: mark it revealed and skip the entrance animations.
+      const alreadyPainted = performance.getEntriesByType("paint").some((entry) => entry.name === "first-contentful-paint");
+      if (alreadyPainted) {
+        document.documentElement.classList.add("js-late");
+        revealTargets.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            element.classList.add("is-in");
+            element.style.transition = "none";
+            requestAnimationFrame(() => requestAnimationFrame(() => element.style.removeProperty("transition")));
+          }
+        });
+      }
 
       revealTargets.forEach((element) => observer.observe(element));
       document.documentElement.classList.add("js");

@@ -1,21 +1,22 @@
 <div class="sticky-navigation sticky top-0 z-50 pl-3 pr-3" data-sticky-navigation>
   <div class="container bg-body text-monte">
     <!-- top navbar -->
-    <ul class="flex h-14 flex-row items-center justify-between navbar-nav order-3 w-full space-x-2 pb-0 uppercase md:h-[52px] xl:space-x-8">
+    <ul class="flex min-h-14 flex-row items-center justify-between navbar-nav order-3 w-full space-x-2 pb-0 uppercase md:min-h-[52px] xl:space-x-8">
       <div class="flex flex-row md:hidden">
         <li class="text-2xl m-3">
           <a class="fa fa-bars font-bold" href="#mymenu" aria-label="Menü öffnen"></a>
         </li>
       </div>
-      <div class="flex min-w-0 flex-1 flex-row">
+      <div class="flex min-w-0 flex-1 flex-row flex-wrap">
         {{ $menuItems := partial "components/menu-items.html" (dict "MenuID" "top" "Page" .) }}
         {{ range $menuItems }}
           {{ $itemClass := "m-3 pt-1 hidden md:block" }}
+          {{ $isCurrent := or (eq .href $.RelPermalink) (and (ne .href "/") (ne .href site.Home.RelPermalink) (hasPrefix $.RelPermalink .href)) }}
           <li class="{{ $itemClass }}">
             {{ if .icon }}
-              <a class="{{ .icon }} btn btn-text font-bold transition-colors duration-150 hover:text-primary" aria-label="{{ .name }}" {{ if .open_in_new_tab }}target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"{{ else if .external }}target="_self" rel="noopener"{{ end }} href="{{ .href }}"></a>
+              <a class="{{ .icon }} btn btn-text font-bold transition-colors duration-150 hover:text-primary" aria-label="{{ .name }}"{{ if $isCurrent }} aria-current="page"{{ end }} {{ if .open_in_new_tab }}target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"{{ else if .external }}target="_self" rel="noopener"{{ end }} href="{{ .href }}"></a>
             {{ end }}
-            <a class="btn btn-text font-bold hover:underline underline-offset-4 {{ if .icon }}hidden{{ end }}" {{ if .open_in_new_tab }}target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"{{ else if .external }}target="_self" rel="noopener"{{ end }} href="{{ .href }}">
+            <a class="btn btn-text font-bold hover:underline underline-offset-4 {{ if .icon }}hidden{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }} {{ if .open_in_new_tab }}target="_blank" rel="{{ if .nofollow }}nofollow noopener{{ else }}noopener{{ end }}"{{ else if .external }}target="_self" rel="noopener"{{ end }} href="{{ .href }}">
               {{ .name }}
             </a>
           </li>

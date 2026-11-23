@@ -216,6 +216,6 @@ test.describe("CMS admin", () => {
     expect(config).not.toContain('name: "foerderer"');
 
     await page.goto("/spenden/", { waitUntil: "networkidle" });
-    await expect(page.getByText("Privater Spender", { exact: true })).toBeVisible();
+    await expect(page.getByText("Merck-Fink-Stiftung", { exact: true })).toBeVisible();
   });
 });

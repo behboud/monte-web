@@ -1,0 +1,11 @@
+{{- /* A slash in a heading is a better line break than hyphenating the compound word next to it. */ -}}
+{{- $text := .Text -}}
+{{- if not (strings.Contains $text "<") -}}
+  {{- $text = replace $text "/" "/<wbr>" -}}
+{{- end -}}
+<h{{ .Level }} id="{{ .Anchor }}"
+  {{- range $key, $value := .Attributes -}}
+    {{- if ne $key "id" }} {{ $key }}="{{ $value }}"{{ end -}}
+  {{- end -}}
+>{{ $text | safeHTML }}</h{{ .Level }}>
+{{- /* This comment removes trailing newlines. */ -}}

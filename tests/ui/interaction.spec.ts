@@ -65,28 +65,28 @@ test.describe("core interactions", () => {
 
     const popup = page.locator("[data-donation-popup]");
     await expect(popup).toHaveAttribute("open", "");
-    await expect(popup.locator("[data-donation-highlight-option]")).toHaveCount(2);
+    await expect(popup.locator("[data-donation-highlight-option]")).toHaveCount(1);
 
     const selectedProject = popup.locator("[data-donation-highlight-option]:not([hidden])");
     await expect(selectedProject).toHaveCount(1);
     await expect(selectedProject.locator("h2")).toBeVisible();
     await expect(selectedProject.locator(".donation-popup-action")).toHaveText(/Jetzt fördern/);
-    await expect(selectedProject.locator(".donation-popup-action")).toHaveAttribute("href", "/kontakt/");
+    await expect(selectedProject.locator(".donation-popup-action")).toHaveAttribute("href", "https://www.bildungsspender.de/montessorischule-gilching");
 
     await popup.locator("[data-donation-popup-close]").click();
     await expect(popup).not.toHaveAttribute("open", "");
 
-    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
+    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("Die Schule unterstützen");
     const donationAction = page.locator(".donation-hero-cta");
     await expect(donationAction).toHaveCount(1);
     await expect(donationAction).toBeVisible();
-    await expect(donationAction).toHaveText("Spende besprechen");
-    await expect(donationAction).toHaveAttribute("href", /^mailto:Verwaltung@montessorischule-gilching\.de\?/);
+    await expect(donationAction).toHaveText("E-Mail an das Fundraising Team");
+    await expect(donationAction).toHaveAttribute("href", "mailto:fundraising@montessorischule-gilching.de");
 
     await expect(page.locator(".donation-project")).toHaveCount(3);
-    await expect(page.locator(".past-donation-card")).toHaveCount(12);
+    await expect(page.locator(".past-donation-card")).toHaveCount(27);
     await expect(page.locator("main [data-donation-popup]")).toHaveCount(1);
-    await expect(page.locator("main a:visible")).toHaveCount(1);
+    await expect(page.locator("main a:visible")).toHaveCount(2);
 
     const sections = await page.locator("main > section").evaluateAll((elements) => elements.map((element) => element.classList[0]));
     expect(sections[0]).toBe("container");
@@ -106,7 +106,7 @@ test.describe("core interactions", () => {
     await page.goto("/foerderer/", { waitUntil: "networkidle" });
 
     await expect(page).toHaveURL(/\/spenden\/?$/);
-    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("So können Sie unsere Schule unterstützen");
+    await expect(page.locator("main > section:first-child h1.page-title-calligraphy")).toHaveText("Die Schule unterstützen");
   });
 
   test("back to top button appears after scrolling and returns to the top", async ({ page }) => {
