@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default `de-DE` }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Titel-Logo Vorschau</title>
+    {{ partialCached "essentials/style.html" . }}
+  </head>
+  {{/* Live preview for the CMS title logo editor (static/admin/title-logo-editor.js). */}}
+  {{/* Same page wrappers as baseof.html, so the title row has the real page margins. */}}
+  <body class="bg-body container mx-auto">
+    <main class="m-3">
+      {{ partial "components/page-title" (dict "Context" . "Title" .Title) }}
+    </main>
+  </body>
+</html>

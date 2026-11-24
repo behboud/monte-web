@@ -141,12 +141,20 @@
     @apply font-calligraphy font-normal text-monte;
   }
 
+  /* Logo size and position come from the CMS (data/title_logo.yml); the side columns stay symmetric so the title remains centred. */
   .home-banner-heading,
   .page-title-row {
+    --title-logo-height: calc(var(--title-logo-scale, 1) * 1em);
+    --title-logo-column: max(calc(var(--title-logo-scale, 1) * 1.1em), calc(var(--title-logo-height) * var(--title-logo-ratio, 1)));
     display: grid;
-    grid-template-columns: 1.1em minmax(0, 1fr) 1.1em;
+    grid-template-columns: var(--title-logo-column) minmax(0, 1fr) var(--title-logo-column);
     align-items: center;
     gap: 0.2em;
+  }
+
+  [data-logo-position="above"],
+  [data-logo-position="below"] {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .page-title-row {
@@ -157,9 +165,26 @@
     grid-row: 1;
     grid-column: 3;
     justify-self: end;
-    block-size: 1em;
+    block-size: var(--title-logo-height, 1em);
     inline-size: auto;
     object-fit: contain;
+    /* Fine-tuning offset from the CMS, in title heights; it never shifts the title itself. */
+    translate: calc(var(--title-logo-offset-x, 0) * 1em) calc(var(--title-logo-offset-y, 0) * 1em);
+  }
+
+  [data-logo-position="left"] > .title-logo {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  [data-logo-position="above"] > .title-logo,
+  [data-logo-position="below"] > .title-logo {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  [data-logo-position="below"] > .title-logo {
+    grid-row: 2;
   }
 
   .home-banner-title,
@@ -172,6 +197,18 @@
     -webkit-hyphenate-limit-before: 8;
     -webkit-hyphenate-limit-after: 4;
     overflow-wrap: break-word;
+  }
+
+  [data-logo-position="above"] > .home-banner-title,
+  [data-logo-position="above"] > .page-title-calligraphy {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  [data-logo-position="below"] > .home-banner-title,
+  [data-logo-position="below"] > .page-title-calligraphy {
+    grid-row: 1;
+    grid-column: 1;
   }
 
   .home-banner-title {

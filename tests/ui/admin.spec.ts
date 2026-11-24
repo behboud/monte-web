@@ -169,6 +169,84 @@ test.describe("CMS admin", () => {
     expect(config).toContain("optimize: true");
   });
 
+  test("site settings manage the title logo image, position and size", async ({ request }) => {
+    const configResponse = await request.get("/admin/config.yml");
+    const config = await configResponse.text();
+
+    const settingsStart = config.indexOf('  - name: "site_settings"');
+    const aktuellesStart = config.indexOf('  - name: "aktuelles"', settingsStart);
+    const settingsConfig = config.slice(settingsStart, aktuellesStart);
+
+    expect(settingsConfig).toContain('file: "data/title_logo.yml"');
+    expect(settingsConfig).toMatch(/name: "image", widget: "image"/);
+    expect(settingsConfig).toMatch(/name: "alt", widget: "string"/);
+    expect(settingsConfig).toContain('{ label: "Rechts neben dem Titel", value: "right" }');
+    expect(settingsConfig).toContain('{ label: "Links neben dem Titel", value: "left" }');
+    expect(settingsConfig).toContain('{ label: "Über dem Titel", value: "above" }');
+    expect(settingsConfig).toContain('{ label: "Unter dem Titel", value: "below" }');
+    expect(settingsConfig).toMatch(/name: "size", widget: "number", value_type: "int", min: 50, max: 200/);
+    expect(settingsConfig).toMatch(/name: "offset", widget: "title-logo-offset"/);
+
+    const adminResponse = await request.get("/admin/");
+    expect(await adminResponse.text()).toContain('<script src="./title-logo-editor.js"></script>');
+  });
+
+  test("title logo preview page renders the real title row without being indexed", async ({ request }) => {
+    const previewResponse = await request.get("/admin/title-logo-preview/");
+    await expect(previewResponse).toBeOK();
+    const previewHtml = await previewResponse.text();
+    expect(previewHtml).toMatch(/<meta name="?robots"? content="noindex, nofollow"/);
+    expect(previewHtml).toContain("page-title-row");
+    expect(previewHtml).toContain("title-logo");
+
+    const sitemapResponse = await request.get("/sitemap.xml");
+    expect(await sitemapResponse.text()).not.toContain("title-logo-preview");
+  });
+
+  test("title logo preview applies unsaved settings and turns dragging into an offset", async ({ page }) => {
+    await page.goto("/admin/title-logo-preview/", { waitUntil: "networkidle" });
+    await page.addScriptTag({ url: "/admin/title-logo-editor.js" });
+
+    const row = page.locator(".page-title-row");
+    const logo = row.locator(".title-logo");
+    const title = row.locator("h1");
+
+    await page.evaluate(() => {
+      const preview = Reflect.get(window, "MonteTitleLogoPreview");
+      preview.applySettings(document, { position: "left", size: 150, offset: { x: 0, y: 0 }, title: "Ein Beispieltitel" });
+      preview.attachDrag(document, {
+        getOffset: () => ({ x: 0, y: 0 }),
+        onCommit: (offset: unknown) => Reflect.set(window, "__committedOffset", offset),
+      });
+    });
+
+    await expect(title).toHaveText("Ein Beispieltitel");
+    await expect(row).toHaveAttribute("data-logo-position", "left");
+    const fontSize = await row.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+    const startBox = (await logo.boundingBox())!;
+    expect(startBox.height / fontSize).toBeCloseTo(1.5, 2);
+    expect(startBox.x + startBox.width).toBeLessThanOrEqual((await title.boundingBox())!.x + 1);
+
+    const startX = startBox.x + startBox.width / 2;
+    const startY = startBox.y + startBox.height / 2;
+    await page.mouse.move(startX, startY);
+    await page.mouse.down();
+    await page.mouse.move(startX + fontSize * 0.5, startY - fontSize * 0.25, { steps: 5 });
+    await page.mouse.up();
+
+    const committed = await page.evaluate(() => Reflect.get(window, "__committedOffset"));
+    expect(committed.x).toBeCloseTo(0.5, 1);
+    expect(committed.y).toBeCloseTo(-0.25, 1);
+    const endBox = (await logo.boundingBox())!;
+    expect(endBox.x - startBox.x).toBeCloseTo(fontSize * committed.x, 0);
+    expect(endBox.y - startBox.y).toBeCloseTo(fontSize * committed.y, 0);
+
+    const normalized = await page.evaluate(() =>
+      Reflect.get(window, "MonteTitleLogoPreview").normalizeOffset({ x: 5, y: "-0.123" }),
+    );
+    expect(normalized).toEqual({ x: 2, y: -0.12 });
+  });
+
   test("CMS logo uses an opaque anniversary logo", async ({ request }) => {
     const configResponse = await request.get("/admin/config.yml");
     const config = await configResponse.text();

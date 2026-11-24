@@ -1,5 +1,5 @@
 {{ define "main" }}
-  {{ $anniversaryLogo := resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
+  {{ $logo := partial "components/title-logo.html" . }}
 
 
   <!-- Banner -->
@@ -7,8 +7,10 @@
     <div class="ml-3 mt-3 mb-12">
       <div class="container pt-8">
         <div class="justify-center text-center">
-          <div class="home-banner-heading">
-            <img class="home-banner-logo title-logo" src="{{ $anniversaryLogo.RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ $anniversaryLogo.Width }}" height="{{ $anniversaryLogo.Height }}" />
+          <div class="home-banner-heading" data-logo-position="{{ $logo.position }}" style="{{ $logo.style }}">
+            {{ with $logo.image }}
+              <img class="home-banner-logo title-logo" src="{{ .RelPermalink }}" alt="{{ $logo.alt }}"{{ with $logo.width }} width="{{ . }}"{{ end }}{{ with $logo.height }} height="{{ . }}"{{ end }} />
+            {{ end }}
             <h1 class="home-banner-title">{{ .title }}</h1>
           </div>
           {{ if .content }}
