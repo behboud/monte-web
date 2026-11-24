@@ -1,11 +1,12 @@
 {{ $ctx := .Context }}
 {{ $title := .Title | default $ctx.Title }}
+{{ $logo := partial "components/title-logo.html" . }}
 
 
 <section class="container mt-10 mb-12 text-center">
-  <div class="page-title-row">
-    {{ with resources.Get "images/logo_20_jahre_140mm_400dpi.png" }}
-      <img class="title-logo" src="{{ .RelPermalink }}" alt="20 Jahre Montessori Schule Gilching" width="{{ .Width }}" height="{{ .Height }}" />
+  <div class="page-title-row" data-logo-position="{{ $logo.position }}" style="{{ $logo.style }}">
+    {{ with $logo.image }}
+      <img class="title-logo" src="{{ .RelPermalink }}" alt="{{ $logo.alt }}"{{ with $logo.width }} width="{{ . }}"{{ end }}{{ with $logo.height }} height="{{ . }}"{{ end }} />
     {{ end }}
     <h1 class="page-title-calligraphy">{{ $title }}</h1>
   </div>

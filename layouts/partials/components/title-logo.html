@@ -1,0 +1,21 @@
+{{/* Shared title logo settings from data/title_logo.yml (edited in the CMS under Site Settings). */}}
+{{ $settings := hugo.Data.title_logo | default dict }}
+{{ $image := resources.Get (strings.TrimPrefix "/" ($settings.image | default "/images/logo_20_jahre_140mm_400dpi.png")) }}
+{{ $scale := div (float ($settings.size | default 100)) 100 }}
+{{ $offset := $settings.offset | default dict }}
+{{ $ratio := 1.0 }}
+{{ $width := 0 }}
+{{ $height := 0 }}
+{{ if and $image (ne $image.MediaType.SubType "svg") }}
+  {{ $width = $image.Width }}
+  {{ $height = $image.Height }}
+  {{ $ratio = div (float $width) $height }}
+{{ end }}
+{{ return dict
+  "image" $image
+  "alt" ($settings.alt | default "")
+  "position" ($settings.position | default "right")
+  "style" (printf "--title-logo-scale: %g; --title-logo-ratio: %.4f; --title-logo-offset-x: %g; --title-logo-offset-y: %g;" $scale $ratio (float ($offset.x | default 0)) (float ($offset.y | default 0)) | safeCSS)
+  "width" $width
+  "height" $height
+}}

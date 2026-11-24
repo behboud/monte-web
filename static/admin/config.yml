@@ -44,6 +44,25 @@ collections:
           preview: false
         fields:
           - { label: Site Title for Browser Tab, name: title, widget: string }
+      - file: "data/title_logo.yml"
+        label: "Titel-Logo"
+        name: "title_logo"
+        editor:
+          preview: false
+        fields:
+          - { label: "Logo", name: "image", widget: "image", hint: "Wird auf allen Seiten neben bzw. über dem Seitentitel angezeigt." }
+          - { label: "Alternativtext", name: "alt", widget: "string", hint: "Beschreibt das Logo für Screenreader." }
+          - label: "Position"
+            name: "position"
+            widget: "select"
+            default: "right"
+            options:
+              - { label: "Rechts neben dem Titel", value: "right" }
+              - { label: "Links neben dem Titel", value: "left" }
+              - { label: "Über dem Titel", value: "above" }
+              - { label: "Unter dem Titel", value: "below" }
+          - { label: "Größe (% der Titelhöhe)", name: "size", widget: "number", value_type: "int", min: 50, max: 200, step: 10, default: 100 }
+          - { label: "Vorschau & Feinjustierung", name: "offset", widget: "title-logo-offset", required: false, hint: "Logo in der Vorschau mit der Maus ziehen. Der Versatz wird in Titelhöhen gespeichert und gilt für alle Seiten." }
   - name: "aktuelles"
     label: "Aktuelles"
     folder: "content/de/aktuelles"

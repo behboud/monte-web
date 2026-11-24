@@ -1086,6 +1086,68 @@ test.describe("style regressions", () => {
     }
   });
 
+  test("every page renders the same CMS-configured title logo", async ({ page }) => {
+    for (const route of ["/", "/schule/", "/aktuelles/post-4/", "/kontakt/"]) {
+      await page.goto(route, { waitUntil: "networkidle" });
+      const row = page.locator(".home-banner-heading, .page-title-row").first();
+      const logo = row.locator(".title-logo");
+      await expect(row).toHaveAttribute("data-logo-position", "right");
+      await expect(row).toHaveAttribute("style", /--title-logo-scale: ?1;/);
+      await expect(row).toHaveAttribute("style", /--title-logo-offset-x: ?0;.*--title-logo-offset-y: ?0/);
+      await expect(logo).toHaveAttribute("src", /logo_20_jahre_140mm_400dpi/);
+      await expect(logo).toHaveAttribute("alt", "20 Jahre Montessori Schule Gilching");
+
+      const ratio = await logo.evaluate((element) => {
+        const fontSize = Number.parseFloat(getComputedStyle(element.parentElement as Element).fontSize);
+        return element.getBoundingClientRect().height / fontSize;
+      });
+      expect(ratio).toBeCloseTo(1, 2);
+    }
+  });
+
+  test("title logo position and size settings lay out the title row", async ({ page }) => {
+    for (const route of ["/", "/schule/"]) {
+      await page.goto(route, { waitUntil: "networkidle" });
+      const row = page.locator(".home-banner-heading, .page-title-row").first();
+      const logo = row.locator(".title-logo");
+      const title = row.locator("h1");
+
+      // Applies the attributes the template renders for other CMS values.
+      await row.evaluate((element) => {
+        element.setAttribute("data-logo-position", "left");
+        element.style.setProperty("--title-logo-scale", "1.5");
+      });
+      let logoBox = await logo.boundingBox();
+      let titleBox = await title.boundingBox();
+      const fontSize = await row.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+      expect(logoBox!.height / fontSize).toBeCloseTo(1.5, 2);
+      expect(logoBox!.x + logoBox!.width).toBeLessThanOrEqual(titleBox!.x + 1);
+
+      await row.evaluate((element) => element.setAttribute("data-logo-position", "above"));
+      logoBox = await logo.boundingBox();
+      titleBox = await title.boundingBox();
+      expect(logoBox!.y + logoBox!.height).toBeLessThanOrEqual(titleBox!.y + 1);
+      expect(Math.abs(logoBox!.x + logoBox!.width / 2 - (titleBox!.x + titleBox!.width / 2))).toBeLessThan(2);
+
+      await row.evaluate((element) => element.setAttribute("data-logo-position", "below"));
+      logoBox = await logo.boundingBox();
+      titleBox = await title.boundingBox();
+      expect(logoBox!.y).toBeGreaterThanOrEqual(titleBox!.y + titleBox!.height - 1);
+      expect(Math.abs(logoBox!.x + logoBox!.width / 2 - (titleBox!.x + titleBox!.width / 2))).toBeLessThan(2);
+
+      // The fine-tuning offset is measured in title heights and does not move the title.
+      await row.evaluate((element) => {
+        element.style.setProperty("--title-logo-offset-x", "0.5");
+        element.style.setProperty("--title-logo-offset-y", "-0.25");
+      });
+      const shiftedLogoBox = await logo.boundingBox();
+      const unshiftedTitleBox = await title.boundingBox();
+      expect(shiftedLogoBox!.x - logoBox!.x).toBeCloseTo(fontSize * 0.5, 0);
+      expect(shiftedLogoBox!.y - logoBox!.y).toBeCloseTo(fontSize * -0.25, 0);
+      expect(unshiftedTitleBox).toEqual(titleBox);
+    }
+  });
+
   test("breadcrumbs are absent from archives and taxonomy pages", async ({ page }) => {
     for (const route of ["/aktuelles/", "/tags/", "/tags/termin/", "/categories/"]) {
       await page.goto(route, { waitUntil: "networkidle" });
