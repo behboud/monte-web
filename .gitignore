@@ -28,3 +28,4 @@ docs/hugo-setup-review-2026-03.md
 .claude/skills
 tests/ui/visual.spec.ts-snapshots
 /envit.lock.json
+/.npmrc
